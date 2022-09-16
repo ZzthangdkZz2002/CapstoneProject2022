@@ -1,1 +1,1 @@
-web: java -cp target/classes/:target/dependency/* com.example.electriccomponentsshop.ElectricComponentsShopApplication
+web: java -cp target/classes/com.example.electriccomponentsshop.ElectricComponentsShopApplication
