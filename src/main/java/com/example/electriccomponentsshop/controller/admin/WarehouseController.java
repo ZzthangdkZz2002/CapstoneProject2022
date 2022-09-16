@@ -5,7 +5,10 @@ import com.example.electriccomponentsshop.dto.WarehouseDTO;
 import com.example.electriccomponentsshop.entities.Warehouse;
 import com.example.electriccomponentsshop.services.ImportTransactionService;
 import com.example.electriccomponentsshop.services.WarehouseService;
+import com.example.electriccomponentsshop.services.impl.WarehouseServiceImpl;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +25,16 @@ import java.util.*;
 @AllArgsConstructor
 @RequestMapping("admin/warehouses")
 public class WarehouseController {
-    final
-    WarehouseService warehouseService;
-    final
-    ImportTransactionService importTransactionService;
+    private final static Logger LOGGER = LoggerFactory.getLogger(WarehouseController.class);
+
+    final WarehouseService warehouseService;
+    final ImportTransactionService importTransactionService;
+    final WarehouseServiceImpl warehouseService2;
+
+
     @GetMapping("")
     public String viewAll(Model model){
+        LOGGER.info("ware houses list: ");
         ArrayList<Warehouse> warehouses =(ArrayList<Warehouse>) warehouseService.findAll();
         model.addAttribute("warehouses",warehouses);
         return "administrator/warehouse-management";
