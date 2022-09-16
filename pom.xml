@@ -109,6 +109,13 @@
             <artifactId>hibernate-validator-annotation-processor</artifactId>
             <version>6.2.3.Final</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.3.23</version>
+        </dependency>
+
 
     </dependencies>
 
