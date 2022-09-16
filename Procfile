@@ -1,1 +1,1 @@
-web: java -cp target/classes/com.example.electriccomponentsshop.ElectricComponentsShopApplication
+web: java -jar build/libs/rate-0.0.1-SNAPSHOT.jar
