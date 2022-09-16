@@ -9,7 +9,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @SpringBootApplication
-public class ElectricComponentsShopApplication implements WebMvcConfigurer {
+public class ElectricComponentsShopApplication{
 
     public static void main(String[] args) {
         SpringApplication.run(ElectricComponentsShopApplication.class, args);
