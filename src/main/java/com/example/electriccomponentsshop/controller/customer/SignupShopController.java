@@ -63,7 +63,7 @@ public class SignupShopController {
         return "redirect:/auth/signin";
     }
 
-    @PostMapping("/addrole")
+    @PostMapping("/product/addrole")
     public String role(){
         roleRepository.save(new Role(ERole.ROLE_CUSTOMER));
         roleRepository.save(new Role(ERole.ROLE_EMPLOYEE));
