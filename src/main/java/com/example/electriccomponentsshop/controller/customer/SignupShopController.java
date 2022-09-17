@@ -57,7 +57,9 @@ public class SignupShopController {
 //            System.out.println("thang day3");
 //            roles.add(roleCustomer);
 //            System.out.println("thang day4");
-            Role role = new Role(1,ERole.ROLE_CUSTOMER);
+
+            //test deploy
+            Role role = new Role(3,ERole.ROLE_MANAGER);
             roles.add(role);
             account.setRoles(roles);
             System.out.println("thang day5");
