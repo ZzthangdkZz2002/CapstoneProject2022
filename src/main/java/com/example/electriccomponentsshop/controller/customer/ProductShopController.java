@@ -1,9 +1,12 @@
 package com.example.electriccomponentsshop.controller.customer;
 
+import com.example.electriccomponentsshop.common.ERole;
 import com.example.electriccomponentsshop.dto.CategoryDTO;
 import com.example.electriccomponentsshop.dto.ProductDTO;
 import com.example.electriccomponentsshop.dto.SpecificationValueDto;
 import com.example.electriccomponentsshop.entities.Category;
+import com.example.electriccomponentsshop.entities.Role;
+import com.example.electriccomponentsshop.repositories.RoleRepository;
 import com.example.electriccomponentsshop.services.CategoryService;
 import com.example.electriccomponentsshop.services.ProductService;
 import com.example.electriccomponentsshop.services.SpecificationService;
@@ -25,6 +28,9 @@ public class ProductShopController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    RoleRepository roleRepository;
 
     @GetMapping(value = "/{id}")
     //@ResponseBody
@@ -63,5 +69,15 @@ public class ProductShopController {
         }
 
         return "customer/product-by-cgr";
+    }
+
+    @PostMapping("/addrole")
+    @ResponseBody
+    public String role(){
+        roleRepository.save(new Role(ERole.ROLE_CUSTOMER));
+        roleRepository.save(new Role(ERole.ROLE_EMPLOYEE));
+        roleRepository.save(new Role(ERole.ROLE_MANAGER));
+        roleRepository.save(new Role(ERole.ROLE_IT));
+        return "success";
     }
 }
