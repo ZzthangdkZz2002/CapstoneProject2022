@@ -49,13 +49,17 @@ public class SignupShopController {
             map.addAttribute("error", "Email đã được sử dụng");
             return "customer/signup";
         } else {
+            System.out.println("thang day1");
             Account account = new Account(custom.get("email"), passwordEncoder.encode(custom.get("pwd")));
-
+            System.out.println("thang day2");
             List<Role> roles = new ArrayList<>();
             Role roleCustomer = roleRepository.findByRoleName(ERole.ROLE_CUSTOMER).orElseThrow(() -> new RuntimeException("Role not found"));
+            System.out.println("thang day3");
             roles.add(roleCustomer);
+            System.out.println("thang day4");
 
             account.setRoles(roles);
+            System.out.println("thang day5");
             accountRepository.save(account);
 
         }
