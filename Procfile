@@ -1,1 +1,1 @@
-web: java -cp target/ElectricComponentsShop-0.0.1-SNAPSHOT.jar
+web: java -jar target/ElectricComponentsShop-0.0.1-SNAPSHOT.jar
