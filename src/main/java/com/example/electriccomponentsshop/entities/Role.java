@@ -20,7 +20,15 @@ public class Role {
     @Column(length = 20)
     private ERole roleName;
 
+    public Role(ERole roleName){
+        this.roleName = roleName;
+    }
+
     public ERole getRoleName() {
         return roleName;
+    }
+
+    public void setRoleName(ERole roleName) {
+        this.roleName = roleName;
     }
 }
