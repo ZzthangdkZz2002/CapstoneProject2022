@@ -70,14 +70,4 @@ public class ProductShopController {
 
         return "customer/product-by-cgr";
     }
-
-    @PostMapping("/addrole")
-    @ResponseBody
-    public String role(){
-        roleRepository.save(new Role(ERole.ROLE_CUSTOMER));
-        roleRepository.save(new Role(ERole.ROLE_EMPLOYEE));
-        roleRepository.save(new Role(ERole.ROLE_MANAGER));
-        roleRepository.save(new Role(ERole.ROLE_IT));
-        return "success";
-    }
 }
