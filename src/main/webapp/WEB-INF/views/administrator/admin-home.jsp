@@ -75,7 +75,7 @@
 
     var chart = new CanvasJS.Chart("chartContainer", {
       animationEnabled: true,
-      theme: "dark1",
+      theme: "light2",
       title: {
         text: "Doanh thu thuần theo Tháng"
       },
@@ -92,14 +92,14 @@
       },
       data: [{
         type: "column",
-        name: "Production",
-        yValueFormatString: "#0.0# million tonnes",
+        name: "Doanh Thu",
+        yValueFormatString: "#0.0# Triệu VNĐ",
         showInLegend: true,
         dataPoints: <%out.print(dataPoints1);%>
       }, {
         type: "column",
-        name: "Exports",
-        yValueFormatString: "#0.## million tonnes",
+        name: "Lợi Nhuận",
+        yValueFormatString: "#0.## Triệu VNĐ",
         showInLegend: true,
         dataPoints: <%out.print(dataPoints2);%>
       }]
@@ -124,14 +124,14 @@
       },
       data: [{
         type: "column",
-        name: "Production",
-        yValueFormatString: "#0.0# million tonnes",
+        name: "Doanh Thu",
+        yValueFormatString: "#0.0# Triệu VNĐ",
         showInLegend: true,
         dataPoints: <%out.print(dataPoints1);%>
       }, {
         type: "column",
-        name: "Exports",
-        yValueFormatString: "#0.## million tonnes",
+        name: "Lợi Nhuận",
+        yValueFormatString: "#0.## Triệu VNĐ",
         showInLegend: true,
         dataPoints: <%out.print(dataPoints2);%>
       }]
