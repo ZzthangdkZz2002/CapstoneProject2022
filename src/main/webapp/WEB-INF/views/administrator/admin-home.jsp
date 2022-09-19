@@ -1,4 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.*" %>
+<%@ page import="com.google.gson.Gson"%>
+<%@ page import="com.google.gson.JsonObject"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,6 +31,130 @@
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <jsp:include page="home-menu.jsp"/>
+
+<!-- Chart content -->
+<%
+  Gson gsonObj = new Gson();
+  Map<Object,Object> map = null;
+  List<Map<Object,Object>> list = new ArrayList<Map<Object,Object>>();
+
+  map = new HashMap<Object,Object>(); map.put("label", "T1"); map.put("y", 450); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T2"); map.put("y", 198.3); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T3"); map.put("y", 206.1); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T4"); map.put("y", 224.8); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T5"); map.put("y", 238.2); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T6"); map.put("y", 271.6); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T7"); map.put("y", 290.2); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T8"); map.put("y", 319); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T9"); map.put("y", 332.9); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T10"); map.put("y", 120); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T11"); map.put("y", 305); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T12"); map.put("y", 600.5); list.add(map);
+
+  String dataPoints1 = gsonObj.toJson(list);
+
+  list = new ArrayList<Map<Object,Object>>();
+  map = new HashMap<Object,Object>(); map.put("label", "T1"); map.put("y", 136.4); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T2"); map.put("y", 135); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T3"); map.put("y", 143.3); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T4"); map.put("y", 162.6); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T5"); map.put("y", 173.1); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T6"); map.put("y", 206.6); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T7"); map.put("y", 225.2); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T8"); map.put("y", 254); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T9"); map.put("y", 267.9); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T10"); map.put("y", 267.9); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T11"); map.put("y", 267.9); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T12"); map.put("y", 267.9); list.add(map);
+
+  String dataPoints2 = gsonObj.toJson(list);
+%>
+<%--Script for Chart--%>
+<script type="text/javascript">
+  window.onload = function() {
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+      animationEnabled: true,
+      theme: "dark1",
+      title: {
+        text: "Doanh thu thuần theo Tháng"
+      },
+      axisY: {
+        title: "Theo VNĐ",
+        includeZero: true
+      },
+      toolTip: {
+        shared: true
+      },
+      legend: {
+        cursor: "pointer",
+        itemclick: toggleDataSeries
+      },
+      data: [{
+        type: "column",
+        name: "Production",
+        yValueFormatString: "#0.0# million tonnes",
+        showInLegend: true,
+        dataPoints: <%out.print(dataPoints1);%>
+      }, {
+        type: "column",
+        name: "Exports",
+        yValueFormatString: "#0.## million tonnes",
+        showInLegend: true,
+        dataPoints: <%out.print(dataPoints2);%>
+      }]
+    });
+
+    var chart2 = new CanvasJS.Chart("chartContainer2", {
+      animationEnabled: true,
+      theme: "dark1",
+      title: {
+        text: "Doanh thu thuần theo Tháng"
+      },
+      axisY: {
+        title: "Theo VNĐ",
+        includeZero: true
+      },
+      toolTip: {
+        shared: true
+      },
+      legend: {
+        cursor: "pointer",
+        itemclick: toggleDataSeries
+      },
+      data: [{
+        type: "column",
+        name: "Production",
+        yValueFormatString: "#0.0# million tonnes",
+        showInLegend: true,
+        dataPoints: <%out.print(dataPoints1);%>
+      }, {
+        type: "column",
+        name: "Exports",
+        yValueFormatString: "#0.## million tonnes",
+        showInLegend: true,
+        dataPoints: <%out.print(dataPoints2);%>
+      }]
+    });
+    chart.render();
+    chart2.render();
+
+    function toggleDataSeries(e) {
+      if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+        e.dataSeries.visible = false;
+      }
+      else {
+        e.dataSeries.visible = true;
+      }
+      chart.render();
+      chart2.render();
+    }
+
+  }
+</script>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
 <main class="app-content">
   <div class="row">
     <div class="col-md-12">
@@ -191,16 +318,16 @@
         <div class="col-md-12">
           <div class="tile">
             <h3 class="tile-title">Dữ liệu tháng hiện</h3>
-            <div class="embed-responsive embed-responsive-16by9">
-              <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
+            <div class="embed-responsive">
+              <div id="chartContainer" style="height: 600px; width: 100%;"></div>
             </div>
           </div>
         </div>
         <div class="col-md-12">
           <div class="tile">
             <h3 class="tile-title">Thống kê 6 tháng doanh thu</h3>
-            <div class="embed-responsive embed-responsive-16by9">
-              <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
+            <div class="embed-responsive">
+              <div id="chartContainer2" style="height: 600px; width: 100%;"></div>
             </div>
           </div>
         </div>
@@ -221,12 +348,12 @@
   -->
 
 </main>
-<script src="<c:url value="/js/jquery-3.2.1.min.js"/>></script>
-<script src="<c:url value="/js/popper.min.js"/>></script>
-<script src="<c:url value="/js/bootstrap.min.js"/>></script>
-<script src="<c:url value="/js/main.js"/>></script>
-<script src="<c:url value="/js/plugins/pace.min.js"/>></script>
-<script src="<c:url value="/js/plugins/chart.js"/>></script>
+<script src="<c:url value="/js/jquery-3.2.1.min.js"/></script>
+<script src="<c:url value="/js/popper.min.js"/></script>
+<script src="<c:url value="/js/bootstrap.min.js"/></script>
+<script src="<c:url value="/js/main.js"/></script>
+<script src="<c:url value="/js/plugins/pace.min.js"/></script>
+<script src="<c:url value="/js/plugins/chart.js"/></script>
 <script type="text/javascript">
   var data = {
     labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6"],
