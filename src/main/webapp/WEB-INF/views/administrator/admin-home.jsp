@@ -319,7 +319,7 @@
           <div class="tile">
             <h3 class="tile-title">Dữ liệu tháng hiện</h3>
             <div class="embed-responsive">
-              <div id="chartContainer" style="height: 600px; width: 100%;"></div>
+<%--              <div id="chartContainer" style="height: 600px; width: 100%;"></div>--%>
             </div>
           </div>
         </div>
@@ -327,7 +327,7 @@
           <div class="tile">
             <h3 class="tile-title">Thống kê 6 tháng doanh thu</h3>
             <div class="embed-responsive">
-              <div id="chartContainer2" style="height: 600px; width: 100%;"></div>
+<%--              <div id="chartContainer2" style="height: 600px; width: 100%;"></div>--%>
             </div>
           </div>
         </div>
