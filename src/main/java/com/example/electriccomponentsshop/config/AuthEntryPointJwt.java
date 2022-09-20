@@ -2,14 +2,9 @@ package com.example.electriccomponentsshop.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,8 +19,18 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        System.out.println("THUONG DAY");
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.addHeader("UNAUTHORIZED","UNAUTHORIZED");
+        System.out.println("hoang" + request.getContentType());
+        if(request.getContentType() == null || !request.getContentType().equals("application/json")){
+            System.out.println("hoangdexz");
             response.sendRedirect("/auth/signin");
+        }
+        else if(request.getContentType().equals("application/json")){
+            System.out.println("Gg34");
+            response.sendError(401,"unauth");
+        }
+
     }
 
 }

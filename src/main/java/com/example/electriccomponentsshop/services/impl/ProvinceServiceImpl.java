@@ -1,5 +1,6 @@
 package com.example.electriccomponentsshop.services.impl;
 
+
 import com.example.electriccomponentsshop.config.ModelMap;
 import com.example.electriccomponentsshop.dto.ProvinceDTO;
 import com.example.electriccomponentsshop.entities.Province;
@@ -31,10 +32,14 @@ public class ProvinceServiceImpl implements ProvinceService {
 
     @Override
     public ProvinceDTO findByName(String name) {
+        return modelMap.modelMapper().map(getByName(name),ProvinceDTO.class);
+    }
+    @Override
+    public Province getByName(String name){
         Optional<Province> provinceOptional =provinceRepository.findByName(name);
         if(provinceOptional.isEmpty()){
             throw new NoSuchElementException("Không tìm thấy tỉnh này");
         }
-        return modelMap.modelMapper().map(provinceOptional.get(),ProvinceDTO.class);
+        return provinceOptional.get();
     }
 }

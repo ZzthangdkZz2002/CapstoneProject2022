@@ -2,9 +2,7 @@ package com.example.electriccomponentsshop.services.impl;
 
 import com.example.electriccomponentsshop.config.ModelMap;
 import com.example.electriccomponentsshop.dto.DistrictDTO;
-import com.example.electriccomponentsshop.dto.ProvinceDTO;
 import com.example.electriccomponentsshop.entities.District;
-import com.example.electriccomponentsshop.entities.Province;
 import com.example.electriccomponentsshop.repositories.DistrictRepository;
 import com.example.electriccomponentsshop.services.DistrictService;
 
@@ -41,10 +39,16 @@ public class DistrictServiceImpl implements DistrictService {
 
     @Override
     public DistrictDTO findByName(String name) {
+
+        return convertToDto(getByName(name));
+    }
+    @Override
+    public District getByName(String name){
+        System.out.println(name+"huyện");
         Optional<District> districtOptional = districtRepository.findByName(name);
         if(districtOptional.isEmpty()){
             throw  new NoSuchElementException("Không có huyện này");
         }
-        return convertToDto(districtOptional.get());
+        return districtOptional.get();
     }
 }

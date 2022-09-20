@@ -3,8 +3,8 @@ package com.example.electriccomponentsshop.services;
 import com.example.electriccomponentsshop.dto.WardDTO;
 import com.example.electriccomponentsshop.entities.Ward;
 
+
 import java.util.List;
-import java.util.Optional;
 
 public interface WardService {
     List<WardDTO> findByDistrictName(String districtName);
@@ -13,4 +13,6 @@ public interface WardService {
 
     WardDTO findByName(String name);
     WardDTO convertToDto(Ward ward);
+
+    Ward getByName(String name);
 }

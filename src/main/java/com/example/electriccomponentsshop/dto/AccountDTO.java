@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class AccountDTO {
     private String id;
-    @Email(message = "Email không hợp lệ",regexp = "^[\\w!#$%&’*+/=?`{|}~^-]+(?:\\.[\\w!#$%&’*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
+    @Email
     private String email;
     @NotEmpty(message = "Không được để trống")
     private String name;

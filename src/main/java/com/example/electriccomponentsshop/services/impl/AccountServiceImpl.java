@@ -1,24 +1,21 @@
 package com.example.electriccomponentsshop.services.impl;
 
 import com.example.electriccomponentsshop.common.ERole;
+import com.example.electriccomponentsshop.config.ModelMap;
 import com.example.electriccomponentsshop.dto.AccountDTO;
 import com.example.electriccomponentsshop.entities.*;
 import com.example.electriccomponentsshop.repositories.*;
-import com.example.electriccomponentsshop.services.*;
+import com.example.electriccomponentsshop.services.AccountService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -29,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
     final
     AccountRepository accountRepository;
     final
-    ModelMapper modelMap;
+    ModelMap modelMap;
     final
     PasswordEncoder passwordEncoder;
     final
@@ -42,6 +39,28 @@ public class AccountServiceImpl implements AccountService {
     RoleRepository roleRepository;
 
     @Override
+    public Account findEmployeeForOrder() {
+        Account employee = new Account();
+
+        List<Account> employeeList = accountRepository.findAllByRoleName(new String[] {"ROLE_EMPLOYEE"});
+        List<Account> employeesInOrder = accountRepository.findAllEmployeeInOrder();
+
+        if (employeesInOrder.size() == 0) {
+            employee = employeeList.get(0);
+        } else if (employeeList.size() > employeesInOrder.size()) {
+            for(Account a : employeesInOrder) {
+                employeeList.remove(a);
+            }
+
+            employee = employeeList.get(0);
+        } else if (employeeList.size() == employeesInOrder.size()) {
+            employee = accountRepository.findLessOrderEmployee();
+        }
+
+        return employee;
+    }
+
+    @Override
     public AccountDTO findByEmail(String email) {
         Optional<Account> accountOptional = accountRepository.findByEmail(email);
         if(accountOptional.isEmpty()){
@@ -49,13 +68,20 @@ public class AccountServiceImpl implements AccountService {
         }
         return convertToDto(accountOptional.get());
     }
+    @Override
+    public Account getAccountCustomerByPhone(String phone){
+        Optional<Account> accountOptional = accountRepository.findAccountCustomerByPhone(phone);
+        if(accountOptional.isPresent()){
+            return accountOptional.get();
+        }else throw new NoSuchElementException("Không tìm thấy tài khoản khách có số điện thoại này");
+    }
 
     @Override
     public AccountDTO convertToDto(Account account){
-        return modelMap.map(account,AccountDTO.class);
+        return modelMap.modelMapper().map(account,AccountDTO.class);
     }
     @Override
-   public boolean addAccount(AccountDTO accountDTO){
+    public boolean addAccount(AccountDTO accountDTO){
         Account account = new Account();
         List<Role> roles = new ArrayList<>();
         Optional<Role> roleOptional = roleRepository.findByRoleName(ERole.ROLE_EMPLOYEE);
@@ -76,19 +102,19 @@ public class AccountServiceImpl implements AccountService {
     }
     @Override
     public boolean updateAccount(AccountDTO accountDTO,Integer id) {
-       Optional<Account> optionalAccount = accountRepository.findById(id);
+        Optional<Account> optionalAccount = accountRepository.findById(id);
 
-       if(optionalAccount.isPresent()){
-           Account account = optionalAccount.get();
-           account.setName(accountDTO.getName());
-           account.setPhone(accountDTO.getPhone());
-           account.setEmail(accountDTO.getEmail());
-           account.setGender(accountDTO.getGender());
-           if(!accountDTO.getPassword().equals(optionalAccount.get().getPassword())){
-               account.setPassword(passwordEncoder.encode(accountDTO.getPassword()));
-           }
+        if(optionalAccount.isPresent()){
+            Account account = optionalAccount.get();
+            account.setName(accountDTO.getName());
+            account.setPhone(accountDTO.getPhone());
+            account.setEmail(accountDTO.getEmail());
+            account.setGender(accountDTO.getGender());
+            if(!accountDTO.getPassword().equals(optionalAccount.get().getPassword())){
+                account.setPassword(passwordEncoder.encode(accountDTO.getPassword()));
+            }
 
-           account.setBirthDate(Date.valueOf(accountDTO.getDob()));
+            account.setBirthDate(Date.valueOf(accountDTO.getDob()));
 //           List<Role> roles = new ArrayList<>();
 //           Optional<Role> roleOptional = roleService.findByRoleName(ERole.valueOf(accountDTO.getRole()));
 //           if(roleOptional.isEmpty()){
@@ -99,11 +125,11 @@ public class AccountServiceImpl implements AccountService {
 //           }
 //         account.setRoles(roles);
             setAddress(accountDTO, account);
-           return accountRepository.save(account) != null;
-       }
-       else {
-           throw new NoSuchElementException("Không tìm thấy tài khoản này");
-       }
+            return accountRepository.save(account) != null;
+        }
+        else {
+            throw new NoSuchElementException("Không tìm thấy tài khoản này");
+        }
 
     }
 
@@ -164,7 +190,7 @@ public class AccountServiceImpl implements AccountService {
         if(accountOptional.isEmpty()){
             throw new NoSuchElementException("Không tìm thấy tài khoản có id như trên");
         }
-            return convertToDto(accountOptional.get());
+        return convertToDto(accountOptional.get());
     }
 
     @Override

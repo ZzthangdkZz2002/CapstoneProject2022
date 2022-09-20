@@ -5,15 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderItemDto {
+public class OrderItemDTO {
     private String orderId;
     private String productId;
     private String productName;
-    private Double subTotal;
-    private String quantity;
-    private String unitPrice;
+    private BigDecimal subTotal;
+    private BigInteger quantity;
+    private BigDecimal unitPrice;
 }

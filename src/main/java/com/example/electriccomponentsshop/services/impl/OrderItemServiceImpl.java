@@ -1,7 +1,7 @@
 package com.example.electriccomponentsshop.services.impl;
 
 import com.example.electriccomponentsshop.config.ModelMap;
-import com.example.electriccomponentsshop.dto.OrderItemDto;
+import com.example.electriccomponentsshop.dto.OrderItemDTO;
 import com.example.electriccomponentsshop.entities.OrderItem;
 import com.example.electriccomponentsshop.repositories.OrderItemRepository;
 import com.example.electriccomponentsshop.services.OrderItemService;
@@ -17,20 +17,20 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Autowired
     ModelMap modelMap;
     @Override
-    public OrderItemDto convertToDto(OrderItem orderItem){
+    public OrderItemDTO convertToDto(OrderItem orderItem){
         System.out.println("gihi");
-        OrderItemDto orderItemDto =modelMap.modelMapper().map(orderItem,OrderItemDto.class);
+        OrderItemDTO orderItemDto =modelMap.modelMapper().map(orderItem, OrderItemDTO.class);
         System.out.println("ghi" + orderItem.getProduct().getName());
         orderItemDto.setProductName(orderItem.getProduct().getName());
 
         return orderItemDto;
     }
     @Override
-    public List<OrderItemDto> findAll() {
+    public List<OrderItemDTO> findAll() {
         return orderItemRepository.findAll().stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public List<OrderItemDto> findByOrderId(Integer id) {
+    public List<OrderItemDTO> findByOrderId(Integer id) {
         return orderItemRepository.findByOrderId(id).stream().map(this::convertToDto).collect(Collectors.toList());
     }
 

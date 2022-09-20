@@ -55,7 +55,7 @@
 
   list = new ArrayList<Map<Object,Object>>();
   map = new HashMap<Object,Object>(); map.put("label", "T1"); map.put("y", 136.4); list.add(map);
-  map = new HashMap<Object,Object>(); map.put("label", "T2"); map.put("y", 135); list.add(map);
+  map = new HashMap<Object,Object>(); map.put("label", "T2"); map.put("y", -2000); list.add(map);
   map = new HashMap<Object,Object>(); map.put("label", "T3"); map.put("y", 143.3); list.add(map);
   map = new HashMap<Object,Object>(); map.put("label", "T4"); map.put("y", 162.6); list.add(map);
   map = new HashMap<Object,Object>(); map.put("label", "T5"); map.put("y", 173.1); list.add(map);
@@ -107,7 +107,7 @@
 
     var chart2 = new CanvasJS.Chart("chartContainer2", {
       animationEnabled: true,
-      theme: "dark1",
+      theme: "light1",
       title: {
         text: "Doanh thu thuần theo Tháng"
       },
