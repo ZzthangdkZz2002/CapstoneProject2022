@@ -104,11 +104,11 @@ public class AuthController {
             modelMap.addAttribute("wrongPassword","Sai mật khẩu");
             return "customer/html/signin";
         }
-//        else if(!accountOptional.get().getStatus()){
-//            System.out.println(accountOptional.get().getStatus()+"đây nè");
-//            modelMap.addAttribute("locked","Tài khoản này đã bị vô hiệu hóa");
-//            return "customer/html/signin";
-//        }
+        else if(!accountOptional.get().getStatus()){
+            System.out.println(accountOptional.get().getStatus()+"đây nè");
+            modelMap.addAttribute("locked","Tài khoản này đã bị vô hiệu hóa");
+            return "customer/html/signin";
+        }
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signinRequest.getEmail(), signinRequest.getPassword())
         );
@@ -120,7 +120,7 @@ public class AuthController {
         if(!refreshToken.isPresent()){
             refreshTokenService.createRefreshToken(accountDetail.getEmail());
         }
-        else  if(refreshTokenService.isExpiration(refreshToken.get())){
+       else  if(refreshTokenService.isExpiration(refreshToken.get())){
             refreshTokenService.delete(refreshToken.get());
             refreshTokenService.createRefreshToken(accountDetail.getEmail());
         }
@@ -182,3 +182,4 @@ public class AuthController {
 
     }
 }
+

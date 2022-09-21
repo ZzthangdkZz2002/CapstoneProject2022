@@ -89,18 +89,22 @@ public class CartController {
         return "redirect:/cart";
     }
 
-//    @GetMapping(value = "/get-numbers-product")
-//    @ResponseBody
-//    public String getNumbersOfProductInCart (Authentication authentication) {
-//        AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
-//
-//        int numbersOfProduct = 0;
-//
-//        if (accountDetail != null) {
-//            Cart cart = cartRepository.findByAccountId(accountDetail.getId());
-//            numbersOfProduct = cart.getCartItems().size();
-//        }
-//
-//        return String.valueOf(numbersOfProduct);
-//    }
+    @GetMapping(value = "/get-numbers-product")
+    @ResponseBody
+    public String getNumbersOfProductInCart (Authentication authentication) {
+        AccountDetailImpl accountDetail = null;
+
+        if (authentication != null) {
+            accountDetail = (AccountDetailImpl) authentication.getPrincipal();
+        }
+
+        int numbersOfProduct = 0;
+
+        if (accountDetail != null) {
+            Cart cart = cartRepository.findByAccountId(accountDetail.getId());
+            numbersOfProduct = cart.getCartItems().size();
+        }
+
+        return String.valueOf(numbersOfProduct);
+    }
 }

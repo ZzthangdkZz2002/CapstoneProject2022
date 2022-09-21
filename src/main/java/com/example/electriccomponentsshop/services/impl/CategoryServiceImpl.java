@@ -26,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> findCategoriesByParentCategoryIdIsNull() {
-        return categoryRepository.findNoneParent();
+       return categoryRepository.findNoneParent();
     }
 
     @Override
@@ -55,6 +55,11 @@ public class CategoryServiceImpl implements CategoryService {
         } catch (NumberFormatException e) {
             throw new NoSuchElementException("Không có danh mục này");
         }
+    }
+
+    @Override
+    public <S extends Category> S save(S entity) {
+        return categoryRepository.save(entity);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.example.electriccomponentsshop.repositories;
 
-import com.example.electriccomponentsshop.entities.District;
-import com.example.electriccomponentsshop.entities.Province;
 import com.example.electriccomponentsshop.entities.Ward;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

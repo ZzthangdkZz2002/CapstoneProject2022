@@ -28,12 +28,11 @@ public class ImportTransaction {
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "importTransaction")
     List<ImportItem> importItems = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="warehouse_id")
     private Warehouse warehouseImport;
-
     private BigDecimal totalPayment;
+
 
 
 }

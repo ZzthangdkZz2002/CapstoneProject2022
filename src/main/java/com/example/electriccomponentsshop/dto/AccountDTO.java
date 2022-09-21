@@ -4,9 +4,7 @@ package com.example.electriccomponentsshop.dto;
 import lombok.*;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -29,6 +27,9 @@ public class AccountDTO {
     private String districtName;
     @NotEmpty(message = "Không được để trống")
     private String wardName;
+
+    private String detailLocation;
+
     @NotEmpty(message = "Không được để trống")
     private String gender;
     @NotEmpty(message = "Không được để trống")

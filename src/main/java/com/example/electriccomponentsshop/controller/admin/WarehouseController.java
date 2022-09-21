@@ -63,7 +63,7 @@ public class WarehouseController {
         }catch (RuntimeException e){
             modelMap.addAttribute("error",e.getMessage());
         }
-        return "redirect:/admin/warehouses";
+       return "redirect:/admin/warehouses";
     }
     @GetMapping("/edit/{id}")
     public String viewUpdateForm(ModelMap modelMap,@PathVariable(name="id") String id){
@@ -118,10 +118,11 @@ public class WarehouseController {
     public String addImportTransaction(@Valid @RequestBody ImportTransactionDto importTransactionDto, ModelMap modelMap){
         try{
             importTransactionService.addImportTransaction(importTransactionDto);
+            return "thành công";
         }catch (NoSuchElementException e){
             return e.getMessage();
         }
-        return "thêm thành công";
+
     }
     @GetMapping("/import/update/{id}")
     public String updateImportTransaction(ModelMap modelMap, @PathVariable(name = "id") String id){
@@ -200,9 +201,9 @@ public class WarehouseController {
     public String addExportTransaction(ModelMap modelMap,@Valid @RequestBody ExportTransactionDto exportTransactionDto){
         try{
             exportTransactionService.addExportTransaction(exportTransactionDto);
-            return "Thêm thành công";
+            return "thành công";
         }catch (NoSuchElementException e){
-            return e.getMessage();
+           return e.getMessage();
         }
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)

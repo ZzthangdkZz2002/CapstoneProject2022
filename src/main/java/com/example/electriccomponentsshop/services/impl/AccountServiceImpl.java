@@ -81,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
         return modelMap.modelMapper().map(account,AccountDTO.class);
     }
     @Override
-    public boolean addAccount(AccountDTO accountDTO){
+   public boolean addAccount(AccountDTO accountDTO){
         Account account = new Account();
         List<Role> roles = new ArrayList<>();
         Optional<Role> roleOptional = roleRepository.findByRoleName(ERole.ROLE_EMPLOYEE);
@@ -101,35 +101,26 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.save(account) != null;
     }
     @Override
-    public boolean updateAccount(AccountDTO accountDTO,Integer id) {
-        Optional<Account> optionalAccount = accountRepository.findById(id);
+    public boolean updateAccount(AccountDTO accountDTO, Integer id) {
+       Optional<Account> optionalAccount = accountRepository.findById(id);
 
-        if(optionalAccount.isPresent()){
-            Account account = optionalAccount.get();
-            account.setName(accountDTO.getName());
-            account.setPhone(accountDTO.getPhone());
-            account.setEmail(accountDTO.getEmail());
-            account.setGender(accountDTO.getGender());
-            if(!accountDTO.getPassword().equals(optionalAccount.get().getPassword())){
-                account.setPassword(passwordEncoder.encode(accountDTO.getPassword()));
-            }
+       if(optionalAccount.isPresent()){
+           Account account = optionalAccount.get();
+           account.setName(accountDTO.getName());
+           account.setPhone(accountDTO.getPhone());
+           account.setEmail(accountDTO.getEmail());
+           account.setGender(accountDTO.getGender());
+           if(!accountDTO.getPassword().equals(optionalAccount.get().getPassword())){
+               account.setPassword(passwordEncoder.encode(accountDTO.getPassword()));
+           }
 
-            account.setBirthDate(Date.valueOf(accountDTO.getDob()));
-//           List<Role> roles = new ArrayList<>();
-//           Optional<Role> roleOptional = roleService.findByRoleName(ERole.valueOf(accountDTO.getRole()));
-//           if(roleOptional.isEmpty()){
-//               throw new NoSuchElementException("Không tìm thấy chức vụ này");
-//           }
-//           else {
-//               roles.add(roleOptional.get());
-//           }
-//         account.setRoles(roles);
+           account.setBirthDate(Date.valueOf(accountDTO.getDob()));
             setAddress(accountDTO, account);
-            return accountRepository.save(account) != null;
-        }
-        else {
-            throw new NoSuchElementException("Không tìm thấy tài khoản này");
-        }
+           return accountRepository.save(account) != null;
+       }
+       else {
+           throw new NoSuchElementException("Không tìm thấy tài khoản này");
+       }
 
     }
 
@@ -190,7 +181,7 @@ public class AccountServiceImpl implements AccountService {
         if(accountOptional.isEmpty()){
             throw new NoSuchElementException("Không tìm thấy tài khoản có id như trên");
         }
-        return convertToDto(accountOptional.get());
+            return convertToDto(accountOptional.get());
     }
 
     @Override

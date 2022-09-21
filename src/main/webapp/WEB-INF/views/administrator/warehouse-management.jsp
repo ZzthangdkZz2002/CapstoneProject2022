@@ -63,12 +63,12 @@
                 <td>${warehouse.detailLocation}, ${warehouse.wardName}, ${warehouse.districtName}, ${warehouse.provinceName}</td>
                 <td>
                   <div class="switch">
-                    <input class="status-checkbox" onclick="return false" type="checkbox"  name="check" <c:if test="${warehouse.status == 1}"> checked</c:if>/>
+                  <input class="status-checkbox" onclick="return false" type="checkbox"  name="check" <c:if test="${warehouse.status == 1}"> checked</c:if>/>
 
-                    <span class="slider round"></span>
+                  <span class="slider round"></span>
                     <div style="position:absolute; left:0; right:0; top:0; bottom:0;" onclick="updateWarehouseStatus(this)"data-toggle="modal"
                             <c:if test="${warehouse.status == 1}"> data-target="#disableStatus"</c:if> <c:if test="${warehouse.status == 0}"> data-target="#enableStatus"</c:if> ></div>
-                  </div>
+                </div>
                 </td>
                 <td>
                   <a href="${pageContext.request.contextPath}/admin/warehouses/edit/${warehouse.id}" class="btn btn-primary btn-sm edit" type="button" title="Sửa"><i
@@ -199,11 +199,13 @@ MODAL
 <script src="<c:url value="/resources/data.json"/>"></script>
 <script>
   $(document).ready(function (){
+
   });
   function updateWarehouseStatus(e){
     var id = $(e.parentNode.parentNode.parentNode).find('td').eq(0).html();
     var element =$(e.parentNode).find('input');
     if($(element).is(":checked")){
+
       disableWarehouse(id);
     } else enableWarehouse(id);
   }
@@ -237,6 +239,7 @@ MODAL
       });
     });
   }
+
 </script>
 <!-- Page specific javascripts-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>

@@ -93,7 +93,7 @@
 </head>
 <body class="app sidebar-mini rtl">
 <aside class="app-sidebar">
-    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="${pageContext.request.contextPath}/resources/images/avatar.jpg" width="50px"
+    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="${pageContext.request.contextPath}/img/avatar.jpg" width="50px"
                                         alt="User Image">
         <div>
             <p class="app-sidebar__user-name"><b>${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}</b></p>
@@ -117,7 +117,6 @@
         </li>
         <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/orders"><i class='app-menu__icon bx bx-task'></i><span
                 class="app-menu__label">Quản lý đơn hàng</span></a></li>
-        <sec:authorize access="hasRole('ROLE_MANAGER')">
             <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/accounts/system-account"><i class='app-menu__icon bx bx-id-card'></i>
                 <span class="app-menu__label">Quản lý tài khoản</span>
             </a>
@@ -148,13 +147,14 @@
                     class='app-menu__icon bx bxs-package '></i><span class="app-menu__label">Quản lý lô sản
             phẩm</span></a>
             </li>
+            <sec:authorize access="hasRole('ROLE_MANAGER')">
             <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/feedbacks"><i class='app-menu__icon bx bx-user-voice'></i><span
                     class="app-menu__label">Feedback</span></a>
             </li>
             <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/reports"><i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span
                     class="app-menu__label">Báo cáo thống kê</span></a>
             </li>
-        </sec:authorize>
+            </sec:authorize>
     </ul>
 </aside>
 

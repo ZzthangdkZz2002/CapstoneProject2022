@@ -91,28 +91,28 @@ public class ImportTransactionServiceImpl implements ImportTransactionService {
         System.out.println(importItemDtos.size() + "đây là");
 
         for (ImportItemDto im: importItemDtos
-        ) {
+             ) {
             System.out.println("híadd");
-            Container container = containerService.getContainerById(im.getContainerId());
+                Container container = containerService.getContainerById(im.getContainerId());
             System.out.println(container.getRowIn()+ "cơ mà");
-            Product product = productService.getById(im.getProductId());
+                Product product = productService.getById(im.getProductId());
             System.out.println("đay");
             BigInteger quantity = im.getQuantity();
-            product.setAvailable(product.getAvailable().add(quantity));
-            Sku sku = new Sku();
-            sku.setId(im.getSkuId()+"-"+importTransaction.getId());
-            sku.setQuantity(quantity);
-            sku.setProduct(product);
-            sku = skuService.save(sku);
-            List<Sku> skus =  product.getSkus();
-            skus.add(sku);
-            productService.save(product);
-            BigDecimal importPrice = im.getImportPrice();
-            BigDecimal subtotal = importPrice.multiply(new BigDecimal(quantity));
-            ImportItem importItem = new ImportItem(new ImportItemId(importTransaction.getId(),container.getId(),product.getId()),quantity,importPrice,sku,importTransaction,container,product,subtotal);
-            importItems.add(importItem);
-            importItemRepository.save(importItem);
-            totalPayment = totalPayment.add(subtotal);
+                product.setAvailable(product.getAvailable().add(quantity));
+                Sku sku = new Sku();
+                sku.setId(im.getSkuId()+"-"+importTransaction.getId());
+                sku.setQuantity(quantity);
+                sku.setProduct(product);
+                sku = skuService.save(sku);
+                List<Sku> skus =  product.getSkus();
+                skus.add(sku);
+                productService.save(product);
+                BigDecimal importPrice = im.getImportPrice();
+                BigDecimal subtotal = importPrice.multiply(new BigDecimal(quantity));
+                ImportItem importItem = new ImportItem(new ImportItemId(importTransaction.getId(),container.getId(),product.getId()),quantity,importPrice,sku,importTransaction,container,product,subtotal);
+                importItems.add(importItem);
+                importItemRepository.save(importItem);
+                totalPayment = totalPayment.add(subtotal);
         }
         importTransaction.setImportItems(importItems);
         importTransaction.setTotalPayment(totalPayment);

@@ -83,9 +83,9 @@
                 <form:errors path="wardName" element="span" />
               </div>
               <div class="form-group col-md-3">
-                <label class="control-label required-field">Địa chỉ chi tiết</label>
-                <form:input class="form-control" type="text" path="detailLocation" required="required"/>
-              </div>
+              <label class="control-label required-field">Địa chỉ chi tiết</label>
+              <form:input class="form-control" type="text" path="detailLocation" required="required"/>
+               </div>
             </div>
             <div class="row">
               <div class="confirm-button">
@@ -113,9 +113,11 @@
 <script>
   $(document).ready(function (){
     function showWard(){
+
     }
     $('#province').change(function(event){
       var pro = $('#province').val();
+
       $.ajax({
         type:"GET",
         contentType:"application/x-www-form-urlencoded",

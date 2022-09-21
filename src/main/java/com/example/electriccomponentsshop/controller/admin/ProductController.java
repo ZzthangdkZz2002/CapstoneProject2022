@@ -60,7 +60,7 @@ public class ProductController {
         }
         List<SpecificationDto> specificationDtos = specificationService.findAll();
         modelMap.addAttribute("listSpec",specificationDtos);
-        return "administrator/add-product-specification";
+            return "administrator/add-product-specification";
     }
     @GetMapping("/view/{id}")
     public String viewById(ModelMap model,@PathVariable @Valid String id){
@@ -95,15 +95,15 @@ public class ProductController {
         return   supplierDTO.getProducts();
     }
     @GetMapping("/add")
-    public String viewProduct(ModelMap modelMap){
+        public String viewProduct(ModelMap modelMap){
         List<CategoryDTO> listCategories = categoryService.findAll();
         List<SpecificationDto> specificationDtos = specificationService.findAll();
         List<SupplierDTO> supplierDTOS = supplierService.getAllSupplier();
         modelMap.addAttribute("listCategories",listCategories);
         modelMap.addAttribute("specificationDtos", specificationDtos);
         modelMap.addAttribute("listSuppliers",supplierDTOS);
-        return "administrator/add-product";
-    }
+            return "administrator/add-product";
+        }
     @PostMapping("/disable")
     @ResponseBody
     public String disable(@RequestParam(name="id") String id ){
@@ -127,16 +127,19 @@ public class ProductController {
     @GetMapping ("search-import")
     @ResponseBody
     public List<ProductDTO> getProductImport(@RequestParam(name="text") String text,@RequestParam(name="sId",defaultValue = "0")String sId){
-        return productService.findBySupplierIdAndNameContain(sId,text);
+            return productService.findBySupplierIdAndNameContain(sId,text);
     }
     @GetMapping("search")
-    public String searchProduct(@RequestParam(name="text") String text,@RequestParam(name="index",defaultValue = "0") String index,ModelMap modelMap){
+    public String searchProduct(@RequestParam(name="text", required = false) String text, @RequestParam(name="index",defaultValue = "0") String index, ModelMap modelMap){
         int pIndex = Integer.parseInt(index);
+
         Page<ProductDTO> productDTOS = productService.searchProduct(text,PageRequest.of(pIndex,10));
+
+        modelMap.addAttribute("pageNo", 1);
         modelMap.addAttribute("productDtos", productDTOS.getContent());
-        modelMap.addAttribute("total",productDTOS.getTotalPages());
-        modelMap.addAttribute("text",text);
-        System.out.println(text+"đây là gi");
+        modelMap.addAttribute("total", productDTOS.getTotalPages());
+        modelMap.addAttribute("text", text);
+
         return "administrator/product-management";
     }
     @PostMapping("/add")
@@ -169,4 +172,6 @@ public class ProductController {
     public String update(@PathVariable Integer id,@Valid @RequestBody ProductDTO productDTO){
         return "administrator/product-management";
     }
-}
+    }
+
+

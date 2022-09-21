@@ -6,8 +6,9 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-
+import java.util.Set;
 @Getter
 @Setter
 @Entity
@@ -57,6 +58,11 @@ public class Account {
         this.email = email;
         this.password = password;
     }
+    public Account(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
     public Account(String email, String password,List<Role> roles) {
         this.email = email;
         this.password = password;
@@ -72,9 +78,6 @@ public class Account {
         }
 
     }
-    @OneToOne(mappedBy = "account")
-    @PrimaryKeyJoinColumn
-    private Cart cart;
     public String getRole(){
         return roles.stream().findFirst().get().getRoleName().name();
     }

@@ -9,6 +9,8 @@ import java.util.List;
 public interface WardService {
     List<WardDTO> findByDistrictName(String districtName);
 
+    List<WardDTO> findByDistrictId(String dCode);
+
     List<WardDTO> findAll();
 
     WardDTO findByName(String name);

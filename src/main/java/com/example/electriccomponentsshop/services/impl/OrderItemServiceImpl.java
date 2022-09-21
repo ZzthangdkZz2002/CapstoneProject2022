@@ -10,21 +10,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 public class OrderItemServiceImpl implements OrderItemService {
     @Autowired
     OrderItemRepository orderItemRepository;
+
     @Autowired
     ModelMap modelMap;
-    @Override
-    public OrderItemDTO convertToDto(OrderItem orderItem){
-        System.out.println("gihi");
-        OrderItemDTO orderItemDto =modelMap.modelMapper().map(orderItem, OrderItemDTO.class);
-        System.out.println("ghi" + orderItem.getProduct().getName());
-        orderItemDto.setProductName(orderItem.getProduct().getName());
 
-        return orderItemDto;
+    @Override
+    public OrderItemDTO convertToDto(OrderItem orderItem) {
+        OrderItemDTO orderItemDTO = modelMap.modelMapper().map(orderItem, OrderItemDTO.class);
+        orderItemDTO.setProductName(orderItem.getProduct().getName());
+        return orderItemDTO;
     }
+
     @Override
     public List<OrderItemDTO> findAll() {
         return orderItemRepository.findAll().stream().map(this::convertToDto).collect(Collectors.toList());

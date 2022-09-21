@@ -82,9 +82,9 @@ public class ExportTransactionServiceImpl implements ExportTransactionService {
         exportTransaction.setExportDate(Date.valueOf(exportTransactionDto.getExportDate()));
         exportTransaction =  exportTransactionRepository.save(exportTransaction);
         List<ExportItem> exportItems = new ArrayList<>();
-        List<ExportItemDto> exportItemDtoList = exportTransactionDto.getExportItems();
+         List<ExportItemDto> exportItemDtoList = exportTransactionDto.getExportItems();
         for (ExportItemDto e: exportItemDtoList
-        ) {
+             ) {
             System.out.println(e.getSkuId()+"hoangx");
             Sku sku = skuService.getSkuById(e.getSkuId());
 

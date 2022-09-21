@@ -24,6 +24,7 @@
   <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
   <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
   <script>
+
     function readURL(input, thumbimage) {
       if (input.files && input.files[0]) { //Sử dụng  cho Firefox - chrome
         var reader = new FileReader();
@@ -34,6 +35,7 @@
       }
       else { // Sử dụng cho IE
         $("#thumbimage").attr('src', input.value);
+
       }
       $("#thumbimage").show();
       $('.filename').text($("#uploadfile").val());
@@ -41,10 +43,12 @@
       $('.Choicefile').css('cursor', 'default');
       $(".removeimg").show();
       $(".Choicefile").unbind('click');
+
     }
     $(document).ready(function () {
       $(".Choicefile").bind('click', function () {
         $("#uploadfile").click();
+
       });
       $(".removeimg").click(function () {
         $("#thumbimage").attr('src', '').hide();
@@ -68,49 +72,51 @@
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <jsp:include page="home-menu.jsp"/>
-<main class="app-content">
-  <div class="app-title">
-    <ul class="app-breadcrumb breadcrumb">
-      <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/suppliers">Quản lý nhà cung cấp</a></li>
-      <li class="breadcrumb-item active">Thêm nhà cung cấp</li>
-    </ul>
-  </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="tile">
-        <h3 class="tile-title">Thêm nhà cung cấp</h3>
-        <div class="tile-body">
-          <%--@elvariable id="newSupplier" type="com.example.electriccomponentsshop.dto.SupplierDTO"--%>
-          <form:form action="${pageContext.request.contextPath}/admin/suppliers/add" method="post" modelAttribute="newSupplier">
-            <div class="row">
-              <div class="form-group col-md-3">
-                <label class="control-label required-field">Tên nhà cung cấp</label>
-                <form:input class="form-control" type="text" required="required" path="name"/>
-              </div>
-              <div class="form-group col-md-3">
-                <label class="control-label">Số điện thoại</label>
-                <form:input class="form-control" type="text" path="phone"/>
-              </div>
-            </div>
-            <div class="row">
-              <div class="confirm-button">
-                <div class="button">
-                  <button type="submit" class="btn btn-save" >Lưu lại</button>
-                  <button type="button" class="btn btn-cancel" onclick="location.href='supplier-management.html'">Hủy
-                    bỏ</button>
+  <main class="app-content">
+    <div class="app-title">
+      <ul class="app-breadcrumb breadcrumb">
+        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/suppliers">Quản lý nhà cung cấp</a></li>
+        <li class="breadcrumb-item active">Thêm nhà cung cấp</li>
+      </ul>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <h3 class="tile-title">Thêm nhà cung cấp</h3>
+          <div class="tile-body">
+            <%--@elvariable id="newSupplier" type="com.example.electriccomponentsshop.dto.SupplierDTO"--%>
+            <form:form action="${pageContext.request.contextPath}/admin/suppliers/add" method="post" modelAttribute="newSupplier">
+              <div class="row">
+                <div class="form-group col-md-3">
+                  <label class="control-label required-field">Tên nhà cung cấp</label>
+                  <form:input class="form-control" type="text" required="required" path="name"/>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="control-label">Số điện thoại</label>
+                  <form:input class="form-control" type="text" path="phone"/>
                 </div>
               </div>
-            </div>
-          </form:form>
+              <div class="row">
+                <div class="confirm-button">
+                  <div class="button">
+                    <button type="submit" class="btn btn-save" >Lưu lại</button>
+                    <button type="button" class="btn btn-cancel" onclick="location.href='supplier-management.html'">Hủy
+                      bỏ</button>
+                  </div>
+                </div>
+              </div>
+            </form:form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</main>
+  </main>
 <script src="<c:url value="/js/jquery-3.2.1.min.js"/>></script>
 <script src="<c:url value="/js/popper.min.js"/>></script>
 <script src="<c:url value="/js/bootstrap.min.js"/>></script>
 <script src="<c:url value="/js/main.js"/>></script>
 <script src="<c:url value="/js/plugins/pace.min.js"/>></script>
+
 </body>
+
 </html>

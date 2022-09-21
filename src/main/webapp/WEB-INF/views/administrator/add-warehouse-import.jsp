@@ -250,11 +250,35 @@ MODAL SUCCESSFUL
                             </span>
                     </div>
                     <div class="form-group col-md-12" style="text-align: center;">
-                        <p class="modal-notify-successful">Tạo đơn hàng thành công</p>
+                        <p class="modal-notify-successful">Tạo đơn nhập thành công</p>
                     </div>
                 </div>
                 <div style="display: flex; justify-content: center; padding: 10px;">
-                    <button style="margin: 5px;" class="btn btn-save" data-dismiss="modal">Quay lại</button>
+                    <a href="${pageContext.request.contextPath}/admin/warehouses/view/import" style="margin: 5px;" class="btn btn-save">Đóng</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="unsuccessful" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group  col-md-12">
+              <span class="thong-tin-thanh-toan">
+                <h5>Thông báo</h5>
+              </span>
+                    </div>
+                    <div class="form-group col-md-12" style="text-align: center;">
+                        <p class="modal-notify-unsuccessful" id="reason"></p>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center; padding: 10px;">
+                    <button style="margin: 5px;" class="btn btn-save" data-dismiss="modal">Đóng</button>
                 </div>
             </div>
             <div class="modal-footer">
@@ -346,13 +370,14 @@ MODAL
         $(".import-items").each(function (){
             var row = $(this);
             var importItem = new Object();
+
             importItem.productId = row.find("TD").eq(0).html();
             importItem.skuId = row.find("TD").eq(1).html();
-            alert(importItem.skuId);
             importItem.importPrice = row.find("TD").eq(4).find("INPUT").val();
             importItem.quantity = row.find("TD").eq(5).find("INPUT").val();
             importItem.containerId =  row.find("TD").eq(8).html();;
             importItems.push(importItem);
+
         });
         var data1={
             supplierId: $('#supplierSelect').val(),
@@ -360,6 +385,7 @@ MODAL
             warehouseId:$('#warehouse').val(),
             importItems: importItems
         };
+
         $.ajax({
             type: "POST",
             contentType: "application/json",
@@ -369,8 +395,14 @@ MODAL
             ,
             dataType:"text",
             success: function (response){
-                $("errorAlert").innerHTML = response
-                alert(response);
+                if(response === "thành công"){
+                    $('#successful').modal('show');
+                }
+                else {
+                    $('#reason').innerHTML = response;
+                    $('#unsuccessful').modal('show');
+                }
+
             }
         });
     });

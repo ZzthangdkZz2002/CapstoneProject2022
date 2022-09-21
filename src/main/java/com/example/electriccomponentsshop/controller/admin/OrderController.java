@@ -53,7 +53,6 @@ public class OrderController {
     public String viewAll(ModelMap modelMap) {
         ArrayList<OrderDTO> orders = (ArrayList<OrderDTO>) orderService.findAll();
         modelMap.addAttribute("listOrder", orders);
-
         return "administrator/order-management";
     }
 
@@ -135,7 +134,7 @@ public class OrderController {
         try{
             Map<String,List<SkuDTO>> map = new HashMap<>();
             for (OrderItemDTO orderItemDTO: orderService.getOrderDtoById(id).getOrderItems()
-            ) {
+                 ) {
                 ObjectMapper objectMapper = new ObjectMapper();
                 String itemDto = objectMapper.writeValueAsString(orderItemDTO);
                 List<SkuDTO> skuDTOS = skuService.getSkuDtoByProductId(orderItemDTO.getProductId());
@@ -146,7 +145,7 @@ public class OrderController {
             return map ;
         }catch (Exception e){
             System.out.println(e.getMessage()+"hoangdex");
-            return null;
+          return null;
         }
 
     }
@@ -165,7 +164,7 @@ public class OrderController {
 
         }
 
-        return "administrator/create-new-order";
+            return "administrator/create-new-order";
 
 
     }

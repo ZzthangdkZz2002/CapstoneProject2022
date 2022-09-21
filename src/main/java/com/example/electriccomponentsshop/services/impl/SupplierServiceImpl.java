@@ -47,10 +47,10 @@ public class SupplierServiceImpl implements SupplierService {
             throw  new NoSuchElementException("Không tìm nhà cung cấp này");
         }
     }
-    @Override
-    public SupplierDTO getDtoById(String id){
+   @Override
+   public SupplierDTO getDtoById(String id){
         return convertToDto(getBySupplierId(id));
-    }
+   }
     @Override
     public List<SupplierDTO> getAllSupplier(){
         List<Supplier> supplierList = supplierRepository.findAll();

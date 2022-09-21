@@ -51,4 +51,10 @@ public class DistrictServiceImpl implements DistrictService {
         }
         return districtOptional.get();
     }
+
+    @Override
+    public List<DistrictDTO> findByProvinceId(String provinceId) {
+        List<District> districtList =districtRepository.findByPCode(provinceId);
+        return districtList.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
 }
