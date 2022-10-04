@@ -83,11 +83,11 @@ import java.util.List;
                 .authorizeRequests().antMatchers("/error23", "/css/**", "/js/**", "/resources/**", "/store-info-api", "/cart/get-numbers-product",
                         "/auth/signin", "/auth/signup", "/auth/sign-out", "/home", "/error-401", "/product?**",
                         "/signup", "/address/**", "/img/**", "/product/**", "/contact").permitAll()
-                .antMatchers("/admin/**", "/admin-home").hasAnyAuthority("ROLE_EMPLOYEE", "ROLE_MANAGER")
+                .antMatchers("/admin/**", "/admin-home").authenticated() //.hasAnyAuthority("ROLE_EMPLOYEE", "ROLE_MANAGER")
                 .antMatchers("/addToCart/**", "/profile/**", "/createOrder",
                         "/order/**", "/change-password", "/cart/**").hasAnyAuthority(("ROLE_CUSTOMER"))
                 .anyRequest().authenticated()
-                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler()).and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
+                .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler()).and().exceptionHandling();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 

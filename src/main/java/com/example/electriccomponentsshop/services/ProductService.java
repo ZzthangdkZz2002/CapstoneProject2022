@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,9 +15,7 @@ import java.util.function.Function;
 
 public interface ProductService {
 
-    int countByCate(String cate);
 
-    List<ProductDTO> getProductByCate(String cate, int pageNo, int pageSize);
 
     ProductDTO convertToDto(Product product);
 
@@ -24,7 +23,7 @@ public interface ProductService {
 
     Product getById(String id);
 
-    boolean addProduct(ProductDTO productDTO);
+    String addProduct(ProductDTO productDTO, MultipartFile multipartFile);
 
     List<Product> getAll();
 
@@ -34,9 +33,9 @@ public interface ProductService {
 
     Page<ProductDTO> searchProduct(String text, Pageable pageable);
 
-    Page<ProductDTO> findBySupplierId(Pageable pageable, String sId);
-
-    List<ProductDTO> findBySupplierIdAndNameContain(String sId, String text);
+//    Page<ProductDTO> findBySupplierId(Pageable pageable, String sId);
+//
+//    List<ProductDTO> findBySupplierIdAndNameContain(String sId, String text);
 
     List<ProductDTO> findAll();
 

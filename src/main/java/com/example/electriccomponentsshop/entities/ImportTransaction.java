@@ -22,9 +22,9 @@ public class ImportTransaction {
 
     private Date importDate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "supplier_id")
+//    private Supplier supplier;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "importTransaction")
     List<ImportItem> importItems = new ArrayList<>();

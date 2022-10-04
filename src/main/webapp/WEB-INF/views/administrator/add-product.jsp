@@ -10,6 +10,7 @@
   <title>Header</title>
   <!-- Main CSS-->
   <link href="<c:url value="/css/main.css"/>" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/src/main/resources/static/css/style.css" type="text/css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
   <!-- or -->
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -85,38 +86,49 @@
         <div class="tile">
           <h3 class="tile-title">Thêm sản phẩm mới</h3>
           <div class="tile-body">
-            <div class="row element-button">
-              <div class="col-sm-2">
-                <a class="btn btn-add btn-sm" href="${pageContext.request.contextPath}/admin/products/specification/add" title="Thêm"><i
-                        class="fas fa-plus"></i>
-                  Thêm thông số kỹ thuật</a>
-              </div>
-            </div>
-            <form>
+<%--            <div class="row element-button">--%>
+<%--              <div class="col-sm-2">--%>
+<%--                <a class="btn btn-add btn-sm" href="${pageContext.request.contextPath}/admin/products/specification/add" title="Thêm"><i--%>
+<%--                        class="fas fa-plus"></i>--%>
+<%--                  Thêm thông số kỹ thuật</a>--%>
+<%--              </div>--%>
+<%--            </div>--%>
+            <form enctype="multipart/form-data" method="post" id="addProductForm">
               <div class="row">
+
+                <div class="form-group col-md-3">
+                  <label class="control-label">Mã sản phẩm</label>
+                  <input class="form-control" id="code" type="text" placeholder="Được thêm tự động">
+                </div>
+
                 <div class="form-group col-md-3">
                   <label class="control-label required-field">Tên sản phẩm</label>
                   <input class="form-control" id="name" type="text" required>
                 </div>
 
                 <div class="form-group col-md-3">
+                  <label class="control-label required-field">Giá vốn</label>
+                  <input class="form-control" id="original-price" type="number">
+                </div>
+
+                <div class="form-group col-md-3">
                   <label class="control-label required-field">Giá bán</label>
                   <input class="form-control" id="price" type="number">
                 </div>
-                <div class="form-group col-md-3">
-                  <label for="supplierOption" class="control-label required-field">Nhà cung cấp</label>
-                  <select class="form-control" id="supplierOption" required>
-                    <c:forEach var = "supplierDto" items="${listSuppliers}">
-                      <option value="${supplierDto.id}">${supplierDto.name}</option>
-                    </c:forEach>
-                  </select>
-                </div>
+<%--                <div class="form-group col-md-3">--%>
+<%--                  <label for="supplierOption" class="control-label required-field">Nhà cung cấp</label>--%>
+<%--                  <select class="form-control" id="supplierOption" required>--%>
+<%--                    <c:forEach var = "supplierDto" items="${listSuppliers}">--%>
+<%--                      <option value="${supplierDto.id}">${supplierDto.name}</option>--%>
+<%--                    </c:forEach>--%>
+<%--                  </select>--%>
+<%--                </div>--%>
               </div>
               <div class="row">
-                <div class="form-group col-md-3">
-                  <label class="control-label required-field">Đơn vị bán</label>
-                  <input class="form-control" id="unit" type="number">
-                </div>
+<%--                <div class="form-group col-md-3">--%>
+<%--                  <label class="control-label required-field">Đơn vị bán</label>--%>
+<%--                  <input class="form-control" id="unit" type="number">--%>
+<%--                </div>--%>
                 <div class="form-group col-md-3">
                   <label for="exampleSelect1" class="control-label required-field">Danh mục</label>
                   <select class="form-control" id="categoryOption" required>
@@ -125,6 +137,8 @@
                     </c:forEach>
                   </select>
                 </div>
+
+
                 <div class="form-group col-md-3">
                   <button class="side-button btn btn-add" type="button" title="Thêm vào danh sách"
                           onclick="addToCategoryTable()">Thêm
@@ -150,52 +164,69 @@
                   </table>
                 </div>
               </div>
-              <div class="row">
-                <div class="form-group col-md-3">
-                  <label for="exampleSelect1" class="control-label">Thông số kỹ thuật</label>
-                  <select id="specOption" class="form-control">
 
-                    <c:forEach items="${specificationDtos}" var="spec">
-                      <option value="${spec.id}">${spec.name}</option>
-                    </c:forEach>
-                  </select>
-                </div>
-                <div class="form-group col-md-3">
-                  <button class="side-button btn btn-add" type="button" title="Thêm vào danh sách"
-                          onclick="addToSpecTable()">Thêm
-                    vào
-                    danh sách</button>
-                  <button id="deleteButton" type="button" class="side-button btn btn-cancel" title="Xoá"
-                          onclick="deleteFromTable()">Xoá</button>
-                </div>
+
+              <div class="form-group col-md-3">
+                <label  class="control-label required-field">Thương Hiệu</label>
+                <select class="form-control" id="brandOption" required>
+                  <c:forEach var = "brand" items="${listBrand}">
+                    <option value="${brand.id}">${brand.name}</option>
+                  </c:forEach>
+                </select>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBrandModel">
+                  Thêm thương hiệu
+                </button>
               </div>
-              <div class="row">
-                <div class="form-group col-md-7">
-                  <label for="exampleSelect1" class="control-label">Bảng thông số kỹ thuật</label>
-                  <table id="specTable" class="table table-hover table-bordered js-copytextarea" cellpadding="0"
-                         cellspacing="0">
-                    <thead>
-                    <tr>
-                      <th width="200">Mã thông số kỹ thuật</th>
-                      <th width="200">Thông số kỹ thuật</th>
-                      <th width="400">Giá trị</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+<%--              <div class="row">--%>
+<%--                <div class="form-group col-md-3">--%>
+<%--                  <label for="exampleSelect1" class="control-label">Thông số kỹ thuật</label>--%>
+<%--                  <select id="specOption" class="form-control">--%>
+
+<%--                    <c:forEach items="${specificationDtos}" var="spec">--%>
+<%--                      <option value="${spec.id}">${spec.name}</option>--%>
+<%--                    </c:forEach>--%>
+<%--                  </select>--%>
+<%--                </div>--%>
+<%--                <div class="form-group col-md-3">--%>
+<%--                  <button class="side-button btn btn-add" type="button" title="Thêm vào danh sách"--%>
+<%--                          onclick="addToSpecTable()">Thêm--%>
+<%--                    vào--%>
+<%--                    danh sách</button>--%>
+<%--                  <button id="deleteButton" type="button" class="side-button btn btn-cancel" title="Xoá"--%>
+<%--                          onclick="deleteFromTable()">Xoá</button>--%>
+<%--                </div>--%>
+<%--              </div>--%>
+
+<%--              <div class="row">--%>
+<%--                <div class="form-group col-md-7">--%>
+<%--                  <label for="exampleSelect1" class="control-label">Bảng thông số kỹ thuật</label>--%>
+<%--                  <table id="specTable" class="table table-hover table-bordered js-copytextarea" cellpadding="0"--%>
+<%--                         cellspacing="0">--%>
+<%--                    <thead>--%>
+<%--                    <tr>--%>
+<%--                      <th width="200">Mã thông số kỹ thuật</th>--%>
+<%--                      <th width="200">Thông số kỹ thuật</th>--%>
+<%--                      <th width="400">Giá trị</th>--%>
+<%--                    </tr>--%>
+<%--                    </thead>--%>
+<%--                    <tbody>--%>
+<%--                    </tbody>--%>
+<%--                  </table>--%>
+<%--                </div>--%>
+<%--              </div>--%>
               <div class="row">
                 <div class="form-group col-md-12">
-                  <label class="control-label required-field">Ảnh sản phẩm</label>
-                  <div id="myfileupload">
-                    <input type="file" id="uploadfile" name="ImageUpload" onchange="setThumbImage();" accept="image/*"
-                           />
+                  <label class="control-label required-field">Thêm ảnh</label>
+
+                    <input type="file" id="fileUpload" name="ImageUpload" accept="image/*" onchange="showPreview(event);">
+
+                  <div class="preview">
+                    <img id="file-ip-1-preview" style="width: 250px; height: 250px; display: none">
                   </div>
-                  <div id="thumbbox">
-                    <img height="450" width="400" alt="Thumb image" id="thumbimage" style="display: none" />
-                  </div>
+
+<%--                  <div id="thumbbox">--%>
+<%--                    <img height="450" width="400" alt="Thumb image" id="thumbimage" style="display: none" />--%>
+<%--                  </div>--%>
                 </div>
                 <div class="form-group col-md-12">
                   <label class="control-label">Mô tả sản phẩm</label>
@@ -205,7 +236,7 @@
               <div class="row">
                 <div class="confirm-button">
                   <div class="button">
-                    <button type="button" id="createProduct" class="btn btn-save" onclick="addProduct()" >Lưu lại</button>
+                    <button type="submit" id="createProduct" class="btn btn-save" onclick="addProduct()" >Lưu lại</button>
                     <button type="button" class="btn btn-cancel" onclick="location.href='product-management.html'">Hủy
                       bỏ</button>
                   </div>
@@ -236,7 +267,7 @@
             </div>
           </div>
           <div style="display: flex; justify-content: center; padding: 10px;">
-            <a  href="${pageContext.request.contextPath}/admin/products" style="margin: 5px;" class="btn btn-save" >Đóng</a>
+            <a  href="${pageContext.request.contextPath}/admin/products/add" style="margin: 5px;" class="btn btn-save" >Đóng</a>
           </div>
         </div>
         <div class="modal-footer">
@@ -292,7 +323,7 @@ MODAL UNSUCCESSFUL
               </span>
             </div>
             <div class="form-group col-md-12" style="text-align: center;">
-              <p class="modal-notify-unsuccessful" id="reason"></p>
+              <p class="modal-notify-unsuccessful" id="reason">Thêm sản phẩm không thành công</p>
             </div>
           </div>
           <div style="display: flex; justify-content: center; padding: 10px;">
@@ -307,6 +338,29 @@ MODAL UNSUCCESSFUL
   <!--
 MODAL
 -->
+<%--Model add brand--%>
+  <div class="modal fade" id="addBrandModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color: green">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group col-md-3">
+            <label class="control-label required-field">Tên thương hiệu</label>
+            <input class="form-control" id="addBrand" type="text" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="addBrand()">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>
   <script src="<c:url value="/js/popper.min.js"/>"></script>
   <script src="<c:url value="/js/bootstrap.min.js"/>"></script>

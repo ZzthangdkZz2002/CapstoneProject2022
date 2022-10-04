@@ -12,23 +12,16 @@ import java.util.Optional;
 
 public interface CategoryService {
 
-    List<Category> findCategoriesByParentCategoryIdIsNull();
 
-    List<CategoryDTO> findCategoriesByIdNotIn(List<CategoryDTO> cId);
 
-    Category getById(String id);
+    List<Category> findAll();
+    Category addCategory(String name);
 
-    <S extends Category> S save(S entity);
+    void deleteCategory(Integer id);
 
-    CategoryDTO convertToDto(Category category);
+    Category updateCategory(CategoryDTO categoryDTO);
 
-    List<CategoryDTO> findAllSubAndParCategories(Integer cId);
 
-    List<CategoryDTO> findAll();
 
-    Page<Category> findAll(Pageable pageable);
-    boolean addCategory(CategoryDTO categoryDTO);
-    boolean updateCategory(CategoryDTO categoryDTO,String strId);
-    CategoryDTO findById(Integer id);
 
 }

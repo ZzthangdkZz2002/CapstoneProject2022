@@ -15,7 +15,7 @@ import com.example.electriccomponentsshop.repositories.CategoryRepository;
 import com.example.electriccomponentsshop.repositories.RoleRepository;
 import com.example.electriccomponentsshop.services.AccountDetailImpl;
 import com.example.electriccomponentsshop.services.CategoryService;
-import com.example.electriccomponentsshop.services.OrderService;
+
 import com.example.electriccomponentsshop.services.RefreshTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -54,15 +54,14 @@ public class AuthController {
     RoleRepository roleRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
-    @Autowired
-    OrderService orderService;
+
     @Autowired
     private RefreshTokenService refreshTokenService;
     @Autowired
     JwtUtils jwtUtils;
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
+
     CategoryService categoryService;
     @GetMapping("/change-password")
     public ModelAndView showChangePassword(){
@@ -126,10 +125,11 @@ public class AuthController {
         }
 
         String jwt= jwtUtils.generateJwtToken(authentication);
+        System.out.println(jwt);
         JwtUtils.token = jwt;
         Cookie cookie = new Cookie("accessToken",jwt);
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(1200);
+        cookie.setMaxAge(120000000);
         cookie.setPath("/");
         response.addCookie(cookie);
         if(roles.contains("ROLE_MANAGER")||roles.contains("ROLE_EMPLOYEE")){

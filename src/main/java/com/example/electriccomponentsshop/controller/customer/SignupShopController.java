@@ -43,14 +43,14 @@ public class SignupShopController {
     CategoryService categoryService;
 
 
-    @GetMapping("/signup")
-    public String goToSignUp (ModelMap map) {
-        List<Category> categories = categoryService.findCategoriesByParentCategoryIdIsNull();
-
-        map.addAttribute("categories", categories);
-
-        return "customer/signup";
-    }
+//    @GetMapping("/signup")
+//    public String goToSignUp (ModelMap map) {
+//        List<Category> categories = categoryService.findCategoriesByParentCategoryIdIsNull();
+//
+//        map.addAttribute("categories", categories);
+//
+//        return "customer/signup";
+//    }
 
     @PostMapping("/signup")
     public String signUp (@RequestParam Map<String, String> custom, ModelMap map) {

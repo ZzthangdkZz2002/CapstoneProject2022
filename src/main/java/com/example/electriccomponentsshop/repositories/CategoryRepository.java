@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
@@ -29,6 +30,9 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
     @Override
     <S extends Category> S save(S entity);
 
+    Optional<Category> findById(Integer id);
+
     @Override
     List<Category> findAll();
+
 }

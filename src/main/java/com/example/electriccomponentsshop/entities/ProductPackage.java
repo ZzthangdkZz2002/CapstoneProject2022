@@ -22,7 +22,7 @@ public class ProductPackage {
     @ManyToOne(fetch = FetchType.EAGER)
  @JoinColumn(name="import_transaction_id")
     private ImportTransaction importTransaction;
-    @ManyToOne(fetch = FetchType.EAGER)
-   @JoinColumn(name="supplier_id")
-    private Supplier supplier;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//   @JoinColumn(name="supplier_id")
+//    private Supplier supplier;
 }

@@ -20,20 +20,20 @@ public class Category {
 
     @Column
     private String name;
+//
+//    @JsonIgnore
+//    @ManyToOne
+//    @JoinColumn(name="parent_category_id")
+//    private Category parentCategory;
+//
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    @OneToMany(fetch = FetchType.EAGER,mappedBy = "parentCategory")
+//    @JsonIgnore
+//    private Set<Category> childCategories;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="parent_category_id")
-    private Category parentCategory;
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "parentCategory")
-    @JsonIgnore
-    private Set<Category> childCategories;
-
-    @JsonIgnore
-    private String path;
+//    @JsonIgnore
+//    private String path;
 
     public Category(String name){
         this.name=name;

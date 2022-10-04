@@ -29,7 +29,7 @@ public class AuthEntryPointJwt implements AuthenticationEntryPoint {
         else if(request.getContentType().equals("application/json")){
                 System.out.println("Gg34");
                response.sendError(401,"unauth");
-            }
+        }
 
     }
 

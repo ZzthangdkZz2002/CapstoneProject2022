@@ -39,7 +39,7 @@ public class JwtUtils {
 
     public String generateJwtToken(Authentication authentication) {
         AccountDetailImpl accountPrincipal = (AccountDetailImpl) authentication.getPrincipal();
-
+        System.out.println("Emaill:"+accountPrincipal.getEmail() +", date:"+new Date(jwtExpirationMs + new Date().getTime()));
         return Jwts.builder()
                 .setSubject((accountPrincipal.getEmail()))
                 .setIssuedAt(new Date())
@@ -73,15 +73,20 @@ public class JwtUtils {
              token = getJwtFromRequest(request);
             System.out.println(token + "deop");
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            System.out.println("test1");
             return true;
         }catch (SignatureException e) {
             logger.error("Invalid JWT signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {
             logger.error("Invalid JWT token: {}", e.getMessage());
         } catch (ExpiredJwtException e) {
+            e.printStackTrace();
+            System.out.println("test2");
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            System.out.println("test3");
 
             if(authentication == null||(authentication instanceof AnonymousAuthenticationToken) ){
+                System.out.println("test4");
                 return false;
             }
             else {

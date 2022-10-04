@@ -209,17 +209,23 @@ function addToCategoryTable() {
         var cell1 = row.insertCell(1);
         var cell2 = row.insertCell(2);
 
+        // var button = document.createElement("input");
+        // button.setAttribute("type","button");
+        // button.setAttribute("onclick","deleteFromCategoryTable("+optionValue+")");
+
         var checkbox = document.createElement("input");
         checkbox.setAttribute("type", "checkbox");
 
         cell0.innerHTML = optionValue;
         cell1.innerHTML = optionText;
         cell2.appendChild(checkbox.cloneNode());
+        const select = document.querySelector('select');
+        select.remove(selection.selectedIndex);
     }
-    tableChange();
+    // tableChange();
 }
 
-function deleteFromCategoryTable() {
+function deleteFromCategoryTable(optionValue) {
     var table = document.getElementById("categoryTable");
     for (var i = 1, row; row = table.rows[i]; i++) {
         if (row.cells[2].getElementsByTagName('input')[0].checked) {
@@ -791,8 +797,22 @@ function checkDate() {
     }
     return true;
 }
+
+//preview upload product image
+function showPreview(event){
+    if(event.target.files.length > 0){
+        var src = URL.createObjectURL(event.target.files[0]);
+        var preview = document.getElementById("file-ip-1-preview");
+        preview.src = src;
+        preview.style.display = "block";
+    }
+}
+
 function addProduct(){
+
     validateTable();
+    console.log($('#fileUpload').val());
+    event.preventDefault();
     var specificationValues= new Array();
     var categories = new Array();
     $(".spec-values").each(function (){
@@ -810,39 +830,86 @@ function addProduct(){
         categories.push(category);
 
     });
+    var file = $('input[type=file]')[0].files[0];
+   var formData = new FormData();
+
+   var brand = new Object();
+   brand.id = $('#brandOption').val()
     var data1={
-        name: $('#name').val(),
-        price: $('#price').val(),
-        description: $('#mota').val(),
-        supplierId:$('#supplierOption').val(),
-        unit:$('#unit').val(),
-        categories: categories,
-        specificationValues:specificationValues
+        "name": $('#name').val(),
+        "price": $('#price').val(),
+        "description": $('#mota').val(),
+        "original_price": $('#original-price').val(),
+        "brand": brand,
+        "code" : $('#code').val(),
+        "categories": categories
+        // "image": filed
     };
+
+    formData.append("file", file);
+    formData.append("products", new Blob([JSON.stringify(data1)],
+        {
+            type: "application/json"
+        }));
+    console.log(data1);
+
+
     $.ajax({
         type: "POST",
-        contentType: "application/json",
+        contentType: false,
+        processData: false,
         url: "/admin/products/add",
-        data:
-            JSON.stringify(data1)
+        data: formData
+            // JSON.stringify(data1)
         ,
-        dataType:"text",
+        // dataType:"json",
         success: function (response){
-            if(response === "thành công"){
+            console.log(response)
+            if(response.status === "00"){
                 $('#successful').modal('show');
             }
             else {
-                $('#reason').innerHTML = response;
+                $('#reason').innerHTML = response.message;
                 $('#unsuccessful').modal('show');
             }
         },
         error: function (error){
-            window.location.replace('http://localhost:8083/auth/signin');
+            // $('#reason').innerHTML = "Thêm sản phẩm không thành công";
+            $('#unsuccessful').modal('show');
+            // window.location.replace('http://localhost:5000/auth/signin');
         }
 
 
     });
     $('#createProduct').off('click');
+
+}
+
+function addBrand() {
+    var brandName = $('#addBrand').val();
+    console.log(brandName);
+    $.ajax(
+        {
+            type : "POST",
+            contentType: false,
+            url : "/admin/products/addBrand?name="+brandName,
+
+            success: function (response){
+                console.log(response.data.name + ", " + response.data.id);
+                $('#addBrandModel').modal('hide');
+
+                var x = document.getElementById("brandOption");
+                var option = document.createElement("option");
+                option.text = response.data.name;
+                option.value = response.data.id;
+                x.add(option, x[0]);
+            },
+
+            error: function (error) {
+                console.log(error.message);
+            }
+        }
+    )
 
 }
 
