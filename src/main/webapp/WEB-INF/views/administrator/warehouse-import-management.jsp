@@ -66,23 +66,23 @@
                 </tr>
               </thead>
               <tbody>
-              <c:forEach var="importTransaction" items="${listImport}">
-                <tr>
-                  <td>${importTransaction.id}</td>
-                  <td>
-                    ${importTransaction.supplierName}
-                  </td>
-                  <td>${importTransaction.wardName}, ${importTransaction.districtName},${importTransaction.provinceName}</td>
-                  <td>${importTransaction.totalPayment}</td>
-                  <td>${importTransaction.importDate}</td>
-                  <td>
-                    <a href="${pageContext.request.contextPath}/admin/warehouses/import/update/${importTransaction.id}" class="btn btn-primary btn-sm edit"
-                       title="Sửa"><i class="fas fa-edit"></i></a>
-                    <button class="btn btn-primary btn-sm" type="button" title="Chi tiết đơn hàng"
-                            onclick="location.href='import-transaction-detail.html'"><i class="fa fa-info"></i></button>
-                  </td>
-                </tr>
-              </c:forEach>
+<%--              <c:forEach var="importTransaction" items="${listImport}">--%>
+<%--                <tr>--%>
+<%--                  <td>${importTransaction.id}</td>--%>
+<%--                  <td>--%>
+<%--                    ${importTransaction.supplierName}--%>
+<%--                  </td>--%>
+<%--                  <td>${importTransaction.wardName}, ${importTransaction.districtName},${importTransaction.provinceName}</td>--%>
+<%--                  <td>${importTransaction.totalPayment}</td>--%>
+<%--                  <td>${importTransaction.importDate}</td>--%>
+<%--                  <td>--%>
+<%--                    <a href="${pageContext.request.contextPath}/admin/warehouses/import/update/${importTransaction.id}" class="btn btn-primary btn-sm edit"--%>
+<%--                       title="Sửa"><i class="fas fa-edit"></i></a>--%>
+<%--                    <button class="btn btn-primary btn-sm" type="button" title="Chi tiết đơn hàng"--%>
+<%--                            onclick="location.href='import-transaction-detail.html'"><i class="fa fa-info"></i></button>--%>
+<%--                  </td>--%>
+<%--                </tr>--%>
+<%--              </c:forEach>--%>
 
                 <tr>
                   <td>2</td>

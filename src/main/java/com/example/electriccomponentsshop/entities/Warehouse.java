@@ -21,6 +21,8 @@ public class Warehouse {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pCode")
     private Province provinceWarehouse;
+    @OneToMany(mappedBy = "warehouse")
+    private List<ProductWareHouse> productWareHouseList = new ArrayList<>();
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dCode")
     private District districtWarehouse;
@@ -37,5 +39,7 @@ public class Warehouse {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "warehouseImport")
     List<ImportTransaction> importTransactions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "warehouse")
+    List<Inventory> inventories = new ArrayList<>();
 
 }

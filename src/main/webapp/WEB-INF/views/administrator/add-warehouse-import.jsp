@@ -51,10 +51,10 @@
                         <h3 class="tile-title">Thông tin sản phẩm</h3>
                         <div class="row element-button">
                             <div class="col-sm-12">
-                                <button class="btn btn-add btn-sm" title="Thêm" data-toggle="modal"
-                                        data-target="#productList" type="button" onclick="importInfoSelect(this)"><i
-                                        class="fas fa-plus"></i>
-                                    Thêm sản phẩm</button>
+                                <button class="btn btn-add btn-sm" title="Thêm" data-toggle="modal" data-target="#productList" type="button" onclick="importInfoSelect(this)">
+                                    <i class="fas fa-plus"></i>
+                                    Thêm sản phẩm
+                                </button>
                             </div>
                         </div>
                         <div class="du--lieu-san-pham">
@@ -84,31 +84,44 @@
                     <div class="tile">
                         <h3 class="tile-title">Thông tin nhập hàng</h3>
                         <div class="tile-body">
-                            <div class="form-group col-md-12">
-                                <label for="importDate" class="control-label required-field">Ngày nhập</label>
-                                <input class="form-control" type="date" name="birthmonth" id="importDate" onchange="checkDate()" required
-                                >
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="supplierSelect" class="control-label required-field">Nhà cung
-                                    cấp</label>
-                                <select class="form-control" id="supplierSelect" onchange="resetImportTable()"
-                                        required>
-                                    <c:forEach items="${listSupplier}" var="supplier">
-                                        <option value="${supplier.id}">${supplier.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
+<%--                            <div class="form-group col-md-12">--%>
+<%--                                <label for="importDate" class="control-label required-field">Ngày nhập</label>--%>
+<%--                                <input class="form-control" type="date" name="birthmonth" id="importDate" onchange="checkDate()" required--%>
+<%--                                >--%>
+<%--                            </div>--%>
+<%--                            <div class="form-group col-md-12">--%>
+<%--                                <label for="supplierSelect" class="control-label required-field">Nhà cung--%>
+<%--                                    cấp</label>--%>
+<%--                                <select class="form-control" id="supplierSelect" onchange="resetImportTable()"--%>
+<%--                                        required>--%>
+<%--                                    <c:forEach items="${listSupplier}" var="supplier">--%>
+<%--                                        <option value="${supplier.id}">${supplier.name}</option>--%>
+<%--                                    </c:forEach>--%>
+<%--                                </select>--%>
+<%--                            </div>--%>
                             <div class="form-group col-md-12">
                                 <label for="warehouse" class="control-label required-field">Vị trí lưu
                                     kho</label>
-                                <select class="form-control" id="warehouse" required>
+                                <select class="form-control" id="warehouse" required onchange="SelectWarehouse(this.value)">
+                                    <option value="0">Chọn ví trí lưu kho</option>
                                     <c:forEach var="warehouse" items="${listWarehouses}">
                                         <option value="${warehouse.id}">${warehouse.wardName}, ${warehouse.districtName},${warehouse.provinceName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
+    <div class="form-group col-md-12">
+        <label for="warehouse" class="control-label required-field">Vị trí lưu sản phẩm</label>
+        <select class="form-control" id="warehouseLocation" required>
+            <option value="0">Chọn vị trí lưu sản phẩm</option>
+            <option>Vui lòng chọn vị trí lưu kho trước</option>
+        </select>
+    </div>
 
+    <div class="form-group col-md-3">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductLocation">
+            Thêm vị trí
+        </button>
+    </div>
 
                             <div class="form-group col-md-12">
                                 <label class="control-label">Tổng tiền: </label>
@@ -143,15 +156,16 @@ PRODUCT MODAL
                     <div class="col-md-12">
                         <div class="tile">
                             <div class="tile-body">
-                                <div class="form-group col-md-5">
-                                    <label for="warehouse" class="control-label required-field">Chọn ô chứa</label>
-                                    <select class="form-control" id="container" required >
-                                        <c:forEach var="container" items="${listContainer}">
-                                            <option value = "${container.id}">${container.shelf}-${container.columnIn}-${container.rowIn}</option>
+<%--                                <div class="form-group col-md-5">--%>
+<%--                                    <label for="warehouse" class="control-label required-field">Chọn ô chứa</label>--%>
+<%--                                    <select class="form-control" id="container" required >--%>
+<%--                                        <c:forEach var="container" items="${listContainer}">--%>
+<%--                                            <option value = "${container.id}">${container.shelf}-${container.columnIn}-${container.rowIn}</option>--%>
 
-                                        </c:forEach>
-                                    </select>
-                                </div>
+<%--                                        </c:forEach>--%>
+<%--                                    </select>--%>
+<%--                                </div>--%>
+
                                 <form>
                                     <div class="modal-search-row">
 
@@ -162,7 +176,7 @@ PRODUCT MODAL
                                             <div class="search-container">
                                                 <input class="form-control" type="text" placeholder="Tìm kiếm"
                                                        name="search" id="searchText">
-                                                <button type="button" onclick="searchProductInImport()"><i class="fa fa-search"></i></button>
+                                                <button type="button" onclick="searchProductInImport(1)"><i class="fa fa-search"></i></button>
                                             </div>
                                         </form>
                                     </div>
@@ -172,16 +186,62 @@ PRODUCT MODAL
                                             <th>Mã sản phẩm</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Ảnh sản phẩm</th>
-                                            <th>Số lượng tồn kho</th>
-                                            <th>Giá tiền</th>
+                                            <%--                  <th>Số lượng tồn kho</th>--%>
+                                            <th>Giá vốn</th>
+                                            <th>Giá bán</th>
                                             <th>Chọn</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-
+                                        <c:forEach var="product" items="${products}">
+                                            <tr>
+                                                <td>${product.code}</td>
+                                                <td>${product.name}</td>
+                                                <td><img src="/img/${product.image}" alt="" width="100px;"></td>
+                                                    <%--                  <td>${product.available}</td>--%>
+                                                <td>${product.original_price}</td>
+                                                <td>${product.price}</td>
+<%--                                                <td>--%>
+<%--                                                    <c:forEach var="categoryDto" items="${product.categories}">--%>
+<%--                                                        ${categoryDto.name} ,--%>
+<%--                                                    </c:forEach>--%>
+<%--                                                </td>--%>
+<%--                                                <td>${product.brand.name}</td>--%>
+                                                <td>
+                                                    <input class="status-checkbox" type="checkbox" data-toggle="modal" data-target="#confirmStatus" name="check1" value="1">
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
                                         </tbody>
                                     </table>
+
+                                    <div class="pagination-row">
+                                        <div class="pagination-container">
+                                            <%--              <p>${pageNo}</p>--%>
+                                            <div class="dataTables_paginate paging_simple_numbers" id="sampleTable_paginate">
+                                                <ul class="pagination">
+                                                    <c:forEach var="i" step="1" begin="1" end="${total<=0 ? 0: total-1}">
+                                                        <li class="paginate_button page-item " id="sampleTable_previous">
+                                                            <a aria-controls="sampleTable" data-dt-idx="0" tabindex="0" class="page-link" onclick="<c:choose><c:when test="${text!=null}">searchProductInImport(1)</c:when><c:otherwise>Pagination(${i})</c:otherwise></c:choose>" >
+                                                                    ${i}
+                                                            </a>
+                                                        </li>
+<%--                                                        <c:choose>--%>
+<%--                                                            <c:when test="${pageNo == i}">--%>
+<%--                                                                <li class="active paginate_button page-item " id="sampleTable_previous" onclick="Pagination(${i})">${i}</li>--%>
+<%--                                                            </c:when>--%>
+<%--                                                            <c:otherwise>--%>
+<%--                                                                <li class="paginate_button page-item " id="sampleTable_previous" onclick="Pagination(${i})">${i}</li>--%>
+<%--                                                            </c:otherwise>--%>
+<%--                                                        </c:choose>--%>
+                                                    </c:forEach>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -198,6 +258,7 @@ PRODUCT MODAL
             </div>
         </div>
     </div>
+
 </div>
 <!--
 MODAL
@@ -322,6 +383,7 @@ MODAL
 <!--
 MODAL CHOOSE INFO BEFORE SELECTING PRODUCT
 -->
+
 <div class="modal fade" id="selectImportInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -350,6 +412,31 @@ MODAL CHOOSE INFO BEFORE SELECTING PRODUCT
 MODAL
 -->
 <!-- Essential javascripts for application to work-->
+
+<%--Model add brand--%>
+<div class="modal fade" id="addProductLocation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="color: green">Thêm mới vị trí</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="addProductLocationError" style="color: red;display: none"></p>
+                <div class="form-group col-md-3">
+                    <label class="control-label required-field">Tên vị trí</label>
+                    <input class="form-control" id="addLocaiton" type="text" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addProductLocation()">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="src/jquery.table2excel.js"></script>

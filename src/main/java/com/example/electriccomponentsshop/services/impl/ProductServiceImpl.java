@@ -186,8 +186,8 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
     }
     @Override
-    public Page<ProductDTO> searchProduct(String text, Pageable pageable){
-        return productRepository.searchProductsByNameContain(text,pageable).map(this::convertToDto);
+    public Page<Product> searchProduct(String text, Pageable pageable){
+        return productRepository.searchProductsByNameorCode(text,pageable);
     }
 //    @Override
 //    public Page<ProductDTO> findBySupplierId(Pageable pageable, String sId){
@@ -209,10 +209,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDTO> findAll(Pageable pageable) {
+    public Page<Product> findAll(Pageable pageable) {
         Page<Product> productPages = productRepository.findAll(pageable);
-        Page<ProductDTO> dtoPage = productPages.map(this::convertToDto);
-        return dtoPage;
+//        Page<ProductDTO> dtoPage = productPages.map(this::convertToDto);
+        return productPages;
     }
 
     @Override

@@ -52,67 +52,11 @@ public class ProductController {
     final ProductLocationRepository productLocationRepository;
     @GetMapping("")
     public String viewAll(Model model,@RequestParam(name="index",defaultValue = "0") String index){
-        Page<ProductDTO> products =  productService.findAll(PageRequest.of(Integer.parseInt(index),10));
-        model.addAttribute("productDtos", products.getContent());
+        Page<Product> products =  productService.findAll(PageRequest.of(Integer.parseInt(index),10));
+        model.addAttribute("products", products.getContent());
         model.addAttribute("total",products.getTotalPages());
         return "administrator/product-management";
     }
-//    @GetMapping("/specification/add")
-//    public String getAddSpecForm(ModelMap modelMap){
-//        List<SpecificationDto> specificationDtos = specificationService.findAll();
-//        modelMap.addAttribute("listSpec",specificationDtos);
-//        modelMap.addAttribute("newSpecification",new SpecificationDto());
-//        return "administrator/add-product-specification";
-//    }
-//    @PostMapping("/specification/add")
-//    public String addNewSpecification(@ModelAttribute(name = "newSpecification") SpecificationDto specificationDto, BindingResult bindingResult,ModelMap modelMap){
-//        if(bindingResult.hasErrors()){
-//            bindingResult.getFieldErrors().forEach(fieldError -> modelMap.addAttribute(fieldError.getField(),fieldError.getDefaultMessage()));
-//        }
-//        else{
-//            if(specificationService.addNewSpecification(specificationDto)){
-//                modelMap.addAttribute("success",1);
-//            }else{
-//                modelMap.addAttribute("success" , 0);
-//                modelMap.addAttribute("message", "Thông số này đã tồn tại");
-//            }
-//        }
-//        List<SpecificationDto> specificationDtos = specificationService.findAll();
-//        modelMap.addAttribute("listSpec",specificationDtos);
-//            return "administrator/add-product-specification";
-//    }
-//    @GetMapping("/view/{id}")
-//    public String viewById(ModelMap model,@PathVariable @Valid String id){
-//        try{
-//            ProductDTO productDTO = productService.getProductDtoById(id);
-//            List<CategoryDTO> categoryDtos = categoryService.findCategoriesByIdNotIn(productDTO.getCategories());
-//            System.out.println("dcun");
-////            List<SpecificationValueDto> specificationValueDtos = productDTO.getSpecificationValues();
-////            List<Integer> sIds = new ArrayList<>();
-////            for (SpecificationValueDto c: specificationValueDtos
-////            ) {
-////                System.out.println(c.getSpecificationId()+"gia");
-////                sIds.add(Integer.parseInt(c.getSpecificationId()));
-////            }
-////            List<SpecificationDto> specificationDtos =specificationService.findSpecificationsBySpecificationIdNotIn(sIds);
-////            model.addAttribute("specificationDtos",specificationDtos);
-////            model.addAttribute("listSpecificationValue",specificationValueDtos);
-//
-//            model.addAttribute("productDto",productDTO);
-//            model.addAttribute("listCategories",categoryDtos);
-//
-//        } catch (NoSuchElementException e){
-//            System.out.println(e.getMessage());
-//            model.addAttribute("notFound" ,e.getMessage());
-//        }
-//        return "administrator/setting-product";
-//    }
-//    @GetMapping("/getBySupplier")
-//    @ResponseBody
-//    public List<ProductDTO> getBySupplier(@RequestParam(name = "id") String id){
-//        SupplierDTO supplierDTO =supplierService.getDtoById(id);
-//        return   supplierDTO.getProducts();
-//    }
 
     @PostMapping("/disable")
     @ResponseBody
@@ -143,12 +87,13 @@ public class ProductController {
     public String searchProduct(@RequestParam(name="text", required = false) String text, @RequestParam(name="index",defaultValue = "0") String index, ModelMap modelMap){
         int pIndex = Integer.parseInt(index);
 
-        Page<ProductDTO> productDTOS = productService.searchProduct(text,PageRequest.of(pIndex,10));
+        Page<Product> products = productService.searchProduct(text,PageRequest.of(pIndex,10));
 
-        modelMap.addAttribute("pageNo", 1);
-        modelMap.addAttribute("productDtos", productDTOS.getContent());
-        modelMap.addAttribute("total", productDTOS.getTotalPages());
-        modelMap.addAttribute("text", text);
+            modelMap.addAttribute("pageNo", 1);
+            modelMap.addAttribute("products", products.getContent());
+            modelMap.addAttribute("total", products.getTotalPages());
+            modelMap.addAttribute("text", text);
+
 
         return "administrator/product-management";
     }
@@ -186,19 +131,19 @@ public class ProductController {
     public ResponseEntity<ResponseObject> addBrand(@RequestParam(name = "name") String brandName){
         try{
             if("".equals(brandName)){
-                return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("01","Chưa nhập tên thương hiệu!",""));
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Chưa nhập tên thương hiệu!",""));
             }
 //            if(bindingResult.hasErrors()){
 //                return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("01","Something went wrong!",bindingResult.getAllErrors()));
 //            }
             Brand brand = brandRepository.findBrandByName(brandName);
             if(brand != null){
-                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new ResponseObject("01","Thương hiệu này đã tồn tại",""));
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Thương hiệu này đã tồn tại",""));
             }else{
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Thêm thương hiệu thành công",brandRepository.save(new Brand(brandName))));
             }
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("01","Something went wrong!",e.getMessage()));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Something went wrong!",e.getMessage()));
         }
     }
 //    @PostMapping("/getProductByBrand")

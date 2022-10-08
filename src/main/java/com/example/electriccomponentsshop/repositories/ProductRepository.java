@@ -16,8 +16,8 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 
     @Override
     List<Product> findAll();
-    @Query(value = "select  * from product where name like %:pName% COLLATE utf8mb4_0900_ai_ci",nativeQuery = true)
-    Page<Product> searchProductsByNameContain(@Param("pName") String pName,Pageable pageable);
+    @Query(value = "select  * from product where name like %:pName% or code like %:pName% COLLATE utf8mb4_0900_ai_ci",nativeQuery = true)
+    Page<Product> searchProductsByNameorCode(@Param("pName") String pName,Pageable pageable);
     @Override
     Page<Product> findAll(Pageable pageable);
     Optional<Product> findById(Integer id);

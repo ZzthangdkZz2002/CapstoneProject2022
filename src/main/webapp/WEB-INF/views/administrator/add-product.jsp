@@ -343,12 +343,13 @@ MODAL
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel" style="color: green">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel" style="color: green">Thêm mới thương hiệu</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
+          <p id="addBrandError" style="color: red;display: none"></p>
           <div class="form-group col-md-3">
             <label class="control-label required-field">Tên thương hiệu</label>
             <input class="form-control" id="addBrand" type="text" required>

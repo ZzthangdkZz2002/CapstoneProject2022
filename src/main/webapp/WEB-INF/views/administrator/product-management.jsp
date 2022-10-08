@@ -71,37 +71,41 @@
                   <th>Mã sản phẩm</th>
                   <th>Tên sản phẩm</th>
                   <th>Ảnh sản phẩm</th>
-                  <th>Số lượng tồn kho</th>
+<%--                  <th>Số lượng tồn kho</th>--%>
+                  <th>Giá vốn</th>
                   <th>Giá bán</th>
                   <th>Danh mục</th>
+                  <th>Thương hiệu</th>
                   <th>Trạng thái</th>
                   <th>Tuỳ chọn</th>
                 </tr>
               </thead>
               <tbody>
-              <c:forEach var="productDto" items="${productDtos}">
+              <c:forEach var="product" items="${products}">
                 <tr>
-                  <td>${productDto.id}</td>
-                  <td>${productDto.name}</td>
-                  <td><img src="/img/${productDto.image}" alt="" width="100px;"></td>
-                  <td>${productDto.available}</td>
-                  <td>${productDto.price}</td>
+                  <td>${product.code}</td>
+                  <td>${product.name}</td>
+                  <td><img src="/img/${product.image}" alt="" width="100px;"></td>
+<%--                  <td>${product.available}</td>--%>
+                  <td>${product.original_price}</td>
+                  <td>${product.price}</td>
                   <td>
-                    <c:forEach var="categoryDto" items="${productDto.categories}">
+                    <c:forEach var="categoryDto" items="${product.categories}">
                       ${categoryDto.name} ,
                     </c:forEach>
                   </td>
+                  <td>${product.brand.name}</td>
                   <td>
                     <div class="switch">
-                      <input class="status-checkbox" onclick="return false" type="checkbox"  name="check" <c:if test="${productDto.status == 1}"> checked</c:if>/>
+                      <input class="status-checkbox" onclick="return false" type="checkbox"  name="check" <c:if test="${product.status == 1}"> checked</c:if>/>
 
                       <span class="slider round"></span>
                       <div style="position:absolute; left:0; right:0; top:0; bottom:0;" onclick="updateProductStatus(this)"data-toggle="modal"
-                              <c:if test="${productDto.status == 1}"> data-target="#disableStatus"</c:if> <c:if test="${productDto.status == 0}"> data-target="#enableStatus"</c:if> ></div>
+                              <c:if test="${product.status == 1}"> data-target="#disableStatus"</c:if> <c:if test="${product.status == 0}"> data-target="#enableStatus"</c:if> ></div>
                     </div>
                   </td>
                   <td>
-                    <a href="${pageContext.request.contextPath}/admin/products/view/${productDto.id}" class="btn btn-primary btn-sm edit" type="button" title="Sửa"><i
+                    <a href="${pageContext.request.contextPath}/admin/products/view/${product.id}" class="btn btn-primary btn-sm edit" type="button" title="Sửa"><i
                             class="fas fa-edit"></i></a>
                   </td>
                 </tr>
@@ -111,10 +115,10 @@
             </table>
             <div class="pagination-row">
               <div class="pagination-container">
-              <p>${pageNo} + thuong</p>
+<%--              <p>${pageNo}</p>--%>
                 <div class="dataTables_paginate paging_simple_numbers" id="sampleTable_paginate">
                  <ul class="pagination">
-                   <c:forEach var="i" step="1" begin="1" end="${total-1}">
+                   <c:forEach var="i" step="1" begin="1" end="${total<=0 ? 0: total-1}">
                      <c:choose>
                         <c:when test="${pageNo == i}">
                             <li class="active paginate_button page-item " id="sampleTable_previous"><a href="${pageContext.request.contextPath}/admin/products<c:choose><c:when test="${text!=null}">/search?text=${text}&index=${i}</c:when><c:otherwise>?index=${i}</c:otherwise></c:choose>"

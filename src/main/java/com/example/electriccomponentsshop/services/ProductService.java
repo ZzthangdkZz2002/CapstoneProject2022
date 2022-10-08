@@ -31,7 +31,7 @@ public interface ProductService {
 
     void enableProduct(String id);
 
-    Page<ProductDTO> searchProduct(String text, Pageable pageable);
+    Page<Product> searchProduct(String text, Pageable pageable);
 
 //    Page<ProductDTO> findBySupplierId(Pageable pageable, String sId);
 //
@@ -41,6 +41,6 @@ public interface ProductService {
 
     <S extends Product> S save(S entity);
 
-    Page<ProductDTO> findAll(Pageable pageable);
+    Page<Product> findAll(Pageable pageable);
 
 }

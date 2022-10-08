@@ -278,29 +278,105 @@ function resetImportTable() {
     }
 }
 
+function SelectWarehouse(warehouse_id){
+    if(warehouse_id ==0){
+        $('#warehouseLocation').html("<option>Chọn vị trí lưu sản phẩm</option> <option> Vui lòng chọn vị trí lưu kho trước</option>");
+        return false;
+    }
+    $.ajax({
+        type: "GET",
+        url: "/admin/warehouses/getProductLocation/?w_id=" + warehouse_id,
+        success: function (response) {
+            console.log(response.data)
+            if(response != "" && response != null && response.status == "00"){
+                $('#warehouseLocation').html(response.data);
+            }else{
+                $('#warehouseLocation').html("<option>Chọn vị trí lưu sản phẩm</option> <option> Vui lòng chọn vị trí lưu kho trước</option>");
+            }
+        },
+        error: function () {
+            return false;
+        }
+        });
+}
+
 
 function importInfoSelect(e) {
-    var warehouse = document.getElementById("warehouse").value;
-    var importDate = document.getElementById("importDate").value;
+    var warehouse = $('#warehouse').find(":selected").val();
+    var productLocation = $('#warehouseLocation').find(":selected").val();
     var supplierId = $('#supplierSelect').val();
-    if(warehouse == ""  || importDate == "") {
+    if(warehouse == "" || warehouse == '0' || productLocation == "" || productLocation == "0") {
         e.removeAttribute("data-toggle");
         $("#selectImportInfo").modal('show');
     }else {
         e.setAttribute("data-toggle", "modal");
     }
 
+    // $.ajax({
+    //     type: "GET",
+    //     url: "/admin/products/getBySupplier?id="+supplierId,
+    //     success: function (response){
+    //         var $products = $('#products tbody');
+    //         $products.find('tr').remove();
+    //         $.each(response, function(index,value){
+    //             $products.append('<tr><td>'+value.id+'</td><td>'+value.name+'</td><td></td><td>'+value.available + '</td><td>'+value.price+'</td><td><input class="status-checkbox" type="checkbox" data-toggle="modal" data-target="#confirmStatus" name="check1" value="1">\n' +
+    //                 '                                                </td></tr>');
+    //
+    //         });
+    //     }
+    // });
+}
+
+
+function Pagination(index) {
+    console.log(index);
     $.ajax({
         type: "GET",
-        url: "/admin/products/getBySupplier?id="+supplierId,
+        url: "/admin/warehouses/getProducts?index="+index,
         success: function (response){
+            console.log(response);
             var $products = $('#products tbody');
             $products.find('tr').remove();
-            $.each(response, function(key,value){
-                $products.append('<tr><td>'+value.id+'</td><td>'+value.name+'</td><td></td><td>'+value.available + '</td><td>'+value.price+'</td><td><input class="status-checkbox" type="checkbox" data-toggle="modal" data-target="#confirmStatus" name="check1" value="1">\n' +
-                    '                                                </td></tr>');
+            for(var i in response.data){
+                $products.append('<tr>' +
+                    '<td>'+response.data[i].code+'</td>' +
+                    '<td>'+response.data[i].name+'</td>' +
+                    '<td>'+'<img width="100px"; src=/img/'+response.data[i].image+'>'+'</td>' +
+                    '<td>'+response.data[i].original_price + '</td>' +
+                    '<td>'+response.data[i].price+'</td>' +
+                    '<td>' +
+                    '<input class="status-checkbox" type="checkbox" data-toggle="modal" data-target="#confirmStatus" name="check1" value="1">\n' +
+                    '                                                </td>' +
+                    '</tr>');
+            }
+        }
+    });
+}
 
-            });
+function searchProductInImport(index){
+    var text = $('#searchText').val();
+    console.log(index);
+    // var sId = $('#supplierSelect').val();
+    $.ajax({
+        type: "GET",
+        url: "/admin/warehouses/searchProduct?text=" + text + "&index=" + index,
+        contentType:"application/json",
+        success:function (response){
+            var $product = $('#products tbody');
+            $product.find('tr').remove();
+
+            for(var i in response.data){
+                $product.append('<tr>' +
+                    '<td>'+response.data[i].code+'</td>' +
+                    '<td>'+response.data[i].name+'</td>' +
+                    '<td>'+'<img width="100px"; src=/img/'+response.data[i].image+'>'+'</td>' +
+                    '<td>'+response.data[i].original_price + '</td>' +
+                    '<td>'+response.data[i].price+'</td>' +
+                    '<td>' +
+                    '<input class="status-checkbox" type="checkbox" data-toggle="modal" data-target="#confirmStatus" name="check1" value="1">\n' +
+                    '                                                </td>' +
+                    '</tr>');
+            }
         }
     });
 }
@@ -309,20 +385,20 @@ function importInfoSelect(e) {
 function addToImportTable() {
 
     var warehouse = document.getElementById("warehouse").value;
-    //var  container =document.getElementById('container').options[document.getElementById('container').selectedIndex].text;
-    var importDate = document.getElementById("importDate").value;
-    var date = new Date(importDate);
-    var dd = String(date.getDate()).padStart(2, '0');
-    var mm = String(date.getMonth() + 1).padStart(2, '0');
-    var yyyy = date.getFullYear();
-    date = yyyy + '-' + mm + '-' + dd;
+    // var  container =document.getElementById('container').options[document.getElementById('container').selectedIndex].text;
+    // var importDate = document.getElementById("importDate").value;
+    // var date = new Date(importDate);
+    // var dd = String(date.getDate()).padStart(2, '0');
+    // var mm = String(date.getMonth() + 1).padStart(2, '0');
+    // var yyyy = date.getFullYear();
+    // date = yyyy + '-' + mm + '-' + dd;
     var importProductTable = document.getElementById("importProductList");
     var productTable = document.getElementById("products");
     for (var i = 1, row; row = productTable.rows[i]; i++) {
         if (row.cells[5].getElementsByTagName('input')[0].checked && !duplicateimportProduct(row.cells[0].innerHTML)) {
             var newRow = importProductTable.insertRow(1);
             newRow.setAttribute('class','import-items');
-            var  container =document.getElementById('container').options[document.getElementById('container').selectedIndex].text;
+            // var  container =document.getElementById('container').options[document.getElementById('container').selectedIndex].text;
             var cell0 = newRow.insertCell(0);
             var cell1 = newRow.insertCell(1);
             var cell2 = newRow.insertCell(2);
@@ -335,7 +411,8 @@ function addToImportTable() {
             cell8.style.display= 'none';
             var id = row.cells[0].innerHTML;
             cell0.innerHTML = id;
-            cell1.innerHTML =  warehouse + "-" +container + "-P" + id + "-" + date;
+            cell1.innerHTML = '';
+            // cell1.innerHTML =  warehouse + "-" +container + "-P" + id + "-" + date;
             cell2.innerHTML = row.cells[1].innerHTML;
             cell3.innerHTML = row.cells[2].innerHTML;
             const price = document.createElement("input");
@@ -895,24 +972,65 @@ function addBrand() {
             url : "/admin/products/addBrand?name="+brandName,
 
             success: function (response){
-                console.log(response.data.name + ", " + response.data.id);
-                $('#addBrandModel').modal('hide');
-
-                var x = document.getElementById("brandOption");
-                var option = document.createElement("option");
-                option.text = response.data.name;
-                option.value = response.data.id;
-                x.add(option, x[0]);
+                document.getElementById("addBrandError").style.display = "none";
+                if(response.status === '00'){
+                    $('#addBrandModel').modal('hide');
+                    var x = document.getElementById("brandOption");
+                    var option = document.createElement("option");
+                    option.text = response.data.name;
+                    option.value = response.data.id;
+                    x.add(option, x[0]);
+                }
+                else{
+                    document.getElementById("addBrandError").style.display = "block";
+                    document.getElementById("addBrandError").innerHTML = response.message;
+                }
             },
 
-            error: function (error) {
-                console.log(error.message);
+            error: function () {
+                document.getElementById("addBrandError").style.display = "block";
+                document.getElementById("addBrandError").innerHTML = "Không thể thêm thương hiệu";
             }
         }
     )
 
 }
 
+function addProductLocation() {
+    var locationName = $('#addLocaiton').val();
+    var warehouse_id = $('#warehouse').find(":selected").val();
+
+    $.ajax({
+        type : "POST",
+        contentType: false,
+        url: "/admin/warehouses/addProductLocation?location_name=" + locationName + "&w_id=" + warehouse_id,
+
+        success: function (response) {
+            document.getElementById("addProductLocationError").style.display = "none";
+            if(response.status === '00'){
+                console.log(response);
+                $('#addProductLocation').modal('hide');
+                var x = document.getElementById("warehouseLocation");
+                var option = document.createElement("option");
+                option.text = response.data.name;
+                option.value = response.data.id;
+                x.add(option, x[1]);
+
+            }
+            else{
+                document.getElementById("addProductLocationError").style.display = "block";
+                document.getElementById("addProductLocationError").innerHTML = response.message;
+            }
+        },
+
+        error: function () {
+            document.getElementById("addProductLocationError").style.display = "block";
+            document.getElementById("addProductLocationError").innerHTML = "Không thể thêm Vị trí";
+        }
+    });
+
+
+}
 
 
 setEventImportPrice();
@@ -1007,23 +1125,6 @@ function tableChange(){
         }
     });
 }
-function searchProductInImport(){
-    var text = $('#searchText').val();
-    var sId = $('#supplierSelect').val();
-    $.ajax({
-        type: "GET",
-        url: "/admin/products/search-import?text=" + text+"&sId="+sId,
-        contentType:"application/json",
-        success:function (response){
-            var $product = $('#products tbody');
-            $product.find('tr').remove();
-            response.forEach(p=>{
-                $product.append('<tr class="export-items"><td>'+p.id+'</td><td>'+p.name+'</td><td></td><td>'+p.available +
-                    '  </td><td>'+p.price+ '</td><td><input className="status-checkbox" type="checkbox" data-toggle="modal" data-target="#confirmStatus" name="check1" value="1"></td></tr>')
-            });
 
-        }
-    });
-}
 
 

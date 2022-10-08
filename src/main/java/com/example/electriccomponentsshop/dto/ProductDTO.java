@@ -24,6 +24,8 @@ public class ProductDTO {
     @NotNull
     private String name;
 
+    private String image;
+
 //    private MultipartFile image;
 //    private BigInteger available;
     @NotNull
@@ -38,7 +40,7 @@ public class ProductDTO {
     private String code;
 //    private List<SpecificationValueDto> specificationValues;
 
-    private int status ;
+    private int status;
 
     private String description;
 //    private String supplierId;
