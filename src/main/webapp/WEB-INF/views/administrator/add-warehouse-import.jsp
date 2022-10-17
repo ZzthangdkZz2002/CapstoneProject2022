@@ -62,7 +62,7 @@
                                 <thead>
                                 <tr>
                                     <th>Mã sản phẩm</th>
-                                    <th class="order-item-number">Mã SKUD</th>
+                                    <th class="order-item-number">Giá bán</th>
                                     <th class="order-item-number" width="200">Tên sản phẩm</th>
                                     <th class="order-item-number">Hình ảnh</th>
                                     <th class="order-item-number" width="100">Đơn giá</th>
@@ -89,16 +89,6 @@
 <%--                                <input class="form-control" type="date" name="birthmonth" id="importDate" onchange="checkDate()" required--%>
 <%--                                >--%>
 <%--                            </div>--%>
-<%--                            <div class="form-group col-md-12">--%>
-<%--                                <label for="supplierSelect" class="control-label required-field">Nhà cung--%>
-<%--                                    cấp</label>--%>
-<%--                                <select class="form-control" id="supplierSelect" onchange="resetImportTable()"--%>
-<%--                                        required>--%>
-<%--                                    <c:forEach items="${listSupplier}" var="supplier">--%>
-<%--                                        <option value="${supplier.id}">${supplier.name}</option>--%>
-<%--                                    </c:forEach>--%>
-<%--                                </select>--%>
-<%--                            </div>--%>
                             <div class="form-group col-md-12">
                                 <label for="warehouse" class="control-label required-field">Vị trí lưu
                                     kho</label>
@@ -121,6 +111,17 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductLocation">
             Thêm vị trí
         </button>
+    </div>
+
+    <div class="form-group col-md-12">
+        <label for="supplierSelect" class="control-label required-field">Nhà cung
+            cấp</label>
+        <select class="form-control" id="supplierSelect" >
+            <option value="0">Chọn nhà cung cấp</option>
+            <c:forEach items="${listSupplier}" var="supplier">
+                <option value="${supplier.id}">${supplier.name}</option>
+            </c:forEach>
+        </select>
     </div>
 
                             <div class="form-group col-md-12">
@@ -323,6 +324,7 @@ MODAL SUCCESSFUL
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="unsuccessful" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -453,24 +455,29 @@ MODAL
 <script>
     var element = document.getElementById("createImport");
     element.addEventListener('click',()=>{
-        var importItems= new Array();
+        var importProducts= new Array();
         $(".import-items").each(function (){
             var row = $(this);
-            var importItem = new Object();
+            var importProduct = new Object();
 
-            importItem.productId = row.find("TD").eq(0).html();
-            importItem.skuId = row.find("TD").eq(1).html();
-            importItem.importPrice = row.find("TD").eq(4).find("INPUT").val();
-            importItem.quantity = row.find("TD").eq(5).find("INPUT").val();
-            importItem.containerId =  row.find("TD").eq(8).html();;
-            importItems.push(importItem);
+            importProduct.product_code = row.find("TD").eq(0).html();
+            // importItem.skuId = row.find("TD").eq(1).html();
+            importProduct.import_pirce = row.find("TD").eq(4).find("INPUT").val();
+            importProduct.quantity = row.find("TD").eq(5).find("INPUT").val();
+            // importProduct.containerId =  row.find("TD").eq(8).html();;
+            importProducts.push(importProduct);
 
         });
+
+        var location_name = $( "#warehouseLocation option:selected" ).text();
+        var warehouse = new Object();
+        warehouse.id = $('#warehouse').val();
         var data1={
-            supplierId: $('#supplierSelect').val(),
-            importDate: $('#importDate').val(),
-            warehouseId:$('#warehouse').val(),
-            importItems: importItems
+            "supplier_id": $('#supplierSelect').val(),
+            // importDate: $('#importDate').val(),
+            "location_name": location_name,
+            "warehouse": warehouse,
+            "importProducts": importProducts
         };
 
         $.ajax({
@@ -480,17 +487,23 @@ MODAL
             data:
                 JSON.stringify(data1)
             ,
-            dataType:"text",
+            // dataType:"text",
             success: function (response){
-                if(response === "thành công"){
+                console.log(response);
+                if(response.status === "00"){
                     $('#successful').modal('show');
                 }
                 else {
-                    $('#reason').innerHTML = response;
+                    console.log(response.message + '\n' + response.data + response.status);
+                    $('#reason').html(response.data);
                     $('#unsuccessful').modal('show');
                 }
 
+            },
+            error: function () {
+                return false;
             }
+
         });
     });
 </script>

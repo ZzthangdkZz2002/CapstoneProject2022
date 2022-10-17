@@ -156,19 +156,19 @@
                                             </thead>
 
                                             <tbody id="listItems">
-                                            <c:forEach var="order" items="${listOrders}">
-                                                <tr class="items" onclick="getItems(this)">
-                                                    <td>${order.id}</td>
-                                                    <td>${order.accountCustomerPhone}</td>
-                                                    <td>${order.orderedDate}</td>
-                                                    <td>${order.totalPayment}</td>
-                                                    <td>
-                                                        <button class="btn btn-add btn-sm" title="Chọn" type="button"
-                                                                data-dismiss="modal" onclick="addToExportProductTable(this)">
-                                                            <i class="fas fa-plus"></i></button>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
+<%--                                            <c:forEach var="order" items="${listOrders}">--%>
+<%--                                                <tr class="items" onclick="getItems(this)">--%>
+<%--                                                    <td>${order.id}</td>--%>
+<%--                                                    <td>${order.accountCustomerPhone}</td>--%>
+<%--                                                    <td>${order.orderedDate}</td>--%>
+<%--                                                    <td>${order.totalPayment}</td>--%>
+<%--                                                    <td>--%>
+<%--                                                        <button class="btn btn-add btn-sm" title="Chọn" type="button"--%>
+<%--                                                                data-dismiss="modal" onclick="addToExportProductTable(this)">--%>
+<%--                                                            <i class="fas fa-plus"></i></button>--%>
+<%--                                                    </td>--%>
+<%--                                                </tr>--%>
+<%--                                            </c:forEach>--%>
 
 
                                             </tbody>

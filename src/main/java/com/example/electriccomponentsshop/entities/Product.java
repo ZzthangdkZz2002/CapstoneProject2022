@@ -1,5 +1,6 @@
 package com.example.electriccomponentsshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -36,8 +37,9 @@ public class Product {
     @Column
     private BigDecimal price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id")
+    @JsonIgnore
     private Brand brand;
 
 
@@ -68,7 +70,7 @@ public class Product {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private List<Feedback> feedbackList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "product")
     private List<ProductWareHouse> productWareHouseList = new ArrayList<>();
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")

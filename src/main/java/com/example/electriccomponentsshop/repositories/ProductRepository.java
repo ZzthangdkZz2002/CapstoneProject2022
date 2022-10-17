@@ -1,5 +1,6 @@
 package com.example.electriccomponentsshop.repositories;
 
+import com.example.electriccomponentsshop.dto.BrandDTO;
 import com.example.electriccomponentsshop.entities.Brand;
 import com.example.electriccomponentsshop.entities.Product;
 

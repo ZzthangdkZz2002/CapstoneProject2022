@@ -8,6 +8,7 @@ import com.example.electriccomponentsshop.entities.Product;
 import com.example.electriccomponentsshop.repositories.BrandRepository;
 import com.example.electriccomponentsshop.repositories.ProductLocationRepository;
 import com.example.electriccomponentsshop.repositories.ProductRepository;
+import com.example.electriccomponentsshop.repositories.ProductWarehouseRepository;
 import com.example.electriccomponentsshop.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,9 @@ public class ProductController {
 
     @Autowired
     final ProductRepository productRepository;
+
+    @Autowired
+    final ProductWarehouseRepository productWarehouseRepository;
 
     @Autowired
     final BrandRepository brandRepository;
@@ -146,19 +150,24 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Something went wrong!",e.getMessage()));
         }
     }
-//    @PostMapping("/getProductByBrand")
-//    public ResponseEntity<String> getProductByBrand(@RequestBody Brand brand){
-//        try{
+    @PostMapping("/getProductByBrand")
+    public ResponseEntity<List<Product>> getProductByBrand(@RequestBody BrandDTO brand){
+        try{
+            System.out.println("brand dto:"+brand);
+            List<Product> list = productRepository.findByBrand(brandRepository.findBrandByName(brand.getName()));
+            System.out.println("list brand: "+list);
+
 //            System.out.println("test brand: "+brandRepository.findById(brand.getId()));
 //            List<Product> list = brandRepository.findById(brand.getId()).get().getProduct();
 //            for(Product p: list){
 //                System.out.println(p);
 //            }
-//            return ResponseEntity.status(HttpStatus.OK).body("success");
-//        }catch (Exception e){
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-//        }
-//    }
+            return ResponseEntity.status(HttpStatus.OK).body(list);
+        }catch (Exception e){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body();
+        }
+        return null;
+    }
 
 
     @PostMapping("/addCategory")

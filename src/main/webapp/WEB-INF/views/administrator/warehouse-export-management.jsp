@@ -68,21 +68,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="exportTransaction" items="${listOfExport}">
-                                <tr>
-                                    <td>${exportTransaction.id}</td>
-                                    <td>${exportTransaction.exportDate}</td>
-                                    <td>${exportTransaction.exportPerson}</td>
-                                    <td>${exportTransaction.receivedPerson}</td>
-                                    <td>
-                                        <a href="${pageContext.request.contextPath}/admin/warehouses/export/edit/${exportTransaction.id}" class="btn btn-primary btn-sm edit"
-                                           type="button" title="Sửa"><i class="fas fa-edit"></i></a>
-                                        <button class="btn btn-primary btn-sm" type="button" title="Chi tiết đơn hàng"
-                                                onclick="location.href='export-transaction-detail.html'"><i
-                                                class="fa fa-info"></i></button>
-                                    </td>
-                                </tr>
-                            </c:forEach>
+<%--                            <c:forEach var="exportTransaction" items="${listOfExport}">--%>
+<%--                                <tr>--%>
+<%--                                    <td>${exportTransaction.id}</td>--%>
+<%--                                    <td>${exportTransaction.exportDate}</td>--%>
+<%--                                    <td>${exportTransaction.exportPerson}</td>--%>
+<%--                                    <td>${exportTransaction.receivedPerson}</td>--%>
+<%--                                    <td>--%>
+<%--                                        <a href="${pageContext.request.contextPath}/admin/warehouses/export/edit/${exportTransaction.id}" class="btn btn-primary btn-sm edit"--%>
+<%--                                           type="button" title="Sửa"><i class="fas fa-edit"></i></a>--%>
+<%--                                        <button class="btn btn-primary btn-sm" type="button" title="Chi tiết đơn hàng"--%>
+<%--                                                onclick="location.href='export-transaction-detail.html'"><i--%>
+<%--                                                class="fa fa-info"></i></button>--%>
+<%--                                    </td>--%>
+<%--                                </tr>--%>
+<%--                            </c:forEach>--%>
 
                             </tbody>
                         </table>

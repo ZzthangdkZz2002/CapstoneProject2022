@@ -22,17 +22,23 @@ public class Inventory {
     @CreationTimestamp
     @Column(updatable = false)
     private Date created_date;
-    private int real_quantity;
+    private Integer real_quantity;
     private BigDecimal real_totalPrice;
     private int difference_quantity;
     private int difference_quantityUp;
     private int difference_quantityDown;
+    private BigDecimal money_mustPay;
     private String creator_name;
     private String note;
+    private String receiver;
 
     private String product_code;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 }

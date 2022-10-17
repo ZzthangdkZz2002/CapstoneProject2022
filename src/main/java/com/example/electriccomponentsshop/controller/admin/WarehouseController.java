@@ -4,13 +4,8 @@ package com.example.electriccomponentsshop.controller.admin;
 
 import com.example.electriccomponentsshop.common.OrderEnum;
 import com.example.electriccomponentsshop.dto.*;
-import com.example.electriccomponentsshop.entities.Product;
-import com.example.electriccomponentsshop.entities.ProductLocation;
-import com.example.electriccomponentsshop.entities.ProductWareHouse;
-import com.example.electriccomponentsshop.entities.Warehouse;
-import com.example.electriccomponentsshop.repositories.ProductLocationRepository;
-import com.example.electriccomponentsshop.repositories.ProductWarehouseRepository;
-import com.example.electriccomponentsshop.repositories.WarehouseRepository;
+import com.example.electriccomponentsshop.entities.*;
+import com.example.electriccomponentsshop.repositories.*;
 import com.example.electriccomponentsshop.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,19 +35,25 @@ public class WarehouseController {
     final ProductLocationRepository productLocationRepository;
     @Autowired
     final WarehouseRepository warehouseRepository;
+    @Autowired
+    final InventoryRepository inventoryRepository;
+    @Autowired
+    SupplierRepository supplierRepository;
     final
     WarehouseService warehouseService;
     final
     ProductService productService;
+    final ProductWarehouseService productWarehouseService;
 //    final
 //    ImportTransactionService importTransactionService;
 //    final ExportTransactionService exportTransactionService;
-//    final SupplierService supplierService;
+    final SupplierService supplierService;
     final ContainerService containerService;
 //    final OrderService orderService;
     final ProvinceService provinceService;
     final DistrictService districtService;
     final WardService wardService;
+    final InventoryService inventoryService;
     @GetMapping("")
     public String viewAll(Model model){
         List<WarehouseDTO> warehouses =warehouseService.getAllWarehouse();
@@ -115,7 +116,7 @@ public class WarehouseController {
     }
     @GetMapping("/import/add")
     public String viewFormAddImp(ModelMap modelMap, @RequestParam(name="index",defaultValue = "0") String index){
-//        List<SupplierDTO> listSupplier = supplierService.getAllSupplier();
+        List<Supplier> listSupplier = supplierRepository.findSupplierByActive(1);
         List<WarehouseDTO> listWarehouse = warehouseService.getAllWarehouse();
         Page<Product> products =  productService.findAll(PageRequest.of(Integer.parseInt(index),10));
         modelMap.addAttribute("products", products.getContent());
@@ -124,6 +125,7 @@ public class WarehouseController {
 //        System.out.println(listContainer.stream().findFirst().get().getShelf()+ "gw") ;
 //        modelMap.addAttribute("listSupplier",listSupplier);
         modelMap.addAttribute("listWarehouses",listWarehouse);
+        modelMap.addAttribute("listSupplier", listSupplier);
 //        modelMap.addAttribute("listContainer",listContainer);
         return "administrator/add-warehouse-import";
     }
@@ -168,24 +170,59 @@ public class WarehouseController {
     @GetMapping("/view/import")
     public String viewListImport(ModelMap modelMap){
         try{
+            List<Inventory> inventories = inventoryRepository.findAll();
+            modelMap.addAttribute("inventories",inventories);
 //            List<ImportTransactionDto> importTransactionDtoList =importTransactionService.findAll();
 //            modelMap.addAttribute("listImport", importTransactionDtoList );
         }catch (NoSuchElementException e){
             modelMap.addAttribute("notFound","Không có dữ liệu");
         }
-        return "administrator/warehouse-import-management";
+        return "administrator/Inventory";
     }
-//    @PostMapping("/import/add")
-//    @ResponseBody
-//    public String addImportTransaction(@Valid @RequestBody ImportTransactionDto importTransactionDto, ModelMap modelMap){
-//        try{
+    @PostMapping("/import/add")
+    @ResponseBody
+    public ResponseEntity<ResponseObject> addImportTransaction( @Valid @RequestBody ProductWarehouseDTO productWarehouseDTO, BindingResult bindingResult){
+        try{
+            if(bindingResult.hasErrors()){
+                Map<String, String> errors= new HashMap<>();
+                bindingResult.getFieldErrors().forEach(
+                        error -> errors.put(error.getField(), error.getDefaultMessage())
+                );
+                String errorMsg= "";
+
+                for(String key: errors.keySet()){
+                    errorMsg += "Lỗi ở: " + key + ", lí do: " + errors.get(key) + "\n";
+                }
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Thêm sản phẩm vào kho không thành công", errorMsg));
+            }
+            for(ImportProductDTO p : productWarehouseDTO.getImportProducts()){
+                if(p.getProduct_code().equalsIgnoreCase("null") || p.getProduct_code().equals("")){
+                    return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Thêm sản phẩm vào kho không thành công", "Mã sản phẩm không tồn tại"));
+                }
+            }
+
+
+            List<ProductWarehouseDTO> productWareHouseList = productWarehouseService.addProductToWarehouse(productWarehouseDTO);
+            if(productWareHouseList != null && inventoryService.addInventoryImport(productWarehouseDTO)){
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Thêm sản phẩm vào kho thành công", productWareHouseList));
+            }else{
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Thêm sản phẩm vào kho không thành công", "Không thể thêm sản phẩm"));
+            }
+//            if(productWareHouseList != null){
+//                if(inventoryService.addInventoryImport(productWarehouseDTO)){
+//                    return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Thêm sản phẩm vào kho thành công", productWareHouseList));
+//                }else{
+//                    return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Thêm sản phẩm vào kho không thành công", "Không thể thêm sản phẩm"));
+//                }
+//            }else{
+//                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Thêm sản phẩm vào kho không thành công", "Mã sản phẩm không tồn tại"));
+//            }
 //            importTransactionService.addImportTransaction(importTransactionDto);
-//            return "thành công";
-//        }catch (NoSuchElementException e){
-//            return e.getMessage();
-//        }
-//
-//    }
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Thêm sản phẩm vào kho không thành công", e.getMessage()));
+        }
+
+    }
 //    @GetMapping("/import/update/{id}")
 //    public String updateImportTransaction(ModelMap modelMap, @PathVariable(name = "id") String id){
 //        try{
@@ -225,9 +262,9 @@ public class WarehouseController {
         Warehouse warehouse = warehouseService.getWarehouse(warehouse_id);
         String data = "<option value=\"0\"> Chọn vị trí lưu sản phẩm </option>";
         if(warehouse != null){
-            List<ProductWareHouse> productWareHouses = productWarehouseRepository.findProductWareHouseByWarehouse(warehouse);
-            for(ProductWareHouse pw : productWareHouses){
-                data += "<option value=" + pw.getProductLocation().getId() + ">" + pw.getProductLocation().getName() + "</option>"+" ";
+            List<ProductLocation> productLocations = productLocationRepository.findProductLocationByWarehouse(warehouse);
+            for(ProductLocation pl : productLocations){
+                data += "<option value=" + pl.getId() + ">" + pl.getName() + "</option>"+" ";
             }
             return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Lấy vị trí thành công", data));
         }else{
@@ -240,31 +277,34 @@ public class WarehouseController {
     @ResponseBody
     public ResponseEntity<ResponseObject> addProductLocation(@RequestParam(name = "location_name") String location_name, @RequestParam(name = "w_id") String warehouse_id){
 
-            ProductLocation productLocation = productLocationRepository.findProductLocationByName(location_name);
+            ProductLocation productLocation = null;
             Warehouse warehouse = warehouseRepository.findWarehouseById(Integer.parseInt(warehouse_id));
+            if(productLocationRepository.findProductLocationByWarehouse(warehouse) != null){
+                 productLocation = productLocationRepository.findProductLocationByWarehouseAndName(warehouse, location_name);
+            }
             if(productLocation != null){
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Vị trí này đã tồn tại",""));
             }else{
                 if(Integer.parseInt(warehouse_id) <= 0){
                     return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Vui lòng chọn vị trí lưu kho",""));
                 }
-                ProductLocation productLocation1 = productLocationRepository.save(new ProductLocation(location_name));
-                ProductWareHouse productWareHouse = productWarehouseRepository.save(new ProductWareHouse(productLocation1, warehouse));
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Thêm vị trí thành công",productWareHouse.getProductLocation()));
+                ProductLocation productLocation1 = productLocationRepository.save(new ProductLocation(warehouse,location_name));
+//                ProductWareHouse productWareHouse = productWarehouseRepository.save(new ProductWareHouse(productLocation1, warehouse,0));
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Thêm vị trí thành công",productLocation1));
             }
 
     }
 
-//    @GetMapping("/view/export")
-//    public String viewExports(ModelMap modelMap){
+    @GetMapping("/view/export")
+    public String viewExports(ModelMap modelMap){
 //        try{
 //            List<ExportTransactionDto> exportTransactionDtos =exportTransactionService.findAll();
 //            modelMap.addAttribute("listOfExport", exportTransactionDtos );
 //        }catch (NoSuchElementException e){
 //            modelMap.addAttribute("notFound","Không có dữ liệu");
 //        }
-//        return "administrator/warehouse-export-management";
-//    }
+        return "administrator/warehouse-export-management";
+    }
 //    @PostMapping("/export/update")
 //    @ResponseBody
 //    public String updateExport(@Valid @RequestBody ExportTransactionDto exportTransactionDto){
@@ -284,17 +324,17 @@ public class WarehouseController {
 //        modelMap.addAttribute("exportTransaction" , exportTransactionDto);
 //        return "administrator/setting-warehouse-export";
 //    }
-//    @GetMapping("/export/add")
-//    public String viewAddExport(ModelMap modelMap){
-//        try{
+    @GetMapping("/export/add")
+    public String viewAddExport(ModelMap modelMap){
+        try{
 //            List<OrderDTO> orderDTOList = orderService.findByStatus(OrderEnum.CONFIRM.getName());
 //            modelMap.addAttribute("listOrders", orderDTOList);
-//        }
-//        catch (Exception e){
-//            modelMap.addAttribute("notFound", e.getMessage());
-//        }
-//        return "administrator/add-warehouse-export";
-//    }
+        }
+        catch (Exception e){
+            modelMap.addAttribute("notFound", e.getMessage());
+        }
+        return "administrator/add-warehouse-export";
+    }
 //    @PostMapping("/export/add")
 //    @ResponseBody
 //    public String addExportTransaction(ModelMap modelMap,@Valid @RequestBody ExportTransactionDto exportTransactionDto){
