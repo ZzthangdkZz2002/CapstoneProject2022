@@ -164,12 +164,9 @@
                                 <th scope="col">Nhà cung cấp</th>
                                 <th scope="col">Kho hàng</th>
                                 <th scope="col">Người nhập kho</th>
-                                <th scope="col">Số lượng thực tế</th>
-                                <th scope="col">Tổng chênh lệch</th>
-                                <th scope="col">SL lệch tăng</th>
-                                <th scope="col">SL lệch giảm</th>
-                                <th scope="col">Cần trả NCC</th>
-                                <th scope="col">Tổng tiền hàng trong kho</th>
+                                <th scope="col">Tổng số lượng</th>
+                                <th scope="col">Tổng tiền hàng</th>
+                                <th scope="col">Tiền đã trả NCC</th>
                                 <th scope="col">Ghi chú</th>
 
                                 <th scope="col"></th>
@@ -185,17 +182,16 @@
                                     <td>${inventory.supplier.name}</td>
                                     <td>Chi nhánh trung tâm</td>
                                     <td>${inventory.creator_name}</td>
-                                    <td>${inventory.real_quantity}</td>
-                                    <td>${inventory.difference_quantity}</td>
-                                    <td>${inventory.difference_quantityUp}</td>
-                                    <td>${inventory.difference_quantityDown}</td>
-                                    <td>${inventory.money_mustPay}</td>
-                                    <td>${inventory.real_totalPrice}</td>
+                                    <td>${inventory.total_quantity}</td>
+                                    <td>${inventory.total_importPrice}</td>
+                                    <td style="color: ${inventory.money_paid != inventory.total_importPrice ? "red" :""}">${inventory.money_paid}</td>
                                     <td>${inventory.note}</td>
-                                    <td> <a href="http://127.0.0.1:5500/inventory-view.html"><i
-                                            class="fa-solid fa-eye"></i></a>
+                                    <td> <a href="#" onclick="showDetailInventory(`${inventory}`)">
+                                        <i class="fa-solid fa-eye"></i>
+                                        </a>
                                     </td>
                                 </tr>
+
                             </c:forEach>
                             </tbody>
                         </table>
@@ -204,6 +200,115 @@
             </div>
         </div>
     </div>
+
+
+
+
+    <!-- detail inventory-->
+
+    <form  class="mt-4 hide" id="detailInventory" style="display: none">
+        <div class="container mt-2">
+            <div class="row pre-info">
+                <div class="col-5 mr-5">
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Mã nhập hàng:</label>
+                        <div class="col-sm-8">
+                            <p id="inventory_code"></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Thời gian:</label>
+                        <div class="col-sm-8">
+                            <p id="inventory_date"></p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Nhà cung cấp:</label>
+                        <div class="col-sm-8">
+                            <p id="inventory_supplier"></p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-5">
+
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Chi nhánh:</label>
+                        <div class="col-sm-8">
+                            <p>Chi nhánh trung tâm</p>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Người nhập:</label>
+                        <div class="col-sm-8">
+                            <p id="inventory_creatorname"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <thead style="background-color: #5FB55F; color: white;">
+                <tr>
+                    <th scope="col">Mã hàng</th>
+                    <th scope="col">Tên hàng</th>
+                    <th scope="col">Số lượng</th>
+                    <th scope="col">Đơn giá</th>
+                    <th scope="col">Giảm giá</th>
+                    <th scope="col">Giá nhập</th>
+                    <th scope="col">Thành tiền</th>
+                </tr>
+                </thead>
+                <tbody>
+<%--                <tr>--%>
+<%--                    <th scope="row">1</th>--%>
+<%--                    <td>Mark</td>--%>
+<%--                    <td>Otto</td>--%>
+<%--                    <td>@mdo</td>--%>
+<%--                    <td>@mdo</td>--%>
+<%--                    <td>@mdo</td>--%>
+<%--                    <td>@mdo</td>--%>
+<%--                </tr>--%>
+                </tbody>
+            </table>
+<%--            <div class="count mt-2 d-flex justify-content-end">--%>
+<%--                <table>--%>
+<%--                    <tr>--%>
+<%--                        <td style="width:150px;">Tổng số lượng:</td>--%>
+<%--                        <td style="width:100px; text-align: right;">3</td>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <td style="width:150px;">Tổng số mặt hàng:</td>--%>
+<%--                        <td style="width:100px; text-align: right;">1</td>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <td style="width:150px;">Tổng tiền hàng:</td>--%>
+<%--                        <td style="width:100px; text-align: right;">8000</td>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <td style="width:150px;">Giảm giá:</td>--%>
+<%--                        <td style="width:100px; text-align: right;">0</td>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <td style="width:150px;">Tổng cộng:</td>--%>
+<%--                        <td style="width:100px; text-align: right;">9000</td>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <td style="width:150px;">Tiền đã trả NCC:</td>--%>
+<%--                        <td style="width:100px; text-align: right;">9000</td>--%>
+<%--                    </tr>--%>
+<%--                </table>--%>
+<%--            </div>--%>
+            <div class="buttons mt-5 text-center">
+                <button class="btn btn-success mr-2" type="submit"><i
+                        class="fa-solid fa-floppy-disk mr-2"></i>Lưu</button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash-can mr-2"></i>Hủy bỏ</button>
+            </div>
+        </div>
+    </form>
+
+
+
+
 
     <!-- hiển thị time(theo ngày, tháng, năm)  -->
     <div class="time-popup hide">

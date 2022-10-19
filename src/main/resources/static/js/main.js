@@ -276,6 +276,7 @@ function resetImportTable() {
         importProductTable.deleteRow(i);
         i = 0;
     }
+
 }
 
 function SelectWarehouse(warehouse_id){
@@ -405,10 +406,17 @@ function addToImportTable() {
             var cell3 = newRow.insertCell(3);
             var cell4 = newRow.insertCell(4);
             var cell5 = newRow.insertCell(5);
+
             var cell6 = newRow.insertCell(6);
             var cell7 = newRow.insertCell(7);
             var cell8 = newRow.insertCell(8);
-            cell8.style.display= 'none';
+
+
+            // var cell6 = newRow.insertCell(6);
+            // var cell7 = newRow.insertCell(7);
+
+            // var cell8 = newRow.insertCell(8);
+            // cell8.style.display= 'none';
             var p_code = row.cells[0].innerHTML;
             cell0.innerHTML = p_code;
             cell1.innerHTML = row.cells[4].innerHTML;
@@ -420,15 +428,21 @@ function addToImportTable() {
             price.value = row.cells[3].innerHTML;
             // price.setAttribute('disabled','true');
             price.classList.add("import-price");
+            const discount = document.createElement("input");
+            discount.classList.add("discount-price");
+            discount.type = "number";
+            discount.value = 0;
             cell4.appendChild(price.cloneNode(true));
             cell5.appendChild(quantity.cloneNode(true));
             cell5.getElementsByClassName("minus-btn")[0].addEventListener("click", setMinusValueFunction);
             cell5.getElementsByClassName("plus-btn")[0].addEventListener("click", setPlusValueFunction);
-            cell6.innerHTML = 0;
-            cell7.appendChild(deleteButton.cloneNode(true));
-            cell8.innerHTML = $('#container').val()
+            cell6.appendChild(discount.cloneNode(true));
+            cell7.innerHTML = 0;
+            cell8.appendChild(deleteButton.cloneNode(true));
+            // cell8.innerHTML = $('#container').val()
         }
     }
+    setEventImportdiscount();
     setEventImportPrice();
     setSumImport();
     setWholeValue();
@@ -601,31 +615,7 @@ function duplicateExportProduct(id) {
 
 
 
-function setSumOrder() {
-    if (document.getElementById("orderProductList") != null) {
-        var table = document.getElementById("orderProductList");
-        var sum = document.getElementById("sum");
-        var sumNumber = 0;
-        for (var i = 1, row; row = table.rows[i]; i++) {
-            sumNumber = sumNumber + parseFloat(row.cells[5].innerHTML);
-        }
-        sum.innerHTML = convertMoney(sumNumber);
-    }
-}
 
-function setSumImport() {
-    if (document.getElementById("importProductList") != null) {
-        var sum = document.getElementById("sum");
-        var sumNumber = 0;
-        var table = document.getElementById("importProductList");
-        for (var i = 1, row; row = table.rows[i]; i++) {
-            var currentUnit = row.cells[4].getElementsByTagName("input")[0].value;
-            row.cells[6].innerHTML = currentUnit * row.cells[5].getElementsByTagName("input")[0].value;
-            sumNumber = sumNumber + parseFloat(row.cells[6].innerHTML);
-        }
-        sum.innerHTML = convertMoney(sumNumber);
-    }
-}
 
 
 
@@ -667,7 +657,7 @@ function minus(e) {
         var unit = e.target.parentNode.parentNode.previousElementSibling;
         var ammount = e.target.parentNode.parentNode.nextElementSibling;
         if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id == "importProductList") {
-            ammount.innerHTML = input.value * parseInt(unit.getElementsByTagName("input")[0].value);
+            // ammount.innerHTML = input.value * parseInt(unit.getElementsByTagName("input")[0].value);
         } else {
             ammount.innerHTML = input.value * parseInt(unit.innerHTML);
         }
@@ -697,7 +687,7 @@ function plus(e) {
         var ammount = e.target.parentNode.parentNode.nextElementSibling;
         if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id == "importProductList") {
             console.log(unit.getElementsByTagName("input")[0].value);
-            ammount.innerHTML = input.value * parseInt(unit.getElementsByTagName("input")[0].value);
+            // ammount.innerHTML = input.value * parseInt(unit.getElementsByTagName("input")[0].value);
         } else {
             ammount.innerHTML = input.value * parseInt(unit.innerHTML);
         }
@@ -725,7 +715,7 @@ function setWholeValue() {
                         var unit = e.target.parentNode.parentNode.previousElementSibling;
                         var ammount = e.target.parentNode.parentNode.nextElementSibling;
                         if (e.target.parentNode.parentNode.parentNode.parentNode.parentNode.id == "importProductList") {
-                            ammount.innerHTML = parseInt(unit.getElementsByTagName("input")[0].value) * parseInt(e.target.value);
+                            // ammount.innerHTML = parseInt(unit.getElementsByTagName("input")[0].value) * parseInt(e.target.value);
                             setSumImport();
                         } else {
                             ammount.innerHTML = parseInt(unit.innerHTML) * parseInt(e.target.value);
@@ -740,6 +730,17 @@ function setWholeValue() {
     }
 }
 
+var debts = 0;
+
+$('#moneyMustPay').on('keyup', function () {
+    var money = $('#moneyMustPay').val();
+    var total = totalMoney.toFixed(3);
+    var debt = Number(money) - Number(total);
+    debts = debt;
+    document.getElementById("debt").innerHTML = convertMoney(debt)+"";
+});
+
+
 function setEventImportPrice() {
     var importPrice = document.getElementsByClassName("import-price");
     if (importPrice != null) {
@@ -749,10 +750,13 @@ function setEventImportPrice() {
                     if (e.target.value == "" || e.target.value < 0) {
                         e.target.value = 0;
                     }
+                    // e.target.value.innerHTML = convertMoney(parseInt(e.target.value));
                     e.target.value = parseInt(e.target.value);
+
+
                     var number = e.target.parentNode.nextElementSibling.getElementsByTagName("input")[0];
                     var ammout = e.target.parentNode.nextElementSibling.nextElementSibling;
-                    ammout.innerHTML = parseInt(number.value) * parseInt(e.target.value);
+                    // ammout.innerHTML = parseInt(number.value) * parseInt(e.target.value);
                     setSumImport();
                 }
             }
@@ -760,6 +764,65 @@ function setEventImportPrice() {
     }
 }
 
+function setEventImportdiscount() {
+    var discountPrice = document.getElementsByClassName("discount-price");
+    if (discountPrice != null) {
+        for (var i = 0; i < discountPrice.length; i++) {
+            if (typeof discountPrice[i].oninput !== "function") {
+                discountPrice[i].oninput = function (e) {
+                    if (e.target.value == "" || e.target.value < 0) {
+                        e.target.value = 0;
+                    }
+                    e.target.value = parseInt(e.target.value);
+                    var number = e.target.parentNode.nextElementSibling.getElementsByTagName("input")[0];
+                    var ammout = e.target.parentNode.nextElementSibling.nextElementSibling;
+                    // ammout.innerHTML = parseInt(number.value) * parseInt(e.target.value);
+                    setSumImport();
+                }
+            }
+        }
+    }
+}
+
+
+function setSumOrder() {
+    if (document.getElementById("orderProductList") != null) {
+        var table = document.getElementById("orderProductList");
+        var sum = document.getElementById("sum");
+        var sumNumber = 0;
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            sumNumber = sumNumber + parseFloat(row.cells[5].innerHTML);
+        }
+        sum.innerHTML = convertMoney(sumNumber);
+    }
+}
+var totalMoney = 0;
+function setSumImport() {
+    if (document.getElementById("importProductList") != null) {
+        var sum = document.getElementById("sum");
+        var discountElement = document.getElementsByClassName("discount-price");
+        var sumNumber = 0;
+        var table = document.getElementById("importProductList");
+        for (var i = 1, row; row = table.rows[i]; i++) {
+            var currentUnit = row.cells[4].getElementsByTagName("input")[0].value;
+            var discount = row.cells[6].getElementsByTagName("input")[0].value;
+            if(Number(discount) > Number(currentUnit)){
+                discount = currentUnit;
+            }
+            row.cells[7].innerHTML = (currentUnit-discount) * row.cells[5].getElementsByTagName("input")[0].value;
+            sumNumber = sumNumber + parseFloat(row.cells[7].innerHTML);
+        }
+        totalMoney = sumNumber;
+        //tinh cong no
+        var money = $('#moneyMustPay').val();
+        var total = totalMoney.toFixed(3);
+        var debt = Number(money) - Number(total);
+        debts = debt;
+        document.getElementById("debt").innerHTML = convertMoney(debt)+"";
+        //
+        sum.innerHTML = convertMoney(sumNumber);
+    }
+}
 
 function convertMoney(num) {
     return num.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
@@ -777,6 +840,15 @@ function showPassword(checkbox) {
     }
 }
 
+
+function showDetailInventory(inventory) {
+    console.log(inventory);
+    document.getElementById("detailInventory").style.display = "none";
+
+    document.getElementById("inventory_code").innerHTML = inventory.code;
+    document.getElementById("detailInventory").style.display = "block";
+
+}
 
 function checkPassword() {
     // /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
@@ -1016,6 +1088,7 @@ function addProductLocation() {
                 option.text = response.data.name;
                 option.value = response.data.id;
                 x.add(option, x[1]);
+                x[1].selected = true;
 
             }
             else{

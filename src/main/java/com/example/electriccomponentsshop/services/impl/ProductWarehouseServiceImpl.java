@@ -40,7 +40,8 @@ public class ProductWarehouseServiceImpl implements ProductWarehouseService {
                 productWareHouse.setQuantity(productDTO.getQuantity());
 
                 //dieu chinh gia von
-                double original_price = (product.getOriginal_price().doubleValue() * getProductQuantity(productDTO.getProduct_code()) + productDTO.getImport_pirce().doubleValue() * productDTO.getQuantity()) /
+                double discount = productDTO.getDiscount_price().doubleValue() > productDTO.getOriginal_price().doubleValue() ? productDTO.getOriginal_price().doubleValue() : productDTO.getDiscount_price().doubleValue();
+                double original_price = (product.getOriginal_price().doubleValue() * getProductQuantity(productDTO.getProduct_code()) + (productDTO.getOriginal_price().doubleValue() - discount) * productDTO.getQuantity()) /
                         (getProductQuantity(productDTO.getProduct_code())+productDTO.getQuantity());
                     product.setOriginal_price(BigDecimal.valueOf(original_price));
                     productRepository.save(product);

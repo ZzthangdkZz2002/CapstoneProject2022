@@ -17,5 +17,12 @@ public class ImportProductDTO {
 
     private Integer quantity;
 
-    private BigDecimal import_pirce;
+    //don gia
+    private BigDecimal original_price;
+//    gia nhap vao
+//    private BigDecimal import_price;
+    //giam gia
+    private BigDecimal discount_price;
+    //Thanh tien
+    private BigDecimal total;
 }

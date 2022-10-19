@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Main CSS-->
     <link href="<c:url value="/css/main.css"/>" rel="stylesheet" type="text/css">
+    <link href="<c:url value="/css/warehouse.css"/>" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <!-- or -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -20,6 +21,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+          integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
@@ -67,6 +73,7 @@
                                     <th class="order-item-number">Hình ảnh</th>
                                     <th class="order-item-number" width="100">Đơn giá</th>
                                     <th class="order-item-number" width="10">Số lượng</th>
+                                    <th class="order-item-number" width="10">Giảm giá</th>
                                     <th class="order-item-number">Thành tiền</th>
                                     <th width="100" class="order-item-number text-center"
                                         style="text-align: center; vertical-align: middle;">Tuỳ chọn</th>
@@ -122,12 +129,25 @@
                 <option value="${supplier.id}">${supplier.name}</option>
             </c:forEach>
         </select>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
+            Thêm nhà cung cấp
+        </button>
     </div>
 
                             <div class="form-group col-md-12">
                                 <label class="control-label">Tổng tiền: </label>
                                 <p class="control-all-money-total"><span id="sum">0</span></p>
                             </div>
+    <div class="form-group col-md-12">
+        <label class="control-label">Tiền trả nhà cung cấp: </label>
+        <input type="text" class="form__field money_mustPay" id="moneyMustPay" required="" value="0" style="width: 200px; margin-left: 30px">
+    </div>
+    <div class="form-group col-md-12">
+        <label class="control-label">Tính vào công nợ: </label>
+        <p class="control-all-money-total"><span id="debt">0</span></p>
+    </div>
                             <div class="row">
                                 <div class="tile-footer col-md-12">
                                     <button id="createImport" class="btn btn-primary create-order-button"
@@ -410,6 +430,73 @@ MODAL CHOOSE INFO BEFORE SELECTING PRODUCT
         </div>
     </div>
 </div>
+
+<!-- Add supplier model -->
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thêm nhà cung cấp</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row justify-content-between">
+
+                        <div class="form__group field col-5">
+                            <input type="input" class="form__field" placeholder="Mã mặc định" name="s_code" id='code' required />
+                            <label for="name" class="form__label">Mã nhà cung cấp</label>
+                        </div>
+
+
+                        <div class="form__group field col-5">
+                            <input type="input" class="form__field" placeholder="Name" name="s_name" id='supplier_name' required />
+                            <label for="name" class="form__label">Tên  nhà cung cấp</label>
+                        </div>
+
+                        <div class="form__group field col-5">
+                            <input type="input" class="form__field" placeholder="s_email" name="name" id='supplier_email' required />
+                            <label for="name" class="form__label">Email</label>
+                        </div>
+
+                        <div class="form__group field col-5">
+                            <input type="input" class="form__field" placeholder="Name" name="phone" id='supplier_phone' required />
+                            <label for="name" class="form__label">Điện thoại</label>
+                        </div>
+
+                        <div class="form__group field col-5">
+                            <input type="input" class="form__field" placeholder="Name" name="company" id='supplier_company' required />
+                            <label for="name" class="form__label">Công ty</label>
+                        </div>
+
+                        <div class="form__group field col-5">
+                            <input type="input" class="form__field" placeholder="Name" name="address" id='supplier_address' required />
+                            <label for="name" class="form__label">Địa chỉ</label>
+                        </div>
+                        <div class="form__group field col-5">
+                            <input type="input" class="form__field" placeholder="Name" name="tax_code" id='supplier_taxcode' required />
+                            <label for="name" class="form__label">Mã số thuế</label>
+                        </div>
+
+
+                        <div class="form__group field col-5">
+                            <input type="input" class="form__field" placeholder="Name" name="note" id='supplier_note' required />
+                            <label for="name" class="form__label">Ghi chú</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa-solid fa-ban mr-2"></i>Huỷ</button>
+                <button type="button" class="btn btn-primary"><i class="fa-regular fa-floppy-disk mr-2"></i>Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--
 MODAL
 -->
@@ -453,6 +540,14 @@ MODAL
 <!-- Page specific javascripts-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script>
+    $('#exampleModal').on('show.bs.modal', event => {
+        var button = $(event.relatedTarget);
+        var modal = $(this);
+        // Use above variables to manipulate the DOM
+
+    });
+</script>
+<script>
     var element = document.getElementById("createImport");
     element.addEventListener('click',()=>{
         var importProducts= new Array();
@@ -462,8 +557,11 @@ MODAL
 
             importProduct.product_code = row.find("TD").eq(0).html();
             // importItem.skuId = row.find("TD").eq(1).html();
-            importProduct.import_pirce = row.find("TD").eq(4).find("INPUT").val();
+            // importProduct.import_price = row.find("TD").eq(4).find("INPUT").val();
             importProduct.quantity = row.find("TD").eq(5).find("INPUT").val();
+            importProduct.original_price = row.find("TD").eq(4).find("INPUT").val();
+            importProduct.discount_price = row.find("TD").eq(6).find("INPUT").val();
+            importProduct.total = row.find("TD").eq(7).html();
             // importProduct.containerId =  row.find("TD").eq(8).html();;
             importProducts.push(importProduct);
 
@@ -477,6 +575,8 @@ MODAL
             // importDate: $('#importDate').val(),
             "location_name": location_name,
             "warehouse": warehouse,
+            "total_importPrice" : totalMoney.toFixed(0),
+            "money_paid" : $('#moneyMustPay').val(),
             "importProducts": importProducts
         };
 
