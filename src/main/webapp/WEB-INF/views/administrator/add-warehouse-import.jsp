@@ -123,7 +123,7 @@
     <div class="form-group col-md-12">
         <label for="supplierSelect" class="control-label required-field">Nhà cung
             cấp</label>
-        <select class="form-control" id="supplierSelect" >
+        <select class="form-control" id="supplierSelect">
             <option value="0">Chọn nhà cung cấp</option>
             <c:forEach items="${listSupplier}" var="supplier">
                 <option value="${supplier.id}">${supplier.name}</option>
@@ -435,7 +435,7 @@ MODAL CHOOSE INFO BEFORE SELECTING PRODUCT
 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header">F
                 <h5 class="modal-title">Thêm nhà cung cấp</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

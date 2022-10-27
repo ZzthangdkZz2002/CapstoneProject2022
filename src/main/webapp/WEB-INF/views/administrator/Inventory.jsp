@@ -186,7 +186,7 @@
                                     <td>${inventory.total_importPrice}</td>
                                     <td style="color: ${inventory.money_paid != inventory.total_importPrice ? "red" :""}">${inventory.money_paid}</td>
                                     <td>${inventory.note}</td>
-                                    <td> <a href="#" onclick="showDetailInventory(`${inventory}`)">
+                                    <td> <a href="#" onclick="showDetailInventory(`${inventory.id}`,`${inventory.code}`,`${inventory.created_date}`,`${inventory.supplier.name}`,`${inventory.creator_name}`)">
                                         <i class="fa-solid fa-eye"></i>
                                         </a>
                                     </td>
@@ -246,7 +246,8 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-striped">
+    <h3>Thông tin chi tiết hàng nhập</h3>
+            <table class="table table-striped" id="importItemTable">
                 <thead style="background-color: #5FB55F; color: white;">
                 <tr>
                     <th scope="col">Mã hàng</th>
@@ -259,15 +260,7 @@
                 </tr>
                 </thead>
                 <tbody>
-<%--                <tr>--%>
-<%--                    <th scope="row">1</th>--%>
-<%--                    <td>Mark</td>--%>
-<%--                    <td>Otto</td>--%>
-<%--                    <td>@mdo</td>--%>
-<%--                    <td>@mdo</td>--%>
-<%--                    <td>@mdo</td>--%>
-<%--                    <td>@mdo</td>--%>
-<%--                </tr>--%>
+
                 </tbody>
             </table>
 <%--            <div class="count mt-2 d-flex justify-content-end">--%>
@@ -298,11 +291,11 @@
 <%--                    </tr>--%>
 <%--                </table>--%>
 <%--            </div>--%>
-            <div class="buttons mt-5 text-center">
-                <button class="btn btn-success mr-2" type="submit"><i
-                        class="fa-solid fa-floppy-disk mr-2"></i>Lưu</button>
-                <button class="btn btn-danger"><i class="fa-solid fa-trash-can mr-2"></i>Hủy bỏ</button>
-            </div>
+<%--            <div class="buttons mt-5 text-center">--%>
+<%--                <button class="btn btn-success mr-2" type="submit"><i--%>
+<%--                        class="fa-solid fa-floppy-disk mr-2"></i>Lưu</button>--%>
+<%--                <button class="btn btn-danger"><i class="fa-solid fa-trash-can mr-2"></i>Hủy bỏ</button>--%>
+<%--            </div>--%>
         </div>
     </form>
 

@@ -3,14 +3,18 @@ package com.example.electriccomponentsshop.services.impl;
 
 
 import com.example.electriccomponentsshop.config.ModelMap;
+import com.example.electriccomponentsshop.dto.ProductWarehouseDTO;
 import com.example.electriccomponentsshop.dto.SupplierDTO;
+import com.example.electriccomponentsshop.entities.Inventory;
 import com.example.electriccomponentsshop.entities.Supplier;
+import com.example.electriccomponentsshop.repositories.InventoryRepository;
 import com.example.electriccomponentsshop.repositories.SupplierRepository;
 import com.example.electriccomponentsshop.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -20,6 +24,8 @@ import java.util.stream.Collectors;
 public class SupplierServiceImpl implements SupplierService {
     @Autowired
     SupplierRepository supplierRepository;
+    @Autowired
+    InventoryRepository inventoryRepository;
     @Autowired
     ModelMap modelMap;
     @Override
@@ -35,6 +41,25 @@ public class SupplierServiceImpl implements SupplierService {
     public SupplierDTO convertToDto(Supplier supplier){
         return modelMap.modelMapper().map(supplier,SupplierDTO.class);
     }
+
+    @Override
+    public void addDebtAndPurchaseToSupplier(ProductWarehouseDTO productWarehouseDTO) {
+        if(productWarehouseDTO.getSupplier_id() != null || Integer.parseInt(productWarehouseDTO.getSupplier_id()) > 0){
+            Supplier supplier = getBySupplierId(productWarehouseDTO.getSupplier_id());
+            supplier.setDebt(BigDecimal.valueOf((productWarehouseDTO.getTotal_importPrice().doubleValue() - productWarehouseDTO.getMoney_paid().doubleValue()) + supplier.getDebt().doubleValue()));
+
+            List<Inventory> inventories = inventoryRepository.findInventoryBySupplier(supplier);
+            double total_purchase = 0;
+            if(inventories != null){
+                for(Inventory inventory : inventories){
+                    total_purchase += inventory.getTotal_importPrice().doubleValue();
+                }
+            }
+            supplier.setTotal_purchase(BigDecimal.valueOf(total_purchase));
+            supplierRepository.save(supplier);
+        }
+    }
+
     @Override
     public Supplier getBySupplierId(String id){
         try{
@@ -52,12 +77,12 @@ public class SupplierServiceImpl implements SupplierService {
         return convertToDto(getBySupplierId(id));
    }
     @Override
-    public List<SupplierDTO> getAllSupplier(){
+    public List<Supplier> getAllSupplier(){
         List<Supplier> supplierList = supplierRepository.findAll();
         if(supplierList.isEmpty()){
             throw new NoSuchElementException("Không tìm thấy nhà cung cấp");
         }
-        return supplierList.stream().map(this::convertToDto).collect(Collectors.toList());
+        return supplierList;
     }
     @Override
     public Optional<Supplier> findById(Integer integer) {
@@ -66,8 +91,16 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public void addSupplier(SupplierDTO supplierDTO){
         Supplier supplier = new Supplier();
+        supplier.setCode(supplierDTO.getCode());
         supplier.setName(supplierDTO.getName());
         supplier.setPhone(supplierDTO.getPhone());
+        supplier.setEmail(supplierDTO.getEmail());
+        supplier.setCompany(supplierDTO.getCompany());
+        supplier.setAddress(supplierDTO.getAddress());
+        supplier.setNote(supplierDTO.getNote());
+        supplier.setTax_code(supplierDTO.getTax_code());
+        supplier.setDebt(BigDecimal.valueOf(0));
+        supplier.setTotal_purchase(BigDecimal.valueOf(0));
         supplier.setActive(1);
         supplierRepository.save(supplier);
     }

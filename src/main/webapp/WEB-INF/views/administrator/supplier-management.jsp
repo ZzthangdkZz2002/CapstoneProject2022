@@ -10,6 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Main CSS-->
   <link href="<c:url value="/css/main.css"/>" rel="stylesheet" type="text/css">
+  <link href="<c:url value="/css/warehouse.css"/>" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
   <!-- or -->
   <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -21,6 +22,10 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
+  <!-- icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body onload="time()" class="app sidebar-mini rtl">
@@ -41,7 +46,7 @@
           <div class="tile-body">
             <div class="row element-button">
               <div class="col-sm-2">
-                <a class="btn btn-add btn-sm" href="${pageContext.request.contextPath}/admin/suppliers/add" title="Thêm"><i class="fas fa-plus"></i>
+                <a class="btn btn-add btn-sm" href="#" title="Thêm" data-toggle="modal" data-target="#addSupplierModel"><i class="fas fa-plus"></i>
                   Thêm nhà cung cấp</a>
               </div>
             </div>
@@ -59,6 +64,10 @@
                   <th width="100">Mã nhà cung cấp</th>
                   <th>Tên nhà cung cấp</th>
                   <th>Số điện thoại</th>
+                  <th>Email</th>
+                  <th>Địa chỉ</th>
+                  <th>Nợ cần trả</th>
+                  <th>Tổng mua</th>
                   <th width="80">Trạng thái</th>
                   <th width="100">Tuỳ chọn</th>
                 </tr>
@@ -66,9 +75,13 @@
               <tbody>
               <c:forEach var="supplier" items="${listSupplier}">
                 <tr>
-                  <td>${supplier.id}</td>
+                  <td>${supplier.code}</td>
                   <td>${supplier.name}</td>
                   <td>${supplier.phone}</td>
+                  <td>${supplier.email}</td>
+                  <td>${supplier.address}</td>
+                  <td>${supplier.debt}</td>
+                  <td>${supplier.total_purchase}</td>
                   <td>
                     <div class="switch">
                       <input class="status-checkbox" onclick="return false" type="checkbox"  name="check" <c:if test="${supplier.active == 1}"> checked</c:if>/>
@@ -196,6 +209,74 @@ MODAL
   <!--
 MODAL
 -->
+
+  <!-- Add supplier model -->
+  <div class="modal fade" id="addSupplierModel" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <form action="${pageContext.request.contextPath}/admin/suppliers/add" method="post">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Thêm nhà cung cấp</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row justify-content-between">
+
+              <div class="form__group field col-5">
+                <input type="input" class="form__field" placeholder="Mã mặc định" name="s_code" id="code" required />
+                <label for="name" class="form__label">Mã nhà cung cấp</label>
+              </div>
+
+
+              <div class="form__group field col-5">
+                <input type="input" class="form__field" placeholder="Name" name="s_name" id="supplier_name" required />
+                <label for="name" class="form__label">Tên  nhà cung cấp</label>
+              </div>
+
+              <div class="form__group field col-5">
+                <input type="input" class="form__field" placeholder="s_email" name="s_email" id="supplier_email" required />
+                <label for="name" class="form__label">Email</label>
+              </div>
+
+              <div class="form__group field col-5">
+                <input type="input" class="form__field" placeholder="Name" name="phone" id="supplier_phone" required />
+                <label for="name" class="form__label">Điện thoại</label>
+              </div>
+
+              <div class="form__group field col-5">
+                <input type="input" class="form__field" placeholder="Name" name="company" id="supplier_company"  />
+                <label for="name" class="form__label">Công ty</label>
+              </div>
+
+              <div class="form__group field col-5">
+                <input type="input" class="form__field" placeholder="Name" name="address" id="supplier_address" required />
+                <label for="name" class="form__label">Địa chỉ</label>
+              </div>
+              <div class="form__group field col-5">
+                <input type="input" class="form__field" placeholder="Name" name="tax_code" id="supplier_taxcode"  />
+                <label for="name" class="form__label">Mã số thuế</label>
+              </div>
+
+
+              <div class="form__group field col-5">
+                <input type="input" class="form__field" placeholder="Name" name="note" id="supplier_note"  />
+                <label for="name" class="form__label">Ghi chú</label>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa-solid fa-ban mr-2"></i>Huỷ</button>
+          <button type="submit" class="btn btn-primary"><i class="fa-regular fa-floppy-disk mr-2"></i>Lưu</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
   <!-- Essential javascripts for application to work-->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

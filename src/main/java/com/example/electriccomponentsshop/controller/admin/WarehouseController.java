@@ -7,6 +7,7 @@ import com.example.electriccomponentsshop.dto.*;
 import com.example.electriccomponentsshop.entities.*;
 import com.example.electriccomponentsshop.repositories.*;
 import com.example.electriccomponentsshop.services.*;
+import com.j256.ormlite.stmt.query.In;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,8 @@ public class WarehouseController {
     final ProductWarehouseRepository productWarehouseRepository;
     @Autowired
     final ProductLocationRepository productLocationRepository;
+    @Autowired
+    final ProductsImportRepository productsImportRepository;
     @Autowired
     final WarehouseRepository warehouseRepository;
     @Autowired
@@ -203,7 +206,9 @@ public class WarehouseController {
 
 
             List<ProductWarehouseDTO> productWareHouseList = productWarehouseService.addProductToWarehouse(productWarehouseDTO);
+            productService.setProductQuantity(productWarehouseDTO);
             if(productWareHouseList != null && inventoryService.addInventoryImport(productWarehouseDTO)){
+                supplierService.addDebtAndPurchaseToSupplier(productWarehouseDTO);
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Thêm sản phẩm vào kho thành công", productWareHouseList));
             }else{
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Thêm sản phẩm vào kho không thành công", "Không thể thêm sản phẩm"));
@@ -222,6 +227,18 @@ public class WarehouseController {
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Thêm sản phẩm vào kho không thành công", e.getMessage()));
         }
 
+    }
+
+    @GetMapping("/getImportItems")
+    @ResponseBody
+    public ResponseEntity<ResponseObject> getImportProducts(@RequestParam(name = "code") Integer inventory_id){
+        Optional<Inventory> inventory = inventoryRepository.findById(inventory_id);
+        if(inventory.isPresent()){
+            List<ProductsImport> productsImports = inventory.get().getProductsImports();
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","success",productsImports));
+        }else{
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Không tìm thấy Inventory",""));
+        }
     }
 //    @GetMapping("/import/update/{id}")
 //    public String updateImportTransaction(ModelMap modelMap, @PathVariable(name = "id") String id){

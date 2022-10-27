@@ -1,6 +1,7 @@
 package com.example.electriccomponentsshop.services;
 
 import com.example.electriccomponentsshop.dto.ProductDTO;
+import com.example.electriccomponentsshop.dto.ProductWarehouseDTO;
 import com.example.electriccomponentsshop.entities.Product;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,8 @@ public interface ProductService {
     String addProduct(ProductDTO productDTO, MultipartFile multipartFile);
 
     List<Product> getAll();
+
+    void setProductQuantity(ProductWarehouseDTO productWarehouseDTO);
 
     void disableProduct(String id);
 

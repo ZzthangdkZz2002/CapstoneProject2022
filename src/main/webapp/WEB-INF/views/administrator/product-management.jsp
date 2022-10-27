@@ -74,6 +74,7 @@
 <%--                  <th>Số lượng tồn kho</th>--%>
                   <th>Giá vốn</th>
                   <th>Giá bán</th>
+                  <th>Tổng tồn kho</th>
                   <th>Danh mục</th>
                   <th>Thương hiệu</th>
                   <th>Trạng thái</th>
@@ -89,6 +90,8 @@
 <%--                  <td>${product.available}</td>--%>
                   <td>${product.original_price}</td>
                   <td>${product.price}</td>
+
+                  <td>${product.quantity}</td>
                   <td>
                     <c:forEach var="categoryDto" items="${product.categories}">
                       ${categoryDto.name} ,

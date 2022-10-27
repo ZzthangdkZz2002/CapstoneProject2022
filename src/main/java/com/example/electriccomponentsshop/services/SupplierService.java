@@ -1,5 +1,6 @@
 package com.example.electriccomponentsshop.services;
 
+import com.example.electriccomponentsshop.dto.ProductWarehouseDTO;
 import com.example.electriccomponentsshop.dto.SupplierDTO;
 import com.example.electriccomponentsshop.entities.Supplier;
 
@@ -14,11 +15,13 @@ public interface SupplierService {
 
     SupplierDTO convertToDto(Supplier supplier);
 
+    void addDebtAndPurchaseToSupplier(ProductWarehouseDTO productWarehouseDTO);
+
     Supplier getBySupplierId(String id);
 
     SupplierDTO getDtoById(String id);
 
-    List<SupplierDTO> getAllSupplier();
+    List<Supplier> getAllSupplier();
 
     Optional<Supplier> findById(Integer integer);
 

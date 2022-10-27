@@ -63,7 +63,7 @@
                 <div class="confirm-button">
                   <div class="button">
                     <button type="submit" class="btn btn-save">Lưu lại</button>
-                    <button type="button" class="btn btn-cancel" onclick="location.href='supplier-management.html'">Hủy
+                    <button type="button" class="btn btn-cancel" onclick="location.href='${pageContext.request.contextPath}/admin/suppliers'">Hủy
                       bỏ</button>
                   </div>
                 </div>

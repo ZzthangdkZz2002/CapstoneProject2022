@@ -48,9 +48,11 @@ public class Product {
     @CreationTimestamp
     @Column(updatable = false)
     private Date addedDate;
-//    @Column
-//    @ColumnDefault("0")
-//    private BigInteger available;
+
+    @Column
+    @ColumnDefault("0")
+    private int quantity;
+
     @Column
     private int status;
 //    private BigInteger unit;
@@ -72,6 +74,7 @@ public class Product {
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "product")
     private List<ProductWareHouse> productWareHouseList = new ArrayList<>();
+
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
 //    private List<SpecificationValue> specificationValues = new ArrayList<>();

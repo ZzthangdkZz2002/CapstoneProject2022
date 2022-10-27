@@ -1,5 +1,6 @@
 package com.example.electriccomponentsshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,5 +33,6 @@ public class ProductsImport {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Inventory_id")
+    @JsonIgnore
     private Inventory inventory;
 }

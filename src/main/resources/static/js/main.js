@@ -734,7 +734,7 @@ var debts = 0;
 
 $('#moneyMustPay').on('keyup', function () {
     var money = $('#moneyMustPay').val();
-    var total = totalMoney.toFixed(3);
+    var total = totalMoney.toFixed(0);
     var debt = Number(money) - Number(total);
     debts = debt;
     document.getElementById("debt").innerHTML = convertMoney(debt)+"";
@@ -815,8 +815,9 @@ function setSumImport() {
         totalMoney = sumNumber;
         //tinh cong no
         var money = $('#moneyMustPay').val();
-        var total = totalMoney.toFixed(3);
+        var total = totalMoney.toFixed(0);
         var debt = Number(money) - Number(total);
+        console.log("money: " + money + ", total: "+total + ", debt: "+debt);
         debts = debt;
         document.getElementById("debt").innerHTML = convertMoney(debt)+"";
         //
@@ -841,11 +842,37 @@ function showPassword(checkbox) {
 }
 
 
-function showDetailInventory(inventory) {
-    console.log(inventory);
-    document.getElementById("detailInventory").style.display = "none";
+function showDetailInventory(inventory_id,inventory_code,inventory_date,inventory_supplier,inventory_creator) {
+    console.log(inventory_id);
+    console.log(inventory_code);
 
-    document.getElementById("inventory_code").innerHTML = inventory.code;
+    document.getElementById("detailInventory").style.display = "none";
+    $.ajax({
+        type: "GET",
+        url: "/admin/warehouses/getImportItems?code="+inventory_id,
+        success: function (response){
+            console.log(response);
+            document.getElementById('inventory_code').innerHTML = inventory_code;
+            document.getElementById('inventory_date').innerHTML = inventory_date;
+            document.getElementById('inventory_supplier').innerHTML = inventory_supplier;
+            document.getElementById('inventory_creatorname').innerHTML = inventory_creator;
+
+            var $importItemTable = $('#importItemTable tbody');
+            $importItemTable.find('tr').remove();
+            for(var i in response.data){
+                $importItemTable.append('<tr>' +
+                    '<td>'+response.data[i].p_code+'</td>' +
+                    '<td>'+response.data[i].p_name+'</td>' +
+                    '<td>'+response.data[i].quantity+'</td>' +
+                    '<td>'+response.data[i].original_price + '</td>' +
+                    '<td>'+response.data[i].discount_price+'</td>' +
+                    '<td>'+response.data[i].import_price+'</td>' +
+                    '<td>'+response.data[i].total+'</td>' +
+                    '</tr>');
+            }
+        }
+    });
+    // document.getElementById("inventory_code").innerHTML = inventory.code;
     document.getElementById("detailInventory").style.display = "block";
 
 }

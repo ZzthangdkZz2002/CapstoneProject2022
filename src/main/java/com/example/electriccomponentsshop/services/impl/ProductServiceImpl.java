@@ -2,9 +2,7 @@ package com.example.electriccomponentsshop.services.impl;
 
 import com.example.electriccomponentsshop.common.Utils;
 import com.example.electriccomponentsshop.config.ModelMap;
-import com.example.electriccomponentsshop.dto.CategoryDTO;
-import com.example.electriccomponentsshop.dto.ProductDTO;
-import com.example.electriccomponentsshop.dto.SpecificationValueDto;
+import com.example.electriccomponentsshop.dto.*;
 import com.example.electriccomponentsshop.entities.*;
 import com.example.electriccomponentsshop.repositories.ExportPriceRepository;
 import com.example.electriccomponentsshop.repositories.ProductRepository;
@@ -174,6 +172,20 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAll(){
         return productRepository.findAll();
     }
+
+    @Override
+    public void setProductQuantity(ProductWarehouseDTO productWarehouseDTO) {
+        for(ImportProductDTO ip : productWarehouseDTO.getImportProducts()){
+            Optional<Product> p = productRepository.findByCode(ip.getProduct_code());
+            if(p.isPresent()){
+                Product product = p.get();
+                product.setQuantity(product.getQuantity() + ip.getQuantity());
+                productRepository.save(product);
+            }
+        }
+
+    }
+
     @Override
     public void disableProduct(String id){
         Product product = getById(id);

@@ -1,5 +1,6 @@
 package com.example.electriccomponentsshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

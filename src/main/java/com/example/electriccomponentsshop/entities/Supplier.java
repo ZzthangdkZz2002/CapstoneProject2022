@@ -23,6 +23,7 @@ public class Supplier {
     @Column
     private String name;
     private String phone;
+    private String email;
     @Column
     String tax_code;
     @Column
