@@ -1,6 +1,11 @@
 package com.example.electriccomponentsshop.common;
 
 
+import com.example.electriccomponentsshop.entities.OrderTransaction;
+
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Random;
 
 public class Utils {
 
@@ -46,6 +51,20 @@ public class Utils {
         strCode.append(inventory_id);
 
         return strCode.toString();
+    }
+
+    public String gererateOrderid(){
+        Random generator = new Random();
+        int randomNumber = generator.nextInt((9 - 0) + 1) + 0;
+
+       int hour = LocalDateTime.now().getHour();
+       int minute = LocalDateTime.now().getMinute();
+       int second = LocalDateTime.now().getSecond() + randomNumber;
+
+       String str = String.valueOf(hour) + String.valueOf(minute) + String.valueOf(second);
+
+       return str;
+
     }
 
 }

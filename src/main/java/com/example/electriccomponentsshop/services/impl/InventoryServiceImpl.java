@@ -77,39 +77,8 @@ public class InventoryServiceImpl implements InventoryService {
 //                inventory.getProductsImports().add(productsImport);
                 productsImports.add(productsImport);
             }
-
-//            Inventory inventest = inventoryRepository.findById(39).get();
-//            System.out.println("inven test1:" + inventest);
-//            System.out.println("inven test2: "+ inventest.getProductsImports().get(0).getP_code());
-
-
             return true;
 
-
-//            for(ImportProductDTO p : productWarehouseDTO.getImportProducts()){
-//                if(productRepository.findByCode(p.getProduct_code()).isPresent()){
-//                    Inventory inventory = new Inventory();
-//                    int quantity = getProductQuantity(productWarehouseDTO.getWarehouse(),p.getProduct_code());
-//                    inventory.setProduct_code(p.getProduct_code());
-//                    inventory.setWarehouse(productWarehouseDTO.getWarehouse());
-//                    if(Integer.parseInt(productWarehouseDTO.getSupplier_id()) > 0 && supplierRepository.findById(Integer.parseInt(productWarehouseDTO.getSupplier_id())).isPresent()){
-//                        inventory.setSupplier(supplierRepository.findById(Integer.parseInt(productWarehouseDTO.getSupplier_id())).get());
-//                    }
-//                    inventory.setReal_quantity(quantity);
-//                    inventory.setCreator_name(getLoggedUsername());
-//                    inventory.setDifference_quantity(p.getQuantity());
-//                    inventory.setDifference_quantityUp(p.getQuantity());
-//                    inventory.setDifference_quantityDown(0);
-//                    int realTotalPrice = productRepository.findByCode(p.getProduct_code()).get().getOriginal_price().intValue() * quantity;
-//                    inventory.setReal_totalPrice(new BigDecimal(realTotalPrice));
-//                    inventory.setMoney_mustPay(BigDecimal.valueOf(p.getImport_pirce().doubleValue() * p.getQuantity()));
-//                    inventory.setNote("Phiếu kiểm kho được tạo tự động khi thêm hàng hóa vào kho:"+p.getProduct_code());
-//                    inventoryRepository.save(inventory);
-//                    inventory.setCode(new Utils().generateInventoryCode(inventoryRepository.getMaxProductID()));
-//                    inventoryRepository.save(inventory);
-//
-//                }
-//            }
         }catch (Exception e){
             System.out.println("inventory error: "+e.getMessage());
             return false;

@@ -21,7 +21,6 @@ public class Order {
     private Integer id;
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name= "employee_id")
-
     private Account accountEmployee;
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name="customer_id")

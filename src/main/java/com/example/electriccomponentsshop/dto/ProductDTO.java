@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -21,6 +22,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ProductDTO {
+    private Integer id;
     @NotNull
     private String name;
 
@@ -32,6 +34,7 @@ public class ProductDTO {
     private BigDecimal original_price;
     @NotNull
     private BigDecimal price;
+    private int quantity;
     @NotNull
     private List<Category> categories;
     @NotNull
@@ -43,6 +46,8 @@ public class ProductDTO {
     private int status;
 
     private String description;
+
+    private Date addedDate;
 //    private String supplierId;
 //    private BigInteger unit;
 }

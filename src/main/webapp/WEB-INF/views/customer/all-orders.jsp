@@ -14,21 +14,21 @@
       </head>
       <body>    
         <!--Page Header-->
-        <jsp:include page="header.jsp" />
+<%--        <jsp:include page="header.jsp" />--%>
 
         <!--Page Content-->
         <main>
-          <c:if test="${not empty orderId}">
-            <div id="myModal" class="modal">
+<%--          <c:if test="${not empty orderId}">--%>
+<%--            <div id="myModal" class="modal">--%>
 
-              <!-- Modal content -->
-              <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Đơn hàng với mã ${orderId} vừa được tạo</p>
-              </div>
+<%--              <!-- Modal content -->--%>
+<%--              <div class="modal-content">--%>
+<%--                <span class="close">&times;</span>--%>
+<%--                <p>Đơn hàng với mã ${orderId} vừa được tạo</p>--%>
+<%--              </div>--%>
 
-            </div>
-          </c:if>
+<%--            </div>--%>
+<%--          </c:if>--%>
           <div class="account">
             <div class="account_side">
               <a href="${pageContext.request.contextPath}/profile"><i class="material-icons"> arrow_right</i>Hồ sơ của tôi</a>
@@ -44,39 +44,50 @@
                 <a href="${pageContext.request.contextPath}/order/cancelled">Đã hủy</a>
               </div>
               <div id="order_list">
-                <c:forEach var="order" items="${orders}">
-                    <div class="an-order">
-                      <table>
-                        <tr>
-                          <td>Mã đơn: ${order.id}</td>
-                          <td>${order.status}</td>
-                        </tr>
-                        <c:forEach var="item" items="${order.orderItems}">
-                            <tr>
-                              <td><img src="/img/${item.productImage}" alt="hinh ảnh sản phẩm"> <span> ${item.productName}</span> <br> x${item.quantity}</td>
-                              <td>${item.subTotal}</td>
-                            </tr>
-                        </c:forEach>
-                        <tr>
-                          <td></td>
-                          <td style="font-size: 20px;"><span style="font-weight: bold;">Tổng thanh toán:</span>  ${order.totalPayment}</td>
-                        </tr>
-                        <c:if test="${item.status != 'Đã Hủy' && item.status != 'Hoàn Thành'}">
-                            <tr>
-                              <td colspan="2"><button>Hủy đơn hàng</button></td>
-                            </tr>
-                        </c:if>
+                  <c:choose>
+                      <c:when test="${orders == null}">
+                          <h1>Bạn chưa có đơn hàng nào</h1>
+                      </c:when>
+                      <c:otherwise>
+                          <c:forEach var="order" items="${orders}">
+                              <div class="an-order">
+                                  <table>
+                                      <tr>
+                                          <td>Mã đơn: #${order.orderid}</td>
+                                          <td>${order.status}</td>
+                                      </tr>
+                                      <c:forEach var="item" items="${order.orderTransactionDetails}">
+                                          <tr>
+                                              <td><img src="/img/${item.productDTO.image}" alt="hinh ảnh sản phẩm"> <span> ${item.productDTO.name}</span> <br> x${item.quantity}</td>
+                                              <td>${item.amount}</td>
+                                          </tr>
+                                      </c:forEach>
+                                      <tr>
+                                          <td></td>
+                                          <td style="font-size: 20px;"><span style="font-weight: bold;">Tổng thanh toán:</span>  ${order.amount}</td>
+                                      </tr>
+                                      <c:if test="${order.status != 'Đã Hủy' && order.status != 'Hoàn Thành'}">
+                                          <tr>
+                                              <td colspan="2">
+                                                  <a href="${pageContext.request.contextPath}/cancel?orderId=${order.id}" onclick="return confirm('Bạn muốn huỷ đơn mã #${order.orderid}?')">
+                                                      <button>Hủy đơn hàng</button>
+                                                  </a>
+                                              </td>
+                                          </tr>
+                                      </c:if>
 
-                      </table>
-                    </div>
-                </c:forEach>
+                                  </table>
+                              </div>
+                          </c:forEach>
+                      </c:otherwise>
+                  </c:choose>
               </div>
             </div>
           </div>
         </main>
     
         <!--Page Footer-->
-        <jsp:include page="footer.jsp" />
+<%--        <jsp:include page="footer.jsp" />--%>
 
         <script>
         var modal = document.getElementById("myModal");

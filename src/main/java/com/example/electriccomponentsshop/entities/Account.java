@@ -6,9 +6,8 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -35,6 +34,9 @@ public class Account {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "account_roles", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles =new ArrayList<>();
+
+    @OneToMany(mappedBy = "account",fetch = FetchType.LAZY)
+    List<OrderTransaction> orderTrasactionList = new ArrayList<>();
 
     @OneToOne(mappedBy = "account")
     @PrimaryKeyJoinColumn

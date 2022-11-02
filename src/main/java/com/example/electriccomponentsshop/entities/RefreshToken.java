@@ -1,5 +1,6 @@
 package com.example.electriccomponentsshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class RefreshToken {
     @OneToOne
     @MapsId
     @JoinColumn(name ="account_id")
+    @JsonIgnore
     private Account account;
 
     @Column(unique = true)

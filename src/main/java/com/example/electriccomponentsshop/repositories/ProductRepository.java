@@ -15,6 +15,7 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product,Integer> {
 
+
     @Override
     List<Product> findAll();
     @Query(value = "select  * from product where name like %:pName% or code like %:pName% COLLATE utf8mb4_0900_ai_ci",nativeQuery = true)

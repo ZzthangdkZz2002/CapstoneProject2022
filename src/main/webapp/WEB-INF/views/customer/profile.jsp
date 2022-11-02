@@ -14,7 +14,7 @@
       </head>
       <body>    
         <!--Page Header-->
-        <jsp:include page="header.jsp"/>
+
     
         <!--Page Content-->
         <main>
@@ -30,22 +30,22 @@
                 <table>
                   <tr>
                     <td class="label">Họ tên:</td>
-                    <td class="field"><input type="text" name="name" id="name" value="${account.name}" readonly/></td>
+                    <td class="field"><input type="text" name="name" id="txtName" value="${account.name}" /></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td class="label">Email:</td>
-                    <td class="field"><input type="text" name="email" id="email" value="${account.email}" readonly style="width: 100%;"/></td>
+                    <td class="field"><input type="text" name="email" id="txtEmail" value="${account.email}" readonly style="width: 100%;"/></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td class="label">Số điện thoại:</td>
-                    <td class="field"><input type="text" name="phone" id="phone" value="${account.phone}" readonly/></td>
+                    <td class="field"><input type="text" name="phone" id="txtPhone" value="${account.phone}" /></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td class="label">Ngày sinh:</td>
-                    <td class="field"><input type="date" name="birthday" id="birthday" value="${account.dob}" readonly/></td>
+                    <td class="field"><input type="date" name="birthday" id="txtBirthday" value="${account.dob}"/></td>
                     <td></td>
                   </tr>
                   <tr>
@@ -66,14 +66,14 @@
                   </tr>
                   <tr>
                     <td class="label">Địa chỉ:</td>
-                    <td class="field"><input type="text" name="address" id="address" value="${account.detailLocation}, ${account.wardName}, ${account.districtName}, ${account.provinceName}" readonly style="width: 100%;"/></td>
+                    <td class="field"><input type="text" name="address" id="address" value="${account.detailLocation}"  style="width: 100%;"/></td>
                     <td></td>
                   </tr>
                   <tr>
                     <td></td>
                     <td></td>
                     <td>
-                      <button onclick="openUpdate()">Chỉnh sửa</button>
+                      <button>Lưu</button>
                     </td>
                   </tr>
                 </table>
@@ -181,7 +181,7 @@
         </main>
     
         <!--Page Footer-->
-        <jsp:include page="footer.jsp"/>
+
 
         <script src="/js/validate.js"></script>
 

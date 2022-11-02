@@ -18,7 +18,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Table(name = "Product")
 public class Product {
     @Id
@@ -29,7 +28,8 @@ public class Product {
     private String code;
     @Column
     private String name;
-
+    @Column
+    private String title;
     @Column(length = 250)
     private String image;
     @Column
@@ -65,9 +65,9 @@ public class Product {
 //    @JoinColumn(name = "cart_id")
 //    private Cart cart;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private ExportPrice exportPrice;
+//    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+//    @PrimaryKeyJoinColumn
+//    private ExportPrice exportPrice;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
     private List<Feedback> feedbackList = new ArrayList<>();

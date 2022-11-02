@@ -137,7 +137,7 @@ public class AuthController {
             return "redirect:/admin/home";
 
         }
-        return "redirect:/home";
+        return "redirect:/homepage";
     }
 
     @PostMapping ("/signup")
