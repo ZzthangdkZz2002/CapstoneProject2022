@@ -3,9 +3,11 @@ package com.example.electriccomponentsshop.controller.onlinepage;
 import com.example.electriccomponentsshop.dto.OrderTransactionDTO;
 import com.example.electriccomponentsshop.dto.ProductDTO;
 import com.example.electriccomponentsshop.dto.ResponseObject;
+import com.example.electriccomponentsshop.entities.Category;
 import com.example.electriccomponentsshop.entities.OrderTransaction;
 import com.example.electriccomponentsshop.entities.OrderTransactionDetail;
 import com.example.electriccomponentsshop.entities.Product;
+import com.example.electriccomponentsshop.repositories.CategoryRepository;
 import com.example.electriccomponentsshop.repositories.OrderTransactionDetailRepository;
 import com.example.electriccomponentsshop.repositories.OrderTransactionRepository;
 import com.example.electriccomponentsshop.repositories.ProductRepository;
@@ -19,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -36,6 +39,9 @@ public class OnlineHomeController {
     final OrderTransactionService orderTransactionService;
 
     @Autowired
+    CategoryRepository categoryRepository;
+
+    @Autowired
     OrderTransactionDetailRepository orderTransactionDetailRepository;
 
     @Autowired
@@ -45,7 +51,9 @@ public class OnlineHomeController {
     final ProductRepository productRepository;
 
     @GetMapping("")
-    public String homePage(){
+    public String homePage(ModelMap map){
+        List<Category> categories = categoryRepository.findNoneParent();
+        map.addAttribute("categories", categories);
         return "onlinePage/home";
     }
 
@@ -71,7 +79,7 @@ public class OnlineHomeController {
         if("".equals(orderTransactionDTO.getUser_phone()) || orderTransactionDTO.getUser_phone() == null){
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","add order transaction Fail",""));
         }
-        OrderTransaction orderTransaction = orderTransactionService.addTransaction(orderTransactionDTO, authentication);
+        OrderTransaction orderTransaction = orderTransactionService.addTransactionOnline(orderTransactionDTO, authentication);
         if(orderTransaction != null){
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","add order transaction Success", orderTransaction.getId()));
         }else{

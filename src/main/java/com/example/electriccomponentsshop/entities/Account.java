@@ -35,8 +35,11 @@ public class Account {
     @JoinTable(name = "account_roles", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles =new ArrayList<>();
 
-    @OneToMany(mappedBy = "account",fetch = FetchType.LAZY)
-    List<OrderTransaction> orderTrasactionList = new ArrayList<>();
+    @OneToMany(mappedBy = "accountuser",fetch = FetchType.LAZY)
+    List<OrderTransaction> orderTrasactionListUser = new ArrayList<>();
+
+    @OneToMany(mappedBy = "accountemployee",fetch = FetchType.LAZY)
+    List<OrderTransaction> orderTrasactionListEmployee = new ArrayList<>();
 
     @OneToOne(mappedBy = "account")
     @PrimaryKeyJoinColumn

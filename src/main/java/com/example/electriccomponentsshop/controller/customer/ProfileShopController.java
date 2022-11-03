@@ -49,7 +49,7 @@ public class ProfileShopController {
         map.addAttribute("account", account);
         map.addAttribute("provinces", provinces);
 
-        return "customer/profile";
+        return "onlinePage/profile";
     }
 
     @PostMapping(value = "/profile")

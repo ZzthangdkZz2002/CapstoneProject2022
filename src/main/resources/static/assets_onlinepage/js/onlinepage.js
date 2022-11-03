@@ -12,6 +12,8 @@ const products = document.querySelector('.list-product');
 //
 // }
 
+
+
 const formatDescription=(text)=>{
     if(text == null){
         return "";
@@ -75,8 +77,7 @@ function convertMoney(num) {
 productList.map((item,key)=>{
 
     products.innerHTML+=`<a href="${contextPath}/homepage/detailProduct?id=${item.id}" onclick="saveId(${item.id})">
-    <div  class="product col-md-3" style="margin-bottom: 20px;    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
-    padding: 10px;margin-right: 15px">
+   <div class="product col-md-4" style="height: 200px;margin-bottom: 20px; border: 0.5px solid #e6e6e6; padding: 5px">
     <div class="product-micro">
         <div class="row product-micro-row">
             <div class="col col-xs-5">
@@ -84,11 +85,9 @@ productList.map((item,key)=>{
                 height: 20px;">
                     <div class="image" href="${contextPath}/homepage/detailProduct?id=${item.id}">
                         
-                            <img style="object-fit: cover;    width: 100%;
-                            height: 100%;"
-                                src="img/${item.image}" alt="">
+                            <img style="object-fit: cover;"
+                                src="img/${item.image}" alt="" width="111px" height="111px" onerror="this.src='https://cdn-img.thethao247.vn//storage/files/camhm/2022/10/11/tin-mu-moi-nhat-11-10-ronaldo-duoc-doi-thu-tang-len-may-casemiro-tim-lai-chinh-minh-200731.jpg'">
                             <div class="zoom-overlay"></div>
-                  
                     </div>
 
 
@@ -104,7 +103,7 @@ productList.map((item,key)=>{
                         
                         <p style="color: ${item.quantity > 0 ? "green" : "red"}">${item.quantity > 0 ? "Còn hàng" : "Liên hệ"}</p>
                     </div>
-                      <div class="action" style="display:flex"><button type="button" onclick="addCart(${item.id})" class="btn btn-info" style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px";>Add to cart</button>
+                      <div class="action" style="display:flex;position: absolute;top: 160px"><button type="button" onclick="addCart(${item.id})" class="btn btn-info" style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px";>Add to cart</button>
                       <a onclick="saveId(${item.id})" href="${contextPath}/homepage/detailProduct?id=${item.id}" class="btn btn-info" style="padding: 5px 10px;font-size:12px;border:none">View</a>
                     </div>
                 </div>

@@ -1,28 +1,30 @@
-//package com.example.electriccomponentsshop.controller.admin;
-//
-//import com.example.electriccomponentsshop.dto.*;
-//import com.example.electriccomponentsshop.entities.Order;
-//import com.example.electriccomponentsshop.repositories.OrderItemRepository;
-//import com.example.electriccomponentsshop.repositories.OrderRepository;
-//import com.example.electriccomponentsshop.repositories.ProductRepository;
-//import com.example.electriccomponentsshop.services.*;
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.ui.ModelMap;
-//import org.springframework.web.bind.MethodArgumentNotValidException;
-//import org.springframework.web.bind.annotation.*;
-//
-//
-//import javax.validation.Valid;
-//import java.util.*;
-//
-//@CrossOrigin
-//@Controller
-//@RequestMapping("admin/orders")
-//public class OrderController {
-//    private final OrderService orderService;
+package com.example.electriccomponentsshop.controller.admin;
+
+import com.example.electriccomponentsshop.common.OrderEnum;
+import com.example.electriccomponentsshop.dto.*;
+import com.example.electriccomponentsshop.entities.OrderTransaction;
+import com.example.electriccomponentsshop.entities.OrderTransactionDetail;
+import com.example.electriccomponentsshop.entities.Product;
+import com.example.electriccomponentsshop.repositories.OrderTransactionRepository;
+import com.example.electriccomponentsshop.repositories.ProductRepository;
+import com.example.electriccomponentsshop.services.*;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+
+import java.util.*;
+
+@AllArgsConstructor
+@CrossOrigin
+@Controller
+@RequestMapping("admin/orders")
+public class OrderController {
 //    @Autowired
 //    OrderRepository r;
 //    @Autowired
@@ -30,34 +32,132 @@
 //
 //    @Autowired
 //    OrderItemRepository orderItemRepository;
-//    @Autowired
-//    ProvinceService provinceService;
-//    @Autowired
-//    DistrictService districtService;
-//    @Autowired
-//    WardService wardService;
-//    @Autowired
-//    ProductService productService;
-//
-//    public OrderController(OrderService orderService) {
-//        this.orderService = orderService;
-//    }
-//
+    @Autowired
+    ProvinceService provinceService;
+    @Autowired
+    DistrictService districtService;
+    @Autowired
+    WardService wardService;
+    @Autowired
+    ProductService productService;
+    @Autowired
+    OrderTransactionRepository orderTransactionRepository;
+    final
+    OrderTransactionService orderTransactionService;
+
+
+    @Autowired
+    ProductRepository productRepository;
 //    @Autowired
 //    OrderItemService orderItemService;
 //    @Autowired
 //    OrderKindService orderKindService;
 //    @Autowired
 //    SkuService skuService;
-//    @GetMapping("")
-//    public String viewAll(ModelMap modelMap) {
-//        ArrayList<OrderDTO> orders = (ArrayList<OrderDTO>) orderService.findAll();
-//        modelMap.addAttribute("listOrder", orders);
-//        return "administrator/order-management";
-//    }
-//
+    @GetMapping("/{status}")
+    public String viewAllOrderByEmployeeId(@PathVariable String status, ModelMap modelMap, Authentication authentication) {
+        AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
+        List<OrderTransaction> orderTransactions;
+        List<OrderTransactionDTO> orderTransactionDTOS= new ArrayList<>();
+        String active = "";
+
+        if (status.equals("waiting")) {
+            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.PENDING.getName());
+            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            active = "waiting";
+        } else if (status.equals("confirmed")) {
+            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.CONFIRM.getName());
+            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            active = "confirmed";
+        } else if (status.equals("shipping")) {
+            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.DELIVERY.getName());
+            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            active = "shipping";
+        } else if (status.equals("received")) {
+            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.DONE.getName());
+            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            active = "received";
+        } else if (status.equals("cancelled")) {
+            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.CANCEL.getName());
+            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            active = "cancelled";
+        } else if (status.equals("returned")) {
+            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.RETURNED.getName());
+            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            active = "returned";
+        }
+
+        modelMap.addAttribute("active", active);
+        modelMap.addAttribute("listOrder", orderTransactionDTOS);
+
+        return "administrator/order-management";
+    }
+
+    public List<OrderTransactionDTO> convertOrderToDTO(List<OrderTransaction> orderTransactions){
+        List<OrderTransactionDTO> orderTransactionDTOS = new ArrayList<>();
+        if(orderTransactions != null){
+            for(OrderTransaction orderTransaction: orderTransactions){
+                OrderTransactionDTO orderTransactionDTO = new OrderTransactionDTO();
+                orderTransactionDTO.setId(orderTransaction.getId());
+                orderTransactionDTO.setOrderid(orderTransaction.getOrderid());
+                orderTransactionDTO.setStatus(orderTransaction.getStatus());
+                orderTransactionDTO.setUser_name(orderTransaction.getUser_name());
+                orderTransactionDTO.setUser_email(orderTransaction.getUser_email());
+                orderTransactionDTO.setUser_phone(orderTransaction.getUser_phone());
+                orderTransactionDTO.setAddress(orderTransaction.getAddress());
+                orderTransactionDTO.setAmount(String.valueOf(orderTransaction.getAmount()));
+                orderTransactionDTO.setPayment_method(orderTransaction.getPayment_method());
+                orderTransactionDTO.setOrderKind(orderTransaction.getOrderKind());
+                orderTransactionDTO.setAccount_user(orderTransaction.getAccountuser());
+                orderTransactionDTO.setAccount_employee(orderTransaction.getAccountemployee());
+                orderTransactionDTO.setCreated(orderTransaction.getCreated());
+
+                List<OrderTransactionDetailDTO> orderTransactionDetailDTOS = new ArrayList<>();
+                for(OrderTransactionDetail orderTransactionDetail : orderTransaction.getOrderTransactionDetails()){
+                    OrderTransactionDetailDTO orderTransactionDetailDTO = new OrderTransactionDetailDTO();
+                    ProductDTO p = new ProductDTO();
+                    Product product = productRepository.findById(orderTransactionDetail.getProduct_id()).get();
+                    p.setId(product.getId());
+                    p.setCode(product.getCode());
+                    p.setName(product.getName());
+                    p.setImage(product.getImage());
+                    p.setOriginal_price(product.getOriginal_price());
+                    p.setPrice(product.getPrice());
+                    p.setQuantity(product.getQuantity());
+                    p.setDescription(product.getDescription());
+                    p.setAddedDate(product.getAddedDate());
+                    p.setBrand(product.getBrand());
+                    p.setCategories(product.getCategories());
+
+                    orderTransactionDetailDTO.setAmount(orderTransactionDetail.getAmount());
+                    orderTransactionDetailDTO.setQuantity(orderTransactionDetail.getQuantity());
+                    orderTransactionDetailDTO.setProductDTO(p);
+
+                    orderTransactionDetailDTOS.add(orderTransactionDetailDTO);
+                }
+                orderTransactionDTO.setOrderTransactionDetails(orderTransactionDetailDTOS);
+                orderTransactionDTOS.add(orderTransactionDTO);
+            }
+            return orderTransactionDTOS;
+        }else{
+            return null;
+        }
+    }
+
+    @GetMapping("/accept")
+    public String acceptOrder(@RequestParam(name = "id") String id, RedirectAttributes r){
+        try{
+            OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
+            orderTransaction.setStatus(OrderEnum.CONFIRM.getName());
+            orderTransactionRepository.save(orderTransaction);
+            r.addFlashAttribute("acceptOrderMessage","Xác nhận thành công đơn hàng #" + orderTransaction.getOrderid());
+        }catch (Exception e){
+            r.addFlashAttribute("acceptOrderMessage","error");
+        }
+        return "redirect:/admin/orders/confirmed";
+    }
+
 //    private ModelMap getAddress(ModelMap model) {
-//
 //        List<ProvinceDTO> provinceDTOS = provinceService.findAll();
 //        System.out.println(provinceDTOS.get(0).getName() + "đâ ");
 //        model.addAttribute("listProvince", provinceDTOS);
@@ -134,7 +234,7 @@
 //        try{
 //            Map<String,List<SkuDTO>> map = new HashMap<>();
 //            for (OrderItemDTO orderItemDTO: orderService.getOrderDtoById(id).getOrderItems()
-//                 ) {
+//            ) {
 //                ObjectMapper objectMapper = new ObjectMapper();
 //                String itemDto = objectMapper.writeValueAsString(orderItemDTO);
 //                List<SkuDTO> skuDTOS = skuService.getSkuDtoByProductId(orderItemDTO.getProductId());
@@ -145,7 +245,7 @@
 //            return map ;
 //        }catch (Exception e){
 //            System.out.println(e.getMessage()+"hoangdex");
-//          return null;
+//            return null;
 //        }
 //
 //    }
@@ -164,7 +264,7 @@
 //
 //        }
 //
-//            return "administrator/create-new-order";
+//        return "administrator/create-new-order";
 //
 //
 //    }
@@ -192,5 +292,5 @@
 //
 //        return map;
 //    }
-//
-//}
+
+}

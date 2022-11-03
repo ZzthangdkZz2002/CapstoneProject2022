@@ -14,7 +14,7 @@
       </head>
       <body>    
         <!--Page Header-->
-<%--        <jsp:include page="header.jsp" />--%>
+        <jsp:include page="header.jsp" />
 
         <!--Page Content-->
         <main>
@@ -39,6 +39,7 @@
               <div id="order_tabs">
                 <a href="${pageContext.request.contextPath}/order" style="color: white; background-color: #01447e;">Tất cả</a>
                 <a href="${pageContext.request.contextPath}/order/waiting">Chờ xác nhận</a>
+                <a href="${pageContext.request.contextPath}/order/accepted">Đã xác nhận</a>
                 <a href="${pageContext.request.contextPath}/order/shipping">Đang giao hàng</a>
                 <a href="${pageContext.request.contextPath}/order/received">Đã nhận hàng</a>
                 <a href="${pageContext.request.contextPath}/order/cancelled">Đã hủy</a>
@@ -69,7 +70,7 @@
                                       <c:if test="${order.status != 'Đã Hủy' && order.status != 'Hoàn Thành'}">
                                           <tr>
                                               <td colspan="2">
-                                                  <a href="${pageContext.request.contextPath}/cancel?orderId=${order.id}" onclick="return confirm('Bạn muốn huỷ đơn mã #${order.orderid}?')">
+                                                  <a href="${pageContext.request.contextPath}/customer/cancelOrder?id=${order.id}" onclick="return confirm('Bạn muốn huỷ đơn mã #${order.orderid}?')">
                                                       <button>Hủy đơn hàng</button>
                                                   </a>
                                               </td>

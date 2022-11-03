@@ -5,6 +5,6 @@ import com.example.electriccomponentsshop.entities.OrderTransaction;
 import org.springframework.security.core.Authentication;
 
 public interface OrderTransactionService {
-    OrderTransaction addTransaction(OrderTransactionDTO orderTransactionDTO, Authentication authentication);
+    OrderTransaction addTransactionOnline(OrderTransactionDTO orderTransactionDTO, Authentication authentication);
 
 }

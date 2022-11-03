@@ -42,10 +42,24 @@
           <div class="tile-body">
             <div class="row element-button">
               <div id="myBtnContainer">
-                <button class="filter-btn active">Chờ xử lý</button>
-                <button class="filter-btn">Đang giao hàng</button>
-                <button class="filter-btn">Hoàn thành</button>
-                <button class="filter-btn">Đã huỷ</button>
+                <a href="${pageContext.request.contextPath}/admin/orders/waiting">
+                  <button class="filter-btn <c:if test="${active eq 'waiting'}">active</c:if>">Chờ xử lý</button>
+                </a>
+                <a href="${pageContext.request.contextPath}/admin/orders/confirmed">
+                  <button class="filter-btn <c:if test="${active eq 'confirmed'}">active</c:if>">Đã xác nhận</button>
+                </a>
+                <a href="${pageContext.request.contextPath}/admin/orders/shipping">
+                  <button class="filter-btn <c:if test="${active eq 'shipping'}">active</c:if>">Đang giao hàng</button>
+                </a>
+                <a href="${pageContext.request.contextPath}/admin/orders/received">
+                  <button class="filter-btn <c:if test="${active eq 'received'}">active</c:if>">Hoàn thành</button>
+                </a>
+                <a href="${pageContext.request.contextPath}/admin/orders/cancelled">
+                  <button class="filter-btn <c:if test="${active eq 'cancelled'}">active</c:if>">Đã huỷ</button>
+                </a>
+                <a href="${pageContext.request.contextPath}/admin/orders/returned">
+                  <button class="filter-btn <c:if test="${active eq 'returned'}">active</c:if>">Đã nhận hoàn</button>
+                </a>
               </div>
             </div>
             <div class="row element-button">
@@ -55,6 +69,7 @@
                   Tạo đơn hàng mới</a>
               </div>
             </div>
+
             <div class="search-row">
               <form action="">
                 <div class="search-container">
@@ -63,6 +78,40 @@
                 </div>
               </form>
             </div>
+
+
+              <c:if test="${acceptOrderMessage != null}">
+                <span class="badge bg-success" id="box" style="font-size: 30px; margin-left: 37%">${acceptOrderMessage}</span>
+                <script type="text/javascript">
+                  setTimeout(() => {
+                    const box = document.getElementById('box');
+
+                    // 👇️ removes element from DOM
+                    box.style.display = 'none';
+
+                    // 👇️ hides element (still takes up space on page)
+                    // box.style.visibility = 'hidden';
+                  }, 5000); // 👈️ time in milliseconds
+                </script>
+              </c:if>
+
+            <c:if test="${acceptOrderMessage eq 'error'}">
+              <span class="badge bg-success" id="box" style="font-size: 30px; margin-left: 46%; color: red">Thêm đơn hàng thất bại</span>
+              <script type="text/javascript">
+                setTimeout(() => {
+                  const box = document.getElementById('box');
+
+                  // 👇️ removes element from DOM
+                  box.style.display = 'none';
+
+                  // 👇️ hides element (still takes up space on page)
+                  // box.style.visibility = 'hidden';
+                }, 5000); // 👈️ time in milliseconds
+              </script>
+            </c:if>
+
+
+
             <table class="table table-hover table-bordered" id="sampleTable">
               <thead>
                 <tr>
@@ -72,22 +121,24 @@
                   <th>Ngày đặt hàng</th>
                   <th>Tổng tiền</th>
                   <th>Tình trạng</th>
+                  <th>Loại đơn hàng</th>
                   <th width="100">Tuỳ chọn</th>
                 </tr>
               </thead>
               <tbody>
               <c:forEach var="orderDto" items="${listOrder}">
                 <tr>
-                  <td>${orderDto.id}</td>
-                  <td>${orderDto.accountEmployeeId}</td>
-                  <td>${orderDto.accountCustomerId}</td>
-                  <td>${orderDto.orderedDate}</td>
-                  <td>${orderDto.totalPayment}</td>
+                  <td>#${orderDto.orderid}</td>
+                  <td>${orderDto.account_employee != null ? orderDto.account_employee.id : ""}</td>
+                  <td>${orderDto.account_user != null ? orderDto.account_user.id : ""}</td>
+                  <td>${orderDto.created}</td>
+                  <td>${orderDto.amount}</td>
                   <td><span class="badge bg-success">${orderDto.status}</span></td>
+                  <td>${orderDto.orderKind}</td>
                   <td>
-                  <c:if test="${orderDto.status != 'Hoàn thành'}">
-                    <a href="${pageContext.request.contextPath}/admin/orders/update/${orderDto.id}" class="btn btn-primary btn-sm edit"
-                           type="button" title="Sửa"><i class="fas fa-edit"></i></a>
+                  <c:if test="${orderDto.status eq 'Chờ Xử Lý'}">
+                    <a href="${pageContext.request.contextPath}/admin/orders/accept?id=${orderDto.id}" class="btn btn-primary btn-sm edit"
+                           type="button" title="Xác nhận đơn hàng"><i class="fas fa-edit"></i>Xác nhận đơn hàng</a>
                   </c:if>
                     <a class="btn btn-primary btn-sm edit"
                        type="button" title="Xem" href="${pageContext.request.contextPath}/admin/orders/view/${orderDto.id}"><i class="fa fa-info"></i></a>

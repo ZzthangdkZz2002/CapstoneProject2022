@@ -76,6 +76,7 @@ public class Product {
     private List<ProductWareHouse> productWareHouseList = new ArrayList<>();
 
 
+
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
 //    private List<SpecificationValue> specificationValues = new ArrayList<>();
 

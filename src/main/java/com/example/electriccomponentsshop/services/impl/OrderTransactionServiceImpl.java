@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 public class OrderTransactionServiceImpl implements OrderTransactionService {
     @Autowired
@@ -27,14 +25,14 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
     @Autowired
     AccountRepository accountRepository;
     @Override
-    public OrderTransaction addTransaction(OrderTransactionDTO orderTransactionDTO , Authentication authentication) {
+    public OrderTransaction addTransactionOnline(OrderTransactionDTO orderTransactionDTO , Authentication authentication) {
         try{
             OrderTransaction orderTransaction = new OrderTransaction();
 
             if(authentication != null){
                 AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
                 Account account = accountRepository.findById(accountDetail.getId()).get();
-                orderTransaction.setAccount(account);
+                orderTransaction.setAccountuser(account);
             }
 
 
@@ -47,6 +45,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
             orderTransaction.setPayment_method(orderTransactionDTO.getPayment_method());
             orderTransaction.setMessage(orderTransactionDTO.getMessage());
             orderTransaction.setStatus(OrderEnum.PENDING.getName());
+            orderTransaction.setOrderKind("online");
 
             OrderTransaction o = orderTransactionRepository.save(orderTransaction);
 
@@ -66,4 +65,5 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
         }
 
     }
+
 }

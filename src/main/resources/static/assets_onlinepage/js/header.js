@@ -7,6 +7,10 @@ const countQuantity=()=>{
 }
 count.textContent=countQuantity();
 
+function convertMoney(num) {
+    return num.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+}
+
 
 let productLists = [];
 
@@ -45,21 +49,24 @@ function autocomplete(inp, arr) {
         a = document.createElement("DIV");
         a.setAttribute("id", this.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
+        a.setAttribute("style","height:300px; overflow:auto");
         /*append the DIV element as a child of the autocomplete container:*/
         this.parentNode.appendChild(a);
         /*for each item in the array...*/
         for (i = 0; i < arr.length; i++) {
             if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                b = document.createElement("DIV");
+                b = document.createElement("A");
                 b.style.display='flex'
+                b.style.backgroundColor = 'white'
                 b.className = arr[i].id;
+                b.href = contextPath+'/homepage/detailProduct?id='+arr[i].id
                 b.addEventListener('click', (e)=>{
                     localStorage.setItem('idDetald',e.target.className);
                 });
-                b.innerHTML = `<img src="${contextPath}/img/${arr[i].image}" alt="img-produc" width="50" height="50">`;
+                b.innerHTML = `<img id="imgheader" src="${contextPath}/img/${arr[i].image}" alt="img-produc" width="100" height="100" onerror="this.src='https://cdn-img.thethao247.vn//storage/files/camhm/2022/10/11/tin-mu-moi-nhat-11-10-ronaldo-duoc-doi-thu-tang-len-may-casemiro-tim-lai-chinh-minh-200731.jpg'"/>`
                 b.innerHTML +=`<div class="infor-search" style="display:flex;flex-direction: column;margin-left:80px">
-              <strong >${arr[i].name}</strong>
-              <span >${arr[i].price}</span>
+              <strong style="font-size: 16px; color: #333">${arr[i].name}</strong>
+              <span style="font-size: 16px; color: #333">${convertMoney(arr[i].price)}</span>
 
               </div>`
 
@@ -68,7 +75,6 @@ function autocomplete(inp, arr) {
 
                 b.addEventListener("click", function(e) {
                     inp.value = this.getElementsByTagName("input")[0].value;
-
                     closeAllLists();
                 });
                 a.appendChild(b);
@@ -104,3 +110,4 @@ function autocomplete(inp, arr) {
 }
 
 autocomplete(document.getElementById("btnProductSearch"), productLists);
+

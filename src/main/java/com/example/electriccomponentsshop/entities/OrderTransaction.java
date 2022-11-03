@@ -25,7 +25,11 @@ public class OrderTransaction {
 
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Account account;
+    private Account accountuser;
+
+    @ManyToOne(fetch =  FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Account accountemployee;
 
     @OneToMany(mappedBy = "orderTransaction",fetch = FetchType.EAGER)
     private List<OrderTransactionDetail> orderTransactionDetails = new ArrayList<>();
@@ -40,7 +44,7 @@ public class OrderTransaction {
     private String payment_info;
     //message tu khach hang
     private String message;
-
+    private String orderKind;
     @CreationTimestamp
     @Column(updatable = false)
     private Date created;

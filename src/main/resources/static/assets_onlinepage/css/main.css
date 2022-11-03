@@ -1064,7 +1064,7 @@ a {
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
-  margin: 8px 0 0;
+  margin: 30px 0 0;
 }
 .main-header .top-search-holder .search-area .search-field {
   border: medium none;
@@ -1072,7 +1072,7 @@ a {
   -moz-border-radius: 5px 0 0 5px;
   border-radius: 5px 0 0 5px;
   padding: 13px;
-  width: 67%;
+  width: 45rem;
 }
 .main-header .top-search-holder .search-area .search-field:focus{
   border:  none;
@@ -1161,7 +1161,7 @@ a {
 }
 .top-cart-row .dropdown-cart .lnk-cart .items-cart-inner .total-price-basket {
   padding: 13px 15px;
-  font-family: 'FjallaOneRegular';
+  font-family: Arial, Helvetica, sans-serif;
   text-transform: uppercase;
   float: left;
 }

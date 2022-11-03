@@ -10,11 +10,11 @@
         <link rel="stylesheet" href="/css/style.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Alef' rel='stylesheet'>
-        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<%--        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">--%>
       </head>
       <body>    
         <!--Page Header-->
-
+        <jsp:include page="header.jsp"/>
     
         <!--Page Content-->
         <main>

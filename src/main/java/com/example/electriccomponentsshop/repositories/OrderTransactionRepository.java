@@ -9,5 +9,7 @@ import java.util.Optional;
 
 public interface OrderTransactionRepository extends JpaRepository<OrderTransaction, Integer> {
 Optional<OrderTransaction> findById(Integer id);
-List<OrderTransaction> findAllByAccount(Account account);
+List<OrderTransaction> findAllByAccountuser(Account accountuser);
+List<OrderTransaction> findAllByAccountuserAndStatus(Account accountuser, String status);
+List<OrderTransaction> findAllByStatus(String status);
 }

@@ -77,11 +77,25 @@ public class OrderShopController {
 //        return "redirect:/order";
 //    }
 
+    @GetMapping("/customer/cancelOrder")
+    public String cancelOrderFromCustomer(@RequestParam(name = "id") String id, RedirectAttributes r){
+        try{
+            OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
+            orderTransaction.setStatus(OrderEnum.CANCEL.getName());
+            orderTransactionRepository.save(orderTransaction);
+            r.addFlashAttribute("cancelOrderMessage","Đã hủy thành công đơn hàng #" + orderTransaction.getOrderid());
+        }catch (Exception e){
+            r.addFlashAttribute("cancelOrderMessage","error");
+        }
+        return "redirect:/order/cancelled";
+    }
+
+
     @GetMapping(value = "/order")
     public String getAllOrder (Authentication authentication, ModelMap map) {
         AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
         Account account = accountRepository.findById(accountDetail.getId()).get();
-        List<OrderTransaction> orders = orderTransactionRepository.findAllByAccount(account);
+        List<OrderTransaction> orders = orderTransactionRepository.findAllByAccountuser(account);
         List<OrderTransactionDTO> orderTransactionDTOS = convertOrderToDTO(orders);
         map.addAttribute("orders", orderTransactionDTOS);
         return "customer/all-orders";
@@ -136,30 +150,38 @@ public class OrderShopController {
         }
     }
 
-//    @GetMapping(value = "/order/{status}")
-//    public String getOrderByStatus (Authentication authentication, ModelMap map, @PathVariable String status) {
-//        AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
-//        List<Category> categories = categoryService.findCategoriesByParentCategoryIdIsNull();
-//        List<OrderDTO> orders = new ArrayList<>();
-//        String page = "";
-//
-//        if (status.equals("waiting")) {
-//            orders = orderService.findOrderByStatusForCustomer(accountDetail.getId(), OrderEnum.PENDING.getName());
-//            page = "waiting-order";
-//        } else if (status.equals("shipping")) {
-//            orders = orderService.findOrderByStatusForCustomer(accountDetail.getId(), OrderEnum.DELIVERY.getName());
-//            page = "shipping-order";
-//        } else if (status.equals("received")) {
-//            orders = orderService.findOrderByStatusForCustomer(accountDetail.getId(), OrderEnum.DONE.getName());
-//            page = "received-order";
-//        } else if (status.equals("cancelled")) {
-//            orders = orderService.findOrderByStatusForCustomer(accountDetail.getId(), "Đã Hủy");
-//            page = "cancelled-order";
-//        }
-//
-//        map.addAttribute("categories", categories);
-//        map.addAttribute("orders", orders);
-//
-//        return "customer/"+page;
-//    }
+    @GetMapping(value = "/order/{status}")
+    public String getOrderByStatus (Authentication authentication, ModelMap map, @PathVariable String status) {
+        AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
+        Account account = accountRepository.findById(accountDetail.getId()).get();
+        List<OrderTransaction> orderTransactions = null;
+        List<OrderTransactionDTO> orderTransactionDTOS = new ArrayList<>();
+        String page = "";
+
+        if (status.equals("waiting")) {
+            orderTransactions = orderTransactionRepository.findAllByAccountuserAndStatus(account, OrderEnum.PENDING.getName());
+            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            page = "waiting-order";
+        } else if (status.equals("shipping")) {
+            orderTransactions = orderTransactionRepository.findAllByAccountuserAndStatus(account, OrderEnum.DELIVERY.getName());
+            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            page = "shipping-order";
+        }else if(status.equals("accepted")){
+            orderTransactions = orderTransactionRepository.findAllByAccountuserAndStatus(account, OrderEnum.CONFIRM.getName());
+            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            page = "accepted-order";
+        }
+        else if (status.equals("received")) {
+            orderTransactions = orderTransactionRepository.findAllByAccountuserAndStatus(account, OrderEnum.DONE.getName());
+            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            page = "received-order";
+        } else if (status.equals("cancelled")) {
+            orderTransactions = orderTransactionRepository.findAllByAccountuserAndStatus(account, OrderEnum.CANCEL.getName());
+            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            page = "cancelled-order";
+        }
+        map.addAttribute("orders", orderTransactionDTOS);
+
+        return "customer/"+page;
+    }
 }
