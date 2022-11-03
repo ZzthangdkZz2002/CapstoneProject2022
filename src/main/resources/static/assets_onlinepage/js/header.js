@@ -45,6 +45,7 @@ function autocomplete(inp, arr) {
         a = document.createElement("DIV");
         a.setAttribute("id", this.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
+        a.setAttribute("style","height:300px; overflow:auto");
         /*append the DIV element as a child of the autocomplete container:*/
         this.parentNode.appendChild(a);
         /*for each item in the array...*/
@@ -52,6 +53,8 @@ function autocomplete(inp, arr) {
             if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                 b = document.createElement("DIV");
                 b.style.display='flex'
+                // b.style.height = '200px'
+                // b.style.overflow = 'auto'
                 b.className = arr[i].id;
                 b.addEventListener('click', (e)=>{
                     localStorage.setItem('idDetald',e.target.className);

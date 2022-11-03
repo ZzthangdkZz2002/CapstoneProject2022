@@ -46,12 +46,12 @@ const getListCart=()=>{
                 src="${contextPath}/img/${item.product.image}"
                 alt=""></td>
         <td>
-            <p class="font-weight-bold">${item.product.name}</p>
+            <p class="fw-bold">${item.product.name}</p>
             <p>Mã sản phẩm: ${item.product.id}</p>
         </td>
         <td class="price">${item.product.price}</td>
         <td>
-            <div class="d-flex">
+            <div class="d-flex" style="justify-content: center">
                 <button class="btnIncrease btn btn-link px-2"
                     onclick="decreasing(${item.product.id})">
                     <i class="fas fa-minus"></i>

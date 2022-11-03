@@ -65,40 +65,20 @@
                     <!-- ============================================================= SEARCH AREA : END ============================================================= -->
                 </div><!-- /.top-search-holder -->
 
-                <div class="col-xs-12 col-sm-12 col-md-3 animate-dropdown top-cart-row">
+                <div class="col-xs-12 col-sm-12 col-md-3 animate-dropdown top-cart-row" style="display: flex">
                     <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
 
                     <c:set var="username" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}"/>
 
-                    <div>
-                        <c:choose>
-                            <c:when test = "${username == null}">
-                                <div id="avatar_icon">
-                                    <a href="${pageContext.request.contextPath}/signin"><i class="material-icons">person</i></a><a href="${pageContext.request.contextPath}/signin">Đăng nhập</a> / <a href="${pageContext.request.contextPath}/signup">Đăng ký</a>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="dropdown" style="display: inline;">
-                                    <button class="dropdown-toggle" data-toggle="dropdown" style="padding: 14px 9px; border: none;"><i class="icon fa fa-user" style="padding-right: 5px;"></i>Account</button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="${pageContext.request.contextPath}/profile" style="color: black;">Tài khoản của tôi</a></li>
-                                        <li><a href="${pageContext.request.contextPath}/order" style="color: black;">Đơn hàng của tôi</a></li>
-                                        <li><a href="${pageContext.request.contextPath}/sign-out" style="color: black;">Đăng xuất</a></li>
-                                    </ul>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-
-                    <div class="dropdown dropdown-cart">
+<%--                    giỏ hàng--%>
+                    <div class="dropdown dropdown-cart" style="">
                         <a href="${pageContext.request.contextPath}/homepage/cart" class="dropdown-toggle lnk-cart">
                             <div class="items-cart-inner">
-
                                 <div class="basket">
-                                    <i class="glyphicon glyphicon-shopping-cart">Giỏ hàng</i>
+                                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                                    <span>Giỏ hàng</span>
                                 </div>
                                 <div class="basket-item-count"><span class="count">0</span></div>
-
                             </div>
                         </a>
                         <ul class="dropdown-menu">
@@ -140,6 +120,27 @@
                         </ul>
                     </div>
 
+<%--                    tài khoản--%>
+                    <div style="margin-left: 20px">
+                        <c:choose>
+                            <c:when test = "${username == null}">
+                                <div id="avatar_icon">
+                                    <a href="${pageContext.request.contextPath}/signin"><i class="material-icons">person</i></a><a href="${pageContext.request.contextPath}/signin">Đăng nhập</a> / <a href="${pageContext.request.contextPath}/signup">Đăng ký</a>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" data-toggle="dropdown" style="padding: 14px 9px; border: none;"><i class="icon fa fa-user" style="padding-right: 5px;"></i>Account</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="${pageContext.request.contextPath}/profile" style="color: black;">Tài khoản của tôi</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/order" style="color: black;">Đơn hàng của tôi</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/sign-out" style="color: black;">Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+
                 </div>
 
             </div>
@@ -169,22 +170,6 @@
                                     <li class="dropdown yamm">
                                         <a href="home.html" data-hover="dropdown"
                                            class="dropdown-toggle">Desktop</a>
-
-                                    </li>
-
-                                    <li class="dropdown">
-
-                                        <a href="category.html">Electronics
-                                        </a>
-                                    </li>
-                                    <li class="dropdown hidden-sm">
-
-                                        <a href="category.html">Television
-                                        </a>
-                                    </li>
-
-                                    <li class="dropdown hidden-sm">
-                                        <a href="category.html">Smart Phone</a>
                                     </li>
 
                                     <li class="dropdown">

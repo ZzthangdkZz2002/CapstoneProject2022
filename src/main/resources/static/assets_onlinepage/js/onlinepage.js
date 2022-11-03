@@ -72,11 +72,10 @@ function convertMoney(num) {
     return num.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
 }
 
-productList.map((item,key)=>{
+productList.splice(productList.length-9,productList.length).map((item,key)=>{
 
     products.innerHTML+=`<a href="${contextPath}/homepage/detailProduct?id=${item.id}" onclick="saveId(${item.id})">
-    <div  class="product col-md-3" style="margin-bottom: 20px;    box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
-    padding: 10px;margin-right: 15px">
+    <div class="product col-md-4" style="height: 200px;margin-bottom: 20px; border: 0.5px solid #e6e6e6; padding: 5px">
     <div class="product-micro">
         <div class="row product-micro-row">
             <div class="col col-xs-5">
@@ -104,7 +103,7 @@ productList.map((item,key)=>{
                         
                         <p style="color: ${item.quantity > 0 ? "green" : "red"}">${item.quantity > 0 ? "Còn hàng" : "Liên hệ"}</p>
                     </div>
-                      <div class="action" style="display:flex"><button type="button" onclick="addCart(${item.id})" class="btn btn-info" style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px";>Add to cart</button>
+                      <div class="action" style="display:flex;position: absolute;top: 160px"><button type="button" onclick="addCart(${item.id})" class="btn btn-info" style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px";>Add to cart</button>
                       <a onclick="saveId(${item.id})" href="${contextPath}/homepage/detailProduct?id=${item.id}" class="btn btn-info" style="padding: 5px 10px;font-size:12px;border:none">View</a>
                     </div>
                 </div>
