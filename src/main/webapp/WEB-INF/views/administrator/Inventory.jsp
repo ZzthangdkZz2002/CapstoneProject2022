@@ -113,7 +113,7 @@
         <div class="tile-body">
             <div class="row">
                 <div class="col-2">
-                    <h1 class="heading-page mt-2">Phiếu kiểm kho</h1>
+                    <h1 class="heading-page mt-2">Phiếu nhập kho</h1>
                     <div class="boxLeft mt-5">
                         <h5>Thời gian</h5>
                         <div class="form-check my-3">
@@ -159,7 +159,7 @@
                         <table class="table mt-5 table-bordered " id="inventory-table" style="width: 100%;">
                             <thead class="thead" style="background-color: #c2ffc2;">
                             <tr>
-                                <th scope="col">Mã kiểm kho</th>
+                                <th scope="col">Mã nhập kho</th>
                                 <th scope="col">Thời gian</th>
                                 <th scope="col">Nhà cung cấp</th>
                                 <th scope="col">Kho hàng</th>

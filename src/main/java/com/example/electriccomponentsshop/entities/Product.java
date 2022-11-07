@@ -46,10 +46,10 @@ public class Product {
     @Column
     private String description;
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column()
     private Date addedDate;
 
-    @Column
+    @Column(updatable = false)
     @ColumnDefault("0")
     private int quantity;
 

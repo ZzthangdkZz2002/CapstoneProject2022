@@ -140,6 +140,12 @@
                     <a href="${pageContext.request.contextPath}/admin/orders/accept?id=${orderDto.id}" class="btn btn-primary btn-sm edit"
                            type="button" title="Xác nhận đơn hàng"><i class="fas fa-edit"></i>Xác nhận đơn hàng</a>
                   </c:if>
+
+                    <c:if test="${orderDto.status eq 'Chờ Xử Lý' || orderDto.status eq 'Đã Xác Nhận'}">
+                      <a onclick="return confirm('Bạn muốn hủy đơn hàng ${orderDto.orderid}?')" href="${pageContext.request.contextPath}/admin/orders/cancel?id=${orderDto.id}" class="btn btn-primary btn-sm edit"
+                         type="button" title="Xác nhận đơn hàng"><i class="fas fa-edit"></i>Hủy đơn hàng</a>
+                    </c:if>
+
                     <a class="btn btn-primary btn-sm edit"
                        type="button" title="Xem" href="${pageContext.request.contextPath}/admin/orders/view/${orderDto.id}"><i class="fa fa-info"></i></a>
                   </td>

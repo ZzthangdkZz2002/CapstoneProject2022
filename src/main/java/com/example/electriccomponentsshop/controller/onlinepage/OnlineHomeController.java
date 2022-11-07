@@ -135,7 +135,7 @@ public class OnlineHomeController {
     @GetMapping("/products")
     @ResponseBody
     public ResponseEntity<ResponseObject> getAllProduct(){
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findByStatus(1);
         List<ProductDTO> productDTOS = new ArrayList<>();
         for(Product product : products){
             ProductDTO p = new ProductDTO();
@@ -155,6 +155,8 @@ public class OnlineHomeController {
         }
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","get product success",productDTOS));
     }
+
+
 
     @GetMapping("/getProductById")
     @ResponseBody

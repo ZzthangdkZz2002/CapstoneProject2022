@@ -6,5 +6,5 @@ import org.springframework.security.core.Authentication;
 
 public interface OrderTransactionService {
     OrderTransaction addTransactionOnline(OrderTransactionDTO orderTransactionDTO, Authentication authentication);
-
+    double calOrderProfit(Integer order_id);
 }

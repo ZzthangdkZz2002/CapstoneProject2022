@@ -22,6 +22,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     Page<Product> searchProductsByNameorCode(@Param("pName") String pName,Pageable pageable);
     @Override
     Page<Product> findAll(Pageable pageable);
+    List<Product> findByStatus(int status);
     Optional<Product> findById(Integer id);
     Optional<Product> findByCode(String code);
     List<Product> findDistinctByName(String name);

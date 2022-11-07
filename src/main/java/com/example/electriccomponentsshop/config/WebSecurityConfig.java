@@ -83,7 +83,7 @@ import java.util.List;
                 .authorizeRequests().antMatchers("/error23", "/css/**", "/js/**","/assets_onlinepage/**","/onlinePage/**", "/resources/**", "/store-info-api", "/cart/get-numbers-product",
                         "/auth/signin", "/auth/signup", "/auth/sign-out", "/home","/homepage/**", "/error-401", "/product?**",
                         "/signup", "/address/**", "/img/**", "/product/**", "/contact").permitAll()
-                .antMatchers("/admin/**", "/admin-home").hasAnyAuthority("ROLE_EMPLOYEE", "ROLE_MANAGER")
+                .antMatchers("/admin/**", "/admin-home","customer/**").hasAnyAuthority("ROLE_EMPLOYEE", "ROLE_MANAGER")
                 .antMatchers("/addToCart/**", "/profile/**", "/createOrder",
                         "/order/**", "/change-password", "/cart/**").hasAnyAuthority(("ROLE_CUSTOMER"))
                 .anyRequest().authenticated()

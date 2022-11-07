@@ -131,8 +131,16 @@ public class ProductServiceImpl implements ProductService {
 
 
         product.setCategories(categories);
-        product.setOriginal_price(productDTO.getOriginal_price());
-        product.setPrice(productDTO.getPrice());
+        if("".equals(productDTO.getOriginal_price()) || productDTO.getOriginal_price() == null){
+            product.setOriginal_price(BigDecimal.valueOf(0));
+        }else{
+            product.setOriginal_price(productDTO.getOriginal_price());
+        }
+        if("".equals(productDTO.getPrice()) || productDTO.getPrice() == null){
+            product.setPrice(BigDecimal.valueOf(0));
+        }else{
+            product.setPrice(productDTO.getPrice());
+        }
         product.setBrand(productDTO.getBrand());
 
         //upload image

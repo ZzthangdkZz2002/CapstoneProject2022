@@ -130,7 +130,7 @@
                             </c:when>
                             <c:otherwise>
                                 <div class="dropdown">
-                                    <button class="dropdown-toggle" data-toggle="dropdown" style="padding: 14px 9px; border: none;"><i class="icon fa fa-user" style="padding-right: 5px;"></i>Account</button>
+                                    <button class="dropdown-toggle" data-toggle="dropdown" style="padding: 14px 9px; border: none;"><i class="icon fa fa-user" style="padding-right: 5px;"></i>${username}</button>
                                     <ul class="dropdown-menu">
                                         <li><a href="${pageContext.request.contextPath}/profile" style="color: black;">Tài khoản của tôi</a></li>
                                         <li><a href="${pageContext.request.contextPath}/order" style="color: black;">Đơn hàng của tôi</a></li>

@@ -36,9 +36,8 @@
 
 </head>
 <body class="bg-light">
+<jsp:include page="header.jsp"/>
 <div class="container">
-
-
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -59,16 +58,16 @@
         </div>
         <div class="col-md-8 order-md-1">
             <h4 class="mb-3">Thông tin thanh toán</h4>
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" >
 
                 <div class="mb-3">
                     <label for="phone">Số điện thoại</label>
-                    <input type="text" class="form-control" id="phone" value="${auth != null ? auth.phone : "" }" ${auth != null ? "readonly" : "" }>
+                    <input type="text" class="form-control" id="phone" value="${auth != null ? auth.phone : "" }" ${auth != null ? "readonly" : "" } required>
                 </div>
 
                 <div class="mb-3">
                     <label for="email">Email </label>
-                    <input type="email" class="form-control" id="email" value="${auth != null ? auth.email : "" }" ${auth != null ? "readonly" : "" }>
+                    <input type="email" class="form-control" id="email" value="${auth != null ? auth.email : "" }" ${auth != null ? "readonly" : "" } required>
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                     </div>
@@ -78,7 +77,7 @@
                     <label for="username">Họ và tên</label>
                     <div class="input-group">
 
-                        <input type="text" class="form-control" id="username"  value="${auth != null ? auth.name : "" }" ${auth != null ? "readonly" : "" }>
+                        <input type="text" class="form-control" id="username"  value="${auth != null ? auth.name : "" }" ${auth != null ? "readonly" : "" } required>
                         <div class="invalid-feedback" style="width: 100%;">
                             Your username is required.
                         </div>
@@ -89,10 +88,10 @@
 
                 <div class="mb-3">
                     <label for="address">Địa chỉ</label>
-                    <input type="text" class="form-control" id="address"  required>
-                    <div class="invalid-feedback">
-                        Please enter your shipping address.
-                    </div>
+                    <input type="text" class="form-control" id="address"  required="Vui lòng nhập địa chỉ">
+<%--                    <div class="invalid-feedback">--%>
+<%--                        Please enter your shipping address.--%>
+<%--                    </div>--%>
                 </div>
 
 

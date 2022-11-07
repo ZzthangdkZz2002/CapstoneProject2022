@@ -32,7 +32,7 @@ public class Utils {
     }
 
     public String generateInventoryCode(Integer inventory_id){
-        StringBuffer strCode = new StringBuffer("KK");
+        StringBuffer strCode = new StringBuffer("NK");
         if(String.valueOf(inventory_id).length() == 1){
             strCode.append("00000");
         }
