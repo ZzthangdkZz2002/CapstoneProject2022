@@ -64,7 +64,7 @@
             </div>
             <div class="row element-button">
               <div class="col-sm-2">
-                <a class="btn btn-add btn-sm" href="${pageContext.request.contextPath}/admin/orders/add" title="Tạo đơn hàng mới"><i
+                <a class="btn btn-add btn-sm" href="${pageContext.request.contextPath}/admin/orders/orderOffline" title="Tạo đơn hàng mới"><i
                     class="fas fa-plus"></i>
                   Tạo đơn hàng mới</a>
               </div>

@@ -1,6 +1,7 @@
 package com.example.electriccomponentsshop.dto;
 
 import com.example.electriccomponentsshop.entities.Account;
+import com.example.electriccomponentsshop.entities.Customer;
 import com.example.electriccomponentsshop.entities.OrderTransactionDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class OrderTransactionDTO {
 
     private Account account_user;
     private Account account_employee;
+    private Customer customer;
 
     private String user_name;
     private String user_email;

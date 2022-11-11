@@ -2,7 +2,15 @@ var productList=[]
 
 
 var customers=[]
-
+const moneyRadio1 = document.getElementById('cash');
+const moneyRadio2 = document.getElementById('transfer');
+const tranferMoney = document.querySelector('.tranfer-money');
+const Savebank = document.querySelector('.save-bank');
+const listInforBank = document.querySelector('.custom-select');
+const img_qr = document.querySelector('.img_qr');
+const qr_code_modal = document.querySelector('.qr_code_modal');
+const add_bank = document.querySelector('.add_bank');
+var moneyForQr = 0;
 function convertMoney(num) {
     if(num == null){
         num = "0";
@@ -201,7 +209,7 @@ const viewDetaild=(id)=>{
     console.log('cartListAdmin',cartListAdmin);
     console.log('productItem',productItem);
 
-    document.querySelector(".img-modal").src=productItem.product.image
+    document.querySelector(".img-modal").src=contextPath+'/img/'+productItem.product.image
     document.querySelector(".name-modal").value=productItem.product.name
     document.querySelector(".price-modal").value=productItem.product.price
     document.querySelector(".quantity-modal").value=productItem.quantity
@@ -241,6 +249,7 @@ const renderCartAdmin=()=>{
         (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
         0
     );
+    moneyForQr = money;
     totalMoney.textContent=convertMoney(money);
     renderPay()
 
@@ -286,7 +295,9 @@ btnBill.addEventListener("click",()=>{
         return
 
     }
-    alert(`Bạn đã thanh toán thành công,Tiền thừa bạn khách nhận đc là :${customPay-money}`)
+
+
+    // alert(`Bạn đã thanh toán thành công,Tiền thừa bạn khách nhận đc là :${customPay-money}`)
     localStorage.removeItem('cartAdmin')
     renderCartAdmin();
     location.reload()
@@ -359,7 +370,200 @@ function autocompleteCustomer(inp, arr) {
     });
 }
 
+
+
+
+
+var listBank=[]
+
+img_qr.addEventListener('click',()=>{
+    qr_code_modal.src=img_qr.src
+})
+
+add_bank.addEventListener('click',()=>{
+    $.ajax(
+        {
+            type : "GET",
+            contentType: "application/json",
+            url : "https://api.vietqr.io/v2/banks",
+            success: function (response){
+                console.log(response)
+                if(response.code === '00'){
+                    response.data.map((item,key)=>{
+                        $('#bank_list_select').append(`<option value=${item.bin}>${item.code}-${item.name}</option>`)
+
+                    })
+
+                }
+                else{
+                    alert(response.desc);
+                    return;
+                }
+            },
+
+            error: function () {
+                console.log("Get List bank Error");
+                return false;
+            }
+        }
+
+    );
+    console.log('hiihho',listBank);
+})
+
+//change payment type
+function valueChange(event) {
+    if (moneyRadio1.checked) {
+        console.log('moneyRadio1');
+        tranferMoney.style.display = "none";
+    } else {
+        console.log('moneyRadio2');
+        let listbank = JSON.parse(localStorage.getItem('bankList'));
+        window.localStorage.removeItem('bankList');
+        listbank?.map((item,key)=>{
+            var dataGenQr = {
+                "accountNo": item.stk,
+                "accountName": item.usernameBank,
+                "acqId": item.bin,
+                "addInfo": "FPT Electronic Shop - Thanh toan hoa don",
+                "amount": Number(moneyForQr),
+                "template": "compact2"
+            };
+            $.ajax(
+                {
+                    type : "POST",
+                    contentType: "application/json",
+                    async: false,
+                    url : "https://api.vietqr.io/v2/generate",
+                    headers: {
+                        'x-api-key':'.com',
+                        'x-client-id':'we-l0v3-v1et-qr'
+                    },
+                    data: JSON.stringify(dataGenQr),
+                    success: function (response){
+                        if(response.code === '00'){
+                            var usernameBank = item.usernameBank;
+                            var stk = item.stk;
+                            var bin = item.bin;
+                            var bankname = item.bankname;
+                            var qrImage = response.data.qrDataURL;
+                            // item.qrImage = response.data.qrDataURL;
+                            const bankInfor={usernameBank,stk,bin,bankname,qrImage}
+                            bankList.push(bankInfor)
+                            localStorage.setItem('bankList',JSON.stringify(bankList))
+                        }
+                        else{
+                            alert(response.desc);
+                            return;
+                        }
+                    },
+
+                    error: function () {
+                        console.log("Get QrCode Error");
+                        return false;
+                    }
+                }
+            );
+        })
+        renderListInforBank();
+
+        listbank?.slice(0,1).map((item,key)=>{
+            img_qr.src = item.qrImage;
+        })
+        tranferMoney.style.display = "block";
+
+    }
+}
+var bankList=[]
+moneyRadio1.addEventListener('change', valueChange);
+moneyRadio2.addEventListener('change', valueChange);
+const renderListInforBank=()=>{
+    listInforBank.innerHTML='';
+    let listBanks=JSON.parse(localStorage.getItem('bankList'))
+    let i=0;
+    listBanks?.map((item,key)=>{
+
+        return listInforBank.innerHTML+=`<option value=${++i}>${item.stk}-${item.bankname}</option>`
+
+    })
+}
+
+// $('#custom-select').on('change', function () {
+//     var selectVal = $("#custom-select option:selected").val();
+//     console.log("value selected: "+selectVal.bin);
+// });
+listInforBank.addEventListener('change', bankChange);
+
+function bankChange(event) {
+    let listBanks=JSON.parse(localStorage.getItem('bankList'))
+    const selectVal = $('#custom-select').find(":selected").val();;
+    listBanks?.slice(selectVal-1, selectVal).map((item,key)=>{
+        img_qr.src = item.qrImage;
+    })
+}
+
+Savebank.addEventListener("click",()=>{
+    let storage =localStorage.getItem('bankList');
+    if(storage){
+        bankList=JSON.parse(storage)
+    }
+    const stk = document.querySelector('#stk').value;
+    const bin = document.querySelector('#bank_list_select').value;
+    const bankname = $('#bank_list_select').find(":selected").text();
+    const usernameBank = document.querySelector('#nameBank').value;
+    var qrImage;
+    console.log("moneyy: "+moneyForQr)
+    var dataGenQr = {
+        "accountNo": stk,
+        "accountName": usernameBank,
+        "acqId": bin,
+        "addInfo": "FPT Electronic Shop - Thanh toan hoa don",
+        "amount": Number(moneyForQr),
+        "template": "compact2"
+    };
+    $.ajax(
+        {
+            type : "POST",
+            contentType: "application/json",
+            async: false,
+            url : "https://api.vietqr.io/v2/generate",
+            headers: {
+                'x-api-key':'.com',
+                'x-client-id':'we-l0v3-v1et-qr'
+            },
+            data: JSON.stringify(dataGenQr),
+            success: function (response){
+                console.log(response)
+                if(response.code === '00'){
+                    img_qr.src = response.data.qrDataURL;
+                    qrImage = response.data.qrDataURL;
+                }
+                else{
+                    alert(response.desc);
+                    return;
+                }
+            },
+
+            error: function () {
+                console.log("Get QrCode Error");
+                return false;
+            }
+        }
+    );
+    console.log("QR image: "+qrImage);
+    const bankInfor={usernameBank,stk,bin,bankname,qrImage}
+    bankList.push(bankInfor)
+    localStorage.setItem('bankList',JSON.stringify(bankList))
+    renderListInforBank()
+})
+
+
+renderListInforBank();
+
 autocompleteCustomer(document.getElementById("search-customer"), customers);
+
+
+
 
 function addCustomer() {
     var phone = $('#cust_phone').val();

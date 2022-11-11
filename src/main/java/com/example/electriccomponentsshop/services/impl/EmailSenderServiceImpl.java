@@ -16,7 +16,7 @@ import java.util.Properties;
 @Service
 public class EmailSenderServiceImpl implements EmailSenderService {
     private final String MAIL = "ZzthangdkZz2002@gmail.com";
-    private final String PASSWORD = "qmmhqoholmynqrrv";
+    private final String PASSWORD = "txxchttmhzzupmsq";
 
 
     @Override
@@ -26,6 +26,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", 587);
 
         // Authenticator
         Session session = Session.getInstance(props, new Authenticator() {
@@ -46,7 +47,8 @@ public class EmailSenderServiceImpl implements EmailSenderService {
             System.out.println("Message sent successfully...");
 
         } catch (MessagingException e) {
-            System.out.println("Message sent Fail...");
+            System.out.println("Message sent Fail...: "+ e.getMessage());
+
             throw new RuntimeException(e);
         }
 

@@ -153,7 +153,6 @@
                 </div>
                 <div class="col-4 mt-3">
                     <input type="text" class="form-control customer-pay mb-4" >
-
                 </div>
                 <div class="col-8  mt-3">
                     <p class="mb-4 custom-text-bill">Tiền thừa trả khách</p>
@@ -164,6 +163,44 @@
                 </div>
 
 
+                <div class="col-12">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input custom-checkbox" type="radio" name="inlineRadioOptions" id="cash"
+                               value="cash" checked />
+                        <label class="form-check-label custom-checkbox-label mr-2" for="cash">Tiền mặt</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input custom-checkbox" type="radio" name="inlineRadioOptions" id="transfer"
+                               value="transfer" />
+                        <label class="form-check-label custom-checkbox-label" for="transfer">Chuyển khoản</label>
+                    </div>
+
+
+                </div>
+                <!-- suggest money -->
+
+                <!-- transfer money -->
+                <div class="col-12 mt-3 tranfer-money">
+                    <div class="row">
+                        <div class="col-3">
+                            <img
+                                    src=""
+                                    alt="" class="img_qr" data-bs-toggle="modal" data-bs-target="#exampleModal5" style="cursor: pointer;">
+                        </div>
+                        <div class="col-9">
+                            <select class="custom-select" id="custom-select">
+                                <option selected>Sacombank-030047139480-Nguyễn Viết Thắng</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                            <button type="button" class="btn btn-light add_acount mt-2 add_bank" style="cursor: pointer;"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal4">Thêm tài khoản</button>
+                        </div>
+                    </div>
+
+                </div>
 
                 <div class="col-12" style="position: absolute; bottom: 100px;">
                     <button type="button" class="btn btn-primary btn-bill">Thanh toán</button>
@@ -294,6 +331,93 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Thêm thông tin tài  khoản-->
+<div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabe4" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" >Thêm thông tin tài khoản</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="container-fluid">
+                    <div class="row justify-content-between">
+
+
+
+
+                        <div class="form__group field col-12">
+                            <input type="input" class="form__field" placeholder="Name" name="nameBank" id='nameBank' required />
+                            <label for="name" class="form__label">Họ và tên</label>
+                        </div>
+
+                        <div class="form__group field col-5">
+                            <input type="input" class="form__field" placeholder="Số tài khoản" name="stk" id='stk' required />
+                            <label for="name" class="form__label">Số tài khoản</label>
+                        </div>
+
+                        <div class="form__group field col-5">
+                            <select class="custom-select" id="bank_list_select">
+
+                                <!-- LIST INFOR BANK -->
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary save-bank" data-bs-dismiss="modal">Lưu</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal show img_qr-->
+<div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabe5" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" >QR code</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="container-fluid">
+                    <div class="row" style="justify-content: center;">
+
+
+
+
+                        <div class="col-7">
+                            <img src="" alt="Error_img_qr" style="width:100% ;height: 100%;object-fit: cover;"
+                                 class="qr_code_modal">
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary save-bank">Lưu</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>var contextPath = "${pageContext.request.contextPath}"</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>

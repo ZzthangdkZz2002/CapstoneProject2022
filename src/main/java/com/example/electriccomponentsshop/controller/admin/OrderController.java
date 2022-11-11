@@ -10,6 +10,7 @@ import com.example.electriccomponentsshop.repositories.ProductRepository;
 import com.example.electriccomponentsshop.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -336,7 +337,7 @@ public class OrderController {
 //        }
 //
 //    }
-    @GetMapping("/add")
+    @GetMapping("/orderOffline")
     public String viewAddForm(ModelMap model) {
         try{
 //            List<ProductDTO> productDTOList = productService.findAll();
@@ -352,9 +353,13 @@ public class OrderController {
         }
 
         return "administrator/order-offline";
-
-
     }
+
+//    @PostMapping("/addOrder")
+//    @ResponseBody
+//    public ResponseEntity<ResponseObject> addOrderOffline(@RequestBody OrderTransactionDTO orderTransactionDTO){
+//
+//    }
 //
 //    @PostMapping("/add")
 //    @ResponseBody

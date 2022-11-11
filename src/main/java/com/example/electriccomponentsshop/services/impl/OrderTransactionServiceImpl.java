@@ -86,10 +86,72 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
             }
             return o;
         }catch (Exception e){
-            System.out.println("addTransaction Error: " + e.getMessage());
+            System.out.println("addTransaction online Error: " + e.getMessage());
             return null;
         }
 
+    }
+
+    @Override
+    public OrderTransaction addTransactionOffline(OrderTransactionDTO orderTransactionDTO, Authentication authentication) {
+        try{
+            OrderTransaction orderTransaction = new OrderTransaction();
+            Customer customer = new Customer();
+            if(authentication != null){
+                AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
+                Account account = accountRepository.findById(accountDetail.getId()).get();
+                orderTransaction.setAccountuser(account);
+                customer.setName(account.getName());
+                customer.setEmail(account.getEmail());
+                customer.setPhone(account.getPhone());
+                customer.setAddress(account.getDetailLocation());
+//                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+//                Date parsed = (Date) format.parse(account.getDob());
+//                java.sql.Date date = new java.sql.Date(parsed.getTime());
+//                customer.setDob(date);
+                customer.setGender(account.getGender());
+            }else{
+                customer.setName(orderTransactionDTO.getUser_name());
+                customer.setEmail(orderTransactionDTO.getUser_email());
+                customer.setPhone(orderTransactionDTO.getUser_phone());
+                customer.setAddress(orderTransactionDTO.getAddress());
+            }
+
+            if(!customerRepository.findByPhone(orderTransactionDTO.getUser_phone()).isPresent()){
+                orderTransaction.setCustomer(customerRepository.save(customer));
+            }else{
+                orderTransaction.setCustomer(customerRepository.findByPhone(orderTransactionDTO.getUser_phone()).get());
+            }
+
+            orderTransaction.setOrderid(new Utils().gererateOrderid());
+            orderTransaction.setUser_name(orderTransactionDTO.getUser_name());
+            orderTransaction.setUser_email(orderTransactionDTO.getUser_email());
+            orderTransaction.setUser_phone(orderTransactionDTO.getUser_phone());
+            orderTransaction.setAddress(orderTransactionDTO.getAddress());
+            orderTransaction.setAmount(Double.parseDouble(orderTransactionDTO.getAmount()));
+            orderTransaction.setPayment_method(orderTransactionDTO.getPayment_method());
+            orderTransaction.setMessage(orderTransactionDTO.getMessage());
+            orderTransaction.setStatus(OrderEnum.PENDING.getName());
+            orderTransaction.setOrderKind("online");
+
+            OrderTransaction o = orderTransactionRepository.save(orderTransaction);
+
+
+
+            for(OrderTransactionDetailDTO dto : orderTransactionDTO.getOrderTransactionDetails()){
+                OrderTransactionDetail orderTransactionDetail = new OrderTransactionDetail();
+                orderTransactionDetail.setOrderTransaction(o);
+                orderTransactionDetail.setProduct_id(dto.getProduct_id());
+                orderTransactionDetail.setQuantity(dto.getQuantity());
+                orderTransactionDetail.setAmount(dto.getAmount());
+
+                orderTransactionDetailRepository.save(orderTransactionDetail);
+            }
+            return o;
+        }catch (Exception e){
+            System.out.println("addTransaction offline Error: " + e.getMessage());
+            return null;
+        }
     }
 
     @Override
