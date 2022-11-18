@@ -130,7 +130,7 @@ img[src="assets/images/blank.gif"] {
   -ms-transition: all linear 0.2s;
   -o-transition: all linear 0.2s;
   transition: all linear 0.2s;
-  background: #a8a8a8;
+  /*background: #a8a8a8;*/
   color: #fff;
   border: none;
   font-size: 13px;
@@ -1519,7 +1519,7 @@ a {
   top: 0 !important;
   left: 100%;
   margin: 0;
-  min-width: 330%;
+  /*min-width: 330%;*/
   /*338%;*/
   position: absolute;
   top: 0px;

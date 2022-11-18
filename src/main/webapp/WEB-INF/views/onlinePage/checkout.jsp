@@ -16,7 +16,6 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -25,6 +24,13 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+        }
+
+        .navbar{
+            justify-content: normal;
+        }
+        .navbar-nav{
+            flex-direction: row;
         }
 
         @media (min-width: 768px) {
@@ -119,7 +125,7 @@
                 </div>
 
                 <hr class="mb-4">
-                <a class="btn btn-primary btn-lg btn-block" onclick="OrderAction()">Thanh toán</a>
+                <a class="btn btn-primary btn-lg btn-block text-light" onclick="OrderAction()">Thanh toán</a>
             </form>
         </div>
     </div>

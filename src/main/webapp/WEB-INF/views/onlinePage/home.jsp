@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,26 +49,31 @@
 <body class="cnt-home">
 
 
-
 <jsp:include page="header.jsp"/>
 
 <div class="body-content outer-top-xs" id="top-banner-and-menu">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
-
                 <div class="side-menu animate-dropdown outer-bottom-xs">
                     <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Danh mục sản phẩm</div>
                     <nav class="yamm megamenu-horizontal" role="navigation">
                         <ul class="nav">
                             <c:forEach var="cate" items="${categories}">
                                 <li class="dropdown menu-item">
-                                    <a href="#" class="dropdown-toggle"><i
-                                            class="icon fa fa-desktop fa-fw"></i>${cate.name}</a>
-                                    <ul>
-                                        <c:forEach var="childCate" items="${cate.childCategories}">
-                                        <li><a href="${pageContext.request.contextPath}/product?cate=${childCate.id}&pageNo=1">${childCate.name}</a>
-                                            </c:forEach>
+                                    <a href="#" class="dropdown-toggle" data-hover="dropdown">${cate.name}</a>
+                                    <ul class="dropdown-menu mega-menu">
+                                        <li class="yamm-content">
+                                            <div class="row">
+                                                <ul class="links list-unstyled">
+                                                    <c:forEach var="childCate" items="${cate.childCategories}">
+                                                        <li>
+                                                            <a href="${pageContext.request.contextPath}/product?cate=${childCate.id}&pageNo=1">${childCate.name}</a>
+                                                        </li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </li>
                             </c:forEach>
@@ -87,13 +92,15 @@
                                     <%--                                    list ra các sản phầm--%>
                                     <div class="product">
                                         <div class="product-micro">
-                                            <div class="row product-micro-row" style="border: 0.5px solid #e6e6e6; padding: 8px">
+                                            <div class="row product-micro-row"
+                                                 style="border: 0.5px solid #e6e6e6; padding: 8px">
                                                 <div class="col col-xs-5">
                                                     <div class="product-image">
                                                         <div class="image">
                                                             <a href=""
                                                                data-lightbox="image-1" data-title="Nunc ullamcors">
-                                                                <img src="https://cf.shopee.vn/file/d9f15835b782f90027996bad8ad501f3" alt="" style="width: 100%">
+                                                                <img src="https://cf.shopee.vn/file/d9f15835b782f90027996bad8ad501f3"
+                                                                     alt="" style="width: 100%">
                                                                 <div class="zoom-overlay"></div>
                                                             </a>
                                                         </div>
@@ -110,7 +117,8 @@
 
                                                         </div><!-- /.product-price -->
                                                         <div class="action"><a href="#"
-                                                                               class="btn btn-info">Add To Cart</a></div>
+                                                                               class="btn btn-info">Add To Cart</a>
+                                                        </div>
                                                     </div>
                                                 </div><!-- /.col -->
                                             </div><!-- /.product-micro-row -->
@@ -119,13 +127,15 @@
                                     </div>
                                     <div class="product">
                                         <div class="product-micro">
-                                            <div class="row product-micro-row" style="border: 0.5px solid #e6e6e6; padding: 8px">
+                                            <div class="row product-micro-row"
+                                                 style="border: 0.5px solid #e6e6e6; padding: 8px">
                                                 <div class="col col-xs-5">
                                                     <div class="product-image">
                                                         <div class="image">
                                                             <a href=""
                                                                data-lightbox="image-1" data-title="Nunc ullamcors">
-                                                                <img src="https://cf.shopee.vn/file/d9f15835b782f90027996bad8ad501f3" alt="" style="width: 100%">
+                                                                <img src="https://cf.shopee.vn/file/d9f15835b782f90027996bad8ad501f3"
+                                                                     alt="" style="width: 100%">
                                                                 <div class="zoom-overlay"></div>
                                                             </a>
                                                         </div>
@@ -142,7 +152,8 @@
 
                                                         </div><!-- /.product-price -->
                                                         <div class="action"><a href="#"
-                                                                               class="btn btn-info">Add To Cart</a></div>
+                                                                               class="btn btn-info">Add To Cart</a>
+                                                        </div>
                                                     </div>
                                                 </div><!-- /.col -->
                                             </div><!-- /.product-micro-row -->
@@ -180,7 +191,8 @@
 
                                                         </div><!-- /.product-price -->
                                                         <div class="action"><a href="#"
-                                                                               class="lnk btn btn-primary">Add To Cart</a></div>
+                                                                               class="lnk btn btn-primary">Add To
+                                                            Cart</a></div>
                                                     </div>
                                                 </div><!-- /.col -->
                                             </div><!-- /.product-micro-row -->
@@ -217,7 +229,8 @@
 
                                                         </div><!-- /.product-price -->
                                                         <div class="action"><a href="#"
-                                                                               class="lnk btn btn-primary">Add To Cart</a></div>
+                                                                               class="lnk btn btn-primary">Add To
+                                                            Cart</a></div>
                                                     </div>
                                                 </div><!-- /.col -->
                                             </div><!-- /.product-micro-row -->
@@ -251,7 +264,8 @@
 
                                                         </div><!-- /.product-price -->
                                                         <div class="action"><a href="#"
-                                                                               class="lnk btn btn-primary">Add To Cart</a></div>
+                                                                               class="lnk btn btn-primary">Add To
+                                                            Cart</a></div>
                                                     </div>
                                                 </div><!-- /.col -->
                                             </div><!-- /.product-micro-row -->
@@ -292,7 +306,8 @@
 
                                                         </div><!-- /.product-price -->
                                                         <div class="action"><a href="#"
-                                                                               class="lnk btn btn-primary">Add To Cart</a></div>
+                                                                               class="lnk btn btn-primary">Add To
+                                                            Cart</a></div>
                                                     </div>
                                                 </div><!-- /.col -->
                                             </div><!-- /.product-micro-row -->
@@ -329,7 +344,8 @@
 
                                                         </div><!-- /.product-price -->
                                                         <div class="action"><a href="#"
-                                                                               class="lnk btn btn-primary">Add To Cart</a></div>
+                                                                               class="lnk btn btn-primary">Add To
+                                                            Cart</a></div>
                                                     </div>
                                                 </div><!-- /.col -->
                                             </div><!-- /.product-micro-row -->
@@ -363,7 +379,8 @@
 
                                                         </div><!-- /.product-price -->
                                                         <div class="action"><a href="#"
-                                                                               class="lnk btn btn-primary">Add To Cart</a></div>
+                                                                               class="lnk btn btn-primary">Add To
+                                                            Cart</a></div>
                                                     </div>
                                                 </div><!-- /.col -->
                                             </div><!-- /.product-micro-row -->
@@ -379,15 +396,18 @@
 
             </div>
             <div class="col-xs-12 col-sm-12 col-md-9">
-                <div id="hero"  style="margin-bottom: 20px;">
+                <div id="hero" style="margin-bottom: 20px;">
                     <div id="owl-main" class="owl-carousel silder4 owl-inner-nav owl-ui-sm">
-                        <div class="item" style="background-image: url('https://lucluclac.com/wp-content/uploads/2020/02/banner-1-1475x461.jpg');">
+                        <div class="item"
+                             style="background-image: url('https://lucluclac.com/wp-content/uploads/2020/02/banner-1-1475x461.jpg');">
                         </div><!-- /.item -->
 
-                        <div class="item" style="background-image: url('https://khonggianhoanmy.files.wordpress.com/2021/09/dich-vu-don-dep-ve-sinh-khong-gian-hoan-my-uy-tin-chat-luong-hieu-qua-chiem-duoc-nhieu-su-tin-tuong-tu-khach-hang-870x368-1.jpg');">
+                        <div class="item"
+                             style="background-image: url('https://khonggianhoanmy.files.wordpress.com/2021/09/dich-vu-don-dep-ve-sinh-khong-gian-hoan-my-uy-tin-chat-luong-hieu-qua-chiem-duoc-nhieu-su-tin-tuong-tu-khach-hang-870x368-1.jpg');">
                         </div><!-- /.item -->
 
-                        <div class="item" style="background-image: url('https://beeo.nl/wp-content/uploads/2019/05/GmzGWinter_2017_cut-870x368.jpg');">
+                        <div class="item"
+                             style="background-image: url('https://beeo.nl/wp-content/uploads/2019/05/GmzGWinter_2017_cut-870x368.jpg');">
                         </div><!-- /.item -->
                     </div>
                 </div>
@@ -488,8 +508,6 @@
 <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
 </div><!-- /.container -->
 </div><!-- /#top-banner-and-menu -->
-
-
 
 
 <!-- ============================================================= FOOTER ============================================================= -->
@@ -689,9 +707,7 @@
 <!-- For demo purposes – can be removed on production -->
 
 
-
 <!-- For demo purposes – can be removed on production : End -->
-
 
 
 </body>
