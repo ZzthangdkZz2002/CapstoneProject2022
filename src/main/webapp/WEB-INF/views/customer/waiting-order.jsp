@@ -58,6 +58,13 @@
                                         </tr>
                                         <c:if test="${order.status != 'Đã Hủy' && order.status != 'Hoàn Thành'}">
                                             <tr>
+                                                <c:if test="${order.payment_method == 'Thanh toán qua VNPay' && order.isPaid eq 'false'}">
+                                                    <td colspan="2">
+                                                        <a href="#" onclick="rePayment('${order.orderid}')">
+                                                            <button>Thanh toán đơn hàng</button>
+                                                        </a>
+                                                    </td>
+                                                </c:if>
                                                 <td colspan="2">
                                                     <a href="${pageContext.request.contextPath}/customer/cancelOrder?id=${order.id}" onclick="return confirm('Bạn muốn huỷ đơn mã #${order.orderid}?')">
                                                         <button>Hủy đơn hàng</button>
@@ -78,6 +85,6 @@
     
         <!--Page Footer-->
 <%--        <jsp:include page="footer.jsp"/>--%>
-
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/checkout.js"></script>
       </body>
 </html>

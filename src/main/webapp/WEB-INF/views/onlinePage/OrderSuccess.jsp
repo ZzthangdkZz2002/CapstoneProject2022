@@ -59,8 +59,12 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-between">
-            <p class="fw-bold ">Thanh toán:</p>
+            <p class="fw-bold ">Phương thức thanh toán:</p>
             <p>${transaction.payment_method}</p>
+        </div>
+        <div class="d-flex justify-content-between">
+            <p class="fw-bold ">Trạng thái thanh toán:</p>
+            <p class="fw-bold  text-danger">${ordermessage}</p>
         </div>
         <div class="d-flex justify-content-between">
             <p class="fw-bold ">Vận chuyển:</p>

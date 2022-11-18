@@ -38,6 +38,31 @@ const getListCart=()=>{
 
 getListCart()
 
+function rePayment(orderid) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/homepage/re-payment?orderid="+orderid,
+        dataType:"json",
+        success: function (response){
+            console.log(response);
+            if(response.status === "00"){
+                window.location.href = response.data;
+            }
+            else {
+                console.log(response.message);
+                return;
+            }
+        },
+        error: function (error){
+            console.log("Error");
+            return;
+        }
+
+
+    });
+}
+
 function OrderAction() {
     let username = $('#username').val();
     let email = $('#email').val();
@@ -74,31 +99,58 @@ function OrderAction() {
         "message" : note,
         "orderTransactionDetails" : products
     };
-
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/homepage/checkout",
-        data: JSON.stringify(data),
-        dataType:"json",
-        success: function (response){
-            console.log(response);
-            console.log(response.status);
-            if(response.status === "00"){
-                localStorage.removeItem("cart");
-                window.location.href = 'http://localhost:5000/homepage/confirmOrder?id='+response.data;
-                console.log("Ô văn Kê")
-            }
-            else {
-                console.log("Ngu đần");
+    if(paymentMethod == 'Thanh toán qua VNPay'){
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/homepage/create-payment",
+            data: JSON.stringify(data),
+            dataType:"json",
+            success: function (response){
+                console.log(response);
+                if(response.status === "00"){
+                    localStorage.removeItem("cart");
+                    window.location.href = response.data;
+                }
+                else {
+                    console.log(response.message);
+                    return;
+                }
+            },
+            error: function (error){
+                console.log("Error");
                 return;
             }
-        },
-        error: function (error){
-            console.log("Error");
-            return;
-        }
 
 
-    });
+        });
+
+    }else{
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/homepage/checkout",
+            data: JSON.stringify(data),
+            dataType:"json",
+            success: function (response){
+                console.log(response);
+                console.log(response.status);
+                if(response.status === "00"){
+                    localStorage.removeItem("cart");
+                    window.location.href = 'http://localhost:5000/homepage/confirmOrder?id='+response.data;
+                    console.log("Ô văn Kê")
+                }
+                else {
+                    console.log("Ngu đần");
+                    return;
+                }
+            },
+            error: function (error){
+                console.log("Error");
+                return;
+            }
+
+
+        });
+    }
 }

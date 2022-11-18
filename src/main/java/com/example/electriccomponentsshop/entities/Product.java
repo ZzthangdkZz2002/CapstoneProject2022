@@ -33,8 +33,10 @@ public class Product {
     @Column(length = 250)
     private String image;
     @Column
+    @ColumnDefault("0")
     private BigDecimal original_price;
     @Column
+    @ColumnDefault("0")
     private BigDecimal price;
 
     @ManyToOne(fetch = FetchType.EAGER)

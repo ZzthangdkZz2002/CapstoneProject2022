@@ -419,7 +419,7 @@ function valueChange(event) {
     } else {
         console.log('moneyRadio2');
         let listbank = JSON.parse(localStorage.getItem('bankList'));
-        window.localStorage.removeItem('bankList');
+        localStorage.removeItem('bankList');
         listbank?.map((item,key)=>{
             var dataGenQr = {
                 "accountNo": item.stk,

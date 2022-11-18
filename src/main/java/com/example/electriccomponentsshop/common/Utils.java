@@ -53,18 +53,28 @@ public class Utils {
         return strCode.toString();
     }
 
-    public String gererateOrderid(){
-        Random generator = new Random();
-        int randomNumber = generator.nextInt((9 - 0) + 1) + 0;
+//    public String gererateOrderid(){
+//        Random generator = new Random();
+//        int randomNumber = generator.nextInt((9 - 0) + 1) + 0;
+//
+//       int hour = LocalDateTime.now().getHour();
+//       int minute = LocalDateTime.now().getMinute();
+//       int second = LocalDateTime.now().getSecond() + randomNumber;
+//
+//       String str = String.valueOf(hour) + String.valueOf(minute) + String.valueOf(second);
+//
+//       return str;
+//
+//    }
 
-       int hour = LocalDateTime.now().getHour();
-       int minute = LocalDateTime.now().getMinute();
-       int second = LocalDateTime.now().getSecond() + randomNumber;
-
-       String str = String.valueOf(hour) + String.valueOf(minute) + String.valueOf(second);
-
-       return str;
-
+    public String getRandomNumber(int len) {
+        Random rnd = new Random();
+        String chars = "0123456789";
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++) {
+            sb.append(chars.charAt(rnd.nextInt(chars.length())));
+        }
+        return sb.toString();
     }
 
 }

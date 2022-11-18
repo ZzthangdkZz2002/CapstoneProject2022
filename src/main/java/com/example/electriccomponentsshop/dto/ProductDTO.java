@@ -30,9 +30,9 @@ public class ProductDTO {
 
 //    private MultipartFile image;
 //    private BigInteger available;
-    @NotNull
+
     private BigDecimal original_price;
-    @NotNull
+    
     private BigDecimal price;
     private int quantity;
     @NotNull

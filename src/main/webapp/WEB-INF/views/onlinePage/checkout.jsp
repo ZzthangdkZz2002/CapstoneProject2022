@@ -112,7 +112,7 @@
                         <label class="custom-control-label" for="credit">Thanh toán khi nhận hàng</label>
                     </div>
                     <div class="custom-control custom-radio">
-                        <input id="debit" name="paymentMethod" value="Thanh toán quan VNPay" type="radio" class="custom-control-input" required>
+                        <input id="debit" name="paymentMethod" value="Thanh toán qua VNPay" type="radio" class="custom-control-input" required>
                         <label class="custom-control-label" for="debit">Thanh toán qua VNPay</label>
                     </div>
 

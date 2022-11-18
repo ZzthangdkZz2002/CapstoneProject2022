@@ -1,6 +1,8 @@
 package com.example.electriccomponentsshop.controller.onlinepage;
 
+import com.example.electriccomponentsshop.common.PaymentConfig;
 import com.example.electriccomponentsshop.dto.OrderTransactionDTO;
+import com.example.electriccomponentsshop.dto.PaymentDTO;
 import com.example.electriccomponentsshop.dto.ProductDTO;
 import com.example.electriccomponentsshop.dto.ResponseObject;
 import com.example.electriccomponentsshop.entities.Category;
@@ -23,10 +25,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @AllArgsConstructor
 @CrossOrigin
@@ -73,13 +79,172 @@ public class OnlineHomeController {
         return "onlinePage/checkout";
     }
 
+    @PostMapping("re-payment")
+    public ResponseEntity<ResponseObject> rePayment(@RequestParam(value = "orderid", required = false) String orderid ) throws UnsupportedEncodingException {
+        OrderTransaction orderTransaction = orderTransactionRepository.findByOrderid(orderid).get();
+        int amount = (int)orderTransaction.getAmount() * 100;
+        Map vnp_Params = new HashMap<>();
+        vnp_Params.put("vnp_Version", PaymentConfig.VERSION);
+        vnp_Params.put("vnp_Command", PaymentConfig.COMMAND);
+        vnp_Params.put("vnp_TmnCode", PaymentConfig.vnp_TmnCode);
+        vnp_Params.put("vnp_Amount", String.valueOf(amount));
+        vnp_Params.put("vnp_CurrCode", "VND");
+        vnp_Params.put("vnp_TxnRef", orderid + PaymentConfig.getRandomNumber(6));
+        if(orderTransaction.getMessage() == null || "".equals(orderTransaction.getMessage())){
+            vnp_Params.put("vnp_OrderInfo", "Electronic Shop - Thanh toan hoa don");
+        }else{
+            vnp_Params.put("vnp_OrderInfo", orderTransaction.getMessage());
+        }
+        vnp_Params.put("vnp_OrderType", PaymentConfig.ORDER_TYPE);
+        vnp_Params.put("vnp_Locale", "vn");
+        vnp_Params.put("vnp_ReturnUrl", PaymentConfig.vnp_Returnurl);
+        vnp_Params.put("vnp_IpAddr", "127.0.0.1");
+        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String vnp_CreateDate = formatter.format(cld.getTime());
+
+        vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+
+        //Build data to hash and querystring
+        List fieldNames = new ArrayList(vnp_Params.keySet());
+        Collections.sort(fieldNames);
+        StringBuilder hashData = new StringBuilder();
+        StringBuilder query = new StringBuilder();
+        Iterator itr = fieldNames.iterator();
+        while (itr.hasNext()) {
+            String fieldName = (String) itr.next();
+            String fieldValue = (String) vnp_Params.get(fieldName);
+            if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                //Build hash data
+                hashData.append(fieldName);
+                hashData.append('=');
+                hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                //Build query
+                query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
+                query.append('=');
+                query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                if (itr.hasNext()) {
+                    query.append('&');
+                    hashData.append('&');
+                }
+            }
+        }
+        String queryUrl = query.toString();
+        String vnp_SecureHash = PaymentConfig.hmacSHA512(PaymentConfig.vnp_HashSecret, hashData.toString());
+        queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
+        String paymentUrl = PaymentConfig.vnp_PayUrl + "?" + queryUrl;
+        System.out.println("URL: " + paymentUrl);
+//        orderTransaction.setOrderid(randomNumber);
+//        orderTransactionRepository.save(orderTransaction);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Create payment success",paymentUrl));
+    }
+
+    @PostMapping("/create-payment")
+    public ResponseEntity<ResponseObject> createPayment(@RequestBody OrderTransactionDTO orderTransactionDTO, Authentication authentication) throws UnsupportedEncodingException {
+        int amount = Integer.parseInt(orderTransactionDTO.getAmount()) * 100;
+        String orderid = PaymentConfig.getRandomNumber(6);
+        Map vnp_Params = new HashMap<>();
+        vnp_Params.put("vnp_Version", PaymentConfig.VERSION);
+        vnp_Params.put("vnp_Command", PaymentConfig.COMMAND);
+        vnp_Params.put("vnp_TmnCode", PaymentConfig.vnp_TmnCode);
+        vnp_Params.put("vnp_Amount", String.valueOf(amount));
+        vnp_Params.put("vnp_CurrCode", "VND");
+        vnp_Params.put("vnp_TxnRef", orderid);
+        if(orderTransactionDTO.getMessage() == null || "".equals(orderTransactionDTO.getMessage())){
+            vnp_Params.put("vnp_OrderInfo", "Electronic Shop - Thanh toan hoa don");
+        }else{
+            vnp_Params.put("vnp_OrderInfo", orderTransactionDTO.getMessage());
+        }
+        vnp_Params.put("vnp_OrderType", PaymentConfig.ORDER_TYPE);
+        vnp_Params.put("vnp_Locale", "vn");
+        vnp_Params.put("vnp_ReturnUrl", PaymentConfig.vnp_Returnurl);
+        vnp_Params.put("vnp_IpAddr", "127.0.0.1");
+        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String vnp_CreateDate = formatter.format(cld.getTime());
+
+        vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+
+        //Build data to hash and querystring
+        List fieldNames = new ArrayList(vnp_Params.keySet());
+        Collections.sort(fieldNames);
+        StringBuilder hashData = new StringBuilder();
+        StringBuilder query = new StringBuilder();
+        Iterator itr = fieldNames.iterator();
+        while (itr.hasNext()) {
+            String fieldName = (String) itr.next();
+            String fieldValue = (String) vnp_Params.get(fieldName);
+            if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                //Build hash data
+                hashData.append(fieldName);
+                hashData.append('=');
+                hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                //Build query
+                query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
+                query.append('=');
+                query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                if (itr.hasNext()) {
+                    query.append('&');
+                    hashData.append('&');
+                }
+            }
+        }
+        String queryUrl = query.toString();
+        String vnp_SecureHash = PaymentConfig.hmacSHA512(PaymentConfig.vnp_HashSecret, hashData.toString());
+        queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
+        String paymentUrl = PaymentConfig.vnp_PayUrl + "?" + queryUrl;
+        System.out.println("URL: " + paymentUrl);
+
+        if("".equals(orderTransactionDTO.getUser_phone()) || orderTransactionDTO.getUser_phone() == null){
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","add order transaction Fail",""));
+        }
+        OrderTransaction orderTransaction = orderTransactionService.addTransactionOnline(orderTransactionDTO, authentication, orderid);
+        if(orderTransaction != null){
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Create payment success",paymentUrl));
+        }else{
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","add order transaction Fail",""));
+        }
+    }
+
+    @GetMapping("payment-result")
+    public String paymentResult(@RequestParam(value = "vnp_ResponseCode") String response_code, @RequestParam(value = "vnp_Amount",required = false) String amount,
+                              @RequestParam(value = "vnp_BankCode", required = false) String bank_code, @RequestParam(value = "vnp_BankTranNo", required = false) String BankTranNo,
+                              @RequestParam(value = "vnp_PayDate", required = false) String payDate, @RequestParam(value = "vnp_OrderInfo", required = false) String order_infor,
+                              @RequestParam(value = "vnp_TransactionNo", required = false) String Trans_no, @RequestParam(value = "vnp_TransactionStatus", required = false) String trans_status,
+                              @RequestParam(value = "vnp_TxnRef") String orderid, RedirectAttributes r)
+    {
+        String correctOrderid="";
+        if(orderid.length() > 6){
+            correctOrderid = orderid.substring(0,6);
+        }else{
+            correctOrderid = orderid;
+        }
+        Optional<OrderTransaction> orderTransaction = orderTransactionRepository.findByOrderid(correctOrderid);
+        if("00".equals(response_code)){
+            if(orderTransaction.isPresent()){
+                orderTransaction.get().setIsPaid(true);
+                orderTransactionRepository.save(orderTransaction.get());
+                r.addFlashAttribute("ordermessage","Đã thanh toán");
+                return "redirect:/homepage/confirmOrder?id="+orderTransaction.get().getId();
+            }else{
+                r.addFlashAttribute("ordermessage","Thanh toán không thành công. Đơn hàng không tồn tại");
+                return "redirect:/homepage/confirmOrder?id="+orderTransaction.get().getId();
+            }
+        }else{
+            r.addFlashAttribute("ordermessage","Thanh toán không thành công");
+            return "redirect:/homepage/confirmOrder?id="+orderTransaction.get().getId();
+        }
+    }
+
     @PostMapping("/checkout")
     @ResponseBody
     public ResponseEntity<ResponseObject> checkoutAction(@RequestBody OrderTransactionDTO orderTransactionDTO, Authentication authentication){
         if("".equals(orderTransactionDTO.getUser_phone()) || orderTransactionDTO.getUser_phone() == null){
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","add order transaction Fail",""));
         }
-        OrderTransaction orderTransaction = orderTransactionService.addTransactionOnline(orderTransactionDTO, authentication);
+        OrderTransaction orderTransaction = orderTransactionService.addTransactionOnline(orderTransactionDTO, authentication,"");
         if(orderTransaction != null){
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","add order transaction Success", orderTransaction.getId()));
         }else{

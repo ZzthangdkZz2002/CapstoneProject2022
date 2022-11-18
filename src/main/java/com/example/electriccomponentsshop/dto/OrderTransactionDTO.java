@@ -31,6 +31,7 @@ public class OrderTransactionDTO {
     //tong so tien can thanh toan
     private String amount;
     private String payment_method;
+    private Boolean isPaid;
     //message tu khach hang
     private String message;
     private String orderKind;

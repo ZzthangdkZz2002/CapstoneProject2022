@@ -5,7 +5,11 @@ const countQuantity=()=>{
         0
     );
 }
-count.textContent=countQuantity();
+if(countQuantity() == '' || countQuantity()==0 || countQuantity() == null){
+    count.textContent='0';
+}else{
+    count.textContent=countQuantity();
+}
 
 function convertMoney(num) {
     return num.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });

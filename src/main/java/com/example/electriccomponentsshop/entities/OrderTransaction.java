@@ -54,6 +54,9 @@ public class OrderTransaction {
     private String payment_info;
     //message tu khach hang
     private String message;
+    @Column
+    @ColumnDefault("0")
+    private Boolean isPaid;
     private String orderKind;
     @CreationTimestamp
     @Column(updatable = false)

@@ -116,6 +116,7 @@ public class OrderShopController {
                 orderTransactionDTO.setAmount(String.valueOf(orderTransaction.getAmount()));
                 orderTransactionDTO.setPayment_method(orderTransaction.getPayment_method());
                 orderTransactionDTO.setCreated(orderTransaction.getCreated());
+                orderTransactionDTO.setIsPaid(orderTransaction.getIsPaid());
 
 
                 List<OrderTransactionDetailDTO> orderTransactionDetailDTOS = new ArrayList<>();

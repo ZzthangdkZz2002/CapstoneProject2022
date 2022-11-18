@@ -30,7 +30,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
     @Autowired
     CustomerRepository customerRepository;
     @Override
-    public OrderTransaction addTransactionOnline(OrderTransactionDTO orderTransactionDTO , Authentication authentication) {
+    public OrderTransaction addTransactionOnline(OrderTransactionDTO orderTransactionDTO , Authentication authentication, String orderid) {
         try{
             OrderTransaction orderTransaction = new OrderTransaction();
             Customer customer = new Customer();
@@ -60,7 +60,11 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
                 orderTransaction.setCustomer(customerRepository.findByPhone(orderTransactionDTO.getUser_phone()).get());
             }
 
-            orderTransaction.setOrderid(new Utils().gererateOrderid());
+            if(orderTransactionDTO.getPayment_method().equalsIgnoreCase("Thanh toán qua VNPay")){
+                orderTransaction.setOrderid(orderid);
+            }else{
+                orderTransaction.setOrderid(new Utils().getRandomNumber(6));
+            }
             orderTransaction.setUser_name(orderTransactionDTO.getUser_name());
             orderTransaction.setUser_email(orderTransactionDTO.getUser_email());
             orderTransaction.setUser_phone(orderTransactionDTO.getUser_phone());
@@ -69,6 +73,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
             orderTransaction.setPayment_method(orderTransactionDTO.getPayment_method());
             orderTransaction.setMessage(orderTransactionDTO.getMessage());
             orderTransaction.setStatus(OrderEnum.PENDING.getName());
+            orderTransaction.setIsPaid(false);
             orderTransaction.setOrderKind("online");
 
             OrderTransaction o = orderTransactionRepository.save(orderTransaction);
@@ -123,7 +128,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
                 orderTransaction.setCustomer(customerRepository.findByPhone(orderTransactionDTO.getUser_phone()).get());
             }
 
-            orderTransaction.setOrderid(new Utils().gererateOrderid());
+            orderTransaction.setOrderid(new Utils().getRandomNumber(6));
             orderTransaction.setUser_name(orderTransactionDTO.getUser_name());
             orderTransaction.setUser_email(orderTransactionDTO.getUser_email());
             orderTransaction.setUser_phone(orderTransactionDTO.getUser_phone());
