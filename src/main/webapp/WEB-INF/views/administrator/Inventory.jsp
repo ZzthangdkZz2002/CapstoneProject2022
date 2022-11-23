@@ -78,6 +78,7 @@
             left: 7.823px;
         }
         table {
+            height: 30rem;
             display: block;
             overflow-x: auto;
             white-space: nowrap;
@@ -151,7 +152,7 @@
                             </div>
                             <input type="text" class="form-control" placeholder="Theo mã phiếu kiểm"
                                    aria-label="Input group example" aria-describedby="btnGroupAddon">
-                            <a class="btn btn-add btn-sm" href="${pageContext.request.contextPath}/admin/warehouses/import/add" title="Thêm"><i class="fas fa-plus"></i>
+                            <a class="btn btn-add btn-sm ml-3 mt-1" href="${pageContext.request.contextPath}/admin/warehouses/import/add" title="Thêm"><i class="fas fa-plus"></i>
                                 Thêm giao dịch mới</a>
                         </div>
                     </div>

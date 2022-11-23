@@ -130,7 +130,7 @@
                 <tr>
                   <td>#${orderDto.orderid}</td>
                   <td>${orderDto.account_employee != null ? orderDto.account_employee.id : ""}</td>
-                  <td>${orderDto.account_user != null ? orderDto.account_user.id : ""}</td>
+                  <td>${orderDto.customer != null ? orderDto.customer.id : "Khách lẻ"}</td>
                   <td>${orderDto.created}</td>
                   <td>${orderDto.amount}</td>
                   <td><span class="badge bg-success">${orderDto.status}</span></td>
@@ -142,8 +142,9 @@
                   </c:if>
 
                     <c:if test="${orderDto.status eq 'Chờ Xử Lý' || orderDto.status eq 'Đã Xác Nhận'}">
-                      <a onclick="return confirm('Bạn muốn hủy đơn hàng ${orderDto.orderid}?')" href="${pageContext.request.contextPath}/admin/orders/cancel?id=${orderDto.id}" class="btn btn-primary btn-sm edit"
-                         type="button" title="Xác nhận đơn hàng"><i class="fas fa-edit"></i>Hủy đơn hàng</a>
+                      <button class="btn btn-primary btn-sm edit"
+                         type="button" title="Xác nhận đơn hàng" data-toggle="modal" data-target="#cancelOrderModel" onclick="openModalData('${orderDto.id}')" ><i class="fas fa-edit"></i>Hủy đơn hàng</button>
+<%--                      <span style="display: none" id="orderid">${orderDto.id}</span>--%>
                     </c:if>
 
                     <a class="btn btn-primary btn-sm edit"
@@ -218,21 +219,59 @@ MODAL
   <div class="modal fade" id="confirmFinished" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
+      <form method="POST" action="">
+        <div class="modal-content">
+
+          <div class="modal-body">
+            <div class="row">
+              <div class="form-group  col-md-12">
+              <span class="thong-tin-thanh-toan">
+                <h5>Chú ý</h5>
+              </span>
+              </div>
+              <div class="form-group col-md-12" style="text-align: center;">
+                <label class="control-label">Xác nhận đơn hàng đã được giao và thanh toán</label>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: center; padding: 10px;">
+              <a style="margin: 5px;" class="btn btn-save" data-dismiss="modal" href="#">Xác nhận</a>
+              <a style="margin: 5px;" class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+            </div>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!--
+MODAL
+-->
+
+  <!--
+ Cancel Order Model
+-->
+  <div class="modal fade" id="cancelOrderModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+       data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
 
         <div class="modal-body">
           <div class="row">
             <div class="form-group  col-md-12">
               <span class="thong-tin-thanh-toan">
-                <h5>Chú ý</h5>
+                <h5>Lý do hủy đơn hàng</h5>
               </span>
             </div>
             <div class="form-group col-md-12" style="text-align: center;">
-              <label class="control-label">Xác nhận đơn hàng đã được giao và thanh toán</label>
+              <label class="control-label">Nhập lý do: </label>
+              <br>
+              <textarea name="cancelReason" style="width: 300px; height: 200px"></textarea>
             </div>
           </div>
           <div style="display: flex; justify-content: center; padding: 10px;">
-            <a style="margin: 5px;" class="btn btn-save" data-dismiss="modal" href="#">Xác nhận</a>
+            <input type="hidden" value="" id="OderIdModal">
+            <a style="margin: 5px;" class="btn btn-save" data-dismiss="modal" href="#" onclick="cancelOrder();">Xác nhận</a>
             <a style="margin: 5px;" class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
           </div>
         </div>
@@ -242,10 +281,7 @@ MODAL
     </div>
   </div>
   <!--
-MODAL
--->
 
-  <!--
   MODAL CONFIRM ORDER
 -->
   <div class="modal fade" id="confirmOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -265,7 +301,7 @@ MODAL
             </div>
           </div>
           <div style="display: flex; justify-content: center; padding: 10px;">
-            <a style="margin: 5px;" class="btn btn-save" data-dismiss="modal" href="#">Xác nhận</a>
+            <a style="margin: 5px;" class="btn btn-save" data-dismiss="modal" href="#" id="confirmCancel">Xác nhận</a>
             <a style="margin: 5px;" class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
           </div>
         </div>
@@ -280,6 +316,7 @@ MODAL
   <!-- Essential javascripts for application to work-->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+  <script src="${pageContext.request.contextPath}/js/order-offline.js"></script>
   <script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>
   <script src="<c:url value="/js/popper.min.js"/>"></script>
   <script src="<c:url value="/js/bootstrap.min.js"/>"></script>

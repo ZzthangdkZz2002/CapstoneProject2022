@@ -53,7 +53,7 @@
     <div class="d-flex justify-content-between">
         <a href="${pageContext.request.contextPath}/homepage"class="btn btn-light btn-lg me-2"><i class="fa-solid fa-rotate-left mr-1" role="button"></i>Tiếp tục
             mua hàng</a>
-        <a href="${pageContext.request.contextPath}/homepage/checkout" style="color: white;" class="btn btn-success btn-lg" role="button">Tiếp tục</a>
+        <a href="${pageContext.request.contextPath}/homepage/checkout" id="ContinueOrder" style="color: white; display: none" class="btn btn-success btn-lg" role="button">Tiếp tục</a>
     </div>
 </div>
 <script>var contextPath = "${pageContext.request.contextPath}"</script>

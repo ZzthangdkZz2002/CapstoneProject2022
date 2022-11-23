@@ -65,7 +65,7 @@
                     <!-- ============================================================= SEARCH AREA : END ============================================================= -->
                 </div><!-- /.top-search-holder -->
 
-                <div class="col-xs-12 col-sm-12 col-md-3 animate-dropdown top-cart-row" style="display: flex">
+                <div class="col-xs-12 col-sm-12 col-md-3 animate-dropdown top-cart-row" style="display: flex; justify-content: right">
                     <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
 
                     <c:set var="username" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}"/>
@@ -125,7 +125,10 @@
                         <c:choose>
                             <c:when test = "${username == null}">
                                 <div id="avatar_icon">
-                                    <a href="${pageContext.request.contextPath}/signin"><i class="material-icons">person</i></a><a href="${pageContext.request.contextPath}/signin">Đăng nhập</a> / <a href="${pageContext.request.contextPath}/signup">Đăng ký</a>
+                                    <a href="${pageContext.request.contextPath}/signin"><i class="material-icons"></i></a><a href="${pageContext.request.contextPath}/signin">Đăng nhập</a> / <a href="${pageContext.request.contextPath}/signup">Đăng ký</a>
+                                </div>
+                                <div>
+                                    <a href="#">Lịch sử đơn hàng</a>
                                 </div>
                             </c:when>
                             <c:otherwise>

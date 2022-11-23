@@ -71,7 +71,20 @@ function OrderAction() {
     let note = $('#note').val();
     let paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-
+    //validation
+    if("" == username || username == null){
+        alert("Vui lòng điền Họ và tên!!")
+        return
+    }
+    if("" == phone || phone == null){
+        alert("Vui lòng điền Số điện thoại!!")
+        return
+    }
+    if("" == address || address == null){
+        alert("Vui lòng điền địa chỉ nhận hàng!!")
+        return
+    }
+    //
 
     let products = new Array();
 

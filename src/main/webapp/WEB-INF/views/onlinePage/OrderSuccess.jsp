@@ -9,17 +9,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirm Order</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body{
             background-color: #eee;
         }
+        .navbar {
+            justify-content: normal;
+        }
+        .navbar-nav {
+            flex-direction: row;
+        }
+        .payment {
+            background-color: #eee;
+            padding-top: 30px;
+        }
+        .main-header {
+            padding: 10px 1px 2px !important;
+        }
     </style>
 </head>
 <body>
-<h3 class="text-center mt-3">Đặt hàng thành công</h3>
-<div class="payment mt-1">
-    <div class="mx-auto" style="background-color: white; width: 40%;padding: 30px;">
+<jsp:include page="header.jsp"/>
+<div class="payment">
+    <div class="mx-auto border" style="background-color: white; width: 40%;padding: 30px;">
+        <h2 class="text-center" style="margin-bottom: 30px">Đặt hàng thành công</h2>
         <p>Đơn hàng của bạn đã đặt thành công</p>
         <div class="d-flex justify-content-between">
             <p class="fw-bold ">Mã đơn hàng:</p>
@@ -42,7 +56,8 @@
             <tbody>
             <c:forEach items="${transactionDetail}" var="trans">
                 <tr>
-                    <td scope="row"><a href="${pageContext.request.contextPath}/homepage/detailProduct?id=${trans.id}" style="text-decoration: none;">${trans.name}</a></td>
+                    <td scope="row"><a href="${pageContext.request.contextPath}/homepage/detailProduct?id=${trans.id}"
+                                       style="text-decoration: none;">${trans.name}</a></td>
                     <td>${trans.quantity}</td>
                     <td class="text-right">${trans.price}</td>
                     <td class="text-right">${trans.price * trans.quantity}</td>
@@ -70,9 +85,13 @@
             <p class="fw-bold ">Vận chuyển:</p>
             <p>Giao hàng nhanh</p>
         </div>
-        <a  class="btn btn-primary btn-lg btn-block btn-confirm-order w-100 " data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa-solid fa-arrow-right me-2 "
+
+        <a class="btn btn-primary btn-lg btn-block btn-confirm-order w-100 " data-bs-toggle="collapse"
+           data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i
+                class="fa-solid fa-arrow-right me-2 "
 
         ></i>Xem chi tiết đơn hàng</a>
+
         <div class="collapse" id="collapseExample" >
             <div class="card card-body" style="border: none; border-radius:none;padding:0px;margin-top: 20px;">
                 <p class="fw-bold  text-danger" >Thông tin khách hàng:</p>
@@ -92,14 +111,17 @@
                     <p class="fw-bold ">Địa chỉ:</p>
                     <p>${transaction.address}</p>
                 </div>
-                <a href="${pageContext.request.contextPath}/homepage"class="btn btn-primary btn me-2"><i class="fa-solid fa-rotate-left me-2"></i>Quay lại trang chủ</a>
+                <a href="${pageContext.request.contextPath}/homepage" class="btn btn-primary btn me-2"><i
+                        class="fa-solid fa-rotate-left me-2"></i>Quay lại trang chủ</a>
             </div>
         </div >
     </div>
 </div>
 
 <script src="${pageContext.request.contextPath}/assets_onlinepage/js/confirmOrder.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
 
 </body>
 </html>

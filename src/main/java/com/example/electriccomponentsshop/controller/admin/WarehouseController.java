@@ -42,6 +42,10 @@ public class WarehouseController {
     final InventoryRepository inventoryRepository;
     @Autowired
     SupplierRepository supplierRepository;
+    @Autowired
+    OrderTransactionRepository orderTransactionRepository;
+    @Autowired
+    ProductRepository productRepository;
     final
     WarehouseService warehouseService;
     final
@@ -208,7 +212,9 @@ public class WarehouseController {
             List<ProductWarehouseDTO> productWareHouseList = productWarehouseService.addProductToWarehouse(productWarehouseDTO);
             productService.setProductQuantity(productWarehouseDTO);
             if(productWareHouseList != null && inventoryService.addInventoryImport(productWarehouseDTO)){
-                supplierService.addDebtAndPurchaseToSupplier(productWarehouseDTO);
+                if(!"0".equals(productWarehouseDTO.getSupplier_id()) || productWarehouseDTO.getSupplier_id() == null){
+                    supplierService.addDebtAndPurchaseToSupplier(productWarehouseDTO);
+                }
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Thêm sản phẩm vào kho thành công", productWareHouseList));
             }else{
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Thêm sản phẩm vào kho không thành công", "Không thể thêm sản phẩm"));
@@ -344,13 +350,90 @@ public class WarehouseController {
     @GetMapping("/export/add")
     public String viewAddExport(ModelMap modelMap){
         try{
-//            List<OrderDTO> orderDTOList = orderService.findByStatus(OrderEnum.CONFIRM.getName());
-//            modelMap.addAttribute("listOrders", orderDTOList);
+            List<OrderTransaction> orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.CONFIRM.getName());
+            List<OrderTransactionDTO> orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            modelMap.addAttribute("listOrders", orderTransactionDTOS);
         }
         catch (Exception e){
             modelMap.addAttribute("notFound", e.getMessage());
         }
         return "administrator/add-warehouse-export";
+    }
+    @GetMapping("/export/detail/add")
+    public String exportItem(@RequestParam(name = "orderid") String orderid, ModelMap modelMap){
+        OrderTransaction orderTransaction = orderTransactionRepository.findByOrderid(orderid).get();
+        OrderTransactionDTO orderTransactionDTO = convertOrderToDTO2(orderTransaction);
+        modelMap.addAttribute("order",orderTransactionDTO);
+        return "administrator/warehouse-export-detail";
+    }
+
+    @GetMapping("/getWarehouse")
+    @ResponseBody
+    public ResponseEntity<ResponseObject> getAvailableItemWarehouse(@RequestParam(name = "pid") String product_id){
+        List<String> warehouses = productWarehouseRepository.findWarehouseByProductId(Integer.parseInt(product_id));
+        if(warehouses != null && warehouses.size() > 0){
+            List<WarehouseDTO> warehouseList = new ArrayList<>();
+            for(String w_id : warehouses){
+                Warehouse warehouse = warehouseRepository.findWarehouseById(Integer.parseInt(w_id));
+                warehouseList.add(convertToWarehouseDTO(warehouse));
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","get warehouse success",warehouseList));
+        }else{
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","get warehouse fail","Sản phẩm này không còn trong kho"));
+        }
+    }
+
+    @GetMapping("/getLocation")
+    @ResponseBody
+    public ResponseEntity<ResponseObject> getLocationAvailableQuantityLocation(@RequestParam("pid") String p_id, @RequestParam("wid") String w_id){
+        try{
+            List<ProductWarehouse2DTO> productWareHouses = productWarehouseRepository.findLocationByProductId(Integer.parseInt(p_id));
+            List<ProductWarehouse2DTO> productWarehouse2DTOS = new ArrayList<>();
+            for(ProductWarehouse2DTO pw : productWareHouses){
+                System.out.println("total: "+pw.getTotal());
+                ProductLocation productLocation = pw.getProductLocation();
+                if(productLocation.getWarehouse().getId() == Integer.parseInt(w_id)){
+                    productWarehouse2DTOS.add(pw);
+                }
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","get location success",productWarehouse2DTOS));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","get location fail",e.getMessage()));
+        }
+    }
+
+    @GetMapping("/getProductQuantity")
+    @ResponseBody
+    public ResponseEntity<ResponseObject> getProductQuantity(@RequestParam("lid") String l_id, @RequestParam("pid") String p_id){
+        try{
+            int quantity = productWarehouseRepository.findProductQuantity(Integer.parseInt(p_id), Integer.parseInt(l_id));
+//            List<Integer> quantities = new ArrayList<>();
+//           Product product = productRepository.findById(Integer.parseInt(p_id)).get();
+//           ProductLocation productLocation = productLocationRepository.findById(Integer.parseInt(l_id)).get();
+//           List<ProductWareHouse> productWareHouses = productWarehouseRepository.findProductWareHouseByProductLocationAndProduct(productLocation,product);
+//           for(ProductWareHouse pw : productWareHouses){
+//               quantities.add(pw.getQuantity());
+//           }
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","get quantity success", quantity));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","get quantity fail",e.getMessage()));
+        }
+    }
+
+    public ProductLocationDTO converToProductLocationDTO(ProductLocation productLocation){
+        ProductLocationDTO productLocationDTO = new ProductLocationDTO();
+        productLocationDTO.setId(String.valueOf(productLocation.getId()));
+        productLocationDTO.setName(productLocation.getName());
+
+        return productLocationDTO;
+    }
+
+    public WarehouseDTO convertToWarehouseDTO(Warehouse warehouse){
+        WarehouseDTO warehouseDTO = new WarehouseDTO();
+        warehouseDTO.setId(String.valueOf(warehouse.getId()));
+        warehouseDTO.setName(warehouse.getName());
+
+        return warehouseDTO;
     }
 //    @PostMapping("/export/add")
 //    @ResponseBody
@@ -371,4 +454,119 @@ public class WarehouseController {
         return map;
     }
 
+    public OrderTransactionDTO convertOrderToDTO2(OrderTransaction orderTransaction){
+        try{
+            if(orderTransaction != null){
+                OrderTransactionDTO orderTransactionDTO = new OrderTransactionDTO();
+                orderTransactionDTO.setId(orderTransaction.getId());
+                orderTransactionDTO.setOrderid(orderTransaction.getOrderid());
+                orderTransactionDTO.setStatus(orderTransaction.getStatus());
+//                orderTransactionDTO.setUser_name(orderTransaction.getUser_name());
+//                orderTransactionDTO.setUser_email(orderTransaction.getUser_email());
+//                orderTransactionDTO.setUser_phone(orderTransaction.getUser_phone());
+//                orderTransactionDTO.setAddress(orderTransaction.getAddress());
+                orderTransactionDTO.setAmount(String.valueOf(orderTransaction.getAmount()));
+                orderTransactionDTO.setPayment_method(orderTransaction.getPayment_method());
+                orderTransactionDTO.setOrderKind(orderTransaction.getOrderKind());
+//                orderTransactionDTO.setAccount_user(orderTransaction.getAccountuser());
+//                orderTransactionDTO.setAccount_employee(orderTransaction.getAccountemployee());
+                orderTransactionDTO.setCreated(orderTransaction.getCreated());
+
+                List<OrderTransactionDetailDTO> orderTransactionDetailDTOS = new ArrayList<>();
+                for(OrderTransactionDetail orderTransactionDetail : orderTransaction.getOrderTransactionDetails()){
+                    OrderTransactionDetailDTO orderTransactionDetailDTO = new OrderTransactionDetailDTO();
+                    ProductDTO p = new ProductDTO();
+                    Product product = productRepository.findById(orderTransactionDetail.getProduct_id()).get();
+                    p.setId(product.getId());
+                    p.setCode(product.getCode());
+                    p.setName(product.getName());
+                    p.setImage(product.getImage());
+                    p.setOriginal_price(product.getOriginal_price());
+                    p.setPrice(product.getPrice());
+                    p.setQuantity(product.getQuantity());
+                    if(product.getDescription() != null){
+                        p.setDescription(product.getDescription());
+                    }
+                    p.setAddedDate(product.getAddedDate());
+                    if(product.getBrand() != null){
+                        p.setBrand(product.getBrand());
+                    }
+                    if(product.getCategories() != null){
+                        p.setCategories(product.getCategories());
+                    }
+
+                    orderTransactionDetailDTO.setAmount(orderTransactionDetail.getAmount());
+                    orderTransactionDetailDTO.setQuantity(orderTransactionDetail.getQuantity());
+                    orderTransactionDetailDTO.setProductDTO(p);
+
+                    orderTransactionDetailDTOS.add(orderTransactionDetailDTO);
+                }
+                orderTransactionDTO.setOrderTransactionDetails(orderTransactionDetailDTOS);
+
+
+                return orderTransactionDTO;
+            }else{
+                return null;
+            }
+        }catch (Exception e){
+            return null;
+        }
+
+    }
+
+
+    public List<OrderTransactionDTO> convertOrderToDTO(List<OrderTransaction> orderTransactions){
+        List<OrderTransactionDTO> orderTransactionDTOS = new ArrayList<>();
+        if(orderTransactions != null){
+            for(OrderTransaction orderTransaction: orderTransactions){
+                OrderTransactionDTO orderTransactionDTO = new OrderTransactionDTO();
+                orderTransactionDTO.setId(orderTransaction.getId());
+                orderTransactionDTO.setOrderid(orderTransaction.getOrderid());
+                orderTransactionDTO.setStatus(orderTransaction.getStatus());
+                orderTransactionDTO.setUser_name(orderTransaction.getUser_name());
+                orderTransactionDTO.setUser_email(orderTransaction.getUser_email());
+                orderTransactionDTO.setUser_phone(orderTransaction.getUser_phone());
+                orderTransactionDTO.setAddress(orderTransaction.getAddress());
+                orderTransactionDTO.setAmount(String.valueOf(orderTransaction.getAmount()));
+                orderTransactionDTO.setPayment_method(orderTransaction.getPayment_method());
+                orderTransactionDTO.setOrderKind(orderTransaction.getOrderKind());
+                orderTransactionDTO.setAccount_user(orderTransaction.getAccountuser());
+                orderTransactionDTO.setAccount_employee(orderTransaction.getAccountemployee());
+                orderTransactionDTO.setCreated(orderTransaction.getCreated());
+
+                List<OrderTransactionDetailDTO> orderTransactionDetailDTOS = new ArrayList<>();
+                for(OrderTransactionDetail orderTransactionDetail : orderTransaction.getOrderTransactionDetails()){
+                    OrderTransactionDetailDTO orderTransactionDetailDTO = new OrderTransactionDetailDTO();
+                    ProductDTO p = new ProductDTO();
+                    Product product = productRepository.findById(orderTransactionDetail.getProduct_id()).get();
+                    p.setId(product.getId());
+                    p.setCode(product.getCode());
+                    p.setName(product.getName());
+                    p.setImage(product.getImage());
+                    p.setOriginal_price(product.getOriginal_price());
+                    p.setPrice(product.getPrice());
+                    p.setQuantity(product.getQuantity());
+                    p.setDescription(product.getDescription());
+                    p.setAddedDate(product.getAddedDate());
+                    p.setBrand(product.getBrand());
+                    p.setCategories(product.getCategories());
+
+                    orderTransactionDetailDTO.setAmount(orderTransactionDetail.getAmount());
+                    orderTransactionDetailDTO.setQuantity(orderTransactionDetail.getQuantity());
+                    orderTransactionDetailDTO.setProductDTO(p);
+
+                    orderTransactionDetailDTOS.add(orderTransactionDetailDTO);
+                }
+                orderTransactionDTO.setOrderTransactionDetails(orderTransactionDetailDTOS);
+                orderTransactionDTOS.add(orderTransactionDTO);
+            }
+            return orderTransactionDTOS;
+        }else{
+            return null;
+        }
+    }
+
 }
+
+
+

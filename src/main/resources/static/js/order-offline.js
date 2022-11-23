@@ -5,11 +5,14 @@ var customers=[]
 const moneyRadio1 = document.getElementById('cash');
 const moneyRadio2 = document.getElementById('transfer');
 const tranferMoney = document.querySelector('.tranfer-money');
+const nobank = document.querySelector('.no-bank');
 const Savebank = document.querySelector('.save-bank');
 const listInforBank = document.querySelector('.custom-select');
 const img_qr = document.querySelector('.img_qr');
 const qr_code_modal = document.querySelector('.qr_code_modal');
+const qr_code_image_model = document.querySelector('.qrCode-image');
 const add_bank = document.querySelector('.add_bank');
+const add_bank2 = document.querySelector('.add_bank2');
 var moneyForQr = 0;
 function convertMoney(num) {
     if(num == null){
@@ -63,6 +66,10 @@ $.ajax({
 var cartAdmin =[]
 function autocomplete(inp, arr) {
     var currentFocus;
+
+
+
+
     inp.addEventListener("input", function(e) {
         var a, b, i, val = this.value;
         closeAllLists();
@@ -77,49 +84,101 @@ function autocomplete(inp, arr) {
                 b = document.createElement("DIV");
                 b.style.display='flex'
                 b.className = arr[i].id;
-
-                b.innerHTML = `<img src="${contextPath}/img/${arr[i].image}" alt="img-produc" width="100" height="100" onerror="this.src='https://cdn-img.thethao247.vn//storage/files/camhm/2022/10/11/tin-mu-moi-nhat-11-10-ronaldo-duoc-doi-thu-tang-len-may-casemiro-tim-lai-chinh-minh-200731.jpg'">`;
+                c=document.createElement("img");
+                c.src=`${contextPath}/img/${arr[i].image}`
+                c.width=50
+                c.height=50
+                b.appendChild(c)
                 b.innerHTML +=`<div class="infor-search" style="display:flex;flex-direction: column;margin-left:80px">
-            <strong style="font-size: 16px; color: #333">${arr[i].name}</strong>
-            <span style="font-size: 16px; color: #333">${convertMoney(arr[i].price)}</span>
-            <span style="font-size: 16px; color: #333">Tồn kho: ${arr[i].quantity}</span>
+            <strong class=${arr[i].id} >${arr[i].name}</strong>
+            <span id="price-span" class=${arr[i].id}>${convertMoney(arr[i].price)}</span>
             </div>`
                 b.innerHTML += `<input type='hidden' value=${arr[i].name}>`;
                 b.addEventListener("click", function(e) {
-                    inp.value = this.getElementsByTagName("input")[0].value;
-
-                    let storage =localStorage.getItem('cartAdmin');
-                    if(storage){
-                        cartAdmin=JSON.parse(storage)
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        let storage =localStorage.getItem('cartAdmin');
+                        if(storage){
+                            cartAdmin=JSON.parse(storage)
+                        }
+                        const productCart=cartAdmin.find(item=>item.product?.id==e.target.className)
+                        console.log('productCart',productCart);
+                        if(productCart){
+                            console.log('thêm quantity');
+                            productCart.quantity+=1;
+                            localStorage.setItem('cartAdmin',JSON.stringify(cartAdmin));
+                            console.log('themquantity',cartAdmin);
+                        }
+                        else{
+                            console.log('thêm mới');
+                            console.log('productList',productList);
+                            const product=productList.find(item=>item.id==e.target.className)
+                            console.log('productddd',product);
+                            cartAdmin.push({product,quantity:1})
+                            console.log('cartAdminuiuiuiuiui',cartAdmin);
+                            localStorage.setItem('cartAdmin',JSON.stringify(cartAdmin));
+                        }
+                        renderCartAdmin()
+                        closeAllLists();
                     }
 
-                    const productCart=cartAdmin.find(item=>item.product?.id==e.target.className)
-                    console.log('productCart',productCart);
-                    if(productCart){
-                        console.log('thêm quantity');
-
-                        productCart.quantity+=1;
-                        localStorage.setItem('cartAdmin',JSON.stringify(cartAdmin));
-                        console.log('themquantity',cartAdmin);
-
-                    }
-                    else{
-                        console.log('thêm mới');
-                        console.log('productList',productList);
-                        const product=productList.find(item=>item.id==e.target.className)
-                        console.log('productddd',product);
-                        cartAdmin.push({product,quantity:1})
-                        console.log('cartAdminuiuiuiuiui',cartAdmin);
-                        localStorage.setItem('cartAdmin',JSON.stringify(cartAdmin));
-
-                    }
-                    renderCartAdmin()
 
 
-                    closeAllLists();
-                });
+
+
+
+                );
+
+
+
                 a.appendChild(b);
             }
+            // if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            //     b = document.createElement("DIV");
+            //     b.style.display='flex'
+            //     b.className = arr[i].id;
+            //
+            //     b.innerHTML = `<img src="${contextPath}/img/${arr[i].image}" alt="img-produc" width="100" height="100" onerror="this.src='https://cdn-img.thethao247.vn//storage/files/camhm/2022/10/11/tin-mu-moi-nhat-11-10-ronaldo-duoc-doi-thu-tang-len-may-casemiro-tim-lai-chinh-minh-200731.jpg'">`;
+            //     b.innerHTML +=`<div class="infor-search" style="display:flex;flex-direction: column;margin-left:80px">
+            // <strong style="font-size: 16px; color: #333">${arr[i].name}</strong>
+            // <span style="font-size: 16px; color: #333">${convertMoney(arr[i].price)}</span>
+            // <span style="font-size: 16px; color: #333">Tồn kho: ${arr[i].quantity}</span>
+            // </div>`
+            //     b.innerHTML += `<input type='hidden' value=${arr[i].name}>`;
+            //     b.addEventListener("click", function(e) {
+            //         inp.value = this.getElementsByTagName("input")[0].value;
+            //
+            //         let storage =localStorage.getItem('cartAdmin');
+            //         if(storage){
+            //             cartAdmin=JSON.parse(storage)
+            //         }
+            //
+            //         const productCart=cartAdmin.find(item=>item.product?.id==e.target.className)
+            //         console.log('productCart',productCart);
+            //         if(productCart){
+            //             console.log('thêm quantity');
+            //
+            //             productCart.quantity+=1;
+            //             localStorage.setItem('cartAdmin',JSON.stringify(cartAdmin));
+            //             console.log('themquantity',cartAdmin);
+            //
+            //         }
+            //         else{
+            //             console.log('thêm mới');
+            //             console.log('productList',productList);
+            //             const product=productList.find(item=>item.id==e.target.className)
+            //             console.log('productddd',product);
+            //             cartAdmin.push({product,quantity:1})
+            //             console.log('cartAdminuiuiuiuiui',cartAdmin);
+            //             localStorage.setItem('cartAdmin',JSON.stringify(cartAdmin));
+            //
+            //         }
+            //         renderCartAdmin()
+            //
+            //
+            //         closeAllLists();
+            //     });
+            //     a.appendChild(b);
+            // }
         }
     });
 
@@ -251,6 +310,9 @@ const renderCartAdmin=()=>{
     );
     moneyForQr = money;
     totalMoney.textContent=convertMoney(money);
+    $('#cash').prop('checked',true);
+    tranferMoney.style.display = "none";
+    // moneyRadio1.prop('checked',true);
     renderPay()
 
 }
@@ -277,31 +339,31 @@ document.querySelector(".customer-pay").addEventListener('keyup',()=>{
 
 })
 
-btnBill.addEventListener("click",()=>{
-    let cartListAdmin=JSON.parse(localStorage.getItem('cartAdmin'))
-
-    const customPay=parseInt(document.querySelector(".customer-pay").value,10)
-    const money = cartListAdmin.reduce(
-        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
-        0
-    );
-
-    if(customPay<money){
-        alert('Số tiền của bạn không đủ để thanh toán :(')
-        return
-    }
-    if(Number.isNaN(customPay-money)){
-        alert(`Hãy xem lại phần nhập tiền của khách !`)
-        return
-
-    }
-
-
-    // alert(`Bạn đã thanh toán thành công,Tiền thừa bạn khách nhận đc là :${customPay-money}`)
-    localStorage.removeItem('cartAdmin')
-    renderCartAdmin();
-    location.reload()
-})
+// btnBill.addEventListener("click",()=>{
+//     let cartListAdmin=JSON.parse(localStorage.getItem('cartAdmin'))
+//
+//     const customPay=parseInt(document.querySelector(".customer-pay").value,10)
+//     const money = cartListAdmin.reduce(
+//         (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
+//         0
+//     );
+//
+//     if(customPay<money){
+//         alert('Số tiền của bạn không đủ để thanh toán :(')
+//         return
+//     }
+//     if(Number.isNaN(customPay-money)){
+//         alert(`Hãy xem lại phần nhập tiền của khách !`)
+//         return
+//
+//     }
+//
+//
+//     // alert(`Bạn đã thanh toán thành công,Tiền thừa bạn khách nhận đc là :${customPay-money}`)
+//     localStorage.removeItem('cartAdmin')
+//     renderCartAdmin();
+//     location.reload()
+// })
 renderCartAdmin()
 
 
@@ -390,8 +452,39 @@ add_bank.addEventListener('click',()=>{
                 console.log(response)
                 if(response.code === '00'){
                     response.data.map((item,key)=>{
-                        $('#bank_list_select').append(`<option value=${item.bin}>${item.code}-${item.name}</option>`)
+                        $('#bank_list_select').append(`<option class="en" style="background-image:url('${item.logo}');" value=${item.bin}>${item.code}-${item.name}</option>`)
+                    })
 
+                }
+                else{
+                    alert(response.desc);
+                    return;
+                }
+            },
+
+            error: function () {
+                console.log("Get List bank Error");
+                return false;
+            }
+        }
+
+    );
+    console.log('hiihho',listBank);
+})
+
+
+
+add_bank2.addEventListener('click',()=>{
+    $.ajax(
+        {
+            type : "GET",
+            contentType: "application/json",
+            url : "https://api.vietqr.io/v2/banks",
+            success: function (response){
+                console.log(response)
+                if(response.code === '00'){
+                    response.data.map((item,key)=>{
+                        $('#bank_list_select').append(`<option value=${item.bin}>${item.code}-${item.name}</option>`)
                     })
 
                 }
@@ -416,61 +509,69 @@ function valueChange(event) {
     if (moneyRadio1.checked) {
         console.log('moneyRadio1');
         tranferMoney.style.display = "none";
+        nobank.style.display = "none";
     } else {
         console.log('moneyRadio2');
         let listbank = JSON.parse(localStorage.getItem('bankList'));
-        localStorage.removeItem('bankList');
-        listbank?.map((item,key)=>{
-            var dataGenQr = {
-                "accountNo": item.stk,
-                "accountName": item.usernameBank,
-                "acqId": item.bin,
-                "addInfo": "FPT Electronic Shop - Thanh toan hoa don",
-                "amount": Number(moneyForQr),
-                "template": "compact2"
-            };
-            $.ajax(
-                {
-                    type : "POST",
-                    contentType: "application/json",
-                    async: false,
-                    url : "https://api.vietqr.io/v2/generate",
-                    headers: {
-                        'x-api-key':'.com',
-                        'x-client-id':'we-l0v3-v1et-qr'
-                    },
-                    data: JSON.stringify(dataGenQr),
-                    success: function (response){
-                        if(response.code === '00'){
-                            var usernameBank = item.usernameBank;
-                            var stk = item.stk;
-                            var bin = item.bin;
-                            var bankname = item.bankname;
-                            var qrImage = response.data.qrDataURL;
-                            // item.qrImage = response.data.qrDataURL;
-                            const bankInfor={usernameBank,stk,bin,bankname,qrImage}
-                            bankList.push(bankInfor)
-                            localStorage.setItem('bankList',JSON.stringify(bankList))
-                        }
-                        else{
-                            alert(response.desc);
-                            return;
-                        }
-                    },
+        if(listbank == null || listbank.length <= 0){
+            tranferMoney.style.display = "none";
+            nobank.style.display = "block";
+        }else{
+            localStorage.removeItem('bankList');
+            bankList =[];
+            listbank?.map((item,key)=>{
+                var dataGenQr = {
+                    "accountNo": item.stk,
+                    "accountName": item.usernameBank,
+                    "acqId": item.bin,
+                    "addInfo": "FPT Electronic Shop - Thanh toan hoa don",
+                    "amount": Number(moneyForQr),
+                    "template": "compact2"
+                };
+                $.ajax(
+                    {
+                        type : "POST",
+                        contentType: "application/json",
+                        async: false,
+                        url : "https://api.vietqr.io/v2/generate",
+                        headers: {
+                            'x-api-key':'.com',
+                            'x-client-id':'we-l0v3-v1et-qr'
+                        },
+                        data: JSON.stringify(dataGenQr),
+                        success: function (response){
+                            if(response.code === '00'){
+                                var usernameBank = item.usernameBank;
+                                var stk = item.stk;
+                                var bin = item.bin;
+                                var bankname = item.bankname;
+                                var qrImage = response.data.qrDataURL;
+                                // item.qrImage = response.data.qrDataURL;
+                                const bankInfor={usernameBank,stk,bin,bankname,qrImage}
+                                bankList.push(bankInfor)
+                                localStorage.setItem('bankList',JSON.stringify(bankList))
+                            }
+                            else{
+                                alert(response.desc);
+                                return;
+                            }
+                        },
 
-                    error: function () {
-                        console.log("Get QrCode Error");
-                        return false;
+                        error: function () {
+                            console.log("Get QrCode Error");
+                            return false;
+                        }
                     }
-                }
-            );
-        })
-        renderListInforBank();
+                );
+            })
+            renderListInforBank();
 
-        listbank?.slice(0,1).map((item,key)=>{
-            img_qr.src = item.qrImage;
-        })
-        tranferMoney.style.display = "block";
+            bankList?.slice(0,1).map((item,key)=>{
+                img_qr.src = item.qrImage;
+            })
+
+            tranferMoney.style.display = "block";
+        }
 
     }
 }
@@ -537,6 +638,8 @@ Savebank.addEventListener("click",()=>{
                 if(response.code === '00'){
                     img_qr.src = response.data.qrDataURL;
                     qrImage = response.data.qrDataURL;
+                    nobank.style.display = "none";
+                    tranferMoney.style.display = "block";
                 }
                 else{
                     alert(response.desc);
@@ -612,5 +715,130 @@ function addCustomer() {
             }
         }
     )
+
+}
+
+function printQrCode() {
+    var divContents = qr_code_image_model.innerHTML;
+    var a = window.open('', '', 'height=100%, width=100%');
+    a.document.write('<html>');
+    a.document.write('<body>');
+    a.document.write(divContents);
+    a.document.write('</body></html>');
+    a.document.close();
+    a.print();
+}
+
+function OrderOfflineAction() {
+    let cust_id = JSON.parse(localStorage.getItem('idDetalCustomer'));
+    let payment_method = $('input[name="inlineRadioOptions"]:checked').val();
+    let products = new Array();
+
+    const cartAdmin = JSON.parse(localStorage.getItem('cartAdmin'));
+    const totalMoney = cartAdmin.reduce(
+        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
+        0
+    );
+    console.log(totalMoney);
+
+    const customPay=parseInt(document.querySelector(".customer-pay").value,10)
+    const money = cartAdmin.reduce(
+        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
+        0
+    );
+
+    //validate
+    if(customPay<money){
+        alert('Số tiền của bạn không đủ để thanh toán :(')
+        return
+    }
+    if(Number.isNaN(customPay-money)){
+        alert(`Hãy xem lại phần nhập tiền của khách !`)
+        return
+    }
+    for(let i=0; i<cartAdmin.length; i++){
+        if(cartAdmin[i].product.quantity < cartAdmin[i].quantity){
+            alert('Sản phẩm '+cartAdmin[i].product.name + ' vuợt quá số lượng tồn kho.');
+            return;
+        }
+    }
+    //
+    for(let i=0; i<cartAdmin.length; i++){
+        let item = new Object();
+        item.product_id = cartAdmin[i].product.id;
+        item.quantity = cartAdmin[i].quantity;
+        item.amount = cartAdmin[i].product.price * cartAdmin[i].quantity;
+        products.push(item);
+    }
+
+    let cust_object = new Object();
+    cust_object.id = cust_id;
+    let data = {
+        "amount" : totalMoney,
+        "payment_method" : payment_method,
+        "orderTransactionDetails" : products,
+        "customer" : cust_object
+    };
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/admin/orders/orderOffline",
+        data: JSON.stringify(data),
+        dataType:"json",
+        success: function (response){
+            console.log(response);
+            if(response.status === "00"){
+                localStorage.removeItem('cartAdmin')
+                localStorage.removeItem('idDetalCustomer')
+                renderCartAdmin();
+                location.reload();
+                alert('Tạo đơn hàng thành công');
+            }
+            else {
+                alert('Tạo đơn hàng thất bại');
+                return;
+            }
+        },
+        error: function (error){
+            alert('Something went wrong');
+            return;
+        }
+
+
+    });
+
+}
+function openModalData(oderId){
+    $('#OderIdModal').val(oderId);
+}
+
+
+function cancelOrder() {
+    let reason = $('textarea[name="cancelReason"]').val();
+    console.log(reason);
+    let orderid = $('#OderIdModal').val();
+    console.log("/admin/orders/cancel?id="+orderid + "&reason="+reason);
+    $.ajax({
+        type: "GET",
+        url: "/admin/orders/cancel?id="+orderid + "&reason="+reason,
+        success: function (response){
+            console.log(response);
+            if(response.status === "00"){
+                alert(response.message);
+                window.location.href = "http://localhost:5000/admin/orders/cancelled";
+            }
+            else {
+                alert(response.message);
+                return;
+            }
+        },
+        error: function (error){
+            alert('Something went wrong');
+            return;
+        }
+
+
+    });
 
 }

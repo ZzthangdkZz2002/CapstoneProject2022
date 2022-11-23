@@ -42,82 +42,71 @@
                 </div>
             </div>
         </div>
-        <form>
+
             <div class="row">
 
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="tile">
-                        <h3 class="tile-title">Thông tin sản phẩm</h3>
+                        <h3 class="tile-title">Thông tin đơn hàng</h3>
                         <div class="row element-button">
-                            <div class="col-sm-2">
-                                <button class="btn btn-add btn-sm" title="Thêm" type="button" data-toggle="modal"
-                                        data-target="#productList"><i class="fas fa-plus"></i>
-                                   Liên kết đơn hàng</button>
+                            <div class="search-row">
+                                    <div class="search-container">
+                                        <input class="form-control" type="text" placeholder="Tìm kiếm" name="text" id="searchText" value="">
+                                        <input type="hidden" value="0" type="text" name="index">
+                                        <button type="submit" id="search" ><i class="fa fa-search"></i></button>
+                                    </div>
                             </div>
+<%--                            <div class="col-sm-2">--%>
+<%--                                <button class="btn btn-add btn-sm" title="Thêm" type="button" data-toggle="modal"--%>
+<%--                                        data-target="#productList"><i class="fas fa-plus"></i>--%>
+<%--                                   Liên kết đơn hàng</button>--%>
+<%--                            </div>--%>
                         </div>
+
                         <div class="du--lieu-san-pham">
-                            <table id="exportProductList" class="table table-hover table-bordered form-product">
+                            <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                 <tr>
-                                    <th class="order-item-number">Mã sản phẩm</th>
-                                    <th class="order-item-number">Tên sản phẩm</th>
-                                    <th class="order-item-number">Hình ảnh</th>
-                                    <th class="order-item-number" width="10">Tổng số lượng</th>
-                                    <th class="order-item-number">Mã SKUD</th>
-                                    <th class="order-item-number">Số lượng theo từng sku</th>
-                                    <th width="100" class="order-item-number text-center"
-                                        style="text-align: center; vertical-align: middle;">Tuỳ chọn
-                                    </th>
+                                    <th width="100">Mã đơn hàng</th>
+                                    <th>Mã nhân viên</th>
+                                    <th>Mã khách hàng</th>
+                                    <th>Ngày đặt hàng</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Tình trạng</th>
+                                    <th>Loại đơn hàng</th>
+                                    <th width="100">Tuỳ chọn</th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <c:forEach var="orderDto" items="${listOrders}">
+                                    <tr>
+                                        <td>#${orderDto.orderid}</td>
+                                        <td>${orderDto.account_employee != null ? orderDto.account_employee.id : ""}</td>
+                                        <td>${orderDto.account_user != null ? orderDto.account_user.id : ""}</td>
+                                        <td>${orderDto.created}</td>
+                                        <td>${orderDto.amount}</td>
+                                        <td><span class="badge bg-success">${orderDto.status}</span></td>
+                                        <td>${orderDto.orderKind}</td>
+                                        <td>
+                                                <a class="btn btn-primary btn-sm edit"
+                                                        type="button" title="Xuất đơn hàng" href="${pageContext.request.contextPath}/admin/warehouses/export/detail/add?orderid=${orderDto.orderid}"><i class="fas fa-edit"></i>Xuất đơn hàng</a>
+                                                <%--                      <span style="display: none" id="orderid">${orderDto.id}</span>--%>
+
+
+                                            <a class="btn btn-primary btn-sm edit"
+                                               type="button" title="Xem" href="${pageContext.request.contextPath}/admin/orders/view/${orderDto.id}"><i class="fa fa-info"></i></a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
 
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="tile">
-                        <h3 class="tile-title">Thông tin xuất hàng</h3>
-                        <div class="tile-body">
-                            <div class="form-group col-md-12">
-                                <label for="ExportDate" class="control-label required-field">Mã đơn hàng</label>
-                                <p id="order-id"></p>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="ExportDate" class="control-label required-field">Ngày Xuất</label>
-                                <input class="form-control" type="date" name="ExportDate" id="ExportDate" onchange="checkDate()" required>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="exportName" class="control-label required-field">Họ và tên người xuất
-                                    kho</label>
-                                <input class="form-control" type="text" name="exportName" id="exportName" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}" readonly>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label for="receive" class="control-label required-field">Họ và tên người
-                                    nhận</label>
-                                <input class="form-control" type="text" name="receive" id="receive" required>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label class="control-label">Ghi chú</label>
-                                <textarea class="form-control" name="mota" id="mota"></textarea>
-                            </div>
-                            <div class="row">
-                                <div class="tile-footer col-md-12">
-                                    <button id="createExport" class="btn btn-primary create-order-button" type="button">Lưu
-                                        giao
-                                        dịch</button>
-                                    <a class="btn btn-primary cancel-order-button"
-                                       href="warehouse-export-management.html" type="button">Huỷ và quay về</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </div>
-        </form>
+
     </main>
     <!--
   ORDER LIST MODAL
@@ -369,6 +358,7 @@ MODAL ORDER EMPTY
 MODAL
 -->
     <!-- Essential javascripts for application to work-->
+    <script src="${pageContext.request.contextPath}/js/exportItem.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="src/jquery.table2excel.js"></script>
     <script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>

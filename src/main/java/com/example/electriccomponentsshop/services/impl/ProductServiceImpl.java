@@ -187,6 +187,7 @@ public class ProductServiceImpl implements ProductService {
             Optional<Product> p = productRepository.findByCode(ip.getProduct_code());
             if(p.isPresent()){
                 Product product = p.get();
+                System.out.println("quantity test: "+ (product.getQuantity() + ip.getQuantity()));
                 product.setQuantity(product.getQuantity() + ip.getQuantity());
                 productRepository.save(product);
             }

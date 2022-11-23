@@ -17,6 +17,8 @@ public class Warehouse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
+    private String name;
+    @Column
     private Integer storeId;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pCode")

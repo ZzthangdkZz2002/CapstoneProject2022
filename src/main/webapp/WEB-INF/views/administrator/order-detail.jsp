@@ -1,4 +1,3 @@
-<jsp:useBean id="orderDto" scope="request" type="com.example.electriccomponentsshop.dto.OrderDTO"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,22 +44,32 @@
                     <h3 class="tile-title">Thông tin nhận hàng</h3>
                     <div class="tile-body" >
                         <div class="row">
-                            <div class="form-group col-md-2">
-                                <label class="control-label ">Họ và tên người nhận</label>
+                            <c:if test="${orderDto.customer == null}">
+                                <div class="form-group col-md-2">
+                                    <label class="control-label ">Khách lẻ</label>
+                                </div>
+                            </c:if>
 
-                                    ${orderDto.receivedPerson}
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="exampleSelect1" class="control-label">Địa chỉ giao hàng</label>
-                                <p class="detail-text">${orderDto.detailLocation}, ${orderDto.wardName}, ${orderDto.districtName}, ${orderDto.provinceName}</p>
-                            </div>
-                            <div class="form-group col-md-2">
-                                <label class="control-label">Số điện thoại</label>
-                                <p class="detail-text">${orderDto.receivedPhone}</p>
-                            </div>
+                            <c:if test="${orderDto.customer != null}">
+                                <div class="form-group col-md-2">
+                                    <div class="form-group col-md-2">
+                                        <label class="control-label">Họ và tên</label>
+                                        <p class="detail-text">${orderDto.customer.name}</p>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label class="control-label">Số điện thoại</label>
+                                        <p class="detail-text">${orderDto.customer.phone}</p>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="exampleSelect1" class="control-label">Địa chỉ giao hàng</label>
+                                        <p class="detail-text">${orderDto.address}</p>
+                                    </div>
+                                </div>
+                            </c:if>
+
                             <div class="form-group col-md-4">
                                 <label class="control-label">Số tiền khách hàng cần thanh toán</label>
-                                <p class="detail-text">${orderDto.totalPayment}</p>
+                                <p class="detail-text">${orderDto.amount}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -70,34 +79,19 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="control-label">Phương thức thanh toán</label>
-                                <p class="detail-text"><span class="badge bg-warning">${orderDto.paymentMethod}</span></p>
+                                <p class="detail-text"><span class="badge bg-warning">${orderDto.payment_method}</span></p>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="modal-confirm-button">
-                                <div>
-                                    <c:if test="${orderDto.status == 'Chờ Xử Lý'}">
-                                        <button class="btn btn-primary" data-toggle="modal"
-                                                data-target="#confirmOrder">Xác nhận đơn hàng</button>
-                                    </c:if>
-
-                                    <c:if test="${orderDto.status == 'Đang Giao Hàng'}">
-                                        <button class="btn btn-primary" data-toggle="modal"
-                                                data-target="#confirmFinished">Hoàn thành</button>
-                                    </c:if>
-                                    <c:if test="${orderDto.status == 'Đã Hủy'}">
-                                        <button class="btn btn-primary" data-toggle="modal"
-                                                data-target="#confirmReturned">Đã nhận hoàn</button>
-                                    </c:if>
-                                    <c:if test="${orderDto.status != 'Hoàn Thành'&&orderDto.status!='Đã Nhận Hoàn'}">
-                                        <button class="btn btn-cancel" data-toggle="modal"
-                                                data-target="#confirmCancel">Huỷ đơn hàng</button>
-                                    </c:if>
-
-                                </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label">Loại đơn hàng</label>
+                                <p class="detail-text"><span class="badge bg-warning">${orderDto.orderKind}</span></p>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label">Ngyà tạo</label>
+                                <p class="detail-text"><span class="badge bg-warning">${orderDto.created}</span></p>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="col-md-12">
@@ -110,27 +104,25 @@
                                 <th>Mã sản phẩm</th>
                                 <th>Tên sản phẩm</th>
                                 <th>Ảnh sản phẩm</th>
-                                <th>Danh mục</th>
                                 <th>Đơn giá</th>
                                 <th>Số lượng đặt hàng</th>
                                 <th>Thành tiền</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var = "orderItemDTO" items = "${orderDto.orderItems}">
+                            <c:forEach var = "orderItemDTO" items = "${orderDto.orderTransactionDetails}">
                                 <tr>
-                                    <td>${orderItemDTO.productId}</td>
-                                    <td>${orderItemDTO.productName}</td>
-                                    <td><img src="resources/images/diode.jpg" alt="" width="100px;"></td>
-                                    <td>Dây kết nối</td>
-                                    <td>${orderItemDTO.unitPrice} đ</td>
+                                    <td>${orderItemDTO.productDTO.code}</td>
+                                    <td>${orderItemDTO.productDTO.name}</td>
+                                    <td><img src="${pageContext.request.contextPath}/img/${orderItemDTO.productDTO.image}" alt="" width="100px;"></td>
+                                    <td>${orderItemDTO.productDTO.price} đ</td>
                                     <td>${orderItemDTO.quantity}</td>
-                                    <td>${orderItemDTO.subTotal} đ</td>
+                                    <td>${orderItemDTO.amount} đ</td>
                                 </tr>
                             </c:forEach>
                             <tr>
                                 <td colspan="6" style="font-weight: bold;">Tổng tiền: </td>
-                                <td>${orderDto.totalPayment} đ</td>
+                                <td>${orderDto.amount} đ</td>
                             </tr>
                             </tbody>
                         </table>

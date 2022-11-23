@@ -10,6 +10,7 @@ import com.example.electriccomponentsshop.repositories.ProductRepository;
 import com.example.electriccomponentsshop.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -100,6 +101,9 @@ public class OrderController {
         if(orderTransactions != null){
             for(OrderTransaction orderTransaction: orderTransactions){
                 OrderTransactionDTO orderTransactionDTO = new OrderTransactionDTO();
+                if(orderTransaction.getCustomer() != null){
+                    orderTransactionDTO.setCustomer(orderTransaction.getCustomer());
+                }
                 orderTransactionDTO.setId(orderTransaction.getId());
                 orderTransactionDTO.setOrderid(orderTransaction.getOrderid());
                 orderTransactionDTO.setStatus(orderTransaction.getStatus());
@@ -146,6 +150,69 @@ public class OrderController {
         }
     }
 
+    public OrderTransactionDTO convertOrderToDTO2(OrderTransaction orderTransaction){
+        try{
+            if(orderTransaction != null){
+                OrderTransactionDTO orderTransactionDTO = new OrderTransactionDTO();
+                orderTransactionDTO.setId(orderTransaction.getId());
+                orderTransactionDTO.setOrderid(orderTransaction.getOrderid());
+                orderTransactionDTO.setStatus(orderTransaction.getStatus());
+                if(orderTransaction.getCustomer() != null){
+                    orderTransactionDTO.setCustomer(orderTransaction.getCustomer());
+                }
+//                orderTransactionDTO.setUser_name(orderTransaction.getUser_name());
+//                orderTransactionDTO.setUser_email(orderTransaction.getUser_email());
+//                orderTransactionDTO.setUser_phone(orderTransaction.getUser_phone());
+                orderTransactionDTO.setAddress(orderTransaction.getAddress());
+                orderTransactionDTO.setAmount(String.valueOf(orderTransaction.getAmount()));
+                orderTransactionDTO.setPayment_method(orderTransaction.getPayment_method());
+                orderTransactionDTO.setOrderKind(orderTransaction.getOrderKind());
+//                orderTransactionDTO.setAccount_user(orderTransaction.getAccountuser());
+//                orderTransactionDTO.setAccount_employee(orderTransaction.getAccountemployee());
+                orderTransactionDTO.setCreated(orderTransaction.getCreated());
+
+                List<OrderTransactionDetailDTO> orderTransactionDetailDTOS = new ArrayList<>();
+                for(OrderTransactionDetail orderTransactionDetail : orderTransaction.getOrderTransactionDetails()){
+                    OrderTransactionDetailDTO orderTransactionDetailDTO = new OrderTransactionDetailDTO();
+                    ProductDTO p = new ProductDTO();
+                    Product product = productRepository.findById(orderTransactionDetail.getProduct_id()).get();
+                    p.setId(product.getId());
+                    p.setCode(product.getCode());
+                    p.setName(product.getName());
+                    p.setImage(product.getImage());
+                    p.setOriginal_price(product.getOriginal_price());
+                    p.setPrice(product.getPrice());
+                    p.setQuantity(product.getQuantity());
+                    if(product.getDescription() != null){
+                        p.setDescription(product.getDescription());
+                    }
+                    p.setAddedDate(product.getAddedDate());
+                    if(product.getBrand() != null){
+                        p.setBrand(product.getBrand());
+                    }
+                    if(product.getCategories() != null){
+                        p.setCategories(product.getCategories());
+                    }
+
+                    orderTransactionDetailDTO.setAmount(orderTransactionDetail.getAmount());
+                    orderTransactionDetailDTO.setQuantity(orderTransactionDetail.getQuantity());
+                    orderTransactionDetailDTO.setProductDTO(p);
+
+                    orderTransactionDetailDTOS.add(orderTransactionDetailDTO);
+                }
+                orderTransactionDTO.setOrderTransactionDetails(orderTransactionDetailDTOS);
+
+
+                return orderTransactionDTO;
+            }else{
+                return null;
+            }
+        }catch (Exception e){
+            return null;
+        }
+
+    }
+
     @GetMapping("/accept")
     public String acceptOrder(@RequestParam(name = "id") String id, RedirectAttributes r){
         try{
@@ -160,8 +227,9 @@ public class OrderController {
     }
 
     @GetMapping("/cancel")
-    public String cancelOrder(@RequestParam(name = "id") String id, RedirectAttributes r){
+    public ResponseEntity<ResponseObject> cancelOrder(@RequestParam(name = "id") String id, @RequestParam(name = "reason") String reason){
         try{
+            System.out.println("Reason: "+ reason);
             String buildEmail =
                     "<meta charset=\"UTF-8\">"+
                             "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">"+
@@ -234,15 +302,24 @@ public class OrderController {
             OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
             orderTransaction.setStatus(OrderEnum.CANCEL.getName());
             buildEmail = buildEmail.replace("%orderid%", orderTransaction.getOrderid());
-            buildEmail = buildEmail.replace("%username%", orderTransaction.getUser_name());
-            buildEmail = buildEmail.replace("%reason%","this is reason");
-            emailSenderService.sendMail(orderTransaction.getUser_email(),buildEmail,"Đơn hàng mua tại Electrico của bạn đã bị hủy");
+            if(orderTransaction.getUser_name() != null){
+                buildEmail = buildEmail.replace("%username%", orderTransaction.getUser_name());
+            }else{
+                buildEmail = buildEmail.replace("%username%", "bạn");
+            }
+            buildEmail = buildEmail.replace("%reason%",reason);
+            if(orderTransaction.getUser_email() != null){
+                emailSenderService.sendMail(orderTransaction.getUser_email(),buildEmail,"Đơn hàng mua tại Electrico của bạn đã bị hủy");
+            }
             orderTransactionRepository.save(orderTransaction);
-            r.addFlashAttribute("acceptOrderMessage","Hủy thành công đơn hàng #" + orderTransaction.getOrderid());
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Hủy đơn hàng thành công",""));
+//            r.addFlashAttribute("acceptOrderMessage","Hủy thành công đơn hàng #" + orderTransaction.getOrderid());
         }catch (Exception e){
-            r.addFlashAttribute("acceptOrderMessage","error");
+            System.out.println("Cancel exception: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Hủy đơn hàng thất bại",""));
+//            r.addFlashAttribute("acceptOrderMessage","error");
         }
-        return "redirect:/admin/orders/cancelled";
+//        return "redirect:/admin/orders/cancelled";
     }
 
 //    private ModelMap getAddress(ModelMap model) {
@@ -257,21 +334,21 @@ public class OrderController {
 //        return model;
 //    }
 //
-//    @GetMapping("/view/{id}")
-//
-//    public String viewOrder(@PathVariable String id, Model modelMap) {
-//        try {
-//            Integer orderId = Integer.parseInt(id);
-//
+    @GetMapping("/view/{id}")
+
+    public String viewOrder(@PathVariable String id, Model modelMap) {
+        try {
+            OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
+            OrderTransactionDTO orderTransactionDTO = convertOrderToDTO2(orderTransaction);
 //            OrderDTO orderDTO = orderService.findById(orderId);
-//            modelMap.addAttribute("orderDto", orderDTO);
-//            return "administrator/order-detail";
-//        } catch (NumberFormatException | NoSuchElementException e) {
-//            modelMap.addAttribute("notFound", e.getMessage());
-//            return "administrator/order-detail";
-//        }
-//
-//    }
+            modelMap.addAttribute("orderDto", orderTransactionDTO);
+            return "administrator/order-detail";
+        } catch (NumberFormatException | NoSuchElementException e) {
+            modelMap.addAttribute("notFound", e.getMessage());
+            return "administrator/order-detail";
+        }
+
+    }
 //
 //    @GetMapping("/see/{status}")
 //    public String viewOrderByStatus(@PathVariable String status, ModelMap model) {
@@ -353,6 +430,21 @@ public class OrderController {
         }
 
         return "administrator/order-offline";
+    }
+
+    @PostMapping("/orderOffline")
+    @ResponseBody
+    public ResponseEntity<ResponseObject> addOrderOffline(@RequestBody OrderTransactionDTO orderTransactionDTO){
+        if("".equals(orderTransactionDTO.getAmount()) || "0".equals(orderTransactionDTO.getAmount()) || orderTransactionDTO.getAmount() == null){
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","add order transaction fail",""));
+        }else{
+            OrderTransaction orderTransaction = orderTransactionService.addTransactionOffline(orderTransactionDTO);
+            if(orderTransaction != null){
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","add order transaction Success", ""));
+            }else{
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("02","add order transaction fail",""));
+            }
+        }
     }
 
 //    @PostMapping("/addOrder")

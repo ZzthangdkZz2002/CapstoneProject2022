@@ -166,13 +166,13 @@
                 <div class="col-12">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input custom-checkbox" type="radio" name="inlineRadioOptions" id="cash"
-                               value="cash" checked />
+                               value="Tiền mặt" checked />
                         <label class="form-check-label custom-checkbox-label mr-2" for="cash">Tiền mặt</label>
                     </div>
 
                     <div class="form-check form-check-inline">
                         <input class="form-check-input custom-checkbox" type="radio" name="inlineRadioOptions" id="transfer"
-                               value="transfer" />
+                               value="Chuyển khoản" />
                         <label class="form-check-label custom-checkbox-label" for="transfer">Chuyển khoản</label>
                     </div>
 
@@ -183,7 +183,7 @@
                 <!-- transfer money -->
                 <div class="col-12 mt-3 tranfer-money">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-3 qrCode-image">
                             <img
                                     src=""
                                     alt="" class="img_qr" data-bs-toggle="modal" data-bs-target="#exampleModal5" style="cursor: pointer;">
@@ -202,8 +202,20 @@
 
                 </div>
 
+                <!-- don't have bank -->
+                <div class="col-12 mt-3 no-bank" style="display: none">
+                    <div class="row">
+                        <h3>Chưa có tài khoản ngân hàng nào</h3>
+                        <div class="col-9">
+                            <button type="button" class="btn btn-light add_acount mt-2 add_bank2" style="cursor: pointer;"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModal4">Thêm tài khoản</button>
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="col-12" style="position: absolute; bottom: 100px;">
-                    <button type="button" class="btn btn-primary btn-bill">Thanh toán</button>
+                    <button type="button" class="btn btn-primary btn-bill" onclick="OrderOfflineAction()">Thanh toán</button>
                 </div>
 
 
@@ -350,7 +362,7 @@
 
                         <div class="form__group field col-12">
                             <input type="input" class="form__field" placeholder="Name" name="nameBank" id='nameBank' required />
-                            <label for="name" class="form__label">Họ và tên</label>
+                            <label for="name" class="form__label">Tên hiển thị</label>
                         </div>
 
                         <div class="form__group field col-5">
@@ -358,9 +370,8 @@
                             <label for="name" class="form__label">Số tài khoản</label>
                         </div>
 
-                        <div class="form__group field col-5">
-                            <select class="custom-select" id="bank_list_select">
-
+                        <div class="form__group field col-5 drop-down">
+                            <select name="options" class="custom-select" id="bank_list_select">
                                 <!-- LIST INFOR BANK -->
                             </select>
                         </div>
@@ -401,12 +412,12 @@
                             <img src="" alt="Error_img_qr" style="width:100% ;height: 100%;object-fit: cover;"
                                  class="qr_code_modal">
                         </div>
-
+                        <div class="col-7">
+                            <button type="button" class="btn btn-success" onclick="printQrCode();" style="margin-left: 148px">Print</button>
+                        </div>
 
                     </div>
                 </div>
-
-
 
             </div>
             <div class="modal-footer">
@@ -418,11 +429,14 @@
     </div>
 </div>
 
+
 <script>var contextPath = "${pageContext.request.contextPath}"</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/order-offline.js"></script>
+
+
 </body>
 
 </html>

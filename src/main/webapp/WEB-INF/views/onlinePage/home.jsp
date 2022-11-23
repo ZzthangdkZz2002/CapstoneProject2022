@@ -63,12 +63,19 @@
                         <ul class="nav">
                             <c:forEach var="cate" items="${categories}">
                                 <li class="dropdown menu-item">
-                                    <a href="#" class="dropdown-toggle"><i
-                                            class="icon fa fa-desktop fa-fw"></i>${cate.name}</a>
-                                    <ul>
-                                        <c:forEach var="childCate" items="${cate.childCategories}">
-                                        <li><a href="${pageContext.request.contextPath}/product?cate=${childCate.id}&pageNo=1">${childCate.name}</a>
-                                            </c:forEach>
+                                    <a href="#" class="dropdown-toggle" data-hover="dropdown">${cate.name}</a>
+                                    <ul class="dropdown-menu mega-menu">
+                                        <li class="yamm-content">
+                                            <div class="row">
+                                                <ul class="links list-unstyled">
+                                                    <c:forEach var="childCate" items="${cate.childCategories}">
+                                                        <li>
+                                                            <a href="${pageContext.request.contextPath}/product?cate=${childCate.id}&pageNo=1">${childCate.name}</a>
+                                                        </li>
+                                                    </c:forEach>
+                                                </ul>
+                                            </div>
+                                        </li>
                                     </ul>
                                 </li>
                             </c:forEach>

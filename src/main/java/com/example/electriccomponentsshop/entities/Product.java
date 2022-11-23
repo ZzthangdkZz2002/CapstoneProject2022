@@ -51,7 +51,7 @@ public class Product {
     @Column()
     private Date addedDate;
 
-    @Column(updatable = false)
+    @Column
     @ColumnDefault("0")
     private int quantity;
 

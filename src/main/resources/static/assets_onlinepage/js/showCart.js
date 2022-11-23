@@ -28,13 +28,17 @@ const decreasing=(id)=>{
 
 const removeCart=(id)=>{
     const cartList=JSON.parse(localStorage.getItem('cart'))
-    const cartRemove = cartList.find((item)=>item.product.id==id);
+    const cartRemove = cartList.findIndex((item)=>item.product.id==id);
 
-    if(cartRemove){
+    if(cartRemove!= -1){
         cartList.splice(cartRemove,1)
         localStorage.setItem('cart',JSON.stringify(cartList))
     }
-
+    if(cartList.length > 0 && cartList != null){
+        document.getElementById('ContinueOrder').style.display = "block";
+    }else{
+        document.getElementById('ContinueOrder').style.display = "none";
+    }
     getListCart()
 }
 
@@ -103,3 +107,12 @@ if(cartFind){
 
 
       getListCart()
+
+
+var cartlists = JSON.parse(localStorage.getItem('cart'));
+console.log("carttt: "  + cartlists)
+if(cartlists.length > 0 && cartlists != null){
+    document.getElementById('ContinueOrder').style.display = "block";
+}else{
+    document.getElementById('ContinueOrder').style.display = "none";
+}

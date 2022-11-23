@@ -98,46 +98,38 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
     }
 
     @Override
-    public OrderTransaction addTransactionOffline(OrderTransactionDTO orderTransactionDTO, Authentication authentication) {
+    public OrderTransaction addTransactionOffline(OrderTransactionDTO orderTransactionDTO) {
         try{
             OrderTransaction orderTransaction = new OrderTransaction();
-            Customer customer = new Customer();
-            if(authentication != null){
-                AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
-                Account account = accountRepository.findById(accountDetail.getId()).get();
-                orderTransaction.setAccountuser(account);
-                customer.setName(account.getName());
-                customer.setEmail(account.getEmail());
-                customer.setPhone(account.getPhone());
-                customer.setAddress(account.getDetailLocation());
-//                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//                Date parsed = (Date) format.parse(account.getDob());
-//                java.sql.Date date = new java.sql.Date(parsed.getTime());
-//                customer.setDob(date);
-                customer.setGender(account.getGender());
+            if("".equals(orderTransactionDTO.getCustomer().getId()) || orderTransactionDTO.getCustomer().getId() == null){
+                orderTransaction.setCustomer(null);
             }else{
-                customer.setName(orderTransactionDTO.getUser_name());
-                customer.setEmail(orderTransactionDTO.getUser_email());
-                customer.setPhone(orderTransactionDTO.getUser_phone());
-                customer.setAddress(orderTransactionDTO.getAddress());
-            }
-
-            if(!customerRepository.findByPhone(orderTransactionDTO.getUser_phone()).isPresent()){
-                orderTransaction.setCustomer(customerRepository.save(customer));
-            }else{
-                orderTransaction.setCustomer(customerRepository.findByPhone(orderTransactionDTO.getUser_phone()).get());
+                Optional<Customer> customer = customerRepository.findById(orderTransactionDTO.getCustomer().getId());
+                if(customer.isPresent()){
+                    orderTransaction.setCustomer(customer.get());
+                    if(customer.get().getName() != null){
+                        orderTransaction.setUser_name(customer.get().getName());
+                    }
+                    if(customer.get().getEmail() != null){
+                        orderTransaction.setUser_email(customer.get().getEmail());
+                    }
+                    if(customer.get().getPhone() != null){
+                        orderTransaction.setUser_phone(customer.get().getPhone());
+                    }
+                    if(customer.get().getAddress() != null){
+                        orderTransaction.setAddress(customer.get().getAddress());
+                    }
+                }else{
+                    orderTransaction.setCustomer(null);
+                }
             }
 
             orderTransaction.setOrderid(new Utils().getRandomNumber(6));
-            orderTransaction.setUser_name(orderTransactionDTO.getUser_name());
-            orderTransaction.setUser_email(orderTransactionDTO.getUser_email());
-            orderTransaction.setUser_phone(orderTransactionDTO.getUser_phone());
-            orderTransaction.setAddress(orderTransactionDTO.getAddress());
             orderTransaction.setAmount(Double.parseDouble(orderTransactionDTO.getAmount()));
             orderTransaction.setPayment_method(orderTransactionDTO.getPayment_method());
-            orderTransaction.setMessage(orderTransactionDTO.getMessage());
             orderTransaction.setStatus(OrderEnum.PENDING.getName());
-            orderTransaction.setOrderKind("online");
+            orderTransaction.setIsPaid(true);
+            orderTransaction.setOrderKind("offline");
 
             OrderTransaction o = orderTransactionRepository.save(orderTransaction);
 

@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class WarehouseDTO {
     private String id;
+    private String name;
     private String provinceName;
     private String districtName;
     private String wardName;
