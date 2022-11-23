@@ -128,7 +128,7 @@
                                     <a href="${pageContext.request.contextPath}/signin"><i class="material-icons"></i></a><a href="${pageContext.request.contextPath}/signin">Đăng nhập</a> / <a href="${pageContext.request.contextPath}/signup">Đăng ký</a>
                                 </div>
                                 <div>
-                                    <a href="#">Lịch sử đơn hàng</a>
+                                    <a href="#" data-toggle="modal" data-target="#orderHistoryModel">Lịch sử đơn hàng</a>
                                 </div>
                             </c:when>
                             <c:otherwise>
@@ -197,6 +197,33 @@
         </div>
 
     </div>
+
+    <div class="modal fade" id="orderHistoryModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+         data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group  col-md-12">
+                            <span class="thong-tin-thanh-toan">
+                                <h5>Tra cứu thông tin đơn hàng</h5>
+                            </span>
+                        </div>
+                        <div class="form-group  col-md-12">
+                            <input type="text" name="txtPhone" id="txtPhone" placeholder="Nhập số điện thoại mua hàng">
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: center; padding: 10px;">
+                        <a style="margin: 5px;" class="btn btn-save btn-confirm" data-dismiss="modal" href="#">Tiếp tục</a>
+                        <a style="margin: 5px;" class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>var contextPath = "${pageContext.request.contextPath}"</script>
 
     <script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery-1.11.1.min.js"></script>

@@ -1,5 +1,6 @@
 package com.example.electriccomponentsshop.dto;
 
+import com.example.electriccomponentsshop.entities.Warehouse;
 import lombok.*;
 
 @NoArgsConstructor
@@ -9,4 +10,5 @@ import lombok.*;
 public class ProductLocationDTO {
     private String id;
     private String name;
+    private Warehouse warehouse;
 }

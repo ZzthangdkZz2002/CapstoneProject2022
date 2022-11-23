@@ -27,7 +27,7 @@ public class ProductLocation {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "warehouse_id")
-//    @JsonIgnore
+    @JsonIgnore
     private Warehouse warehouse;
 
     public ProductLocation(Warehouse warehouse,String name){

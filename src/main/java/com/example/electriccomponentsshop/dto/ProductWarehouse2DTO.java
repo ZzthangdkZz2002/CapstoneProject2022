@@ -14,7 +14,6 @@ public class ProductWarehouse2DTO {
     private Integer id;
     private Product product;
     private ProductLocation productLocation;
-
     private Long total;
 
     public ProductWarehouse2DTO(Integer id, Product product, ProductLocation productLocation,Long total) {

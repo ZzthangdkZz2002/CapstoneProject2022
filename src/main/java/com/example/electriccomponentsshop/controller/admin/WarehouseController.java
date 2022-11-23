@@ -420,13 +420,6 @@ public class WarehouseController {
         }
     }
 
-    public ProductLocationDTO converToProductLocationDTO(ProductLocation productLocation){
-        ProductLocationDTO productLocationDTO = new ProductLocationDTO();
-        productLocationDTO.setId(String.valueOf(productLocation.getId()));
-        productLocationDTO.setName(productLocation.getName());
-
-        return productLocationDTO;
-    }
 
     public WarehouseDTO convertToWarehouseDTO(Warehouse warehouse){
         WarehouseDTO warehouseDTO = new WarehouseDTO();
@@ -452,6 +445,14 @@ public class WarehouseController {
         m.getFieldErrors().forEach(e->map.put(e.getField(),e.getDefaultMessage()));
 
         return map;
+    }
+
+    public ProductLocationDTO convertProductLocation2DTO(ProductLocation productLocation){
+        ProductLocationDTO productLocationDTO = new ProductLocationDTO();
+        productLocationDTO.setId(String.valueOf(productLocation.getId()));
+        productLocationDTO.setName(productLocation.getName());
+        productLocationDTO.setWarehouse(productLocation.getWarehouse());
+        return productLocationDTO;
     }
 
     public OrderTransactionDTO convertOrderToDTO2(OrderTransaction orderTransaction){
@@ -564,6 +565,37 @@ public class WarehouseController {
         }else{
             return null;
         }
+    }
+
+    public ProductWarehouse2DTO2 convertProductWarehouse2DTOToDTO2(ProductWarehouse2DTO productWarehouse2DTO){
+        ProductWarehouse2DTO2 productWarehouse2DTO2 = new ProductWarehouse2DTO2();
+
+        productWarehouse2DTO2.setId(productWarehouse2DTO.getId());
+
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.setId(productWarehouse2DTO.getProduct().getId());
+        productDTO.setName(productWarehouse2DTO.getProduct().getName());
+        productDTO.setPrice(productWarehouse2DTO.getProduct().getPrice());
+        productDTO.setOriginal_price(productWarehouse2DTO.getProduct().getOriginal_price());
+        productDTO.setQuantity(productWarehouse2DTO.getProduct().getQuantity());
+        productDTO.setCategories(productWarehouse2DTO.getProduct().getCategories());
+        productDTO.setBrand(productWarehouse2DTO.getProduct().getBrand());
+        productDTO.setDescription(productWarehouse2DTO.getProduct().getDescription());
+        productDTO.setStatus(productWarehouse2DTO.getProduct().getStatus());
+        productDTO.setAddedDate(productWarehouse2DTO.getProduct().getAddedDate());
+        productDTO.setCode(productWarehouse2DTO.getProduct().getCode());
+        productDTO.setImage(productWarehouse2DTO.getProduct().getImage());
+
+        productWarehouse2DTO2.setProductDTO(productDTO);
+
+        ProductLocationDTO productLocationDTO = new ProductLocationDTO();
+        productLocationDTO.setId(String.valueOf(productWarehouse2DTO.getProductLocation().getId()));
+        productLocationDTO.setName(productWarehouse2DTO.getProductLocation().getName());
+        productLocationDTO.setWarehouse(productWarehouse2DTO.getProductLocation().getWarehouse());
+
+        productWarehouse2DTO2.setProductLocationDTO(productLocationDTO);
+
+        return productWarehouse2DTO2;
     }
 
 }

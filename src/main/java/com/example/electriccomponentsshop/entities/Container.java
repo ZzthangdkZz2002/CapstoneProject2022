@@ -1,5 +1,6 @@
 package com.example.electriccomponentsshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,7 @@ public class Container {
     private Integer columnIn;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="warehouse_id")
+    @JsonIgnore
     private Warehouse warehouse;
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "container")
     List<ImportItem> importItems = new ArrayList<>();
