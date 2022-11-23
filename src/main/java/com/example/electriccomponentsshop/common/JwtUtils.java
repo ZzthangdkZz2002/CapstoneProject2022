@@ -5,19 +5,24 @@ import com.example.electriccomponentsshop.repositories.AccountRepository;
 import com.example.electriccomponentsshop.services.AccountDetailImpl;
 import com.example.electriccomponentsshop.services.RefreshTokenService;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Key;
 import java.util.Date;
 import java.util.Optional;
 
@@ -40,11 +45,13 @@ public class JwtUtils {
     public String generateJwtToken(Authentication authentication) {
         AccountDetailImpl accountPrincipal = (AccountDetailImpl) authentication.getPrincipal();
         System.out.println("Emaill:"+accountPrincipal.getEmail() +", date:"+new Date(jwtExpirationMs + new Date().getTime()));
+
         return Jwts.builder()
                 .setSubject((accountPrincipal.getEmail()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(jwtExpirationMs + new Date().getTime()))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+//                .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
+//                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
 
 

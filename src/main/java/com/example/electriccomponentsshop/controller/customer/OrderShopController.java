@@ -101,11 +101,6 @@ public class OrderShopController {
         return "customer/all-orders";
     }
 
-//    @GetMapping("/trackingOrder")
-//    public String trackingOrder(ModelMap map){
-//
-//    }
-
     public List<OrderTransactionDTO> convertOrderToDTO(List<OrderTransaction> orderTransactions){
         List<OrderTransactionDTO> orderTransactionDTOS = new ArrayList<>();
         if(orderTransactions != null){

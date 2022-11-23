@@ -80,7 +80,7 @@ import java.util.List;
     protected void configure(HttpSecurity http) throws  Exception {
         http.logout().invalidateHttpSession(true).addLogoutHandler(logoutHandler()).logoutUrl("/sign-out").permitAll();
         http.cors().and().csrf().disable()
-                .authorizeRequests().antMatchers("/error23", "/css/**", "/js/**","/assets_onlinepage/**","/onlinePage/**", "/resources/**", "/store-info-api", "/cart/get-numbers-product",
+                .authorizeRequests().antMatchers("/error23", "/css/**", "/js/**","/assets_onlinepage/**","/onlinePage/**", "/resources/**","onlinePage/**","/tracking/**","/api/sms/**", "/store-info-api", "/cart/get-numbers-product",
                         "/auth/signin", "/auth/signup", "/auth/sign-out", "/home","/homepage/**", "/error-401", "/product?**",
                         "/signup", "/address/**", "/img/**", "/product/**", "/contact").permitAll()
                 .antMatchers("/admin/**", "/admin-home","customer/**").hasAnyAuthority("ROLE_EMPLOYEE", "ROLE_MANAGER")

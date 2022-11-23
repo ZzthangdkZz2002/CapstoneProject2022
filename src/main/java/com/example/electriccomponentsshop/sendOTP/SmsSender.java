@@ -1,6 +1,7 @@
 package com.example.electriccomponentsshop.sendOTP;
 
 public interface SmsSender {
-    void sendSms(SmsRequest smsRequest);
+    String sendSms(SmsRequest smsRequest);
+    String getCorrectPhoneNumber(String phone);
 }
 
