@@ -1,10 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="com.google.gson.Gson"%>
+<%@ page import="com.google.gson.JsonObject"%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <title>Trang chủ| Quản trị</title>
-  <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%--  <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>--%>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -188,22 +192,32 @@
     <!--Right-->
     <div class="col-md-12 col-lg-6">
       <div class="row">
+          <div class="col-md-12">
+            <div class="row element-button">
+              <div id="myBtnContainer">
+                <a class="filter-btn" href="${pageContext.request.contextPath}/admin/home/stats?date=today">Hôm nay</a>
+                <a class="filter-btn" href="${pageContext.request.contextPath}/admin/home/stats?date=month">Tháng</a>
+                <a class="filter-btn" href="${pageContext.request.contextPath}/admin/home/stats?date=year">Năm</a>
+              </div>
+            </div>
+          </div>
         <div class="col-md-12">
           <div class="tile">
-            <h3 class="tile-title">Dữ liệu tháng hiện</h3>
-            <div class="embed-responsive embed-responsive-16by9">
-              <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
+            <h3 class="tile-title">Thống kê doanh thu, lợi nhuận</h3>
+            <div class="embed-responsive">
+              <div id="chartContainer" style="height: 600px"></div>
             </div>
           </div>
         </div>
-        <div class="col-md-12">
-          <div class="tile">
-            <h3 class="tile-title">Thống kê 6 tháng doanh thu</h3>
-            <div class="embed-responsive embed-responsive-16by9">
-              <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
-            </div>
-          </div>
-        </div>
+
+<%--        <div class="col-md-12">--%>
+<%--          <div class="tile">--%>
+<%--            <h3 class="tile-title">Thống kê theo tháng</h3>--%>
+<%--            <div class="embed-responsive embed-responsive-16by9">--%>
+<%--              <canvas class="embed-responsive-item" id="barChartDemo"></canvas>--%>
+<%--            </div>--%>
+<%--          </div>--%>
+<%--        </div>--%>
       </div>
 
     </div>
@@ -227,6 +241,57 @@
 <script src="<c:url value="/js/main.js"/>></script>
 <script src="<c:url value="/js/plugins/pace.min.js"/>></script>
 <script src="<c:url value="/js/plugins/chart.js"/>></script>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<script type="text/javascript">
+  window.onload = function() {
+
+    var chart = new CanvasJS.Chart("chartContainer", {
+      animationEnabled: true,
+      theme: "light2",
+      title: {
+        text: "${title}"
+      },
+      axisY: {
+        title: "VNĐ",
+        includeZero: true
+      },
+      toolTip: {
+        shared: true
+      },
+      legend: {
+        cursor: "pointer",
+        itemclick: toggleDataSeries
+      },
+      data: [{
+        type: "column",
+        name: "Doanh thu",
+        yValueFormatString: "#0.0# VNĐ",
+        showInLegend: true,
+        dataPoints: ${data[0]}
+      }, {
+        type: "column",
+        name: "Lợi nhuận",
+        yValueFormatString: "#0.## VNĐ",
+        showInLegend: true,
+        dataPoints: ${data[1]}
+      }]
+    });
+    chart.render();
+
+    function toggleDataSeries(e) {
+      if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+        e.dataSeries.visible = false;
+      }
+      else {
+        e.dataSeries.visible = true;
+      }
+      chart.render();
+    }
+
+  }
+</script>
 <script type="text/javascript">
   var data = {
     labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6"],
