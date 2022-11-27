@@ -28,6 +28,8 @@ public class ProductDTO {
 
     private String image;
 
+    private String unit;
+
 //    private MultipartFile image;
 //    private BigInteger available;
 

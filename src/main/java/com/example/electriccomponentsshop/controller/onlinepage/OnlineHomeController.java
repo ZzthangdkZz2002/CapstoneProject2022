@@ -143,14 +143,15 @@ public class OnlineHomeController {
     @PostMapping("/create-payment")
     public ResponseEntity<ResponseObject> createPayment(@RequestBody OrderTransactionDTO orderTransactionDTO, Authentication authentication) throws UnsupportedEncodingException {
         int amount = Integer.parseInt(orderTransactionDTO.getAmount()) * 100;
-        String orderid = PaymentConfig.getRandomNumber(6);
+        String orderid = PaymentConfig.getRandomNumber(3);
+        OrderTransaction orderTransaction = orderTransactionService.addTransactionOnline(orderTransactionDTO, authentication, orderid);
         Map vnp_Params = new HashMap<>();
         vnp_Params.put("vnp_Version", PaymentConfig.VERSION);
         vnp_Params.put("vnp_Command", PaymentConfig.COMMAND);
         vnp_Params.put("vnp_TmnCode", PaymentConfig.vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
-        vnp_Params.put("vnp_TxnRef", orderid);
+        vnp_Params.put("vnp_TxnRef", orderTransaction.getOrderid());
         if(orderTransactionDTO.getMessage() == null || "".equals(orderTransactionDTO.getMessage())){
             vnp_Params.put("vnp_OrderInfo", "Electronic Shop - Thanh toan hoa don");
         }else{
@@ -200,7 +201,6 @@ public class OnlineHomeController {
         if("".equals(orderTransactionDTO.getUser_phone()) || orderTransactionDTO.getUser_phone() == null){
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","add order transaction Fail",""));
         }
-        OrderTransaction orderTransaction = orderTransactionService.addTransactionOnline(orderTransactionDTO, authentication, orderid);
         if(orderTransaction != null){
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Create payment success",paymentUrl));
         }else{
@@ -307,6 +307,7 @@ public class OnlineHomeController {
             p.setId(product.getId());
             p.setCode(product.getCode());
             p.setName(product.getName());
+            p.setUnit(product.getUnit());
             p.setImage(product.getImage());
             p.setOriginal_price(product.getOriginal_price());
             p.setPrice(product.getPrice());

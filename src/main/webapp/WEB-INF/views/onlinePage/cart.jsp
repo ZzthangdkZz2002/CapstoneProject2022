@@ -22,6 +22,12 @@
         .navbar-nav{
             flex-direction: row;
         }
+        .fa-solid{
+            cursor: pointer;
+        }
+        .fas{
+            cursor: pointer;
+        }
     </style>
 </head>
 

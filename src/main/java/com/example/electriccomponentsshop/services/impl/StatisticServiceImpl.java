@@ -83,22 +83,25 @@ public class StatisticServiceImpl implements StatisticService {
     public String[] statsByCurrentDay() {
         String[] dataStats = new String[2];
         StatisticDTO statisticDTO = orderTransactionRepository.statsByCurrentDay();
-
         Gson gsonObj = new Gson();
         Map<Object,Object> map = null;
         List<Map<Object,Object>> list = new ArrayList<Map<Object,Object>>();
         map = new HashMap<Object,Object>();
-        map.put("label", statisticDTO.getDate());
-        map.put("y", statisticDTO.getRevenue());
-        list.add(map);
+        if(statisticDTO != null){
+            map.put("label", statisticDTO.getDate());
+            map.put("y", statisticDTO.getRevenue());
+            list.add(map);
+        }
         //for revenue stats
         dataStats[0] = gsonObj.toJson(list);
 
         list = new ArrayList<Map<Object,Object>>();
         map = new HashMap<Object,Object>();
-        map.put("label", statisticDTO.getDate());
-        map.put("y", statisticDTO.getProfit());
-        list.add(map);
+        if(statisticDTO != null){
+            map.put("label", statisticDTO.getDate());
+            map.put("y", statisticDTO.getProfit());
+            list.add(map);
+        }
         //for profit stats
         dataStats[1] = gsonObj.toJson(list);
 

@@ -65,27 +65,27 @@ public class OrderController {
         String active = "";
 
         if (status.equals("waiting")) {
-            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.PENDING.getName());
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.PENDING.getName());
             orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "waiting";
         } else if (status.equals("confirmed")) {
-            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.CONFIRM.getName());
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.CONFIRM.getName());
             orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "confirmed";
         } else if (status.equals("shipping")) {
-            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.DELIVERY.getName());
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.DELIVERY.getName());
             orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "shipping";
         } else if (status.equals("received")) {
-            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.DONE.getName());
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.DONE.getName());
             orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "received";
         } else if (status.equals("cancelled")) {
-            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.CANCEL.getName());
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.CANCEL.getName());
             orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "cancelled";
         } else if (status.equals("returned")) {
-            orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.RETURNED.getName());
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.RETURNED.getName());
             orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "returned";
         }
@@ -96,13 +96,38 @@ public class OrderController {
         return "administrator/order-management";
     }
 
+    @GetMapping("getOrder")
+    @ResponseBody
+    public ResponseEntity<ResponseObject> getOrderTransaction(@RequestParam(name = "id") String id){
+        OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
+        OrderTransactionDTO orderTransactionDTO = convertOrderToDTO2(orderTransaction);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","get order success",orderTransactionDTO));
+    }
+
     public List<OrderTransactionDTO> convertOrderToDTO(List<OrderTransaction> orderTransactions){
         List<OrderTransactionDTO> orderTransactionDTOS = new ArrayList<>();
         if(orderTransactions != null){
             for(OrderTransaction orderTransaction: orderTransactions){
                 OrderTransactionDTO orderTransactionDTO = new OrderTransactionDTO();
                 if(orderTransaction.getCustomer() != null){
-                    orderTransactionDTO.setCustomer(orderTransaction.getCustomer());
+                    CustomerDTO customerDTO = new CustomerDTO();
+                    customerDTO.setId(orderTransaction.getCustomer().getId());
+                    if(orderTransaction.getCustomer().getName() != null){
+                        customerDTO.setName(orderTransaction.getCustomer().getName());
+                    }
+                    if(orderTransaction.getCustomer().getEmail() != null){
+                        customerDTO.setEmail(orderTransaction.getCustomer().getEmail());
+                    }
+                    if(orderTransaction.getCustomer().getAddress() != null){
+                        customerDTO.setAddress(orderTransaction.getCustomer().getAddress());
+                    }
+                    if(orderTransaction.getCustomer().getPhone() != null){
+                        customerDTO.setPhone(orderTransaction.getCustomer().getPhone());
+                    }
+                    if(orderTransaction.getCustomer().getGender() != null){
+                        customerDTO.setGender(orderTransaction.getCustomer().getGender());
+                    }
+                    orderTransactionDTO.setCustomer(customerDTO);
                 }
                 orderTransactionDTO.setId(orderTransaction.getId());
                 orderTransactionDTO.setOrderid(orderTransaction.getOrderid());
@@ -117,6 +142,9 @@ public class OrderController {
                 orderTransactionDTO.setAccount_user(orderTransaction.getAccountuser());
                 orderTransactionDTO.setAccount_employee(orderTransaction.getAccountemployee());
                 orderTransactionDTO.setCreated(orderTransaction.getCreated());
+                if(orderTransaction.getAccountemployee() != null){
+                    orderTransactionDTO.setAccount_employee(orderTransaction.getAccountemployee());
+                }
 
                 List<OrderTransactionDetailDTO> orderTransactionDetailDTOS = new ArrayList<>();
                 for(OrderTransactionDetail orderTransactionDetail : orderTransaction.getOrderTransactionDetails()){
@@ -158,7 +186,25 @@ public class OrderController {
                 orderTransactionDTO.setOrderid(orderTransaction.getOrderid());
                 orderTransactionDTO.setStatus(orderTransaction.getStatus());
                 if(orderTransaction.getCustomer() != null){
-                    orderTransactionDTO.setCustomer(orderTransaction.getCustomer());
+                    CustomerDTO customerDTO = new CustomerDTO();
+                    customerDTO.setId(orderTransaction.getCustomer().getId());
+                    if(orderTransaction.getCustomer().getName() != null){
+                        customerDTO.setName(orderTransaction.getCustomer().getName());
+                    }
+                    if(orderTransaction.getCustomer().getEmail() != null){
+                        customerDTO.setEmail(orderTransaction.getCustomer().getEmail());
+                    }
+                    if(orderTransaction.getCustomer().getAddress() != null){
+                        customerDTO.setAddress(orderTransaction.getCustomer().getAddress());
+                    }
+                    if(orderTransaction.getCustomer().getPhone() != null){
+                        customerDTO.setPhone(orderTransaction.getCustomer().getPhone());
+                    }
+                    if(orderTransaction.getCustomer().getGender() != null){
+                        customerDTO.setGender(orderTransaction.getCustomer().getGender());
+                    }
+                    orderTransactionDTO.setCustomer(customerDTO);
+//                    orderTransactionDTO.setCustomer(orderTransaction.getCustomer());
                 }
 //                orderTransactionDTO.setUser_name(orderTransaction.getUser_name());
 //                orderTransactionDTO.setUser_email(orderTransaction.getUser_email());
@@ -301,6 +347,9 @@ public class OrderController {
                         "</div></div>";
             OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
             orderTransaction.setStatus(OrderEnum.CANCEL.getName());
+            if(orderTransaction.getIsPaid() == true){
+                orderTransaction.setIsPaid(false);
+            }
             buildEmail = buildEmail.replace("%orderid%", orderTransaction.getOrderid());
             if(orderTransaction.getUser_name() != null){
                 buildEmail = buildEmail.replace("%username%", orderTransaction.getUser_name());
@@ -434,16 +483,20 @@ public class OrderController {
 
     @PostMapping("/orderOffline")
     @ResponseBody
-    public ResponseEntity<ResponseObject> addOrderOffline(@RequestBody OrderTransactionDTO orderTransactionDTO){
-        if("".equals(orderTransactionDTO.getAmount()) || "0".equals(orderTransactionDTO.getAmount()) || orderTransactionDTO.getAmount() == null){
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","add order transaction fail",""));
-        }else{
-            OrderTransaction orderTransaction = orderTransactionService.addTransactionOffline(orderTransactionDTO);
-            if(orderTransaction != null){
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","add order transaction Success", ""));
+    public ResponseEntity<ResponseObject> addOrderOffline(@RequestBody OrderTransactionDTO orderTransactionDTO, Authentication authentication){
+        try{
+            if("".equals(orderTransactionDTO.getAmount()) || "0".equals(orderTransactionDTO.getAmount()) || orderTransactionDTO.getAmount() == null){
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","add order transaction fail",""));
             }else{
-                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("02","add order transaction fail",""));
+                OrderTransaction orderTransaction = orderTransactionService.addTransactionOffline(orderTransactionDTO, authentication);
+                if(orderTransaction != null){
+                    return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","add order transaction Success", orderTransaction.getId()));
+                }else{
+                    return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("02","add order transaction fail",""));
+                }
             }
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("03","add order transaction fail",e.getMessage()));
         }
     }
 

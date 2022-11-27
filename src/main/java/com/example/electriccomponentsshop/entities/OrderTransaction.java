@@ -59,7 +59,6 @@ public class OrderTransaction {
     private Boolean isPaid;
     private String orderKind;
     @CreationTimestamp
-    @Temporal(TemporalType.DATE)
     @Column(updatable = false)
     private Date created;
 }

@@ -13,7 +13,9 @@ const qr_code_modal = document.querySelector('.qr_code_modal');
 const qr_code_image_model = document.querySelector('.qrCode-image');
 const add_bank = document.querySelector('.add_bank');
 const add_bank2 = document.querySelector('.add_bank2');
+const cust_pay = document.querySelector('.custpay');
 var moneyForQr = 0;
+var invoice_template = document.querySelector('.bill');
 function convertMoney(num) {
     if(num == null){
         num = "0";
@@ -63,13 +65,15 @@ $.ajax({
 
 });
 
+function removeAccents(str) {
+    return str.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+}
+
 var cartAdmin =[]
 function autocomplete(inp, arr) {
     var currentFocus;
-
-
-
-
     inp.addEventListener("input", function(e) {
         var a, b, i, val = this.value;
         closeAllLists();
@@ -80,7 +84,8 @@ function autocomplete(inp, arr) {
         a.setAttribute("class", "autocomplete-items");
         this.parentNode.appendChild(a);
         for (i = 0; i < arr.length; i++) {
-            if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            var name_khong_dau = removeAccents(arr[i].name);
+            if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase() || name_khong_dau.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                 b = document.createElement("DIV");
                 b.style.display='flex'
                 b.className = arr[i].id;
@@ -92,11 +97,13 @@ function autocomplete(inp, arr) {
                 b.innerHTML +=`<div class="infor-search" style="display:flex;flex-direction: column;margin-left:80px">
             <strong class=${arr[i].id} >${arr[i].name}</strong>
             <span id="price-span" class=${arr[i].id}>${convertMoney(arr[i].price)}</span>
+            <span id="quantity" class=${arr[i].id}>Số lượng: ${arr[i].quantity}</span>
             </div>`
                 b.innerHTML += `<input type='hidden' value=${arr[i].name}>`;
                 b.addEventListener("click", function(e) {
                         inp.value = this.getElementsByTagName("input")[0].value;
                         let storage =localStorage.getItem('cartAdmin');
+                        console.log("storage = ", storage);
                         if(storage){
                             cartAdmin=JSON.parse(storage)
                         }
@@ -120,65 +127,9 @@ function autocomplete(inp, arr) {
                         renderCartAdmin()
                         closeAllLists();
                     }
-
-
-
-
-
-
                 );
-
-
-
                 a.appendChild(b);
             }
-            // if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-            //     b = document.createElement("DIV");
-            //     b.style.display='flex'
-            //     b.className = arr[i].id;
-            //
-            //     b.innerHTML = `<img src="${contextPath}/img/${arr[i].image}" alt="img-produc" width="100" height="100" onerror="this.src='https://cdn-img.thethao247.vn//storage/files/camhm/2022/10/11/tin-mu-moi-nhat-11-10-ronaldo-duoc-doi-thu-tang-len-may-casemiro-tim-lai-chinh-minh-200731.jpg'">`;
-            //     b.innerHTML +=`<div class="infor-search" style="display:flex;flex-direction: column;margin-left:80px">
-            // <strong style="font-size: 16px; color: #333">${arr[i].name}</strong>
-            // <span style="font-size: 16px; color: #333">${convertMoney(arr[i].price)}</span>
-            // <span style="font-size: 16px; color: #333">Tồn kho: ${arr[i].quantity}</span>
-            // </div>`
-            //     b.innerHTML += `<input type='hidden' value=${arr[i].name}>`;
-            //     b.addEventListener("click", function(e) {
-            //         inp.value = this.getElementsByTagName("input")[0].value;
-            //
-            //         let storage =localStorage.getItem('cartAdmin');
-            //         if(storage){
-            //             cartAdmin=JSON.parse(storage)
-            //         }
-            //
-            //         const productCart=cartAdmin.find(item=>item.product?.id==e.target.className)
-            //         console.log('productCart',productCart);
-            //         if(productCart){
-            //             console.log('thêm quantity');
-            //
-            //             productCart.quantity+=1;
-            //             localStorage.setItem('cartAdmin',JSON.stringify(cartAdmin));
-            //             console.log('themquantity',cartAdmin);
-            //
-            //         }
-            //         else{
-            //             console.log('thêm mới');
-            //             console.log('productList',productList);
-            //             const product=productList.find(item=>item.id==e.target.className)
-            //             console.log('productddd',product);
-            //             cartAdmin.push({product,quantity:1})
-            //             console.log('cartAdminuiuiuiuiui',cartAdmin);
-            //             localStorage.setItem('cartAdmin',JSON.stringify(cartAdmin));
-            //
-            //         }
-            //         renderCartAdmin()
-            //
-            //
-            //         closeAllLists();
-            //     });
-            //     a.appendChild(b);
-            // }
         }
     });
 
@@ -288,15 +239,19 @@ const renderCartAdmin=()=>{
       <td><img src=${contextPath}/img/${item.product?.image} alt="error_img" width="50" height="60" onerror="this.src='https://cdn-img.thethao247.vn//storage/files/camhm/2022/10/11/tin-mu-moi-nhat-11-10-ronaldo-duoc-doi-thu-tang-len-may-casemiro-tim-lai-chinh-minh-200731.jpg'"></td>
 
       <td>${item.product.name}</td>
+      <td>${item.product.unit == null ? 'cái' : item.product.unit}</td>
 
         <td>${convertMoney(item.product.price)}</td>
         <td>
           <button class="btn-decrement-quantity " onclick="decreasing(${item.product.id})"><i class="fa-solid fa-minus"></i></button>
-          <input type="text" name="quantity" value=${item.quantity} maxlength="3" max="10" style="width:50px;padding:7px 0;margin:0 10px" 
+          
+          <input type="text" name="quantity" value=${item.quantity} maxlength="3" max="10" style="width:50px;padding:7px 0;margin:0 10px;color: ${item.quantity > item.product.quantity ? "red" : ""}" 
             class="oder-quantity" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+            
           <button class="btn-increment-quantity" onclick="increasing(${item.product.id})"><i class="fa-solid fa-plus"></i></button>
         </td>
-        <td>${convertMoney(item.product.price*item.quantity)}</td>
+        <td>${convertMoney(item.product.price*item.quantity*0.1)}</td>
+        <td>${convertMoney(item.product.price*item.quantity*1.1)}</td>
         <td><i class="fa-regular fa-trash-can remove-product"  onclick="removeCart(${item.product.id})"></i></td>
         <td><i class="fa-solid fa-eye" data-bs-toggle="modal" onclick="viewDetaild(${item.product.id})" data-bs-target="#exampleModal"></i></td>
 
@@ -304,14 +259,15 @@ const renderCartAdmin=()=>{
     </tr>`
     })
 
-    const money = cartListAdmin?.reduce(
-        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
+    let money = cartListAdmin?.reduce(
+        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity*1.1),
         0
     );
-    moneyForQr = money;
+    moneyForQr = parseInt(money);
     totalMoney.textContent=convertMoney(money);
     $('#cash').prop('checked',true);
     tranferMoney.style.display = "none";
+    cust_pay.style.display = "block";
     // moneyRadio1.prop('checked',true);
     renderPay()
 
@@ -321,7 +277,7 @@ const renderPay=()=>{
 
     const customPay=parseInt(document.querySelector(".customer-pay").value,10)
     const money = cartListAdmin?.reduce(
-        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
+        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity*1.1),
         0
     );
     if(Number.isNaN(customPay-money)){
@@ -329,7 +285,7 @@ const renderPay=()=>{
         return
 
     }
-    tienThua.textContent=customPay-money;
+    tienThua.textContent=convertMoney(customPay-money);
 }
 
 
@@ -385,7 +341,9 @@ function autocompleteCustomer(inp, arr) {
         a.setAttribute("class", "autocomplete-items");
         this.parentNode.appendChild(a);
         for (i = 0; i < arr.length; i++) {
-            if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            var name_khong_dau = removeAccents(arr[i].name);
+            if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase() || name_khong_dau.substr(0, val.length).toUpperCase() == val.toUpperCase() ||
+               arr[i].phone.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                 b = document.createElement("DIV");
                 b.style.display='flex'
                 b.className = arr[i].id;
@@ -510,8 +468,10 @@ function valueChange(event) {
         console.log('moneyRadio1');
         tranferMoney.style.display = "none";
         nobank.style.display = "none";
+        cust_pay.style.display = "block";
     } else {
         console.log('moneyRadio2');
+        cust_pay.style.display = "none";
         let listbank = JSON.parse(localStorage.getItem('bankList'));
         if(listbank == null || listbank.length <= 0){
             tranferMoney.style.display = "none";
@@ -718,9 +678,99 @@ function addCustomer() {
 
 }
 
-function printQrCode() {
-    var divContents = qr_code_image_model.innerHTML;
-    var a = window.open('', '', 'height=100%, width=100%');
+function printInvoice(payment_method, order_id) {
+    if(payment_method == 'Chuyển khoản'){
+        document.getElementById('qr-title').style.display = "block";
+        document.getElementById('qr-invoice').style.display = "block";
+        var qr_code = qr_code_image_model.innerHTML;
+        var src_qr = document.getElementById('qrcode_image').getAttribute('src');
+        console.log(src_qr)
+        document.getElementById('qr-invoice').src = src_qr;
+        // document.getElementById('qr-code').innerHTML = qr_code;
+    }else{
+        document.getElementById('qr-title').style.display = "none";
+        document.getElementById('qr-invoice').style.display = "none";
+    }
+
+    $.ajax(
+        {
+            type : "GET",
+            async: false,
+            url : "/admin/orders/getOrder?id=" + order_id,
+            success: function (response){
+                console.log(response)
+                if(response.status === '00'){
+                    let items = response.data.orderTransactionDetails;
+                    let result = '';
+                    document.getElementById('invoice-id').innerHTML = "Mã hóa đơn: " + response.data.orderid;
+                    document.getElementById('invoice-day').innerHTML = new Date().getDate().toString();
+                    document.getElementById('invoice-month').innerHTML = (new Date().getMonth() + 1).toString();
+                    document.getElementById('invoice-year').innerHTML = new Date().getFullYear().toString();
+
+
+
+                    if(response.data.customer == null){
+                        document.getElementById('cust-name').innerHTML = "Khách lẻ";
+                    }else{
+                        if(response.data.customer.name != null){
+                            document.getElementById('cust-name').innerHTML = response.data.customer.name;
+                        }
+                        if(response.data.customer.phone != null){
+                            document.getElementById('cust-phone').innerHTML = response.data.customer.phone;
+                        }
+                        if(response.data.customer.address != null){
+                            document.getElementById('cust-address').innerHTML = response.data.customer.address;
+                        }
+                    }
+                    // var invoiceTotal = 0;
+                    for(let i=0; i<response.data.orderTransactionDetails.length ; i++){
+                        let itemTemp = '<tr>\n' +
+                            '                <th scope="row" style="border: 1px solid black;">index</th>\n' +
+                            '                <td style="border: 1px solid black;">name</td>\n' +
+                            '                <td style="border: 1px solid black;">unit</td>\n' +
+                            '                <td style="border: 1px solid black;">quantity</td>\n' +
+                            '                <td style="border: 1px solid black;">price</td>\n' +
+                            '                <td style="border: 1px solid black;">vat</td>\n' +
+                            '                <td style="border: 1px solid black;">total</td>\n' +
+                            '            </tr>' +
+                            '';
+                        // var total = response.data.orderTransactionDetails[i].amount + response.data.orderTransactionDetails[i].productDTO.price * response.data.orderTransactionDetails[i].quantity *0.1
+                        itemTemp = itemTemp.replace('index', i+1);
+                        itemTemp = itemTemp.replace('name', response.data.orderTransactionDetails[i].productDTO.name);
+                        itemTemp = itemTemp.replace('unit', "cái");
+                        itemTemp = itemTemp.replace('quantity', response.data.orderTransactionDetails[i].quantity);
+                        itemTemp = itemTemp.replace('price', convertMoney(response.data.orderTransactionDetails[i].productDTO.price));
+                        itemTemp = itemTemp.replace('vat', convertMoney(response.data.orderTransactionDetails[i].productDTO.price * response.data.orderTransactionDetails[i].quantity *0.1));
+                        itemTemp = itemTemp.replace('total', convertMoney(response.data.orderTransactionDetails[i].amount));
+                        // invoiceTotal += total;
+                        result += itemTemp;
+                    }
+                    document.getElementById('total-word').innerHTML = to_vietnamese(response.data.amount) + " đồng";
+
+                    // itemTemp.replace('index', i);
+                    // itemTemp.replace('index', i);
+                    // console.log("inner: ", document.getElementById('invoice-items') );
+                    document.getElementById('invoice-items').innerHTML = result;
+                }
+
+                else{
+                    alert(response.message);
+                    return;
+                }
+            },
+
+            error: function () {
+                alert('Tạo hóa đơn không thành công');
+                return false;
+            }
+        }
+    )
+
+    var divContents = invoice_template.innerHTML;
+    console.log("div: ", divContents);
+    var width = window.screen.width;
+    var height = window.screen.height;
+    var a = window.open('', '', `left=0,top=0,width=${width},height=${height}`);
     a.document.write('<html>');
     a.document.write('<body>');
     a.document.write(divContents);
@@ -736,23 +786,23 @@ function OrderOfflineAction() {
 
     const cartAdmin = JSON.parse(localStorage.getItem('cartAdmin'));
     const totalMoney = cartAdmin.reduce(
-        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
+        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity*1.1),
         0
     );
-    console.log(totalMoney);
+    console.log("total money: ",totalMoney);
 
     const customPay=parseInt(document.querySelector(".customer-pay").value,10)
     const money = cartAdmin.reduce(
-        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
+        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity*1.1),
         0
     );
 
     //validate
-    if(customPay<money){
+    if(customPay<money && moneyRadio1.checked){
         alert('Số tiền của bạn không đủ để thanh toán :(')
         return
     }
-    if(Number.isNaN(customPay-money)){
+    if(Number.isNaN(customPay-money) && moneyRadio1.checked){
         alert(`Hãy xem lại phần nhập tiền của khách !`)
         return
     }
@@ -767,7 +817,7 @@ function OrderOfflineAction() {
         let item = new Object();
         item.product_id = cartAdmin[i].product.id;
         item.quantity = cartAdmin[i].quantity;
-        item.amount = cartAdmin[i].product.price * cartAdmin[i].quantity;
+        item.amount = cartAdmin[i].product.price * cartAdmin[i].quantity*1.1;
         products.push(item);
     }
 
@@ -787,16 +837,21 @@ function OrderOfflineAction() {
         data: JSON.stringify(data),
         dataType:"json",
         success: function (response){
-            console.log(response);
+            console.log("order_id: "+response);
             if(response.status === "00"){
                 localStorage.removeItem('cartAdmin')
                 localStorage.removeItem('idDetalCustomer')
                 renderCartAdmin();
-                location.reload();
-                alert('Tạo đơn hàng thành công');
+                if(confirm("Bạn có muốn tạo hóa đơn không?")){
+                    printInvoice(payment_method, response.data);
+                    location.reload();
+                }else{
+                    alert('Tạo đơn hàng thành công');
+                    location.reload();
+                }
             }
             else {
-                alert('Tạo đơn hàng thất bại');
+                alert(response.message);
                 return;
             }
         },
@@ -841,4 +896,90 @@ function cancelOrder() {
 
     });
 
+}
+
+const defaultNumbers =' hai ba bốn năm sáu bảy tám chín';
+
+const chuHangDonVi = ('1 một' + defaultNumbers).split(' ');
+const chuHangChuc = ('lẻ mười' + defaultNumbers).split(' ');
+const chuHangTram = ('không một' + defaultNumbers).split(' ');
+
+function convert_block_three(number) {
+    if(number == '000') return '';
+    var _a = number + ''; //Convert biến 'number' thành kiểu string
+
+    //Kiểm tra độ dài của khối
+    switch (_a.length) {
+        case 0: return '';
+        case 1: return chuHangDonVi[_a];
+        case 2: return convert_block_two(_a);
+        case 3:
+            var chuc_dv = '';
+            if (_a.slice(1,3) != '00') {
+                chuc_dv = convert_block_two(_a.slice(1,3));
+            }
+            var tram = chuHangTram[_a[0]] + ' trăm';
+            return tram + ' ' + chuc_dv;
+    }
+}
+
+function convert_block_two(number) {
+    var dv = chuHangDonVi[number[1]];
+    var chuc = chuHangChuc[number[0]];
+    var append = '';
+
+    // Nếu chữ số hàng đơn vị là 5
+    if (number[0] > 0 && number[1] == 5) {
+        dv = 'lăm'
+    }
+
+    // Nếu số hàng chục lớn hơn 1
+    if (number[0] > 1) {
+        append = ' mươi';
+
+        if (number[1] == 1) {
+            dv = ' mốt';
+        }
+    }
+
+    return chuc + '' + append + ' ' + dv;
+}
+
+const dvBlock = '1 nghìn triệu tỷ'.split(' ');
+
+function to_vietnamese(number) {
+    var str = parseInt(number) + '';
+    var i = 0;
+    var arr = [];
+    var index = str.length;
+    var result = [];
+    var rsString = '';
+
+    if (index == 0 || str == 'NaN') {
+        return '';
+    }
+
+    // Chia chuỗi số thành một mảng từng khối có 3 chữ số
+    while (index >= 0) {
+        arr.push(str.substring(index, Math.max(index - 3, 0)));
+        index -= 3;
+    }
+
+    // Lặp từng khối trong mảng trên và convert từng khối đấy ra chữ Việt Nam
+    for (i = arr.length - 1; i >= 0; i--) {
+        if (arr[i] != '' && arr[i] != '000') {
+            result.push(convert_block_three(arr[i]));
+
+            // Thêm đuôi của mỗi khối
+            if (dvBlock[i]) {
+                result.push(dvBlock[i]);
+            }
+        }
+    }
+
+    // Join mảng kết quả lại thành chuỗi string
+    rsString = result.join(' ');
+
+    // Trả về kết quả kèm xóa những ký tự thừa
+    return rsString.replace(/[0-9]/g, '').replace(/ /g,' ').replace(/ $/,'');
 }

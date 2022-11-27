@@ -68,20 +68,12 @@
                     class="fas fa-plus"></i>
                   Tạo đơn hàng mới</a>
               </div>
-            </div>
 
-            <div class="search-row">
-              <form action="">
-                <div class="search-container">
-                  <input class="form-control" type="text" placeholder="Tìm kiếm" name="search">
-                  <button type="submit"><i class="fa fa-search"></i></button>
-                </div>
-              </form>
-            </div>
+
 
 
               <c:if test="${acceptOrderMessage != null}">
-                <span class="badge bg-success" id="box" style="font-size: 30px; margin-left: 37%">${acceptOrderMessage}</span>
+                <span class="badge bg-success" id="box" style="font-size: 30px; margin-left: 15%; text-align: center">${acceptOrderMessage}</span>
                 <script type="text/javascript">
                   setTimeout(() => {
                     const box = document.getElementById('box');
@@ -95,22 +87,29 @@
                 </script>
               </c:if>
 
-            <c:if test="${acceptOrderMessage eq 'error'}">
-              <span class="badge bg-success" id="box" style="font-size: 30px; margin-left: 46%; color: red">Thêm đơn hàng thất bại</span>
-              <script type="text/javascript">
-                setTimeout(() => {
-                  const box = document.getElementById('box');
+              <c:if test="${acceptOrderMessage eq 'error'}">
+                <span class="badge bg-success" id="box" style="font-size: 30px; margin-left: 15%;text-align: center; color: red">Thêm đơn hàng thất bại</span>
+                <script type="text/javascript">
+                  setTimeout(() => {
+                    const box = document.getElementById('box');
+                    // 👇️ removes element from DOM
+                    box.style.display = 'none';
+                    // 👇️ hides element (still takes up space on page)
+                    // box.style.visibility = 'hidden';
+                  }, 5000); // 👈️ time in milliseconds
+                </script>
+              </c:if>
 
-                  // 👇️ removes element from DOM
-                  box.style.display = 'none';
+            </div>
 
-                  // 👇️ hides element (still takes up space on page)
-                  // box.style.visibility = 'hidden';
-                }, 5000); // 👈️ time in milliseconds
-              </script>
-            </c:if>
-
-
+            <div class="search-row">
+              <form action="">
+                <div class="search-container">
+                  <input class="form-control" type="text" placeholder="Tìm kiếm" name="search">
+                  <button type="submit"><i class="fa fa-search"></i></button>
+                </div>
+              </form>
+            </div>
 
             <table class="table table-hover table-bordered" id="sampleTable">
               <thead>
@@ -133,7 +132,7 @@
                   <td>${orderDto.customer != null ? orderDto.customer.id : "Khách lẻ"}</td>
                   <td>${orderDto.created}</td>
                   <td>${orderDto.amount}</td>
-                  <td><span class="badge bg-success">${orderDto.status}</span></td>
+                  <td><span class="${orderDto.status =="Đã Hủy" ? "badge bg-danger" : orderDto.status =="Chờ Xử Lý" ? "badge bg-warning" : "badge bg-success"}">${orderDto.status}</span></td>
                   <td>${orderDto.orderKind}</td>
                   <td>
                   <c:if test="${orderDto.status eq 'Chờ Xử Lý'}">
@@ -145,6 +144,10 @@
                       <button class="btn btn-primary btn-sm edit"
                          type="button" title="Xác nhận đơn hàng" data-toggle="modal" data-target="#cancelOrderModel" onclick="openModalData('${orderDto.id}')" ><i class="fas fa-edit"></i>Hủy đơn hàng</button>
 <%--                      <span style="display: none" id="orderid">${orderDto.id}</span>--%>
+                    </c:if>
+                    <c:if test="${orderDto.status eq 'Đã Xác Nhận'}">
+                      <a class="btn btn-primary btn-sm edit"
+                         type="button" title="Xuất đơn hàng" href="${pageContext.request.contextPath}/admin/warehouses/export/detail/add?orderid=${orderDto.orderid}"><i class="fas fa-edit"></i>Xuất đơn hàng</a>
                     </c:if>
 
                     <a class="btn btn-primary btn-sm edit"

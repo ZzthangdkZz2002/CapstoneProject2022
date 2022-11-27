@@ -1,5 +1,6 @@
 package com.example.electriccomponentsshop.controller.onlinepage;
 
+import com.example.electriccomponentsshop.dto.CustomerDTO;
 import com.example.electriccomponentsshop.dto.OrderTransactionDTO;
 import com.example.electriccomponentsshop.dto.OrderTransactionDetailDTO;
 import com.example.electriccomponentsshop.dto.ProductDTO;
@@ -70,7 +71,24 @@ public class TrackingOrder {
             for(OrderTransaction orderTransaction: orderTransactions){
                 OrderTransactionDTO orderTransactionDTO = new OrderTransactionDTO();
                 if(orderTransaction.getCustomer() != null){
-                    orderTransactionDTO.setCustomer(orderTransaction.getCustomer());
+                    CustomerDTO customerDTO = new CustomerDTO();
+                    customerDTO.setId(orderTransaction.getCustomer().getId());
+                    if(orderTransaction.getCustomer().getName() != null){
+                        customerDTO.setName(orderTransaction.getCustomer().getName());
+                    }
+                    if(orderTransaction.getCustomer().getEmail() != null){
+                        customerDTO.setEmail(orderTransaction.getCustomer().getEmail());
+                    }
+                    if(orderTransaction.getCustomer().getAddress() != null){
+                        customerDTO.setAddress(orderTransaction.getCustomer().getAddress());
+                    }
+                    if(orderTransaction.getCustomer().getPhone() != null){
+                        customerDTO.setPhone(orderTransaction.getCustomer().getPhone());
+                    }
+                    if(orderTransaction.getCustomer().getGender() != null){
+                        customerDTO.setGender(orderTransaction.getCustomer().getGender());
+                    }
+                    orderTransactionDTO.setCustomer(customerDTO);
                 }
                 orderTransactionDTO.setId(orderTransaction.getId());
                 orderTransactionDTO.setOrderid(orderTransaction.getOrderid());

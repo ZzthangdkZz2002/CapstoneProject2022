@@ -151,6 +151,7 @@ public class ProductServiceImpl implements ProductService {
             e.printStackTrace();
         }
         product.setImage(fileName);
+        product.setUnit(productDTO.getUnit());
 
         //
 

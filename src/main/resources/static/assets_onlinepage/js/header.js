@@ -38,6 +38,12 @@ $.ajax({
 
 });
 
+function removeAccents(str) {
+    return str.normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+}
+
 function autocomplete(inp, arr) {
     /*the autocomplete function takes two arguments,
     the text field element and an array of possible autocompleted values:*/
@@ -58,7 +64,8 @@ function autocomplete(inp, arr) {
         this.parentNode.appendChild(a);
         /*for each item in the array...*/
         for (i = 0; i < arr.length; i++) {
-            if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+            var name_khong_dau = removeAccents(arr[i].name);
+            if (arr[i].name.substr(0, val.length).toUpperCase() == val.toUpperCase() || name_khong_dau.substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                 b = document.createElement("A");
                 b.style.display='flex'
                 b.style.backgroundColor = 'white'

@@ -350,7 +350,7 @@ public class WarehouseController {
     @GetMapping("/export/add")
     public String viewAddExport(ModelMap modelMap){
         try{
-            List<OrderTransaction> orderTransactions = orderTransactionRepository.findAllByStatus(OrderEnum.CONFIRM.getName());
+            List<OrderTransaction> orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.CONFIRM.getName());
             List<OrderTransactionDTO> orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             modelMap.addAttribute("listOrders", orderTransactionDTOS);
         }

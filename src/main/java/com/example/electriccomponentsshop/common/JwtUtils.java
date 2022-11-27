@@ -31,6 +31,7 @@ public class JwtUtils {
     public static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
     @Value("${bezkoder.app.jwtSecret}")
     private String jwtSecret;
+    private Key jwtSecretNew = Keys.secretKeyFor(SignatureAlgorithm.HS512);
     @Autowired
     AuthenticationManager authenticationManager;
     @Value("${bezkoder.app.jwtExpirationMs}")
@@ -50,6 +51,7 @@ public class JwtUtils {
                 .setSubject((accountPrincipal.getEmail()))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(jwtExpirationMs + new Date().getTime()))
+                .signWith(jwtSecretNew, SignatureAlgorithm.HS512)
 //                .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()), SignatureAlgorithm.HS512)
 //                .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
@@ -58,8 +60,9 @@ public class JwtUtils {
     }
 
     public String getEmailFromJwtToken(String token){
+        return Jwts.parserBuilder().setSigningKey(jwtSecretNew).build().parseClaimsJws(token).getBody().getSubject();
 
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+//        return Jwts.parser().setSigningKey(Keys.secretKeyFor(SignatureAlgorithm.HS512)).parseClaimsJws(token).getBody().getSubject();
     }
     private String getJwtFromRequest(HttpServletRequest request){
 
@@ -79,7 +82,8 @@ public class JwtUtils {
         try{
              token = getJwtFromRequest(request);
             System.out.println(token + "deop");
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+//            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(jwtSecretNew).build().parseClaimsJws(token);
             System.out.println("test1");
             return true;
         }catch (SignatureException e) {
@@ -88,12 +92,9 @@ public class JwtUtils {
             logger.error("Invalid JWT token: {}", e.getMessage());
         } catch (ExpiredJwtException e) {
             e.printStackTrace();
-            System.out.println("test2");
+            System.out.println("Expired hết hạn");
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            System.out.println("test3");
-
             if(authentication == null||(authentication instanceof AnonymousAuthenticationToken) ){
-                System.out.println("test4");
                 return false;
             }
             else {
@@ -110,7 +111,7 @@ public class JwtUtils {
                             Cookie cookie = new Cookie("accessToken", token);
                             cookie.setHttpOnly(true);
                             cookie.setPath("/");
-                            cookie.setMaxAge(1200);
+                            cookie.setMaxAge(120000000);
                             response.addCookie(cookie);
 
                             System.out.println("new token");

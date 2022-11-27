@@ -51,16 +51,16 @@
                             </c:if>
 
                             <c:if test="${orderDto.customer != null}">
-                                <div class="form-group col-md-2">
-                                    <div class="form-group col-md-2">
+                                <div class="form-group col-md-6">
+                                    <div class="form-group">
                                         <label class="control-label">Họ và tên</label>
                                         <p class="detail-text">${orderDto.customer.name}</p>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group">
                                         <label class="control-label">Số điện thoại</label>
                                         <p class="detail-text">${orderDto.customer.phone}</p>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group">
                                         <label for="exampleSelect1" class="control-label">Địa chỉ giao hàng</label>
                                         <p class="detail-text">${orderDto.address}</p>
                                     </div>
@@ -75,19 +75,19 @@
                         <div class="row">
                             <div class="form-group col-md-4">
                                 <label class="control-label">Tình trạng đơn hàng</label>
-                                <p class="detail-text"><span class="badge bg-warning">${orderDto.status}</span></p>
+                                <p class="detail-text"><span class="${orderDto.status =="Đã Hủy" ? "badge bg-danger" : orderDto.status =="Chờ Xử Lý" ? "badge bg-warning" : "badge bg-success"}" >${orderDto.status}</span></p>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="control-label">Phương thức thanh toán</label>
-                                <p class="detail-text"><span class="badge bg-warning">${orderDto.payment_method}</span></p>
+                                <p class="detail-text"><span class="badge bg-success">${orderDto.payment_method}</span></p>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="control-label">Loại đơn hàng</label>
-                                <p class="detail-text"><span class="badge bg-warning">${orderDto.orderKind}</span></p>
+                                <p class="detail-text"><span class="badge bg-success">${orderDto.orderKind}</span></p>
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="control-label">Ngyà tạo</label>
-                                <p class="detail-text"><span class="badge bg-warning">${orderDto.created}</span></p>
+                                <label class="control-label">Ngày tạo</label>
+                                <p class="detail-text"><span class="badge bg-success">${orderDto.created}</span></p>
                             </div>
                         </div>
                     </div>

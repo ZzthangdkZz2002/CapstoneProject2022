@@ -66,11 +66,10 @@ private JwtUtils jwtUtils;
 
         try{
 
-            System.out.println("hoan"+ request.getMethod()+"  " +request.getRequestURI()+ " " + request.getPathInfo()+"    "+JwtUtils.token);
+            System.out.println("Class: doFilterInternal: "+"method: "+ request.getMethod()+"  " +request.getRequestURI()+ " " + request.getPathInfo()+"    "+JwtUtils.token);
 
             if(jwtUtils.isTokenCorrect(request,response)&&JwtUtils.token!=null){
-                System.out.println(JwtUtils.token);
-                System.out.println("dcccb");
+                System.out.println("Token correct!!");
                 String email = jwtUtils.getEmailFromJwtToken(JwtUtils.token);
                 UserDetails userDetails = accountDetailService.loadUserByUsername(email);
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());

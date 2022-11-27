@@ -54,23 +54,27 @@
                               <div class="an-order">
                                   <table>
                                       <tr>
-                                          <td>Mã đơn: #${order.orderid}</td>
-                                          <td>${order.status}</td>
+                                          <td style="font-weight: bold; font-size: 2rem">Mã đơn: #${order.orderid}</td>
+                                          <td style="color: ${order.status =="Đã Hủy" ? "red" : order.status =="Chờ Xử Lý" ? "#E1DB0A" : "green"}; font-size: 2rem" >${order.status}</td>
                                       </tr>
                                       <c:forEach var="item" items="${order.orderTransactionDetails}">
                                           <tr>
-                                              <td><img src="/img/${item.productDTO.image}" alt="hinh ảnh sản phẩm"> <span> ${item.productDTO.name}</span> <br> x${item.quantity}</td>
+                                          <tr style="border-bottom: 0.5px solid #36454F;">
+                                              <td><img src="/img/${item.productDTO.image}" alt="hinh ảnh sản phẩm">
+                                                  <span style="margin-left: 15px"> ${item.productDTO.name}</span> <br>
+                                                  <span style="margin-left: 15px">x${item.quantity}</span>
+                                              </td>
                                               <td>${item.amount}</td>
                                           </tr>
                                       </c:forEach>
-                                      <tr>
+                                      <tr style="padding-top: 15px">
                                           <td></td>
-                                          <td style="font-size: 20px;"><span style="font-weight: bold;">Tổng thanh toán:</span>  ${order.amount}</td>
+                                          <td style="font-size: 2rem; padding-top: 20px"><span style="font-size: 2rem">Tổng thanh toán:</span> ${order.amount}</td>
                                       </tr>
                                       <c:if test="${order.status != 'Đã Hủy' && order.status != 'Hoàn Thành'}">
                                           <tr>
                                               <c:if test="${order.payment_method == 'Thanh toán qua VNPay' && order.isPaid eq 'false'}">
-                                                  <td colspan="2">
+                                                  <td>
                                                       <a href="#" onclick="rePayment('${order.orderid}')">
                                                           <button>Thanh toán đơn hàng</button>
                                                       </a>

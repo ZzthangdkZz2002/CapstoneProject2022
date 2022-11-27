@@ -107,12 +107,12 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                  <label class="control-label required-field">Giá vốn</label>
+                  <label class="control-label">Giá vốn</label>
                   <input class="form-control" id="original-price" type="number">
                 </div>
 
                 <div class="form-group col-md-3">
-                  <label class="control-label required-field">Giá bán</label>
+                  <label class="control-label">Giá bán</label>
                   <input class="form-control" id="price" type="number">
                 </div>
 <%--                <div class="form-group col-md-3">--%>
@@ -165,7 +165,10 @@
                 </div>
               </div>
 
-
+              <div class="form-group col-md-3">
+                <label  class="control-label required-field">Đơn vị bán</label>
+                <input class="form-control" id="unit" type="text" required>
+              </div>
               <div class="form-group col-md-3">
                 <label  class="control-label required-field">Thương Hiệu</label>
                 <select class="form-control" id="brandOption" required>
@@ -173,7 +176,7 @@
                     <option value="${brand.id}">${brand.name}</option>
                   </c:forEach>
                 </select>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBrandModel">
+                <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#addBrandModel">
                   Thêm thương hiệu
                 </button>
               </div>
@@ -237,7 +240,7 @@
                 <div class="confirm-button">
                   <div class="button">
                     <button type="submit" id="createProduct" class="btn btn-save" onclick="addProduct()" >Lưu lại</button>
-                    <button type="button" class="btn btn-cancel" onclick="location.href='product-management.html'">Hủy
+                    <button type="button" class="btn btn-cancel" onclick="location.href='${pageContext.request.contextPath}/admin/products/add'">Hủy
                       bỏ</button>
                   </div>
                 </div>
@@ -350,7 +353,7 @@ MODAL
         </div>
         <div class="modal-body">
           <p id="addBrandError" style="color: red;display: none"></p>
-          <div class="form-group col-md-3">
+          <div class="form-group">
             <label class="control-label required-field">Tên thương hiệu</label>
             <input class="form-control" id="addBrand" type="text" required>
           </div>

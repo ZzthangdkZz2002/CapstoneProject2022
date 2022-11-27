@@ -21,7 +21,7 @@ public class OrderTransactionDTO {
 
     private Account account_user;
     private Account account_employee;
-    private Customer customer;
+    private CustomerDTO customer;
 
     private String user_name;
     private String user_email;

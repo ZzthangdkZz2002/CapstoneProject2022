@@ -109,8 +109,14 @@
     </div>
     <hr>
     <ul class="app-menu">
-        <li><a class="app-menu__item active" href="${pageContext.request.contextPath}/admin/home"><i class='app-menu__icon bx bx-cart-alt'></i>
-            <span class="app-menu__label">Trang chủ</span></a></li>
+        <sec:authorize access="hasRole('ROLE_MANAGER')">
+            <li>
+                <a class="app-menu__item active" href="${pageContext.request.contextPath}/admin/home">
+                    <i class='app-menu__icon bx bx-cart-alt'></i>
+                    <span class="app-menu__label">Trang chủ</span>
+                </a>
+            </li>
+        </sec:authorize>
         <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/products"><i
                 class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản
             phẩm</span></a>
@@ -144,5 +150,18 @@
 
     </ul>
 </aside>
+
+<script>
+    // Add active class to the current button (highlight it)
+    var appMenu = document.querySelector(".app-menu");
+    var items = appMenu.getElementsByClassName("app-menu__item");
+    for (var i = 0; i < items.length; i++) {
+        items[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+        });
+    }
+</script>
 
 </body>

@@ -53,19 +53,13 @@ public class Utils {
         return strCode.toString();
     }
 
-//    public String gererateOrderid(){
-//        Random generator = new Random();
-//        int randomNumber = generator.nextInt((9 - 0) + 1) + 0;
-//
-//       int hour = LocalDateTime.now().getHour();
-//       int minute = LocalDateTime.now().getMinute();
-//       int second = LocalDateTime.now().getSecond() + randomNumber;
-//
-//       String str = String.valueOf(hour) + String.valueOf(minute) + String.valueOf(second);
-//
-//       return str;
-//
-//    }
+    public String gererateOrderid(String orderid_increment){
+        StringBuffer strCode = new StringBuffer();
+        String random_code = getRandomNumber(3);
+        strCode.append(random_code);
+        strCode.append(orderid_increment);
+        return strCode.toString();
+    }
 
     public String getRandomNumber(int len) {
         Random rnd = new Random();

@@ -60,11 +60,6 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
                 orderTransaction.setCustomer(customerRepository.findByPhone(orderTransactionDTO.getUser_phone()).get());
             }
 
-            if(orderTransactionDTO.getPayment_method().equalsIgnoreCase("Thanh toán qua VNPay")){
-                orderTransaction.setOrderid(orderid);
-            }else{
-                orderTransaction.setOrderid(new Utils().getRandomNumber(6));
-            }
             orderTransaction.setUser_name(orderTransactionDTO.getUser_name());
             orderTransaction.setUser_email(orderTransactionDTO.getUser_email());
             orderTransaction.setUser_phone(orderTransactionDTO.getUser_phone());
@@ -78,7 +73,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
 
             OrderTransaction o = orderTransactionRepository.save(orderTransaction);
 
-
+            orderTransaction.setOrderid(new Utils().gererateOrderid(String.valueOf(o.getId())));
 
             for(OrderTransactionDetailDTO dto : orderTransactionDTO.getOrderTransactionDetails()){
                 OrderTransactionDetail orderTransactionDetail = new OrderTransactionDetail();
@@ -98,7 +93,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
     }
 
     @Override
-    public OrderTransaction addTransactionOffline(OrderTransactionDTO orderTransactionDTO) {
+    public OrderTransaction addTransactionOffline(OrderTransactionDTO orderTransactionDTO, Authentication authentication) {
         try{
             OrderTransaction orderTransaction = new OrderTransaction();
             if("".equals(orderTransactionDTO.getCustomer().getId()) || orderTransactionDTO.getCustomer().getId() == null){
@@ -123,8 +118,10 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
                     orderTransaction.setCustomer(null);
                 }
             }
+            AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
+            Account account = accountRepository.findById(accountDetail.getId()).get();
+            orderTransaction.setAccountemployee(account);
 
-            orderTransaction.setOrderid(new Utils().getRandomNumber(6));
             orderTransaction.setAmount(Double.parseDouble(orderTransactionDTO.getAmount()));
             orderTransaction.setPayment_method(orderTransactionDTO.getPayment_method());
             orderTransaction.setStatus(OrderEnum.PENDING.getName());
@@ -132,7 +129,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
             orderTransaction.setOrderKind("offline");
 
             OrderTransaction o = orderTransactionRepository.save(orderTransaction);
-
+            orderTransaction.setOrderid(new Utils().gererateOrderid(String.valueOf(o.getId())));
 
 
             for(OrderTransactionDetailDTO dto : orderTransactionDTO.getOrderTransactionDetails()){

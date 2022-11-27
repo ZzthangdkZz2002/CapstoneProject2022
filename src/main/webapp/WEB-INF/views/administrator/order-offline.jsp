@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,6 +71,18 @@
             background-color: DodgerBlue !important;
             color: #ffffff;
         }
+        .autocomplete-items{
+            height: 200px;
+        }
+        @media print {
+
+            body {
+                zoom: 50%;
+                margin: 0;
+                background-color: #dee2e6;
+            }
+
+        }
     </style>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -115,8 +128,10 @@
                 <tr>
                     <th scope="col">Sản phẩm</th>
                     <th scope="col">Tên Sản phẩm</th>
+                    <th scope="col">Đơn vị</th>
                     <th scope="col">Đơn giá</th>
                     <th scope="col">Số lượng</th>
+                    <th scope="col">Thuế(VAT)</th>
                     <th scope="col">Thành tiền</th>
                     <th scope="col">Xóa</th>
                 </tr>
@@ -136,34 +151,42 @@
 
 
             <div class="row">
-                <div class="col-12  ">
+                <div class="col-7">
                     <input type="text" name="search" placeholder="Tìm khách hàng" class="mb-4 form-boder search-customer" id="search-customer">
-                    <i style="position: absolute;right: 30px;top: 10px;cursor: pointer;" class="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#exampleModal3" ></i>
+<%--                    <i style="position: absolute;right: 30px;top: 10px;cursor: pointer;" class="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#exampleModal3" ></i>--%>
                 </div>
-                <div class="col-8  ">
+                <div class="col-5 pl-4">
+                    <button type="button" class="btn btn-primary ml-4" data-bs-toggle="modal" data-bs-target="#exampleModal3">Thêm khách hàng</button>
+                </div>
+                <div class="col-7 pl-4">
                     <p class="mb-4 custom-text-bill">Tổng tiền hàng</p>
                 </div>
-                <div class="col-4">
+                <div class="col-5">
                     <p class="mb-4 text-right" id="total-money">0</p>
 
 
                 </div>
-                <div class="col-8  mt-3">
-                    <p class="mb-4 custom-text-bill">Khách cần trả</p>
-                </div>
-                <div class="col-4 mt-3">
-                    <input type="text" class="form-control customer-pay mb-4" >
-                </div>
-                <div class="col-8  mt-3">
-                    <p class="mb-4 custom-text-bill">Tiền thừa trả khách</p>
-                </div>
-                <div class="col-4 mt-3">
-                    <p class="mb-4 text-right" id="tienThua">0</p>
+
+                <div class="col-12 custpay">
+                    <div class="col-7 mt-3 pt-2 pl-4">
+                        <p class="mb-4 custom-text-bill">Tiền khách trả</p>
+                    </div>
+                    <div class="col-5 mt-3">
+                        <input type="text" class="form-control customer-pay mb-4" >
+                    </div>
+                    <div class="col-8 mt-3 pl-4">
+                        <p class="mb-4 custom-text-bill">Tiền thừa trả khách</p>
+                    </div>
+                    <div class="col-4 mt-3">
+                        <p class="mb-4 text-right" id="tienThua">0</p>
+                    </div>
+                    <div class="col-12 pl-4 mt-3">
+                        <p class="mb-4 custom-text-bill">Phương thức thanh toán:</p>
+                    </div>
 
                 </div>
 
-
-                <div class="col-12">
+                <div class="col-12 pl-4">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input custom-checkbox" type="radio" name="inlineRadioOptions" id="cash"
                                value="Tiền mặt" checked />
@@ -186,7 +209,7 @@
                         <div class="col-3 qrCode-image">
                             <img
                                     src=""
-                                    alt="" class="img_qr" data-bs-toggle="modal" data-bs-target="#exampleModal5" style="cursor: pointer;">
+                                    alt="" class="img_qr" data-bs-toggle="modal" data-bs-target="#exampleModal5" style="cursor: pointer;" id="qrcode_image">
                         </div>
                         <div class="col-9">
                             <select class="custom-select" id="custom-select">
@@ -195,14 +218,29 @@
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                             </select>
-                            <button type="button" class="btn btn-light add_acount mt-2 add_bank" style="cursor: pointer;"
-                                    data-bs-toggle="modal" data-bs-target="#exampleModal4">Thêm tài khoản</button>
+                            <sec:authorize access="hasAnyRole('ROLE_MANAGER')">
+                                <button type="button" class="btn btn-light add_acount mt-2 add_bank" style="cursor: pointer;"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal4">Thêm tài khoản</button>
+                            </sec:authorize>
+                            <button style="display:none;" class="add_bank"></button>
                         </div>
                     </div>
 
                 </div>
 
-                <!-- don't have bank -->
+                <sec:authorize access="hasRole('ROLE_MANAGER')">
+                    <div class="col-12 mt-3 no-bank" style="display: none">
+                        <div class="row">
+                            <h3>Chưa có tài khoản ngân hàng nào</h3>
+                            <div class="col-9">
+                                <button type="button" class="btn btn-light add_acount mt-2 add_bank2" style="cursor: pointer;"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal4">Thêm tài khoản</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </sec:authorize>
+
                 <div class="col-12 mt-3 no-bank" style="display: none">
                     <div class="row">
                         <h3>Chưa có tài khoản ngân hàng nào</h3>
@@ -213,7 +251,6 @@
                     </div>
 
                 </div>
-
                 <div class="col-12" style="position: absolute; bottom: 100px;">
                     <button type="button" class="btn btn-primary btn-bill" onclick="OrderOfflineAction()">Thanh toán</button>
                 </div>
@@ -228,6 +265,8 @@
 
 </div>
 </div>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -392,6 +431,66 @@
 </div>
 
 
+<div class="bill" style="display: none;width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: white;
+            padding: 2rem 1rem 4rem 1rem;">
+    <div class="bill-header" style="display: flex;">
+        <img src="https://yt3.ggpht.com/ytc/AMLnZu9GCNaRZ_9jmsfiK2tgRjAFEXhjcZPyaRcZG79j=s900-c-k-c0x00ffffff-no-rj"
+             alt="" style="width: 10rem;margin-right: 2rem;">
+        <div class="header-info">
+            <h4>ELECTROCO</h4>
+            <p>Chi nhánh Đại Học FPT Hà Nội</p>
+            <p>Địa chỉ: FPT University, P.D317, khu CNC Hòa Lạc</p>
+            <p>ĐT Hotline: 033 625 2948</p>
+        </div>
+    </div>
+    <div class="bill-main">
+        <h1 class="text-center" style="text-align: center;">HÓA ĐƠN BÁN LẺ</h1>
+        <p class="text-center" style="font-size: 1.5rem; color: red;text-align: center;" id="invoice-id"></p>
+        <p class="ms-5" style="margin-left: 2rem;">Họ tên khách hàng: <span id="cust-name">........</span></p>
+        <p class="ms-5" style="margin-left: 2rem;">ĐT: <span id="cust-phone"></span></p>
+        <p class="ms-5" style="margin-left: 2rem;">Địa chỉ: <span id="cust-address"></span></p>
+        <table style="width: 90%; margin-left: 2rem;margin-right: 2rem;">
+            <thead>
+            <tr>
+                <th scope="col" style="border: 1px solid black;">Số TT</th>
+                <th scope="col" style="border: 1px solid black;">Tên hàng hóa</th>
+                <th scope="col" style="border: 1px solid black;">Đơn vị tính</th>
+                <th scope="col" style="border: 1px solid black;">Số lượng</th>
+                <th scope="col" style="border: 1px solid black;">Đơn giá</th>
+                <th scope="col" style="border: 1px solid black;">Thuế(VAT)</th>
+                <th scope="col" style="border: 1px solid black;">Thành tiền</th>
+            </tr>
+            </thead>
+            <tbody id="invoice-items">
+<%--            <tr>--%>
+<%--                <th scope="row" style="border: 1px solid black;">1</th>--%>
+<%--                <td style="border: 1px solid black;">Mark</td>--%>
+<%--                <td style="border: 1px solid black;">Otto</td>--%>
+<%--                <td style="border: 1px solid black;">@mdo</td>--%>
+<%--                <td style="border: 1px solid black;">Mark</td>--%>
+<%--                <td style="border: 1px solid black;">Otto</td>--%>
+<%--                <td style="border: 1px solid black;">@mdoooooooooooooooooo</td>--%>
+<%--            </tr>--%>
+            </tbody>
+        </table>
+        <p class="ms-5" style="margin-left: 2rem;">Cộng thành tiền (Viết bằng chữ): <span id="total-word"></span></p>
+        <div class="time" style="display: flex;justify-content: end;">
+            <div class="p-2" style="padding: 5px;margin-right: 3px;">Ngày <span id="invoice-day"></span></div>
+            <div class="p-2" style="padding: 5px;margin-right: 3px;">Tháng <span id="invoice-month"></span></div>
+            <div class="p-2" style="padding: 5px;margin-right: 3px;">Năm <span id="invoice-year"></span></div>
+        </div>
+        <p class="text-center" style="font-size: 1.5rem; margin-top: 2rem; text-align: center; display: none" id="qr-title">Vui lòng quét mã QR bên dưới để thanh toán</p>
+<%--        <div id="qr-code" style="display: block;width: 40%;margin-left: 187px;">--%>
+
+<%--        </div>--%>
+        <img style="display: block;width: 40%;margin-left: auto;margin-right: auto; display: none" src=""
+             alt="" id="qr-invoice">
+    </div>
+</div>
+
 <!-- Modal show img_qr-->
 <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabe5" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -413,7 +512,7 @@
                                  class="qr_code_modal">
                         </div>
                         <div class="col-7">
-                            <button type="button" class="btn btn-success" onclick="printQrCode();" style="margin-left: 148px">Print</button>
+                            <button type="button" class="btn btn-success" onclick="printInvoice();" style="margin-left: 148px">Print</button>
                         </div>
 
                     </div>

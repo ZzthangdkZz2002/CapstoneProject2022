@@ -57,7 +57,8 @@ public class Product {
 
     @Column
     private int status;
-//    private BigInteger unit;
+    @Column
+    private String unit;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "Product_Category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))

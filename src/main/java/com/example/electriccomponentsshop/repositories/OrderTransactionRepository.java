@@ -15,7 +15,7 @@ Optional<OrderTransaction> findById(Integer id);
 Optional<OrderTransaction> findByOrderid(String orderid);
 List<OrderTransaction> findAllByAccountuser(Account accountuser);
 List<OrderTransaction> findAllByAccountuserAndStatus(Account accountuser, String status);
-List<OrderTransaction> findAllByStatus(String status);
+List<OrderTransaction> findAllByStatusOrderByCreatedDesc(String status);
 
 @Query(value = "SELECT * FROM order_transaction where user_phone = :phone", nativeQuery = true)
 List<OrderTransaction> findAllByUserphone(String phone);
