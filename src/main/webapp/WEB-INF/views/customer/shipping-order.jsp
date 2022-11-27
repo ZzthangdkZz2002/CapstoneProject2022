@@ -43,7 +43,7 @@
                               <div class="an-order">
                                   <table>
                                       <tr>
-                                          <td>Mã đơn: #${order.orderid}</td>
+                                          <td style="font-weight: bold; font-size: 1.5rem">Mã đơn: #${order.orderid}</td>
                                           <td>${order.status}</td>
                                       </tr>
                                       <c:forEach var="item" items="${order.orderTransactionDetails}">
@@ -54,7 +54,7 @@
                                       </c:forEach>
                                       <tr>
                                           <td></td>
-                                          <td style="font-size: 20px;"><span style="font-weight: bold;">Tổng thanh toán:</span>  ${order.amount}</td>
+                                          <td style="font-size: 2rem;padding-top: 20px"><span style="font-size: 2rem">Tổng thanh toán:</span>  ${order.amount}</td>
                                       </tr>
                                       <c:if test="${order.status != 'Đã Hủy' && order.status != 'Hoàn Thành'}">
                                           <tr>

@@ -244,7 +244,6 @@ function checkRequiredTable() {
 
 //has big category or not
 function showBigCategoryInput() {
-    console.log("active");
     var hasBigCategory = document.getElementById("hasBigCategory");
     var bigCategory = document.getElementById("bigCategory");
     var bigCategoryList = document.getElementById("bigCategoryList");

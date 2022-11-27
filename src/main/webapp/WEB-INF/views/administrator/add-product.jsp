@@ -107,12 +107,12 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                  <label class="control-label required-field">Giá vốn</label>
+                  <label class="control-label">Giá vốn</label>
                   <input class="form-control" id="original-price" type="number">
                 </div>
 
                 <div class="form-group col-md-3">
-                  <label class="control-label required-field">Giá bán</label>
+                  <label class="control-label">Giá bán</label>
                   <input class="form-control" id="price" type="number">
                 </div>
 <%--                <div class="form-group col-md-3">--%>
@@ -173,7 +173,7 @@
                     <option value="${brand.id}">${brand.name}</option>
                   </c:forEach>
                 </select>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBrandModel">
+                <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#addBrandModel">
                   Thêm thương hiệu
                 </button>
               </div>
@@ -350,7 +350,7 @@ MODAL
         </div>
         <div class="modal-body">
           <p id="addBrandError" style="color: red;display: none"></p>
-          <div class="form-group col-md-3">
+          <div class="form-group ">
             <label class="control-label required-field">Tên thương hiệu</label>
             <input class="form-control" id="addBrand" type="text" required>
           </div>

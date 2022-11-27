@@ -70,6 +70,9 @@
             background-color: DodgerBlue !important;
             color: #ffffff;
         }
+        .autocomplete-items{
+            height: 200px;
+        }
     </style>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -94,13 +97,7 @@
         <div class="autocomplete" style="width:500px;">
             <input id="myInput" type="text" name="search_product" class="search_product" placeholder="Search product...">
         </div>
-
-
     </form>
-
-
-
-
 </ul>
 
 
@@ -136,34 +133,38 @@
 
 
             <div class="row">
-                <div class="col-12  ">
+                <div class="col-7">
                     <input type="text" name="search" placeholder="Tìm khách hàng" class="mb-4 form-boder search-customer" id="search-customer">
-                    <i style="position: absolute;right: 30px;top: 10px;cursor: pointer;" class="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#exampleModal3" ></i>
+<%--                    <i style="position: absolute;right: 30px;top: 10px;cursor: pointer;" class="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#exampleModal3"></i>--%>
                 </div>
-                <div class="col-8  ">
+                <div class="col-5 pl-4">
+                    <button type="button" class="btn btn-primary ml-4" data-bs-toggle="modal" data-bs-target="#exampleModal3">Thêm khách hàng</button>
+                </div>
+                <div class="col-7 pl-4">
                     <p class="mb-4 custom-text-bill">Tổng tiền hàng</p>
                 </div>
-                <div class="col-4">
+                <div class="col-5">
                     <p class="mb-4 text-right" id="total-money">0</p>
 
 
                 </div>
-                <div class="col-8  mt-3">
-                    <p class="mb-4 custom-text-bill">Khách cần trả</p>
+                <div class="col-7 mt-3 pt-2 pl-4">
+                    <p class="mb-4 custom-text-bill">Khách trả:</p>
                 </div>
-                <div class="col-4 mt-3">
+                <div class="col-5 mt-3">
                     <input type="text" class="form-control customer-pay mb-4" >
                 </div>
-                <div class="col-8  mt-3">
+                <div class="col-8 mt-3 pl-4">
                     <p class="mb-4 custom-text-bill">Tiền thừa trả khách</p>
                 </div>
                 <div class="col-4 mt-3">
                     <p class="mb-4 text-right" id="tienThua">0</p>
-
+                </div>
+                <div class="col-12 pl-4 mt-3">
+                    <p class="mb-4 custom-text-bill">Phương thức thanh toán:</p>
                 </div>
 
-
-                <div class="col-12">
+                <div class="col-12 pl-4">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input custom-checkbox" type="radio" name="inlineRadioOptions" id="cash"
                                value="Tiền mặt" checked />
@@ -404,9 +405,6 @@
 
                 <div class="container-fluid">
                     <div class="row" style="justify-content: center;">
-
-
-
 
                         <div class="col-7">
                             <img src="" alt="Error_img_qr" style="width:100% ;height: 100%;object-fit: cover;"
