@@ -128,8 +128,11 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
             orderTransaction.setIsPaid(true);
             orderTransaction.setOrderKind("offline");
 
+
             OrderTransaction o = orderTransactionRepository.save(orderTransaction);
             orderTransaction.setOrderid(new Utils().gererateOrderid(String.valueOf(o.getId())));
+
+
 
 
             for(OrderTransactionDetailDTO dto : orderTransactionDTO.getOrderTransactionDetails()){
@@ -141,6 +144,11 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
 
                 orderTransactionDetailRepository.save(orderTransactionDetail);
             }
+
+            //order profit
+            orderTransaction.setProfit(calOrderProfit(o.getId()));
+            orderTransactionRepository.save(orderTransaction);
+
             return o;
         }catch (Exception e){
             System.out.println("addTransaction offline Error: " + e.getMessage());

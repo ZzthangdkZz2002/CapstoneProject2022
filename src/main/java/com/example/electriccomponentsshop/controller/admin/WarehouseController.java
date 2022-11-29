@@ -46,6 +46,10 @@ public class WarehouseController {
     OrderTransactionRepository orderTransactionRepository;
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    ExportTransactionNewRepository exportTransactionNewRepository;
+    @Autowired
+    ExportProductsRepository exportProductsRepository;
     final
     WarehouseService warehouseService;
     final
@@ -61,6 +65,9 @@ public class WarehouseController {
     final DistrictService districtService;
     final WardService wardService;
     final InventoryService inventoryService;
+    final ExportTransactionNewService exportTransactionNewService;
+    final ExportProductsService exportProductsService;
+
     @GetMapping("")
     public String viewAll(Model model){
         List<WarehouseDTO> warehouses =warehouseService.getAllWarehouse();
@@ -358,6 +365,16 @@ public class WarehouseController {
             modelMap.addAttribute("notFound", e.getMessage());
         }
         return "administrator/add-warehouse-export";
+    }
+    @PostMapping("/export/add")
+    @ResponseBody
+    public ResponseEntity<ResponseObject> addExportItem(@RequestBody ExportTransactionNewDTO exportTransactionNewDTO){
+        try {
+            exportTransactionNewService.addExportTransaction(exportTransactionNewDTO);
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","add export transaction success",""));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","add export transaction fail",e.getMessage()));
+        }
     }
     @GetMapping("/export/detail/add")
     public String exportItem(@RequestParam(name = "orderid") String orderid, ModelMap modelMap){

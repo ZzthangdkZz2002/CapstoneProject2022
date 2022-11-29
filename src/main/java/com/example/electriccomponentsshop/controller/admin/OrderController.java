@@ -259,11 +259,29 @@ public class OrderController {
 
     }
 
+    @GetMapping("/finish")
+    public String finishOrder(@RequestParam(name = "id") String id, RedirectAttributes r){
+        try{
+            OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
+            orderTransaction.setStatus(OrderEnum.DONE.getName());
+            if(!orderTransaction.getIsPaid()){
+                orderTransaction.setIsPaid(true);
+            }
+            orderTransaction.setUpdatedDate(new Date());
+            orderTransactionRepository.save(orderTransaction);
+            r.addFlashAttribute("acceptOrderMessage","Giao thành công đơn hàng #" + orderTransaction.getOrderid());
+        }catch (Exception e){
+            r.addFlashAttribute("acceptOrderMessage","error");
+        }
+        return "redirect:/admin/orders/received";
+    }
+
     @GetMapping("/accept")
     public String acceptOrder(@RequestParam(name = "id") String id, RedirectAttributes r){
         try{
             OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
             orderTransaction.setStatus(OrderEnum.CONFIRM.getName());
+            orderTransaction.setUpdatedDate(new Date());
             orderTransactionRepository.save(orderTransaction);
             r.addFlashAttribute("acceptOrderMessage","Xác nhận thành công đơn hàng #" + orderTransaction.getOrderid());
         }catch (Exception e){
@@ -347,6 +365,7 @@ public class OrderController {
                         "</div></div>";
             OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
             orderTransaction.setStatus(OrderEnum.CANCEL.getName());
+            orderTransaction.setUpdatedDate(new Date());
             if(orderTransaction.getIsPaid() == true){
                 orderTransaction.setIsPaid(false);
             }

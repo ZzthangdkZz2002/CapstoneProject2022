@@ -24,6 +24,8 @@ public class ProductLocation {
     @OneToMany(mappedBy = "productLocation")
     private List<ProductWareHouse> productWareHouseList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "productLocation")
+    private List<ExportProducts> exportProducts = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "warehouse_id")

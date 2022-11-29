@@ -56,11 +56,11 @@
             <tbody>
             <c:forEach items="${transactionDetail}" var="trans">
                 <tr>
-                    <td scope="row"><a href="${pageContext.request.contextPath}/homepage/detailProduct?id=${trans.id}"
-                                       style="text-decoration: none;">${trans.name}</a></td>
+                    <td scope="row"><a href="${pageContext.request.contextPath}/homepage/detailProduct?id=${trans.productDTO.id}"
+                                       style="text-decoration: none;">${trans.productDTO.name}</a></td>
                     <td>${trans.quantity}</td>
-                    <td class="text-right">${trans.price}</td>
-                    <td class="text-right">${trans.price * trans.quantity}</td>
+                    <td class="text-right">${trans.productDTO.price}đ</td>
+                    <td class="text-right">${trans.amount}đ (đã bao gồm VAT)</td>
                 </tr>
             </c:forEach>
             <tr>

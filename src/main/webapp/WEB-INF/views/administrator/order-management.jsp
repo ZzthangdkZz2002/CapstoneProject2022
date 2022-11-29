@@ -150,6 +150,13 @@
                          type="button" title="Xuất đơn hàng" href="${pageContext.request.contextPath}/admin/warehouses/export/detail/add?orderid=${orderDto.orderid}"><i class="fas fa-edit"></i>Xuất đơn hàng</a>
                     </c:if>
 
+                    <c:if test="${orderDto.status eq 'Đang Giao Hàng'}">
+                      <a class="btn btn-primary btn-sm edit"
+                         type="button" title="Giao thành công" href="${pageContext.request.contextPath}/admin/orders/finish?id=${orderDto.id}"><i class="fas fa-edit"></i>Xác nhận</a>
+                      <a class="btn btn-primary btn-sm edit"
+                         type="button" title="Giao thành công" href="#"><i class="fas fa-edit"></i>Hoàn trả</a>
+                    </c:if>
+
                     <a class="btn btn-primary btn-sm edit"
                        type="button" title="Xem" href="${pageContext.request.contextPath}/admin/orders/view/${orderDto.id}"><i class="fa fa-info"></i></a>
                   </td>

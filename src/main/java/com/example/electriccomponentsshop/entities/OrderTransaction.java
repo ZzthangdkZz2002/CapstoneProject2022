@@ -37,6 +37,9 @@ public class OrderTransaction {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @OneToOne(mappedBy = "orderTransaction",optional = true)
+    private ExportTransactionNew exportTransactionNew;
+
     @OneToMany(mappedBy = "orderTransaction",fetch = FetchType.EAGER)
     private List<OrderTransactionDetail> orderTransactionDetails = new ArrayList<>();
     private String user_name;
@@ -61,4 +64,8 @@ public class OrderTransaction {
     @CreationTimestamp
     @Column(updatable = false)
     private Date created;
+
+    @CreationTimestamp
+    @Column
+    private Date updatedDate;
 }

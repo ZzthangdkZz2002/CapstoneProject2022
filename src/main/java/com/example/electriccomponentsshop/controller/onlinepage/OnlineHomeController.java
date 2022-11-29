@@ -1,10 +1,7 @@
 package com.example.electriccomponentsshop.controller.onlinepage;
 
 import com.example.electriccomponentsshop.common.PaymentConfig;
-import com.example.electriccomponentsshop.dto.OrderTransactionDTO;
-import com.example.electriccomponentsshop.dto.PaymentDTO;
-import com.example.electriccomponentsshop.dto.ProductDTO;
-import com.example.electriccomponentsshop.dto.ResponseObject;
+import com.example.electriccomponentsshop.dto.*;
 import com.example.electriccomponentsshop.entities.Category;
 import com.example.electriccomponentsshop.entities.OrderTransaction;
 import com.example.electriccomponentsshop.entities.OrderTransactionDetail;
@@ -256,8 +253,10 @@ public class OnlineHomeController {
     public String confirmOrder(@RequestParam(name = "id") Integer id, Model model){
         Optional<OrderTransaction> orderTransaction = orderTransactionRepository.findById(id);
         List<OrderTransactionDetail> orderTransactionDetail = orderTransactionDetailRepository.findAllByOrderTransaction(orderTransaction.get());
-        List<ProductDTO> productDTOS = new ArrayList<>();
+        List<OrderTransactionDetailDTO> orderTransactionDetailDTOS = new ArrayList<>();
+//        List<ProductDTO> productDTOS = new ArrayList<>();
         for(OrderTransactionDetail o : orderTransactionDetail){
+            OrderTransactionDetailDTO orderTransactionDetailDTO = new OrderTransactionDetailDTO();
             Product product = productRepository.findById(o.getProduct_id()).get();
             ProductDTO p = new ProductDTO();
             p.setName(product.getName());
@@ -265,11 +264,17 @@ public class OnlineHomeController {
             p.setPrice(product.getPrice());
             p.setQuantity(o.getQuantity());
             p.setId(product.getId());
-            productDTOS.add(p);
+
+            orderTransactionDetailDTO.setProductDTO(p);
+            orderTransactionDetailDTO.setAmount(o.getAmount());
+            orderTransactionDetailDTO.setQuantity(o.getQuantity());
+
+            orderTransactionDetailDTOS.add(orderTransactionDetailDTO);
+//            productDTOS.add(p);
         }
         if(orderTransaction.isPresent()){
             model.addAttribute("transaction", orderTransaction.get());
-            model.addAttribute("transactionDetail", productDTOS);
+            model.addAttribute("transactionDetail", orderTransactionDetailDTOS);
         }
         return "onlinePage/OrderSuccess";
     }

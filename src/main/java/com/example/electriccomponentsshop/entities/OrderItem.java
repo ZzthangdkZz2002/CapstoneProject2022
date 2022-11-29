@@ -1,5 +1,6 @@
 package com.example.electriccomponentsshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +25,11 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("orderId")
     @JoinColumn(name="order_id")
+    @JsonIgnore
     private Order order;
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("productId")
     @JoinColumn(name="product_id")
+    @JsonIgnore
     private Product product;
 }

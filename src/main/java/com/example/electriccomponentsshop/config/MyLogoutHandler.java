@@ -25,7 +25,6 @@ public class MyLogoutHandler implements LogoutHandler {
                 break;
             }
         }
-        System.out.println("F");
         SecurityContextHolder.getContext().setAuthentication(null);
         SecurityContextHolder.clearContext();
         try {

@@ -21,7 +21,9 @@ public class StatisticServiceImpl implements StatisticService {
     public String[] statsMonthByYear() {
         String[] dataStats = new String[2];
         List<StatisticDTO> statisticDTOS = orderTransactionRepository.statsMonthByYear(String.valueOf(LocalDate.now().getYear()));
-
+        if(statisticDTOS == null){
+            statisticDTOS = new ArrayList<>();
+        }
         Gson gsonObj = new Gson();
         Map<Object,Object> map = null;
         List<Map<Object,Object>> list = new ArrayList<Map<Object,Object>>();
@@ -52,7 +54,9 @@ public class StatisticServiceImpl implements StatisticService {
     public String[] statsByYear() {
         String[] dataStats = new String[2];
         List<StatisticDTO> statisticDTOS = orderTransactionRepository.statsByYear();
-
+        if(statisticDTOS.get(0).getDate() == null || statisticDTOS.get(0).getDate() == ""){
+            statisticDTOS.remove(0);
+        }
         Gson gsonObj = new Gson();
         Map<Object,Object> map = null;
         List<Map<Object,Object>> list = new ArrayList<Map<Object,Object>>();

@@ -118,7 +118,7 @@
                                 <th class="order-item-number" width="10">Tổng số lượng</th>
                                 <th class="order-item-number">Kho hàng</th>
                                 <th class="order-item-number">Vị trí</th>
-<%--                                <th class="order-item-number">Số lượng tồn kho</th>--%>
+                                <%--                                <th class="order-item-number">Số lượng tồn kho</th>--%>
                                 <th width="100" class="order-item-number text-center"
                                     style="text-align: center; vertical-align: middle;">Tuỳ chọn
                                 </th>
@@ -130,21 +130,22 @@
                                     <td>${o.productDTO.code}</td>
                                     <td>${o.productDTO.name}</td>
                                     <td><img src="/img/${o.productDTO.image}" alt="" width="100px;"></td>
-                                    <td>${o.quantity}</td>
+                                    <td >${o.quantity}</td>
+                                    <input type="hidden" id="${o.productDTO.id}-quantity-order" value="${o.quantity}">
                                     <td>
                                         <button class="btn btn-add btn-sm" type="button" onclick="findAvailableItemInWarehouse('${o.productDTO.id}')">Tìm kho còn hàng</button>
                                         <select  id="warehouses-list-${o.productDTO.id}" style="display: none; margin-left: 120px; margin-top: 15px" onchange="genDetailLocation(this.value, '${o.productDTO.id}')">
                                             <option value="0">--------Chọn kho hàng--------</option>
                                         </select>
                                     </td>
-                                    <td id="detail-location">
-<%--                                        <select id="location-list-${o.productDTO.id}" style="display: none" onchange="genProductQuantity(this.value, '${o.productDTO.id}')">--%>
-<%--                                            <option value="0">--------Chọn vị trí--------</option>--%>
-<%--                                        </select>--%>
+                                    <td id="detail-location-${o.productDTO.id}">
+                                            <%--                                        <select id="location-list-${o.productDTO.id}" style="display: none" onchange="genProductQuantity(this.value, '${o.productDTO.id}')">--%>
+                                            <%--                                            <option value="0">--------Chọn vị trí--------</option>--%>
+                                            <%--                                        </select>--%>
                                     </td>
-<%--                                    <td>--%>
-<%--&lt;%&ndash;                                        <span id="p-quantity-${o.productDTO.id}" style="display: none">0</span>&ndash;%&gt;--%>
-<%--                                    </td>--%>
+                                        <%--                                    <td>--%>
+                                        <%--&lt;%&ndash;                                        <span id="p-quantity-${o.productDTO.id}" style="display: none">0</span>&ndash;%&gt;--%>
+                                        <%--                                    </td>--%>
                                     <td></td>
                                 </tr>
                             </c:forEach>
@@ -177,7 +178,7 @@
                         </div>
                         <div class="row">
                             <div class="tile-footer col-md-12">
-                                <button id="createExport" class="btn btn-primary create-order-button" type="button">Lưu
+                                <button  class="btn btn-primary create-order-button" onclick="handleSubmit()" type="button">Lưu
                                     giao
                                     dịch</button>
                                 <a class="btn btn-primary cancel-order-button"

@@ -5,15 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigInteger;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExportItemDto {
-    private String exportTransactionId;
+public class ProductWarehouseExportDTO {
     private String location_id;
-    private String productName;
-    private BigInteger quantity;
+    private int quantity;
 }

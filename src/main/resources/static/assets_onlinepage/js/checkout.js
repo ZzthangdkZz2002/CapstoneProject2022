@@ -90,7 +90,7 @@ function OrderAction() {
 
     const cartList = JSON.parse(localStorage.getItem('cart'))
     const totalMoney = cartList.reduce(
-        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
+        (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity*1.1),
         0
     );
 
@@ -98,7 +98,7 @@ function OrderAction() {
         let item = new Object();
         item.product_id = cartList[i].product.id;
         item.quantity = cartList[i].quantity;
-        item.amount = cartList[i].product.price * cartList[i].quantity;
+        item.amount = parseInt(cartList[i].product.price * cartList[i].quantity*1.1);
         products.push(item);
     }
 
@@ -107,7 +107,7 @@ function OrderAction() {
         "user_email" : email,
         "user_phone" : phone,
         "address" : address,
-        "amount" : totalMoney,
+        "amount" : parseInt(totalMoney),
         "payment_method" : paymentMethod,
         "message" : note,
         "orderTransactionDetails" : products
