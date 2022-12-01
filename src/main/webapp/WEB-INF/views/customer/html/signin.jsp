@@ -25,7 +25,7 @@
           </ul>
           <div class="sign_form">
             <div id="signin_content">
-              <h3>Đăng nhập</h3>
+              <h2 style="color: white; margin-bottom: 20px;text-align: center;font-weight: bold">Đăng nhập</h2>
                 <%--@elvariable id="signinRequest" type="com.example.dto.SigninRequest"--%>
               <form:form action="${pageContext.request.contextPath}/auth/signin" method="POST" modelAttribute="signinRequest" style="width: 100%;"  >
                   <label for="email">Email</label>
@@ -44,8 +44,8 @@
                   <input type="submit" value="Đăng nhập"/>
                 </div>
                 <hr style="color: grey;">
-                <div class="form-elements">
-                  Bạn chưa có tài khoản?<a href="/signup.html" id="signup">Đăng ký</a>
+                <div class="form-elements" style="text-align: center">
+                  Bạn chưa có tài khoản?<a href="/signup" id="signup">Đăng ký</a>
                 </div>
               </form:form>
 
@@ -55,5 +55,21 @@
 
         <!--Page Footer-->
         <jsp:include page="../footer.jsp"/>
+
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery-1.11.1.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/onlinepage.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap.min.js"></script>
+
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-hover-dropdown.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/owl.carousel.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/echo.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.easing-1.3.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-slider.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.rateit.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/assets_onlinepage/js/lightbox.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-select.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/wow.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
       </body>
 </html>

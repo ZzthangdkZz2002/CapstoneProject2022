@@ -2287,7 +2287,7 @@ select.form-control-lg:not([size]):not([multiple]),
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 10px;
   padding-left: 20px;
 }
 
@@ -16431,17 +16431,16 @@ th {
 }
 
 .create-order-button {
-  width: 49.4%;
   height: 60px;
-  font-size: 19px;
+  font-size: 15px;
   line-height: 50px;
   background-color: #007acc;
   color: #f5f5f5 !important;
 }
 .cancel-order-button {
-  width: 49.4%;
+  /*width: 49.4%;*/
   height: 60px;
-  font-size: 19px;
+  font-size: 15px;
   line-height: 50px;
   background-color: #de0400;
   color: #f5f5f5 !important;

@@ -141,5 +141,23 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <%--<script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>--%>
+
+
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery-1.11.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/onlinepage.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-hover-dropdown.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/owl.carousel.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/echo.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.easing-1.3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-slider.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.rateit.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets_onlinepage/js/lightbox.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/wow.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
+
 </body>>
 </html>

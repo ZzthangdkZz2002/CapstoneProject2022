@@ -14,7 +14,7 @@
       </head>
       <body>    
         <!--Page Header-->
-        <jsp:include page="header.jsp" />
+        <jsp:include page="../onlinePage/header.jsp"/>
 
         <!--Page Content-->
         <main>
@@ -47,7 +47,7 @@
                                             <td style="color: #E1DB0A; font-size: 2rem">${order.status}</td>
                                         </tr>
                                         <c:forEach var="item" items="${order.orderTransactionDetails}">
-                                            <tr>
+                                            <tr style="border-bottom: 0.5px solid #36454F;">
                                                 <td><img src="/img/${item.productDTO.image}" alt="hinh ảnh sản phẩm">
                                                     <span style="margin-left: 15px"> ${item.productDTO.name}</span> <br>
                                                     <span style="margin-left: 15px">x${item.quantity}</span>
@@ -89,5 +89,21 @@
         <!--Page Footer-->
 <%--        <jsp:include page="footer.jsp"/>--%>
         <script src="${pageContext.request.contextPath}/assets_onlinepage/js/checkout.js"></script>
+
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery-1.11.1.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/onlinepage.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap.min.js"></script>
+
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-hover-dropdown.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/owl.carousel.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/echo.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.easing-1.3.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-slider.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.rateit.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/assets_onlinepage/js/lightbox.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-select.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/wow.min.js"></script>
+        <script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
       </body>
 </html>

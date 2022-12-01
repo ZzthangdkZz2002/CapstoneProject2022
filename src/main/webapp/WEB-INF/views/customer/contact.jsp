@@ -14,7 +14,7 @@
     </head>
     <body>    
         <!--Page Header-->
-        <jsp:include page="header.jsp"/>
+        <jsp:include page="../onlinePage/header.jsp"/>
     
         <!--Page Content-->
         <main>

@@ -132,9 +132,9 @@
                         hàng
                     </span></a>
                 <ul class="sub-app-menu">
-                    <li><a class="sub-app-menu_item" href="${pageContext.request.contextPath}/admin/warehouses"><span class="app-menu__label">Kho
+                    <li><a class="sub-app-menu_item sub-item-active" href="${pageContext.request.contextPath}/admin/warehouses"><span class="app-menu__label">Kho
                                 hàng</span></a></li>
-                    <li><a class="sub-app-menu_item sub-item-active" href="${pageContext.request.contextPath}/admin/warehouses/view/import"><span
+                    <li><a class="sub-app-menu_item " href="${pageContext.request.contextPath}/admin/warehouses/view/import"><span
                             class="app-menu__label">Quản lý
                                 nhập kho</span></a></li>
                     <li><a class="sub-app-menu_item" href="${pageContext.request.contextPath}/admin/warehouses/view/export"><span
@@ -158,4 +158,27 @@
     </ul>
 </aside>
 
+<script>
+    window.onload = function (){
+        var url = window.location.href;
+        var items = document.querySelectorAll('.app-menu__item');
+        var sub_items = document.querySelectorAll('.sub-app-menu_item');
+        if(url.includes('admin/warehouses')){
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[6].className += " active";
+        }
+        if(url.includes('admin/warehouses/view/import') || url.includes('admin/warehouses/import/add')){
+            let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
+            current[0].className = current[0].className.replace(" sub-item-active", "");
+            sub_items[1].className += " sub-item-active";
+        }
+        else if(url.includes('admin/warehouses/view/export') || url.includes('admin/warehouses/export/add')){
+            let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
+            current[0].className = current[0].className.replace(" sub-item-active", "");
+            sub_items[2].className += " sub-item-active";
+        }
+
+    }
+</script>
 </body>

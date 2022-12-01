@@ -237,8 +237,8 @@
                         <a href="${pageContext.request.contextPath}/homepage/cart" class="dropdown-toggle lnk-cart">
                             <div class="items-cart-inner">
                                 <div class="basket">
-                                    <i class="glyphicon glyphicon-shopping-cart"></i>
-                                    <span>Giỏ hàng</span>
+                                    <i class="glyphicon glyphicon-shopping-cart" style="font-size: 15px"></i>
+                                    <span style="font-size: 15px">Giỏ hàng</span>
                                 </div>
                                 <div class="basket-item-count"><span class="count">0</span></div>
                             </div>
@@ -286,16 +286,24 @@
                     <div style="margin-left: 20px">
                         <c:choose>
                             <c:when test = "${username == null}">
-                                <div id="avatar_icon">
-                                    <a href="${pageContext.request.contextPath}/signin"><i class="material-icons"></i></a><a href="${pageContext.request.contextPath}/signin">Đăng nhập</a> / <a href="${pageContext.request.contextPath}/signup">Đăng ký</a>
-                                </div>
-                                <div>
-                                    <a href="${pageContext.request.contextPath}/tracking/trackingOrder">Lịch sử đơn hàng</a>
+<%--                                <div id="avatar_icon">--%>
+<%--                                    <a href="${pageContext.request.contextPath}/signin"><i class="material-icons"></i></a><a href="${pageContext.request.contextPath}/signin">Đăng nhập</a> / <a href="${pageContext.request.contextPath}/signup">Đăng ký</a>--%>
+<%--                                </div>--%>
+<%--                                <div>--%>
+<%--                                    <a href="${pageContext.request.contextPath}/tracking/trackingOrder">Lịch sử đơn hàng</a>--%>
+<%--                                </div>--%>
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle" data-hover ="dropdown" style="padding: 15px 13px; border: none; font-size: 15px"><i class="icon fa fa-user" style="margin-right: 3px"></i>Tài khoản</button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="${pageContext.request.contextPath}/signin" style="color: black;">Đăng nhập</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/signup" style="color: black;">Đăng kí</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/trackingOrder" style="color: black;">Lịch sử đơn hàng</a></li>
+                                    </ul>
                                 </div>
                             </c:when>
                             <c:otherwise>
                                 <div class="dropdown">
-                                    <button class="dropdown-toggle" data-toggle="dropdown" style="padding: 14px 9px; border: none;"><i class="icon fa fa-user" style="padding-right: 5px;"></i>${username}</button>
+                                    <button class="dropdown-toggle" data-hover ="dropdown" style="padding: 15px 13px; border: none; font-size: 15px"><i class="icon fa fa-user" style="margin-right: 3px; font-size: 15px"></i>${username}</button>
                                     <ul class="dropdown-menu">
                                         <li><a href="${pageContext.request.contextPath}/profile" style="color: black;">Tài khoản của tôi</a></li>
                                         <li><a href="${pageContext.request.contextPath}/order" style="color: black;">Đơn hàng của tôi</a></li>

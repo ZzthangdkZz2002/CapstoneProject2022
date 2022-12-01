@@ -74,6 +74,11 @@
         .autocomplete-items{
             height: 200px;
         }
+
+        .required-field::after {
+            content: " *";
+            color: red;
+        }
         @media print {
 
             body {
@@ -167,9 +172,8 @@
 
                 </div>
 
-                <div class="col-12 custpay">
-                    <div class="col-7 mt-3 pt-2 pl-4">
-                        <p class="mb-4 custom-text-bill">Tiền khách trả</p>
+                    <div class="col-7 mt-3">
+                        <p class="mb-4 custom-text-bill ml-2 pt-2">Tiền khách trả</p>
                     </div>
                     <div class="col-5 mt-3">
                         <input type="text" class="form-control customer-pay mb-4" >
@@ -180,11 +184,10 @@
                     <div class="col-4 mt-3">
                         <p class="mb-4 text-right" id="tienThua">0</p>
                     </div>
-                    <div class="col-12 pl-4 mt-3">
+                    <div class="col-12 pl-4 mt-4">
                         <p class="mb-4 custom-text-bill">Phương thức thanh toán:</p>
                     </div>
 
-                </div>
 
                 <div class="col-12 pl-4">
                     <div class="form-check form-check-inline">
@@ -330,7 +333,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Thông tin khách hàng</h5>
+                <h5 class="modal-title" id="">Thông tin khách hàng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -343,29 +346,29 @@
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_name' required />
-                            <label for="name" class="form__label">Tên  khách hàng</label>
+                            <label for="cust_name" class="form__label required-field">Tên  khách hàng</label>
                         </div>
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_email' required />
-                            <label for="name" class="form__label">Email</label>
+                            <label for="cust_email" class="form__label required-field">Email</label>
                         </div>
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_phone' required />
-                            <label for="name" class="form__label">Điện thoại</label>
+                            <label for="cust_phone" class="form__label required-field">Điện thoại</label>
                         </div>
 
 
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_address' required />
-                            <label for="name" class="form__label">Địa chỉ</label>
+                            <label for="cust_address" class="form__label required-field">Địa chỉ</label>
                         </div>
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="name" id='cust_note' required />
-                            <label for="name" class="form__label">Ghi chú</label>
+                            <input type="input" class="form__field" placeholder="Name" name="name" id='cust_note' />
+                            <label for="cust_note" class="form__label">Ghi chú</label>
                         </div>
 
                     </div>
@@ -401,12 +404,12 @@
 
                         <div class="form__group field col-12">
                             <input type="input" class="form__field" placeholder="Name" name="nameBank" id='nameBank' required />
-                            <label for="name" class="form__label">Tên hiển thị</label>
+                            <label for="nameBank" class="form__label">Tên hiển thị</label>
                         </div>
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Số tài khoản" name="stk" id='stk' required />
-                            <label for="name" class="form__label">Số tài khoản</label>
+                            <label for="stk" class="form__label">Số tài khoản</label>
                         </div>
 
                         <div class="form__group field col-5 drop-down">

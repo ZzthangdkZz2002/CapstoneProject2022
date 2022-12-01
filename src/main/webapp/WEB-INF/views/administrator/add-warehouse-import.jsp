@@ -4,7 +4,7 @@
 
 <head>
     <title>Thêm nhập kho | Quản trị</title>
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +25,7 @@
     <!-- icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
           integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
-          crossorigin="anonymous" referrerpolicy="no-referrer" />
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 
 </head>
 
@@ -35,6 +35,7 @@
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <jsp:include page="warehouse-home-menu.jsp"/>
+
 <main class="app-content">
     <div class="row">
         <div class="col-md-12">
@@ -52,12 +53,13 @@
     <form>
         <div class="row">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="tile">
                         <h3 class="tile-title">Thông tin sản phẩm</h3>
                         <div class="row element-button">
                             <div class="col-sm-12">
-                                <button class="btn btn-add btn-sm" title="Thêm" data-toggle="modal" data-target="#productList" type="button" onclick="importInfoSelect(this)">
+                                <button class="btn btn-add btn-sm" title="Thêm" data-toggle="modal"
+                                        data-target="#productList" type="button" onclick="importInfoSelect(this)">
                                     <i class="fas fa-plus"></i>
                                     Thêm sản phẩm
                                 </button>
@@ -76,7 +78,8 @@
                                     <th class="order-item-number" width="10">Giảm giá</th>
                                     <th class="order-item-number">Thành tiền</th>
                                     <th width="100" class="order-item-number text-center"
-                                        style="text-align: center; vertical-align: middle;">Tuỳ chọn</th>
+                                        style="text-align: center; vertical-align: middle;">Tuỳ chọn
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -87,72 +90,77 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="tile">
                         <h3 class="tile-title">Thông tin nhập hàng</h3>
                         <div class="tile-body">
-<%--                            <div class="form-group col-md-12">--%>
-<%--                                <label for="importDate" class="control-label required-field">Ngày nhập</label>--%>
-<%--                                <input class="form-control" type="date" name="birthmonth" id="importDate" onchange="checkDate()" required--%>
-<%--                                >--%>
-<%--                            </div>--%>
+                            <%--                            <div class="form-group col-md-12">--%>
+                            <%--                                <label for="importDate" class="control-label required-field">Ngày nhập</label>--%>
+                            <%--                                <input class="form-control" type="date" name="birthmonth" id="importDate" onchange="checkDate()" required--%>
+                            <%--                                >--%>
+                            <%--                            </div>--%>
                             <div class="form-group col-md-12">
                                 <label for="warehouse" class="control-label required-field">Vị trí lưu
                                     kho</label>
-                                <select class="form-control" id="warehouse" required onchange="SelectWarehouse(this.value)">
+                                <select class="form-control" id="warehouse" required
+                                        onchange="SelectWarehouse(this.value)">
                                     <option value="0">Chọn ví trí lưu kho</option>
                                     <c:forEach var="warehouse" items="${listWarehouses}">
                                         <option value="${warehouse.id}">${warehouse.wardName}, ${warehouse.districtName},${warehouse.provinceName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
-    <div class="form-group col-md-12">
-        <label for="warehouse" class="control-label required-field">Vị trí lưu sản phẩm</label>
-        <select class="form-control" id="warehouseLocation" required>
-            <option value="0">Chọn vị trí lưu sản phẩm</option>
-            <option>Vui lòng chọn vị trí lưu kho trước</option>
-        </select>
-    </div>
+                            <div class="form-group col-md-12">
+                                <label for="warehouse" class="control-label required-field">Vị trí lưu sản phẩm</label>
+                                <select class="form-control" id="warehouseLocation" required>
+                                    <option value="0">Chọn vị trí lưu sản phẩm</option>
+                                    <option>Vui lòng chọn vị trí lưu kho trước</option>
+                                </select>
+                            </div>
 
-    <div class="form-group col-md-3">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProductLocation">
-            Thêm vị trí
-        </button>
-    </div>
+                            <div class="form-group col-md-3">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#addProductLocation">
+                                    Thêm vị trí
+                                </button>
+                            </div>
 
-    <div class="form-group col-md-12">
-        <label for="supplierSelect" class="control-label required-field">Nhà cung
-            cấp</label>
-        <select class="form-control" id="supplierSelect">
-            <option value="0">Chọn nhà cung cấp</option>
-            <c:forEach items="${listSupplier}" var="supplier">
-                <option value="${supplier.id}">${supplier.name}</option>
-            </c:forEach>
-        </select>
+                            <div class="form-group col-md-12">
+                                <label for="supplierSelect" class="control-label required-field">Nhà cung
+                                    cấp</label>
+                                <select class="form-control" id="supplierSelect" style="margin-bottom: 10px">
+                                    <option value="0">Chọn nhà cung cấp</option>
+                                    <c:forEach items="${listSupplier}" var="supplier">
+                                        <option value="${supplier.id}">${supplier.name}</option>
+                                    </c:forEach>
+                                </select>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
-            Thêm nhà cung cấp
-        </button>
-    </div>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
+                                        data-target="#modelId">
+                                    Thêm nhà cung cấp
+                                </button>
+                            </div>
 
                             <div class="form-group col-md-12">
                                 <label class="control-label">Tổng tiền: </label>
                                 <p class="control-all-money-total"><span id="sum">0</span></p>
                             </div>
-    <div class="form-group col-md-12">
-        <label class="control-label">Tiền trả nhà cung cấp: </label>
-        <input type="text" class="form__field money_mustPay" id="moneyMustPay" required="" value="0" style="width: 200px; margin-left: 30px">
-    </div>
-    <div class="form-group col-md-12">
-        <label class="control-label">Tính vào công nợ: </label>
-        <p class="control-all-money-total"><span id="debt">0</span></p>
-    </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Tiền trả nhà cung cấp: </label>
+                                <input type="number" class="form__field money_mustPay" id="moneyMustPay" required=""
+                                       value="0" style="width: 200px">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Tính vào công nợ: </label>
+                                <p class="control-all-money-total"><span id="debt">0</span></p>
+                            </div>
                             <div class="row">
                                 <div class="tile-footer col-md-12">
                                     <button id="createImport" class="btn btn-primary create-order-button"
                                             type="button">Lưu giao
-                                        dịch</button>
+                                        dịch
+                                    </button>
                                     <a class="btn btn-primary cancel-order-button" href="order-management.html"
                                        type="button">Huỷ và quay về</a>
                                 </div>
@@ -177,27 +185,29 @@ PRODUCT MODAL
                     <div class="col-md-12">
                         <div class="tile">
                             <div class="tile-body">
-<%--                                <div class="form-group col-md-5">--%>
-<%--                                    <label for="warehouse" class="control-label required-field">Chọn ô chứa</label>--%>
-<%--                                    <select class="form-control" id="container" required >--%>
-<%--                                        <c:forEach var="container" items="${listContainer}">--%>
-<%--                                            <option value = "${container.id}">${container.shelf}-${container.columnIn}-${container.rowIn}</option>--%>
+                                <%--                                <div class="form-group col-md-5">--%>
+                                <%--                                    <label for="warehouse" class="control-label required-field">Chọn ô chứa</label>--%>
+                                <%--                                    <select class="form-control" id="container" required >--%>
+                                <%--                                        <c:forEach var="container" items="${listContainer}">--%>
+                                <%--                                            <option value = "${container.id}">${container.shelf}-${container.columnIn}-${container.rowIn}</option>--%>
 
-<%--                                        </c:forEach>--%>
-<%--                                    </select>--%>
-<%--                                </div>--%>
+                                <%--                                        </c:forEach>--%>
+                                <%--                                    </select>--%>
+                                <%--                                </div>--%>
 
                                 <form>
                                     <div class="modal-search-row">
 
                                         <button class="btn btn-save" type="button" data-dismiss="modal"
                                                 onclick="addToImportTable()"><i class='fas fa-plus'></i>
-                                            Thêm vào đơn hàng</button>
+                                            Thêm vào đơn hàng
+                                        </button>
                                         <form action="">
                                             <div class="search-container">
                                                 <input class="form-control" type="text" placeholder="Tìm kiếm"
                                                        name="search" id="searchText">
-                                                <button type="button" onclick="searchProductInImport(1)"><i class="fa fa-search"></i></button>
+                                                <button type="button" onclick="searchProductInImport(1)"><i
+                                                        class="fa fa-search"></i></button>
                                             </div>
                                         </form>
                                     </div>
@@ -222,14 +232,15 @@ PRODUCT MODAL
                                                     <%--                  <td>${product.available}</td>--%>
                                                 <td>${product.original_price}</td>
                                                 <td>${product.price}</td>
-<%--                                                <td>--%>
-<%--                                                    <c:forEach var="categoryDto" items="${product.categories}">--%>
-<%--                                                        ${categoryDto.name} ,--%>
-<%--                                                    </c:forEach>--%>
-<%--                                                </td>--%>
-<%--                                                <td>${product.brand.name}</td>--%>
+                                                    <%--                                                <td>--%>
+                                                    <%--                                                    <c:forEach var="categoryDto" items="${product.categories}">--%>
+                                                    <%--                                                        ${categoryDto.name} ,--%>
+                                                    <%--                                                    </c:forEach>--%>
+                                                    <%--                                                </td>--%>
+                                                    <%--                                                <td>${product.brand.name}</td>--%>
                                                 <td>
-                                                    <input class="status-checkbox" type="checkbox" data-toggle="modal" data-target="#confirmStatus" name="check1" value="1">
+                                                    <input class="status-checkbox" type="checkbox" data-toggle="modal"
+                                                           data-target="#confirmStatus" name="check1" value="1">
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -239,22 +250,29 @@ PRODUCT MODAL
                                     <div class="pagination-row">
                                         <div class="pagination-container">
                                             <%--              <p>${pageNo}</p>--%>
-                                            <div class="dataTables_paginate paging_simple_numbers" id="sampleTable_paginate">
+                                            <div class="dataTables_paginate paging_simple_numbers"
+                                                 id="sampleTable_paginate">
                                                 <ul class="pagination">
-                                                    <c:forEach var="i" step="1" begin="1" end="${total<=0 ? 0: total-1}">
-                                                        <li class="paginate_button page-item " id="sampleTable_previous">
-                                                            <a aria-controls="sampleTable" data-dt-idx="0" tabindex="0" class="page-link" onclick="<c:choose><c:when test="${text!=null}">searchProductInImport(1)</c:when><c:otherwise>Pagination(${i})</c:otherwise></c:choose>" >
+                                                    <c:forEach var="i" step="1" begin="1"
+                                                               end="${total<=0 ? 0: total-1}">
+                                                        <li class="paginate_button page-item "
+                                                            id="sampleTable_previous">
+                                                            <a aria-controls="sampleTable" data-dt-idx="0" tabindex="0"
+                                                               class="page-link" onclick="
+                                                            <c:choose>
+                                                            <c:when test="${text!=null}">searchProductInImport(1)</c:when>
+                                                                <c:otherwise>Pagination(${i})</c:otherwise></c:choose>">
                                                                     ${i}
                                                             </a>
                                                         </li>
-<%--                                                        <c:choose>--%>
-<%--                                                            <c:when test="${pageNo == i}">--%>
-<%--                                                                <li class="active paginate_button page-item " id="sampleTable_previous" onclick="Pagination(${i})">${i}</li>--%>
-<%--                                                            </c:when>--%>
-<%--                                                            <c:otherwise>--%>
-<%--                                                                <li class="paginate_button page-item " id="sampleTable_previous" onclick="Pagination(${i})">${i}</li>--%>
-<%--                                                            </c:otherwise>--%>
-<%--                                                        </c:choose>--%>
+                                                        <%--                                                        <c:choose>--%>
+                                                        <%--                                                            <c:when test="${pageNo == i}">--%>
+                                                        <%--                                                                <li class="active paginate_button page-item " id="sampleTable_previous" onclick="Pagination(${i})">${i}</li>--%>
+                                                        <%--                                                            </c:when>--%>
+                                                        <%--                                                            <c:otherwise>--%>
+                                                        <%--                                                                <li class="paginate_button page-item " id="sampleTable_previous" onclick="Pagination(${i})">${i}</li>--%>
+                                                        <%--                                                            </c:otherwise>--%>
+                                                        <%--                                                        </c:choose>--%>
                                                     </c:forEach>
                                                 </ul>
                                             </div>
@@ -336,7 +354,8 @@ MODAL SUCCESSFUL
                     </div>
                 </div>
                 <div style="display: flex; justify-content: center; padding: 10px;">
-                    <a href="${pageContext.request.contextPath}/admin/warehouses/view/import" style="margin: 5px;" class="btn btn-save">Đóng</a>
+                    <a href="${pageContext.request.contextPath}/admin/warehouses/view/import" style="margin: 5px;"
+                       class="btn btn-save">Đóng</a>
                 </div>
             </div>
             <div class="modal-footer">
@@ -435,7 +454,7 @@ MODAL CHOOSE INFO BEFORE SELECTING PRODUCT
 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">F
+            <div class="modal-header">
                 <h5 class="modal-title">Thêm nhà cung cấp</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -446,51 +465,60 @@ MODAL CHOOSE INFO BEFORE SELECTING PRODUCT
                     <div class="row justify-content-between">
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Mã mặc định" name="s_code" id='code' required />
-                            <label for="name" class="form__label">Mã nhà cung cấp</label>
+                            <input type="input" class="form__field" placeholder="Mã mặc định" name="s_code" id='code'
+                                   required/>
+                            <label for="code" class="form__label required-field">Mã nhà cung cấp</label>
                         </div>
 
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="s_name" id='supplier_name' required />
-                            <label for="name" class="form__label">Tên  nhà cung cấp</label>
+                            <input type="input" class="form__field" placeholder="Name" name="s_name" id='supplier_name'
+                                   required/>
+                            <label for="supplier_name" class="form__label required-field">Tên nhà cung cấp</label>
                         </div>
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="s_email" name="name" id='supplier_email' required />
-                            <label for="name" class="form__label">Email</label>
+                            <input type="input" class="form__field" placeholder="s_email" name="name"
+                                   id='supplier_email' required/>
+                            <label for="supplier_email" class="form__label required-field">Email</label>
                         </div>
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="phone" id='supplier_phone' required />
-                            <label for="name" class="form__label">Điện thoại</label>
+                            <input type="input" class="form__field" placeholder="Name" name="phone" id='supplier_phone'
+                                   required/>
+                            <label for="supplier_phone" class="form__label required-field">Điện thoại</label>
                         </div>
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="company" id='supplier_company' required />
-                            <label for="name" class="form__label">Công ty</label>
+                            <input type="input" class="form__field" placeholder="Name" name="company"
+                                   id='supplier_company' required/>
+                            <label for="supplier_company" class="form__label required-field">Công ty</label>
                         </div>
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="address" id='supplier_address' required />
-                            <label for="name" class="form__label">Địa chỉ</label>
+                            <input type="input" class="form__field" placeholder="Name" name="address"
+                                   id='supplier_address' required/>
+                            <label for="supplier_address" class="form__label required-field">Địa chỉ</label>
                         </div>
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="tax_code" id='supplier_taxcode' required />
-                            <label for="name" class="form__label">Mã số thuế</label>
+                            <input type="input" class="form__field" placeholder="Name" name="tax_code"
+                                   id='supplier_taxcode' required/>
+                            <label for="supplier_taxcode" class="form__label required-field">Mã số thuế</label>
                         </div>
 
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="note" id='supplier_note' required />
-                            <label for="name" class="form__label">Ghi chú</label>
+                            <input type="input" class="form__field" placeholder="Name" name="note" id='supplier_note'/>
+                            <label for="supplier_note" class="form__label">Ghi chú</label>
                         </div>
 
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa-solid fa-ban mr-2"></i>Huỷ</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i
+                        class="fa-solid fa-ban mr-2"></i>Huỷ
+                </button>
                 <button type="button" class="btn btn-primary"><i class="fa-regular fa-floppy-disk mr-2"></i>Lưu</button>
             </div>
         </div>
@@ -503,18 +531,20 @@ MODAL
 <!-- Essential javascripts for application to work-->
 
 <%--Model add brand--%>
-<div class="modal fade" id="addProductLocation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addProductLocation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="color: green">Thêm mới vị trí</h5>
+                <h5 class="modal-title" id="exampleModalLabel" style="color: green; margin-left: 18px">Thêm mới vị
+                    trí</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <p id="addProductLocationError" style="color: red;display: none"></p>
-                <div class="form-group col-md-3">
+                <div class="form-group ">
                     <label class="control-label required-field">Tên vị trí</label>
                     <input class="form-control" id="addLocaiton" type="text" required>
                 </div>
@@ -549,9 +579,9 @@ MODAL
 </script>
 <script>
     var element = document.getElementById("createImport");
-    element.addEventListener('click',()=>{
-        var importProducts= new Array();
-        $(".import-items").each(function (){
+    element.addEventListener('click', () => {
+        var importProducts = new Array();
+        $(".import-items").each(function () {
             var row = $(this);
             var importProduct = new Object();
 
@@ -567,16 +597,16 @@ MODAL
 
         });
 
-        var location_name = $( "#warehouseLocation option:selected" ).text();
+        var location_name = $("#warehouseLocation option:selected").text();
         var warehouse = new Object();
         warehouse.id = $('#warehouse').val();
-        var data1={
+        var data1 = {
             "supplier_id": $('#supplierSelect').val(),
             // importDate: $('#importDate').val(),
             "location_name": location_name,
             "warehouse": warehouse,
-            "total_importPrice" : totalMoney.toFixed(0),
-            "money_paid" : $('#moneyMustPay').val(),
+            "total_importPrice": totalMoney.toFixed(0),
+            "money_paid": $('#moneyMustPay').val(),
             "importProducts": importProducts
         };
 
@@ -588,12 +618,11 @@ MODAL
                 JSON.stringify(data1)
             ,
             // dataType:"text",
-            success: function (response){
+            success: function (response) {
                 console.log(response);
-                if(response.status === "00"){
+                if (response.status === "00") {
                     $('#successful').modal('show');
-                }
-                else {
+                } else {
                     console.log(response.message + '\n' + response.data + response.status);
                     $('#reason').html(response.data);
                     $('#unsuccessful').modal('show');

@@ -264,7 +264,6 @@ ul.breadcrumb li a:hover {
 /* Style main content*/
 main {
     min-height: 70vh;
-    margin-bottom: 100px;
 }
 
 main h3, main h4, #first_row h1 {
@@ -281,8 +280,8 @@ main button {
 }
 
 main > div {
-    background-color: white; 
-    padding: 40px;
+    background-color: #12cca7f0;
+    padding: 80px;
 }
 
     /* Style home page */

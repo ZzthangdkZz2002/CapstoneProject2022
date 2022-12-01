@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
+    <style>
+    </style>
 </head>
 
 <body onload="time()" class="app sidebar-mini rtl">
@@ -43,7 +45,7 @@
                 <div class="tile">
                     <h3 class="tile-title">Thông tin nhận hàng</h3>
                     <div class="tile-body" >
-                        <div class="row">
+                        <div class="row" style="margin-bottom: 20px">
                             <c:if test="${orderDto.customer == null}">
                                 <div class="form-group col-md-2">
                                     <label class="control-label ">Khách lẻ</label>
@@ -51,7 +53,7 @@
                             </c:if>
 
                             <c:if test="${orderDto.customer != null}">
-                                <div class="form-group col-md-6">
+                                <div class="col-md-4" style="padding-left: 0">
                                     <div class="form-group">
                                         <label class="control-label">Họ và tên</label>
                                         <p class="detail-text">${orderDto.customer.name}</p>
@@ -61,7 +63,7 @@
                                         <p class="detail-text">${orderDto.customer.phone}</p>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleSelect1" class="control-label">Địa chỉ giao hàng</label>
+                                        <label class="control-label">Địa chỉ giao hàng</label>
                                         <p class="detail-text">${orderDto.address}</p>
                                     </div>
                                 </div>

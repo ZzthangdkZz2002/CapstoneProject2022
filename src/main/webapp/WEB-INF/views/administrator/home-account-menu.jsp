@@ -154,4 +154,25 @@
     </ul>
 </aside>
 
+
+<script>
+    window.onload = function (){
+        var url = window.location.href;
+        var items = document.querySelectorAll('.app-menu__item');
+        var sub_items = document.querySelectorAll('.sub-app-menu_item');
+        if(url.includes('admin/accounts')){
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[3].className += " active";
+        }
+        if(url.includes('admin/accounts/customer-account')){
+            let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
+            current[0].className = current[0].className.replace(" sub-item-active", "");
+            sub_items[1].className += " sub-item-active";
+        }
+
+
+    }
+</script>
+
 </body>

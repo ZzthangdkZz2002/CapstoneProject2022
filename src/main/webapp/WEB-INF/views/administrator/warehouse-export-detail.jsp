@@ -105,7 +105,7 @@
     <form>
         <div class="row">
 
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="tile">
                     <h3 class="tile-title">Thông tin sản phẩm</h3>
                     <div class="du--lieu-san-pham">
@@ -133,7 +133,7 @@
                                     <td>${o.quantity}</td>
                                     <td>
                                         <button class="btn btn-add btn-sm" type="button" onclick="findAvailableItemInWarehouse('${o.productDTO.id}')">Tìm kho còn hàng</button>
-                                        <select  id="warehouses-list-${o.productDTO.id}" style="display: none; margin-left: 120px; margin-top: 15px" onchange="genDetailLocation(this.value, '${o.productDTO.id}')">
+                                        <select class="p-1 ml-2" id="warehouses-list-${o.productDTO.id}" style="display: none;margin-top: 15px; " onchange="genDetailLocation(this.value, '${o.productDTO.id}')">
                                             <option value="0">--------Chọn kho hàng--------</option>
                                         </select>
                                     </td>
@@ -153,12 +153,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="tile">
                     <h3 class="tile-title">Thông tin xuất hàng</h3>
                     <div class="tile-body">
                         <div class="form-group col-md-12">
-                            <label for="ExportDate" class="control-label required-field">Mã đơn hàng</label>
+                            <label for="order-id" class="control-label required-field">Mã đơn hàng</label>
                             <p id="order-id" style="font-weight: bold;color: green">#${order.orderid}</p>
                         </div>
                         <div class="form-group col-md-12">
@@ -176,7 +176,7 @@
                             <textarea class="form-control" name="mota" id="mota"></textarea>
                         </div>
                         <div class="row">
-                            <div class="tile-footer col-md-12">
+                            <div class="tile-footer col-md-12 pl-2">
                                 <button id="createExport" class="btn btn-primary create-order-button" type="button">Lưu
                                     giao
                                     dịch</button>
