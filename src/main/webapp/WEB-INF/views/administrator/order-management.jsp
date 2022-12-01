@@ -101,12 +101,28 @@
               </c:if>
 
             </div>
-
+<%--            <c:if test="${active eq 'waiting'}">--%>
+<%--              <c:set var="status" value="Chờ Xử Lý" />--%>
+<%--            </c:if>--%>
+<%--            <c:if test="${active eq 'confirmed'}">--%>
+<%--              <c:set var="status" value="Đã Xác Nhận" />--%>
+<%--            </c:if>--%>
+<%--            <c:if test="${active eq 'shipping'}">--%>
+<%--              <c:set var="status" value="Đang Giao Hàng" />--%>
+<%--            </c:if>--%>
+<%--            <c:if test="${active eq 'cancelled'}">--%>
+<%--              <c:set var="status" value="Đã Hủy" />--%>
+<%--            </c:if>--%>
+<%--            <c:if test="${active eq 'returned'}">--%>
+<%--              <c:set var="status" value="Đã Nhận Hoàn" />--%>
+<%--            </c:if>--%>
             <div class="search-row">
-              <form action="">
+              <form action="${pageContext.request.contextPath}/admin/orders/search" method="GET">
                 <div class="search-container">
-                  <input class="form-control" type="text" placeholder="Tìm kiếm" name="search">
-                  <button type="submit"><i class="fa fa-search"></i></button>
+                  <input class="form-control" type="text" placeholder="Tìm kiếm" name="text" id="searchText" value="${text}">
+                  <input type="hidden" value="0" type="text" name="index">
+<%--                  <input type="hidden" value="<%=pageContext.getAttribute("status")%>" type="text" name="status">--%>
+                  <button type="submit" id="search" ><i class="fa fa-search"></i></button>
                 </div>
               </form>
             </div>
@@ -128,10 +144,10 @@
               <c:forEach var="orderDto" items="${listOrder}">
                 <tr>
                   <td>#${orderDto.orderid}</td>
-                  <td>${orderDto.account_employee != null ? orderDto.account_employee.id : ""}</td>
+                  <td>${orderDto.accountemployee != null ? orderDto.accountemployee.id : ""}</td>
                   <td>${orderDto.customer != null ? orderDto.customer.id : "Khách lẻ"}</td>
                   <td>${orderDto.created}</td>
-                  <td>${orderDto.amount}</td>
+                  <td class = "currency-text">${orderDto.amount}</td>
                   <td><span class="${orderDto.status =="Đã Hủy" ? "badge bg-danger" : orderDto.status =="Chờ Xử Lý" ? "badge bg-warning" : "badge bg-success"}">${orderDto.status}</span></td>
                   <td>${orderDto.orderKind}</td>
                   <td>
@@ -155,6 +171,14 @@
                          type="button" title="Giao thành công" href="${pageContext.request.contextPath}/admin/orders/finish?id=${orderDto.id}"><i class="fas fa-edit"></i>Xác nhận</a>
                       <a class="btn btn-primary btn-sm edit"
                          type="button" title="Giao thành công" href="#"><i class="fas fa-edit"></i>Hoàn trả</a>
+                      <c:if test="${orderDto.isShipping eq 'false'}">
+                        <a class="btn btn-primary btn-sm edit"
+                           type="button" title="Giao hàng nhanh" href="${pageContext.request.contextPath}/admin/orders/giaohangnhanh?orderid=${orderDto.orderid}"><i class="fas fa-edit"></i>Lên đơn Giao Hàng Nhanh</a>
+                      </c:if>
+                      <c:if test="${orderDto.isShipping eq 'true'}">
+                        <a class="btn btn-primary btn-sm edit"
+                           type="button" title="Giao hàng nhanh" href="#"><i class="fas fa-edit"></i>Đã lên đơn cho Giao Hàng Nhanh</a>
+                      </c:if>
                     </c:if>
 
                     <a class="btn btn-primary btn-sm edit"
@@ -167,16 +191,21 @@
             </table>
             <div class="pagination-row">
               <div class="pagination-container">
+                <%--              <p>${pageNo}</p>--%>
                 <div class="dataTables_paginate paging_simple_numbers" id="sampleTable_paginate">
                   <ul class="pagination">
-                    <li class="paginate_button page-item previous disabled" id="sampleTable_previous"><a href="#"
-                        aria-controls="sampleTable" data-dt-idx="0" tabindex="0" class="page-link">Lùi</a></li>
-                    <li class="paginate_button page-item active"><a href="#" aria-controls="sampleTable" data-dt-idx="1"
-                        tabindex="0" class="page-link">1</a></li>
-                    <li class="paginate_button page-item "><a href="#" aria-controls="sampleTable" data-dt-idx="2"
-                        tabindex="0" class="page-link">2</a></li>
-                    <li class="paginate_button page-item next" id="sampleTable_next"><a href="#"
-                        aria-controls="sampleTable" data-dt-idx="3" tabindex="0" class="page-link">Tiếp</a></li>
+                    <c:forEach var="i" step="1" begin="0" end="${total<=0 ? 0: total-1}">
+                      <c:choose>
+                        <c:when test="${pageNo == i}">
+                          <li class="active paginate_button page-item " id="sampleTable_previous"><a href="${pageContext.request.contextPath}/admin/orders/${active}<c:choose><c:when test="${text!=null}">/search?text=${text}&index=${i}</c:when><c:otherwise>?index=${i}</c:otherwise></c:choose>"
+                                                                                                     aria-controls="sampleTable" data-dt-idx="0" tabindex="0" class="page-link">${i+1}</a></li>
+                        </c:when>
+                        <c:otherwise>
+                          <li class="paginate_button page-item " id="sampleTable_previous"><a href="${pageContext.request.contextPath}/admin/orders/${active}<c:choose><c:when test="${text!=null}">/search?text=${text}&index=${i}</c:when><c:otherwise>?index=${i}</c:otherwise></c:choose>"
+                                                                                              aria-controls="sampleTable" data-dt-idx="0" tabindex="0" class="page-link">${i+1}</a></li>
+                        </c:otherwise>
+                      </c:choose>
+                    </c:forEach>
                   </ul>
                 </div>
               </div>
@@ -327,6 +356,7 @@ MODAL
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
   <script src="${pageContext.request.contextPath}/js/order-offline.js"></script>
+  <script src="${pageContext.request.contextPath}/assets_onlinepage/js/common.js"></script>
   <script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>
   <script src="<c:url value="/js/popper.min.js"/>"></script>
   <script src="<c:url value="/js/bootstrap.min.js"/>"></script>

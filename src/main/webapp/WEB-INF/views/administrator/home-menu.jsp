@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Main CSS-->
-    <link href="<c:url value="/css/main.css"/>" rel="stylesheet" type="text/css">
+<%--    <link href="<c:url value="/css/main.css"/>" rel="stylesheet" type="text/css">--%>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <!-- or -->
     <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
@@ -19,7 +19,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script type="text/javascript">
+        // var str=location.href.toLowerCase();
+        // $(".app-menu li a").each(function() {
+        //     if (str.indexOf($(this).attr("href").toLowerCase()) > -1) {
+        //         $("a.active").removeClass("active");
+        //         $(this).addClass("active");
+        //     }
+        // });
+        // $("li.active").parents().each(function(){
+        //     if ($(this).is("li")){
+        //         $(this).addClass("active");
+        //     }
+        // });
+    </script>
     <style>
         .Choicefile {
             display: block;
@@ -153,14 +168,64 @@
 
 <script>
     // Add active class to the current button (highlight it)
-    var appMenu = document.querySelector(".app-menu");
-    var items = appMenu.getElementsByClassName("app-menu__item");
-    for (var i = 0; i < items.length; i++) {
-        items[i].addEventListener("click", function () {
-            var current = document.getElementsByClassName("active");
+    // var appMenu = document.querySelector(".app-menu");
+    // var items = appMenu.getElementsByClassName("app-menu__item");
+    // for (var i = 0; i < items.length; i++) {
+    //     items[i].addEventListener("click", function () {
+    //         var current = document.getElementsByClassName("active");
+    //         current[0].className = current[0].className.replace(" active", "");
+    //         this.className += " active";
+    //         console.log('active')
+    //     });
+    // }
+    window.onload = function (){
+        var url = window.location.href;
+        var items = document.querySelectorAll('.app-menu__item');
+        if(url.includes('admin/home')){
+            let current = document.getElementsByClassName("app-menu__item active");
             current[0].className = current[0].className.replace(" active", "");
-            this.className += " active";
-        });
+            items[0].className += " active";
+        }
+        else if(url.includes('admin/products')){
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[1].className += " active";
+        }
+        else if(url.includes('admin/orders')){
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[2].className += " active";
+        }
+        else if(url.includes('admin/accounts')){
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[3].className += " active";
+        }
+        else if(url.includes('admin/categories')){
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[4].className += " active";
+        }
+        else if(url.includes('admin/suppliers')){
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[5].className += " active";
+        }
+        else if(url.includes('admin/warehouses')){
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[6].className += " active";
+        }
+        else if(url.includes('admin/feedbacks')){
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[7].className += " active";
+        }
+        else{
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[8].className += " active";
+        }
     }
 </script>
 

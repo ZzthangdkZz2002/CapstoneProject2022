@@ -28,7 +28,7 @@
 
 </head>
 
-<body onload="time()" class="app sidebar-mini rtl">
+<body class="app sidebar-mini rtl">
   <!-- Navbar-->
   <jsp:include page="header.jsp"/>
   <!-- Sidebar menu-->
@@ -88,8 +88,8 @@
                   <td>${product.name}</td>
                   <td><img src="/img/${product.image}" alt="" width="100px;"></td>
 <%--                  <td>${product.available}</td>--%>
-                  <td>${product.original_price}</td>
-                  <td>${product.price}</td>
+                  <td class="currency-text">${product.original_price}</td>
+                  <td class="currency-text">${product.price}</td>
 
                   <td>${product.quantity}</td>
                   <td>
@@ -276,11 +276,13 @@ MODAL
   <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
   <script src="<c:url value="/js/main.js"/>"></script>
   <script src="<c:url value="/js/plugins/pace.min.js"/>"></script>
-
+  <script src="${pageContext.request.contextPath}/assets_onlinepage/js/common.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.xx.x/js/uikit.min.js"></script>
   <!-- The javascript plugin to display page loading on top-->
   <!-- Page specific javascripts-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+
   <script>
     $(document).ready(function (){
 

@@ -43,7 +43,7 @@
                 <div class="tile">
                     <h3 class="tile-title">Thông tin nhận hàng</h3>
                     <div class="tile-body" >
-                        <div class="row">
+                        <div class="row" style="margin-bottom: 20px">
                             <c:if test="${orderDto.customer == null}">
                                 <div class="form-group col-md-2">
                                     <label class="control-label ">Khách lẻ</label>
@@ -51,7 +51,7 @@
                             </c:if>
 
                             <c:if test="${orderDto.customer != null}">
-                                <div class="form-group col-md-6">
+                                <div class="col-md-4" style="padding-left: 0">
                                     <div class="form-group">
                                         <label class="control-label">Họ và tên</label>
                                         <p class="detail-text">${orderDto.customer.name}</p>
@@ -61,7 +61,7 @@
                                         <p class="detail-text">${orderDto.customer.phone}</p>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleSelect1" class="control-label">Địa chỉ giao hàng</label>
+                                        <label class="control-label">Địa chỉ giao hàng</label>
                                         <p class="detail-text">${orderDto.address}</p>
                                     </div>
                                 </div>
@@ -69,7 +69,7 @@
 
                             <div class="form-group col-md-4">
                                 <label class="control-label">Số tiền khách hàng cần thanh toán</label>
-                                <p class="detail-text">${orderDto.amount}</p>
+                                <p class="detail-text currency-text">${orderDto.amount}</p>
                             </div>
                         </div>
                         <div class="row">
@@ -115,14 +115,14 @@
                                     <td>${orderItemDTO.productDTO.code}</td>
                                     <td>${orderItemDTO.productDTO.name}</td>
                                     <td><img src="${pageContext.request.contextPath}/img/${orderItemDTO.productDTO.image}" alt="" width="100px;"></td>
-                                    <td>${orderItemDTO.productDTO.price} đ</td>
+                                    <td class="currency-text">${orderItemDTO.productDTO.price}</td>
                                     <td>${orderItemDTO.quantity}</td>
-                                    <td>${orderItemDTO.amount} đ</td>
+                                    <td class="currency-text">${orderItemDTO.amount}</td>
                                 </tr>
                             </c:forEach>
                             <tr>
                                 <td colspan="6" style="font-weight: bold;">Tổng tiền: </td>
-                                <td>${orderDto.amount} đ</td>
+                                <td class="currency-text">${orderDto.amount}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -297,6 +297,7 @@ MODAL CONFIRM CANCEL
     <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
     <script src="<c:url value="/js/main.js"/>"></script>
     <script src="<c:url value="/js/plugins/pace.min.js"/>"></script>
+    <script src="${pageContext.request.contextPath}/assets_onlinepage/js/common.js"></script>
     <script src="src/jquery.table2excel.js"></script>
     <!-- The javascript plugin to display page loading on top-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>

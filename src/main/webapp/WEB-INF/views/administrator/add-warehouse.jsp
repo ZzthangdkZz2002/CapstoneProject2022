@@ -32,7 +32,7 @@
 <jsp:include page="header.jsp"/>
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-<jsp:include page="home-menu.jsp"/>
+<jsp:include page="warehouse-home-menu.jsp"/>
 <main class="app-content">
   <div class="app-title">
     <ul class="app-breadcrumb breadcrumb">

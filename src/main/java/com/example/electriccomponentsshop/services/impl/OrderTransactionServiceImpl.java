@@ -52,6 +52,9 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
                 customer.setEmail(orderTransactionDTO.getUser_email());
                 customer.setPhone(orderTransactionDTO.getUser_phone());
                 customer.setAddress(orderTransactionDTO.getAddress());
+                customer.setProvince(orderTransactionDTO.getProvince());
+                customer.setDistrict(orderTransactionDTO.getDistrict());
+                customer.setWard(orderTransactionDTO.getWard());
             }
 
             if(!customerRepository.findByPhone(orderTransactionDTO.getUser_phone()).isPresent()){
@@ -64,11 +67,15 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
             orderTransaction.setUser_email(orderTransactionDTO.getUser_email());
             orderTransaction.setUser_phone(orderTransactionDTO.getUser_phone());
             orderTransaction.setAddress(orderTransactionDTO.getAddress());
+            orderTransaction.setProvince(orderTransactionDTO.getProvince());
+            orderTransaction.setDistrict(orderTransactionDTO.getDistrict());
+            orderTransaction.setWard(orderTransactionDTO.getWard());
             orderTransaction.setAmount(Double.parseDouble(orderTransactionDTO.getAmount()));
             orderTransaction.setPayment_method(orderTransactionDTO.getPayment_method());
             orderTransaction.setMessage(orderTransactionDTO.getMessage());
             orderTransaction.setStatus(OrderEnum.PENDING.getName());
             orderTransaction.setIsPaid(false);
+            orderTransaction.setIsShipping(false);
             orderTransaction.setOrderKind("online");
 
             OrderTransaction o = orderTransactionRepository.save(orderTransaction);
@@ -114,6 +121,9 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
                     if(customer.get().getAddress() != null){
                         orderTransaction.setAddress(customer.get().getAddress());
                     }
+                    orderTransaction.setProvince(customer.get().getProvince());
+                    orderTransaction.setDistrict(customer.get().getDistrict());
+                    orderTransaction.setWard(customer.get().getWard());
                 }else{
                     orderTransaction.setCustomer(null);
                 }
@@ -126,6 +136,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
             orderTransaction.setPayment_method(orderTransactionDTO.getPayment_method());
             orderTransaction.setStatus(OrderEnum.PENDING.getName());
             orderTransaction.setIsPaid(true);
+            orderTransaction.setIsShipping(false);
             orderTransaction.setOrderKind("offline");
 
 

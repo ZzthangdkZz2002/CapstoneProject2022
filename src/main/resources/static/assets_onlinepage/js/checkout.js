@@ -68,6 +68,11 @@ function OrderAction() {
     let email = $('#email').val();
     let phone = $('#phone').val();
     let address = $('#address').val();
+
+    let province = $("#city option:selected").text();
+    let district = $("#district option:selected").text();
+    let ward = $( "#ward option:selected").text();
+
     let note = $('#note').val();
     let paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
 
@@ -82,6 +87,18 @@ function OrderAction() {
     }
     if("" == address || address == null){
         alert("Vui lòng điền địa chỉ nhận hàng!!")
+        return
+    }
+    if($('#city').val() == '0'){
+        alert("Vui lòng điền Tỉnh/Thành phố!!")
+        return
+    }
+    if($('#district').val() == '0'){
+        alert("Vui lòng điền Quận/Huyện!!")
+        return
+    }
+    if($('#ward').val() == '0'){
+        alert("Vui lòng điền Xã/Phường!!")
         return
     }
     //
@@ -107,6 +124,9 @@ function OrderAction() {
         "user_email" : email,
         "user_phone" : phone,
         "address" : address,
+        "province" : province,
+        "district" : district,
+        "ward" : ward,
         "amount" : parseInt(totalMoney),
         "payment_method" : paymentMethod,
         "message" : note,

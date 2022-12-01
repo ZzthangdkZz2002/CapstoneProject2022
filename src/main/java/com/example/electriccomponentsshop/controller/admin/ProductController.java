@@ -62,6 +62,21 @@ public class ProductController {
         return "administrator/product-management";
     }
 
+    @GetMapping("search")
+    public String searchProduct(@RequestParam(name="text", required = false) String text, @RequestParam(name="index",defaultValue = "0") String index, ModelMap modelMap){
+        int pIndex = Integer.parseInt(index);
+
+        Page<Product> products = productService.searchProduct(text,PageRequest.of(pIndex,10));
+
+        modelMap.addAttribute("pageNo", 1);
+        modelMap.addAttribute("products", products.getContent());
+        modelMap.addAttribute("total", products.getTotalPages());
+        modelMap.addAttribute("text", text);
+
+
+        return "administrator/product-management";
+    }
+
     @PostMapping("/disable")
     @ResponseBody
     public String disable(@RequestParam(name="id") String id ){
@@ -87,20 +102,7 @@ public class ProductController {
 //    public List<ProductDTO> getProductImport(@RequestParam(name="text") String text,@RequestParam(name="sId",defaultValue = "0")String sId){
 //            return productService.findBySupplierIdAndNameContain(sId,text);
 //    }
-    @GetMapping("search")
-    public String searchProduct(@RequestParam(name="text", required = false) String text, @RequestParam(name="index",defaultValue = "0") String index, ModelMap modelMap){
-        int pIndex = Integer.parseInt(index);
 
-        Page<Product> products = productService.searchProduct(text,PageRequest.of(pIndex,10));
-
-            modelMap.addAttribute("pageNo", 1);
-            modelMap.addAttribute("products", products.getContent());
-            modelMap.addAttribute("total", products.getTotalPages());
-            modelMap.addAttribute("text", text);
-
-
-        return "administrator/product-management";
-    }
 
     @GetMapping("/add")
     public String viewProduct(ModelMap modelMap){

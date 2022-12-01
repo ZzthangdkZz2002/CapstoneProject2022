@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,21 +14,25 @@
 </head>
 <body>
 <!--Page Header-->
-<jsp:include page="header.jsp"/>
+<jsp:include page="../onlinePage/header.jsp"/>
 
 <!--Page Content-->
 <main>
     <div class="account">
         <div class="account_side">
             <a href="${pageContext.request.contextPath}/profile"><i class="material-icons"> arrow_right</i>Hồ sơ của tôi</a>
-            <a href="${pageContext.request.contextPath}/order" style="font-weight: bold; background-color: rgba(0,0,0,0.1);"><i class="material-icons"> arrow_right</i>Đơn hàng của tôi</a>
-            <a href="${pageContext.request.contextPath}/change-password"><i class="material-icons"> arrow_right</i>Đổi mật khẩu</a>
+            <a href="${pageContext.request.contextPath}/order"
+               style="font-weight: bold; background-color: rgba(0,0,0,0.1);"><i class="material-icons"> arrow_right</i>Đơn
+                hàng của tôi</a>
+            <a href="${pageContext.request.contextPath}/change-password"><i class="material-icons"> arrow_right</i>Đổi
+                mật khẩu</a>
         </div>
         <div class="account_content">
             <div id="order_tabs">
                 <a href="${pageContext.request.contextPath}/order">Tất cả</a>
                 <a href="${pageContext.request.contextPath}/order/waiting">Chờ xác nhận</a>
-                <a href="${pageContext.request.contextPath}/order/accepted" style="color: white; background-color: #01447e;">Đã xác nhận</a>
+                <a href="${pageContext.request.contextPath}/order/accepted"
+                   style="color: white; background-color: #01447e;">Đã xác nhận</a>
                 <a href="${pageContext.request.contextPath}/order/shipping">Đang giao hàng</a>
                 <a href="${pageContext.request.contextPath}/order/received">Đã nhận hàng</a>
                 <a href="${pageContext.request.contextPath}/order/cancelled">Đã hủy</a>
@@ -47,21 +51,24 @@
                                         <td style="color: green; font-size: 2rem">${order.status}</td>
                                     </tr>
                                     <c:forEach var="item" items="${order.orderTransactionDetails}">
-                                        <td><img src="/img/${item.productDTO.image}" alt="hinh ảnh sản phẩm">
-                                            <span style="margin-left: 15px"> ${item.productDTO.name}</span> <br>
-                                            <span style="margin-left: 15px">x${item.quantity}</span>
-                                        </td>
+                                        <tr style="border-bottom: 0.5px solid #36454F;">
+                                            <td><img src="/img/${item.productDTO.image}" alt="hinh ảnh sản phẩm">
+                                                <span style="margin-left: 15px"> ${item.productDTO.name}</span> <br>
+                                                <span style="margin-left: 15px">x${item.quantity}</span>
+                                            </td>
                                             <td>${item.amount}</td>
                                         </tr>
                                     </c:forEach>
                                     <tr>
                                         <td></td>
-                                        <td style="font-size: 2rem;padding-top: 20px"><span style="font-size: 2rem">Tổng thanh toán:</span> ${order.amount}</td>
+                                        <td style="font-size: 2rem;padding-top: 20px"><span style="font-size: 2rem">Tổng thanh toán:</span> ${order.amount}
+                                        </td>
                                     </tr>
                                     <c:if test="${order.status != 'Đã Hủy' && order.status != 'Hoàn Thành'}">
                                         <tr>
                                             <td colspan="2">
-                                                <a href="${pageContext.request.contextPath}/customer/cancelOrder?id=${order.id}" onclick="return confirm('Bạn muốn huỷ đơn mã #${order.orderid}?')">
+                                                <a href="${pageContext.request.contextPath}/customer/cancelOrder?id=${order.id}"
+                                                   onclick="return confirm('Bạn muốn huỷ đơn mã #${order.orderid}?')">
                                                     <button>Hủy đơn hàng</button>
                                                 </a>
                                             </td>
@@ -80,5 +87,22 @@
 
 <!--Page Footer-->
 <%--        <jsp:include page="footer.jsp"/>--%>
+
+
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery-1.11.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/onlinepage.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-hover-dropdown.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/owl.carousel.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/echo.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.easing-1.3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-slider.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.rateit.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets_onlinepage/js/lightbox.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/wow.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
 </body>
 </html>

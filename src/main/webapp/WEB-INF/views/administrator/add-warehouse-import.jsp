@@ -52,12 +52,13 @@
     <form>
         <div class="row">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="tile">
                         <h3 class="tile-title">Thông tin sản phẩm</h3>
                         <div class="row element-button">
                             <div class="col-sm-12">
-                                <button class="btn btn-add btn-sm" title="Thêm" data-toggle="modal" data-target="#productList" type="button" onclick="importInfoSelect(this)">
+                                <button class="btn btn-add btn-sm" title="Thêm" data-toggle="modal"
+                                        data-target="#productList" type="button" onclick="importInfoSelect(this)">
                                     <i class="fas fa-plus"></i>
                                     Thêm sản phẩm
                                 </button>
@@ -76,7 +77,8 @@
                                     <th class="order-item-number" width="10">Giảm giá</th>
                                     <th class="order-item-number">Thành tiền</th>
                                     <th width="100" class="order-item-number text-center"
-                                        style="text-align: center; vertical-align: middle;">Tuỳ chọn</th>
+                                        style="text-align: center; vertical-align: middle;">Tuỳ chọn
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -87,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="tile">
                         <h3 class="tile-title">Thông tin nhập hàng</h3>
                         <div class="tile-body">
@@ -123,7 +125,7 @@
     <div class="form-group col-md-12">
         <label for="supplierSelect" class="control-label required-field">Nhà cung
             cấp</label>
-        <select class="form-control" id="supplierSelect">
+        <select class="form-control" id="supplierSelect" style="margin-bottom: 10px">
             <option value="0">Chọn nhà cung cấp</option>
             <c:forEach items="${listSupplier}" var="supplier">
                 <option value="${supplier.id}">${supplier.name}</option>
@@ -142,7 +144,7 @@
                             </div>
     <div class="form-group col-md-12">
         <label class="control-label">Tiền trả nhà cung cấp: </label>
-        <input type="text" class="form__field money_mustPay" id="moneyMustPay" required="" value="0" style="width: 200px; margin-left: 30px">
+        <input type="text" class="form__field money_mustPay" id="moneyMustPay" required="" value="0" style="width: 200px;">
     </div>
     <div class="form-group col-md-12">
         <label class="control-label">Tính vào công nợ: </label>
@@ -435,7 +437,7 @@ MODAL CHOOSE INFO BEFORE SELECTING PRODUCT
 <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">F
+            <div class="modal-header">
                 <h5 class="modal-title">Thêm nhà cung cấp</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -446,44 +448,51 @@ MODAL CHOOSE INFO BEFORE SELECTING PRODUCT
                     <div class="row justify-content-between">
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Mã mặc định" name="s_code" id='code' required />
-                            <label for="name" class="form__label">Mã nhà cung cấp</label>
+                            <input type="input" class="form__field" placeholder="Mã mặc định" name="s_code" id='code'
+                                   required/>
+                            <label for="code" class="form__label required-field">Mã nhà cung cấp</label>
                         </div>
 
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="s_name" id='supplier_name' required />
-                            <label for="name" class="form__label">Tên  nhà cung cấp</label>
+                            <input type="input" class="form__field" placeholder="Name" name="s_name" id='supplier_name'
+                                   required/>
+                            <label for="supplier_name" class="form__label required-field">Tên nhà cung cấp</label>
                         </div>
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="s_email" name="name" id='supplier_email' required />
-                            <label for="name" class="form__label">Email</label>
+                            <input type="input" class="form__field" placeholder="s_email" name="name"
+                                   id='supplier_email' required/>
+                            <label for="supplier_email" class="form__label required-field">Email</label>
                         </div>
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="phone" id='supplier_phone' required />
-                            <label for="name" class="form__label">Điện thoại</label>
+                            <input type="input" class="form__field" placeholder="Name" name="phone" id='supplier_phone'
+                                   required/>
+                            <label for="supplier_phone" class="form__label required-field">Điện thoại</label>
                         </div>
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="company" id='supplier_company' required />
-                            <label for="name" class="form__label">Công ty</label>
+                            <input type="input" class="form__field" placeholder="Name" name="company"
+                                   id='supplier_company' required/>
+                            <label for="supplier_company" class="form__label required-field">Công ty</label>
                         </div>
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="address" id='supplier_address' required />
-                            <label for="name" class="form__label">Địa chỉ</label>
+                            <input type="input" class="form__field" placeholder="Name" name="address"
+                                   id='supplier_address' required/>
+                            <label for="supplier_address" class="form__label required-field">Địa chỉ</label>
                         </div>
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="tax_code" id='supplier_taxcode' required />
-                            <label for="name" class="form__label">Mã số thuế</label>
+                            <input type="input" class="form__field" placeholder="Name" name="tax_code"
+                                   id='supplier_taxcode' required/>
+                            <label for="supplier_taxcode" class="form__label required-field">Mã số thuế</label>
                         </div>
 
 
                         <div class="form__group field col-5">
-                            <input type="input" class="form__field" placeholder="Name" name="note" id='supplier_note' required />
-                            <label for="name" class="form__label">Ghi chú</label>
+                            <input type="input" class="form__field" placeholder="Name" name="note" id='supplier_note'/>
+                            <label for="supplier_note" class="form__label">Ghi chú</label>
                         </div>
 
                     </div>
@@ -507,14 +516,14 @@ MODAL
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="color: green">Thêm mới vị trí</h5>
+                <h5 class="modal-title" id="exampleModalLabel" style="color: green; margin-left: 18px">Thêm mới vị trí</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <p id="addProductLocationError" style="color: red;display: none"></p>
-                <div class="form-group col-md-3">
+                <div class="form-group">
                     <label class="control-label required-field">Tên vị trí</label>
                     <input class="form-control" id="addLocaiton" type="text" required>
                 </div>
@@ -529,7 +538,7 @@ MODAL
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="src/jquery.table2excel.js"></script>
-
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/common.js"></script>
 <script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>
 <script src="<c:url value="/js/popper.min.js"/>"></script>
 <script src="<c:url value="/js/bootstrap.min.js"/>"></script>

@@ -28,10 +28,14 @@ public class OrderTransactionDTO {
     private String user_phone;
     //dia chi giao hang
     private String address;
+    private String province;
+    private String district;
+    private String ward;
     //tong so tien can thanh toan
     private String amount;
     private String payment_method;
     private Boolean isPaid;
+    private Boolean isShipping;
     //message tu khach hang
     private String message;
     private String orderKind;

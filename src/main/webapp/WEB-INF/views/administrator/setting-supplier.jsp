@@ -35,13 +35,13 @@
     <div class="app-title">
       <ul class="app-breadcrumb breadcrumb">
         <li class="breadcrumb-item"><a href="supplier-management.html">Quản lý nhà cung cấp</a></li>
-        <li class="breadcrumb-item active">Thêm nhà cung cấp</li>
+        <li class="breadcrumb-item active">Tùy chỉnh nhà cung cấp</li>
       </ul>
     </div>
     <div class="row">
       <div class="col-md-12">
         <div class="tile">
-          <h3 class="tile-title">Thêm nhà cung cấpt</h3>
+          <h3 class="tile-title">Tùy chỉnh nhà cung cấp</h3>
           <div class="tile-body">
             <%--@elvariable id="supplier" type="com.example.electriccomponentsshop.dto.SupplierDTO"--%>
             <form:form action="${pageContext.request.contextPath}/admin/suppliers/edit/${supplier.id}" method="post" modelAttribute="supplier">

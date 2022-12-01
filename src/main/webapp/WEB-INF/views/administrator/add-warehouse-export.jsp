@@ -84,7 +84,7 @@
                                         <td>${orderDto.account_employee != null ? orderDto.account_employee.id : ""}</td>
                                         <td>${orderDto.account_user != null ? orderDto.account_user.id : ""}</td>
                                         <td>${orderDto.created}</td>
-                                        <td>${orderDto.amount}</td>
+                                        <td class="currency-text">${orderDto.amount}</td>
                                         <td><span class="badge bg-success">${orderDto.status}</span></td>
                                         <td>${orderDto.orderKind}</td>
                                         <td>
@@ -359,6 +359,7 @@ MODAL
 -->
     <!-- Essential javascripts for application to work-->
     <script src="${pageContext.request.contextPath}/js/exportItem.js"></script>
+    <script src="${pageContext.request.contextPath}/assets_onlinepage/js/common.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="src/jquery.table2excel.js"></script>
     <script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>

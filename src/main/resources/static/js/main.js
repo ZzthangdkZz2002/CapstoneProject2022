@@ -863,10 +863,10 @@ function showDetailInventory(inventory_id,inventory_code,inventory_date,inventor
                     '<td>'+response.data[i].p_code+'</td>' +
                     '<td>'+response.data[i].p_name+'</td>' +
                     '<td>'+response.data[i].quantity+'</td>' +
-                    '<td>'+response.data[i].original_price + '</td>' +
-                    '<td>'+response.data[i].discount_price+'</td>' +
-                    '<td>'+response.data[i].import_price+'</td>' +
-                    '<td>'+response.data[i].total+'</td>' +
+                    '<td>'+convertMoney(Number(response.data[i].original_price)) + '</td>' +
+                    '<td>'+convertMoney(Number(response.data[i].discount_price))+'</td>' +
+                    '<td>'+convertMoney(Number(response.data[i].import_price))+'</td>' +
+                    '<td>'+convertMoney(Number(response.data[i].total))+'</td>' +
                     '</tr>');
             }
         }

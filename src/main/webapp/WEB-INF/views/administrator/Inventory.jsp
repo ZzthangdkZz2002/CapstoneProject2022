@@ -184,8 +184,8 @@
                                     <td>Chi nhánh trung tâm</td>
                                     <td>${inventory.creator_name}</td>
                                     <td>${inventory.total_quantity}</td>
-                                    <td>${inventory.total_importPrice}</td>
-                                    <td style="color: ${inventory.money_paid != inventory.total_importPrice ? "red" :""}">${inventory.money_paid}</td>
+                                    <td class="currency-text">${inventory.total_importPrice}</td>
+                                    <td style="color: ${inventory.money_paid != inventory.total_importPrice ? "red" :""}" class="currency-text">${inventory.money_paid}</td>
                                     <td>${inventory.note}</td>
                                     <td> <a href="#detailInventory" onclick="showDetailInventory(`${inventory.id}`,`${inventory.code}`,`${inventory.created_date}`,`${inventory.supplier.name}`,`${inventory.creator_name}`)">
                                         <i class="fa-solid fa-eye"></i>
@@ -390,6 +390,7 @@
 <!-- Essential javascripts for application to work-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/common.js"></script>
 <script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>
 <script src="<c:url value="/js/popper.min.js"/>"></script>
 <script src="<c:url value="/js/bootstrap.min.js"/>"></script>

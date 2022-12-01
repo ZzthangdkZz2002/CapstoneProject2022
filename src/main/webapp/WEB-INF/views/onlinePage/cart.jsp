@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <style>
-        img {
+        .shopping-cart img {
             width: 80px;
             height: 80px;
         }
@@ -70,6 +70,21 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery-1.11.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/onlinepage.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-hover-dropdown.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/owl.carousel.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/echo.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.easing-1.3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-slider.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.rateit.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets_onlinepage/js/lightbox.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/wow.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
 </body>
 
 </html>

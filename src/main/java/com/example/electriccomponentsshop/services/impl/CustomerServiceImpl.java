@@ -19,6 +19,9 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPhone(customerDTO.getPhone());
         customer.setEmail(customerDTO.getEmail());
         customer.setAddress(customerDTO.getAddress());
+        customer.setProvince(customerDTO.getProvince());
+        customer.setDistrict(customerDTO.getDistrict());
+        customer.setWard(customerDTO.getWard());
         customer.setNote(customerDTO.getNote());
         customer.setGender(customerDTO.getGender());
 
@@ -30,6 +33,9 @@ public class CustomerServiceImpl implements CustomerService {
         dto.setEmail(c.getEmail());
         dto.setPhone(c.getPhone());
         dto.setAddress(c.getAddress());
+        dto.setProvince(c.getProvince());
+        dto.setDistrict(c.getDistrict());
+        dto.setWard(c.getWard());
         dto.setGender(c.getGender());
         dto.setNote(c.getNote());
         return dto;

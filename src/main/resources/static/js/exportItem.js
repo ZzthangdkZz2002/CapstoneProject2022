@@ -30,7 +30,7 @@ function  handleSubmit(){
         "description" : mota,
         "exportProducts" : dataProduct
     }
-    console.log("data",data)
+    console.log("dataProduct",dataProduct)
 
 
     $.ajax(

@@ -80,8 +80,8 @@
                   <td>${supplier.phone}</td>
                   <td>${supplier.email}</td>
                   <td>${supplier.address}</td>
-                  <td>${supplier.debt}</td>
-                  <td>${supplier.total_purchase}</td>
+                  <td class="currency-text">${supplier.debt}</td>
+                  <td class="currency-text" c>${supplier.total_purchase}</td>
                   <td>
                     <div class="switch">
                       <input class="status-checkbox" onclick="return false" type="checkbox"  name="check" <c:if test="${supplier.active == 1}"> checked</c:if>/>
@@ -227,43 +227,43 @@ MODAL
 
               <div class="form__group field col-5">
                 <input type="input" class="form__field" placeholder="Mã mặc định" name="s_code" id="code" required />
-                <label for="name" class="form__label">Mã nhà cung cấp</label>
+                <label for="code" class="form__label" required-field>Mã nhà cung cấp</label>
               </div>
 
 
               <div class="form__group field col-5">
                 <input type="input" class="form__field" placeholder="Name" name="s_name" id="supplier_name" required />
-                <label for="name" class="form__label">Tên  nhà cung cấp</label>
+                <label for="supplier_name" class="form__label" required-field>Tên  nhà cung cấp</label>
               </div>
 
               <div class="form__group field col-5">
                 <input type="input" class="form__field" placeholder="s_email" name="s_email" id="supplier_email" required />
-                <label for="name" class="form__label">Email</label>
+                <label for="supplier_email" class="form__label" required-field>Email</label>
               </div>
 
               <div class="form__group field col-5">
                 <input type="input" class="form__field" placeholder="Name" name="phone" id="supplier_phone" required />
-                <label for="name" class="form__label">Điện thoại</label>
+                <label for="supplier_phone" class="form__label" required-field>Điện thoại</label>
               </div>
 
               <div class="form__group field col-5">
                 <input type="input" class="form__field" placeholder="Name" name="company" id="supplier_company"  />
-                <label for="name" class="form__label">Công ty</label>
+                <label for="supplier_company" class="form__label">Công ty</label>
               </div>
 
               <div class="form__group field col-5">
                 <input type="input" class="form__field" placeholder="Name" name="address" id="supplier_address" required />
-                <label for="name" class="form__label">Địa chỉ</label>
+                <label for="supplier_address" class="form__label" required-field>Địa chỉ</label>
               </div>
               <div class="form__group field col-5">
                 <input type="input" class="form__field" placeholder="Name" name="tax_code" id="supplier_taxcode"  />
-                <label for="name" class="form__label">Mã số thuế</label>
+                <label for="supplier_taxcode" class="form__label">Mã số thuế</label>
               </div>
 
 
               <div class="form__group field col-5">
                 <input type="input" class="form__field" placeholder="Name" name="note" id="supplier_note"  />
-                <label for="name" class="form__label">Ghi chú</label>
+                <label for="supplier_note" class="form__label">Ghi chú</label>
               </div>
 
             </div>
@@ -280,6 +280,7 @@ MODAL
   <!-- Essential javascripts for application to work-->
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="${pageContext.request.contextPath}/assets_onlinepage/js/common.js"></script>
   <script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>
   <script src="<c:url value="/js/popper.min.js"/>"></script>
   <script src="<c:url value="/js/bootstrap.min.js"/>"></script>

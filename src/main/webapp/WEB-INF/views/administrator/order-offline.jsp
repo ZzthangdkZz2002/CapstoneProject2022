@@ -74,6 +74,10 @@
         .autocomplete-items{
             height: 200px;
         }
+        .required-field::after {
+            content: " *";
+            color: red;
+        }
         @media print {
 
             body {
@@ -87,6 +91,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/order-offline.css">
@@ -168,8 +174,8 @@
                 </div>
 
                 <div class="col-12 custpay">
-                    <div class="col-7 mt-3 pt-2 pl-4">
-                        <p class="mb-4 custom-text-bill">Tiền khách trả</p>
+                    <div class="col-7 mt-3">
+                        <p class="mb-4 custom-text-bill ml-2 pt-2">Tiền khách trả</p>
                     </div>
                     <div class="col-5 mt-3">
                         <input type="text" class="form-control customer-pay mb-4" >
@@ -180,7 +186,7 @@
                     <div class="col-4 mt-3">
                         <p class="mb-4 text-right" id="tienThua">0</p>
                     </div>
-                    <div class="col-12 pl-4 mt-3">
+                    <div class="col-12 pl-4 mt-4">
                         <p class="mb-4 custom-text-bill">Phương thức thanh toán:</p>
                     </div>
 
@@ -330,7 +336,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Thông tin khách hàng</h5>
+                <h5 class="modal-title" id="">Thông tin khách hàng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -343,29 +349,67 @@
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_name' required />
-                            <label for="name" class="form__label">Tên  khách hàng</label>
+                            <label for="cust_name" class="form__label" required-field>Tên  khách hàng</label>
                         </div>
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_email' required />
-                            <label for="name" class="form__label">Email</label>
+                            <label for="cust_email" class="form__label" required-field>Email</label>
                         </div>
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_phone' required />
-                            <label for="name" class="form__label">Điện thoại</label>
+                            <label for="cust_phone" class="form__label" required-field>Điện thoại</label>
                         </div>
 
+                        <div class="form__group field col-5">
+                            <label for="city">Tỉnh/Thành phố</label> <br>
+                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="city" name="city">
+                                <option value="0" selected>Chọn tỉnh thành</option>
+                            </select>
+                        </div>
+                        <div class="form__group field col-5">
+                            <label for="district">Quận/Huyện</label> <br>
+                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="district" name="district">
+                                <option value="0" selected>Chọn quận huyện</option>
+                            </select>
+                        </div>
+                        <div class="form__group field col-5">
+                            <label for="ward">Xã/Phường</label> <br>
+                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="ward" name="ward">
+                                <option value="0" selected>Chọn phường xã</option>
+                            </select>
+                        </div>
 
+<%--                        <div class="mb-3">--%>
+<%--                            <label for="city">Tỉnh/Thành phố</label> <br>--%>
+<%--                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="city" name="city">--%>
+<%--                                <option value="0" selected>Chọn tỉnh thành</option>--%>
+<%--                            </select>--%>
+<%--                        </div>--%>
+
+<%--                        <div class="mb-3">--%>
+<%--                            <label for="district">Quận/Huyện</label> <br>--%>
+<%--                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="district" name="district">--%>
+<%--                                <option value="0" selected>Chọn quận huyện</option>--%>
+<%--                            </select>--%>
+<%--                        </div>--%>
+
+<%--                        <div class="mb-3">--%>
+<%--                            <label for="ward">Xã/Phường</label> <br>--%>
+<%--                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="ward" name="ward">--%>
+<%--                                <option value="0" selected>Chọn phường xã</option>--%>
+<%--                            </select>--%>
+<%--                        </div>--%>
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_address' required />
-                            <label for="name" class="form__label">Địa chỉ</label>
+                            <label for="cust_address" class="form__label" required-field>Địa chỉ chi tiết</label>
                         </div>
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_note' required />
-                            <label for="name" class="form__label">Ghi chú</label>
+                            <label for="cust_note" class="form__label">Ghi chú</label>
                         </div>
 
                     </div>
@@ -401,12 +445,12 @@
 
                         <div class="form__group field col-12">
                             <input type="input" class="form__field" placeholder="Name" name="nameBank" id='nameBank' required />
-                            <label for="name" class="form__label">Tên hiển thị</label>
+                            <label for="nameBank" class="form__label">Tên hiển thị</label>
                         </div>
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Số tài khoản" name="stk" id='stk' required />
-                            <label for="name" class="form__label">Số tài khoản</label>
+                            <label for="stk" class="form__label">Số tài khoản</label>
                         </div>
 
                         <div class="form__group field col-5 drop-down">
@@ -530,6 +574,49 @@
 
 
 <script>var contextPath = "${pageContext.request.contextPath}"</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            citis.options[citis.options.length] = new Option(x.Name, x.Id);
+        }
+        citis.onchange = function () {
+            district.length = 1;
+            ward.length = 1;
+            if(this.value != ""){
+                const result = data.filter(n => n.Id === this.value);
+
+                for (const k of result[0].Districts) {
+                    district.options[district.options.length] = new Option(k.Name, k.Id);
+                }
+            }
+        };
+        district.onchange = function () {
+            ward.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.value);
+            if (this.value != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                for (const w of dataWards) {
+                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                }
+            }
+        };
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>

@@ -633,8 +633,10 @@ function addCustomer() {
     var name = $('#cust_name').val();
     var email = $('#cust_email').val();
     var address = $('#cust_address').val();
+    let province = $("#city option:selected").text();
+    let district = $("#district option:selected").text();
+    let ward = $( "#ward option:selected").text();
     var note = $('#cust_note').val();
-    console.log(name+phone);
     if(name == null || name == ''){
         alert("Vui lòng nhập Tên");
         return;
@@ -643,11 +645,30 @@ function addCustomer() {
         alert("Vui lòng nhập số điện thoại");
         return;
     }
+    if(address == null || address == ''){
+        alert("Vui lòng nhập địa chỉ chi tiết");
+        return;
+    }
+    if($('#city').val() == '0'){
+        alert("Vui lòng điền Tỉnh/Thành phố!!")
+        return
+    }
+    if($('#district').val() == '0'){
+        alert("Vui lòng điền Quận/Huyện!!")
+        return
+    }
+    if($('#ward').val() == '0'){
+        alert("Vui lòng điền Xã/Phường!!")
+        return
+    }
     var data = {
         "name" : name,
         "phone" : phone,
         "email" : email,
         "address" : address,
+        "province" : province,
+        "district" : district,
+        "ward" : ward,
         "note" : note
     };
     $.ajax(
@@ -983,3 +1004,4 @@ function to_vietnamese(number) {
     // Trả về kết quả kèm xóa những ký tự thừa
     return rsString.replace(/[0-9]/g, '').replace(/ /g,' ').replace(/ $/,'');
 }
+

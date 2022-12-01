@@ -36,23 +36,19 @@
             align-items: center;
             justify-content: center;
         }
-
         .Choicefile:hover {
             text-decoration: none;
             color: white;
         }
-
         #uploadfile,
         .removeimg {
             display: none;
         }
-
         #thumbbox {
             position: relative;
             width: 100%;
             margin-bottom: 20px;
         }
-
         .removeimg {
             height: 25px;
             position: absolute;
@@ -63,9 +59,7 @@
             width: 25px;
             /* border: 3px solid red; */
             border-radius: 50%;
-
         }
-
         .removeimg::before {
             -webkit-box-sizing: border-box;
             box-sizing: border-box;
@@ -77,7 +71,6 @@
             margin-top: 11px;
             transform: rotate(45deg);
         }
-
         .removeimg::after {
             /* color: #FFF; */
             /* background-color: #DC403B; */
@@ -117,45 +110,67 @@
         </li>
         <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/orders/waiting"><i class='app-menu__icon bx bx-task'></i><span
                 class="app-menu__label">Quản lý đơn hàng</span></a></li>
-            <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/accounts/system-account"><i class='app-menu__icon bx bx-id-card'></i>
-                <span class="app-menu__label">Quản lý tài khoản</span>
-            </a>
-            </li>
-            <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/categories"><i class='app-menu__icon bx bx-category'></i><span
-                    class="app-menu__label">Quản lý danh mục</span></a></li>
+        <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/accounts/system-account"><i class='app-menu__icon bx bx-id-card'></i>
+            <span class="app-menu__label">Quản lý tài khoản</span>
+        </a>
+        </li>
+        <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/categories"><i class='app-menu__icon bx bx-category'></i><span
+                class="app-menu__label">Quản lý danh mục</span></a></li>
 
-            <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/suppliers"><i
-                    class='app-menu__icon bx bxs-user-account'></i><span class="app-menu__label">Quản lý nhà cung cấp
+        <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/suppliers"><i
+                class='app-menu__icon bx bxs-user-account'></i><span class="app-menu__label">Quản lý nhà cung cấp
           </span></a></li>
-            <li><a class="app-menu__item active" href="${pageContext.request.contextPath}/admin/warehouses"><i
-                    class='app-menu__icon bx bx-building-house'></i><span class="app-menu__label">Quản lý kho
+        <li><a class="app-menu__item active" href="${pageContext.request.contextPath}/admin/warehouses"><i
+                class='app-menu__icon bx bx-building-house'></i><span class="app-menu__label">Quản lý kho
                         hàng
                     </span></a>
-                <ul class="sub-app-menu">
-                    <li><a class="sub-app-menu_item" href="${pageContext.request.contextPath}/admin/warehouses"><span class="app-menu__label">Kho
+            <ul class="sub-app-menu">
+                <li><a class="sub-app-menu_item sub-item-active" href="${pageContext.request.contextPath}/admin/warehouses"><span class="app-menu__label">Kho
                                 hàng</span></a></li>
-                    <li><a class="sub-app-menu_item sub-item-active" href="${pageContext.request.contextPath}/admin/warehouses/view/import"><span
-                            class="app-menu__label">Quản lý
+                <li><a class="sub-app-menu_item " href="${pageContext.request.contextPath}/admin/warehouses/view/import"><span
+                        class="app-menu__label">Quản lý
                                 nhập kho</span></a></li>
-                    <li><a class="sub-app-menu_item" href="${pageContext.request.contextPath}/admin/warehouses/view/export"><span
-                            class="app-menu__label">Quản lý
+                <li><a class="sub-app-menu_item" href="${pageContext.request.contextPath}/admin/warehouses/view/export"><span
+                        class="app-menu__label">Quản lý
                                 xuất kho</span></a></li>
-                </ul>
-            </li>
+            </ul>
+        </li>
 
-            <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/orders"><i
-                    class='app-menu__icon bx bxs-package '></i><span class="app-menu__label">Quản lý lô sản
+        <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/orders"><i
+                class='app-menu__icon bx bxs-package '></i><span class="app-menu__label">Quản lý lô sản
             phẩm</span></a>
-            </li>
-            <sec:authorize access="hasRole('ROLE_MANAGER')">
+        </li>
+        <sec:authorize access="hasRole('ROLE_MANAGER')">
             <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/feedbacks"><i class='app-menu__icon bx bx-user-voice'></i><span
                     class="app-menu__label">Feedback</span></a>
             </li>
             <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/reports"><i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span
                     class="app-menu__label">Báo cáo thống kê</span></a>
             </li>
-            </sec:authorize>
+        </sec:authorize>
     </ul>
 </aside>
 
+<script>
+    window.onload = function (){
+        var url = window.location.href;
+        var items = document.querySelectorAll('.app-menu__item');
+        var sub_items = document.querySelectorAll('.sub-app-menu_item');
+        if(url.includes('admin/warehouses')){
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[6].className += " active";
+        }
+        if(url.includes('admin/warehouses/view/import') || url.includes('admin/warehouses/import/add')){
+            let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
+            current[0].className = current[0].className.replace(" sub-item-active", "");
+            sub_items[1].className += " sub-item-active";
+        }
+        else if(url.includes('admin/warehouses/view/export') || url.includes('admin/warehouses/export/add')){
+            let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
+            current[0].className = current[0].className.replace(" sub-item-active", "");
+            sub_items[2].className += " sub-item-active";
+        }
+    }
+</script>
 </body>

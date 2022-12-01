@@ -45,10 +45,20 @@ public class OrderTransaction {
     private String user_name;
     private String user_email;
     private String user_phone;
-    //dia chi giao hang
+    //dia chi chi tiet giao hang
     private String address;
+    //tinh thanh
+    private String province;
+    //Quan huyen
+    private String district;
+    //khu vuc
+    private String ward;
     //tong so tien can thanh toan
     private double amount;
+    //da len don sang ben van chuyen chua
+    @Column
+    @ColumnDefault("0")
+    private Boolean isShipping;
     //loi nhuan
     @Column
     @ColumnDefault("0")

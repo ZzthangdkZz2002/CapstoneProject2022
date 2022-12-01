@@ -18,6 +18,9 @@ public class CustomerDTO {
     private String phone;
     private String email;
     private String address;
+    private String province;
+    private String district;
+    private String ward;
     private String note;
     private Date dob;
     private String gender;

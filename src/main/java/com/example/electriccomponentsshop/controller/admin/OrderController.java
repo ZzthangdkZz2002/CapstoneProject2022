@@ -10,6 +10,8 @@ import com.example.electriccomponentsshop.repositories.ProductRepository;
 import com.example.electriccomponentsshop.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -58,42 +60,78 @@ public class OrderController {
 //    @Autowired
 //    SkuService skuService;
     @GetMapping("/{status}")
-    public String viewAllOrderByEmployeeId(@PathVariable String status, ModelMap modelMap, Authentication authentication) {
+    public String viewAllOrderByEmployeeId(@PathVariable String status, @RequestParam(name="index",defaultValue = "0") String index, ModelMap model, Authentication authentication) {
         AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
-        List<OrderTransaction> orderTransactions;
+//        List<OrderTransaction> orderTransactions = new ArrayList<>();
+        Page<OrderTransaction> orderTransactions = null;
         List<OrderTransactionDTO> orderTransactionDTOS= new ArrayList<>();
         String active = "";
 
         if (status.equals("waiting")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.PENDING.getName());
-            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.PENDING.getName(), PageRequest.of(Integer.parseInt(index),10));
+            model.addAttribute("listOrder", orderTransactions.getContent());
+            model.addAttribute("total",orderTransactions.getTotalPages());
+//            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "waiting";
         } else if (status.equals("confirmed")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.CONFIRM.getName());
-            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.CONFIRM.getName(), PageRequest.of(Integer.parseInt(index),10));
+            model.addAttribute("listOrder", orderTransactions.getContent());
+            model.addAttribute("total",orderTransactions.getTotalPages());
+//            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "confirmed";
         } else if (status.equals("shipping")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.DELIVERY.getName());
-            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.DELIVERY.getName(), PageRequest.of(Integer.parseInt(index),10));
+            model.addAttribute("listOrder", orderTransactions.getContent());
+            model.addAttribute("total",orderTransactions.getTotalPages());
+//            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "shipping";
         } else if (status.equals("received")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.DONE.getName());
-            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.DONE.getName(), PageRequest.of(Integer.parseInt(index),10));
+            model.addAttribute("listOrder", orderTransactions.getContent());
+            model.addAttribute("total",orderTransactions.getTotalPages());
+//            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "received";
         } else if (status.equals("cancelled")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.CANCEL.getName());
-            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.CANCEL.getName(), PageRequest.of(Integer.parseInt(index),10));
+            model.addAttribute("listOrder", orderTransactions.getContent());
+            model.addAttribute("total",orderTransactions.getTotalPages());
+//            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "cancelled";
         } else if (status.equals("returned")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.RETURNED.getName());
-            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.RETURNED.getName(), PageRequest.of(Integer.parseInt(index),10));
+            model.addAttribute("listOrder", orderTransactions.getContent());
+            model.addAttribute("total",orderTransactions.getTotalPages());
+//            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "returned";
         }
 
-        modelMap.addAttribute("active", active);
-        modelMap.addAttribute("listOrder", orderTransactionDTOS);
+        model.addAttribute("active", active);
+//        modelMap.addAttribute("listOrder", orderTransactions);
 
         return "administrator/order-management";
+    }
+
+    @GetMapping("search")
+    public String searchProduct(@RequestParam(name = "status", required = false) String status,@RequestParam(name="text", required = false) String text, @RequestParam(name="index",defaultValue = "0") String index, ModelMap modelMap){
+        int pIndex = Integer.parseInt(index);
+        System.out.println("status: "+status);
+        Page<OrderTransaction> orderTransactions = orderTransactionRepository.findAllByOrderidOrderByCreatedDesc(text,PageRequest.of(pIndex,10));
+
+        modelMap.addAttribute("pageNo", 1);
+        modelMap.addAttribute("listOrder", orderTransactions.getContent());
+        modelMap.addAttribute("total", orderTransactions.getTotalPages());
+        modelMap.addAttribute("text", text);
+
+
+        return "administrator/order-management";
+    }
+
+    @GetMapping("/giaohangnhanh")
+    public String OrderToGiaoHangNhanh(@RequestParam(name = "orderid") String orderid, ModelMap map){
+        OrderTransaction orderTransaction = orderTransactionRepository.findByOrderid(orderid).get();
+        OrderTransactionDTO orderTransactionDTO = convertOrderToDTO2(orderTransaction);
+        map.addAttribute("order",orderTransactionDTO);
+        return "administrator/giaohangnhanh";
     }
 
     @GetMapping("getOrder")
@@ -102,6 +140,14 @@ public class OrderController {
         OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
         OrderTransactionDTO orderTransactionDTO = convertOrderToDTO2(orderTransaction);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","get order success",orderTransactionDTO));
+    }
+
+    @GetMapping("updateIsShip")
+    public ResponseEntity<ResponseObject> updateIsShip(@RequestParam(name = "id") String id){
+        OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
+        orderTransaction.setIsShipping(true);
+        orderTransactionRepository.save(orderTransaction);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","update is shipping success",""));
     }
 
     public List<OrderTransactionDTO> convertOrderToDTO(List<OrderTransaction> orderTransactions){
@@ -132,6 +178,7 @@ public class OrderController {
                 orderTransactionDTO.setId(orderTransaction.getId());
                 orderTransactionDTO.setOrderid(orderTransaction.getOrderid());
                 orderTransactionDTO.setStatus(orderTransaction.getStatus());
+                orderTransactionDTO.setIsShipping(orderTransaction.getIsShipping());
                 orderTransactionDTO.setUser_name(orderTransaction.getUser_name());
                 orderTransactionDTO.setUser_email(orderTransaction.getUser_email());
                 orderTransactionDTO.setUser_phone(orderTransaction.getUser_phone());
@@ -185,6 +232,7 @@ public class OrderController {
                 orderTransactionDTO.setId(orderTransaction.getId());
                 orderTransactionDTO.setOrderid(orderTransaction.getOrderid());
                 orderTransactionDTO.setStatus(orderTransaction.getStatus());
+                orderTransactionDTO.setIsShipping(orderTransaction.getIsShipping());
                 if(orderTransaction.getCustomer() != null){
                     CustomerDTO customerDTO = new CustomerDTO();
                     customerDTO.setId(orderTransaction.getCustomer().getId());
@@ -203,6 +251,16 @@ public class OrderController {
                     if(orderTransaction.getCustomer().getGender() != null){
                         customerDTO.setGender(orderTransaction.getCustomer().getGender());
                     }
+                    if(orderTransaction.getCustomer().getProvince() != null){
+                        customerDTO.setProvince(orderTransaction.getCustomer().getProvince());
+                    }
+                    if(orderTransaction.getCustomer().getDistrict() != null){
+                        customerDTO.setDistrict(orderTransaction.getCustomer().getDistrict());
+                    }
+                    if(orderTransaction.getCustomer().getWard() != null){
+                        customerDTO.setWard(orderTransaction.getCustomer().getWard());
+                    }
+
                     orderTransactionDTO.setCustomer(customerDTO);
 //                    orderTransactionDTO.setCustomer(orderTransaction.getCustomer());
                 }
@@ -210,6 +268,9 @@ public class OrderController {
 //                orderTransactionDTO.setUser_email(orderTransaction.getUser_email());
 //                orderTransactionDTO.setUser_phone(orderTransaction.getUser_phone());
                 orderTransactionDTO.setAddress(orderTransaction.getAddress());
+                orderTransactionDTO.setProvince(orderTransaction.getProvince());
+                orderTransactionDTO.setDistrict(orderTransaction.getDistrict());
+                orderTransactionDTO.setWard(orderTransaction.getWard());
                 orderTransactionDTO.setAmount(String.valueOf(orderTransaction.getAmount()));
                 orderTransactionDTO.setPayment_method(orderTransaction.getPayment_method());
                 orderTransactionDTO.setOrderKind(orderTransaction.getOrderKind());

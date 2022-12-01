@@ -4,6 +4,8 @@ import com.example.electriccomponentsshop.dto.StatisticDTO;
 import com.example.electriccomponentsshop.entities.Account;
 import com.example.electriccomponentsshop.entities.OrderTransaction;
 import com.example.electriccomponentsshop.services.StatisticService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,7 +17,9 @@ Optional<OrderTransaction> findById(Integer id);
 Optional<OrderTransaction> findByOrderid(String orderid);
 List<OrderTransaction> findAllByAccountuser(Account accountuser);
 List<OrderTransaction> findAllByAccountuserAndStatus(Account accountuser, String status);
+Page<OrderTransaction> findAllByStatusOrderByCreatedDesc(String status, Pageable pageable);
 List<OrderTransaction> findAllByStatusOrderByCreatedDesc(String status);
+Page<OrderTransaction> findAllByOrderidOrderByCreatedDesc(String orderid, Pageable pageable);
 
 @Query(value = "SELECT * FROM order_transaction where user_phone = :phone", nativeQuery = true)
 List<OrderTransaction> findAllByUserphone(String phone);

@@ -103,8 +103,8 @@ productList.map((item,key)=>{
                         
                         <p style="color: ${item.quantity > 0 ? "green" : "red"}">${item.quantity > 0 ? "Còn hàng" : "Liên hệ"}</p>
                     </div>
-                      <div class="action" style="display:flex;position: absolute;top: 160px"><button type="button" onclick="addCart(${item.id})" class="btn btn-info" style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px";>Add to cart</button>
-                      <a onclick="saveId(${item.id})" href="${contextPath}/homepage/detailProduct?id=${item.id}" class="btn btn-info" style="padding: 5px 10px;font-size:12px;border:none">View</a>
+                       <div class="action" style="display:flex;position: absolute;top: 160px"><button type="button" onclick="addCart(${item.id})" class="btn btn-info" style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px";><i class="glyphicon glyphicon-shopping-cart" style="margin-right: 2px"></i>Chọn mua</button>
+                      <a onclick="saveId(${item.id})" href="${contextPath}/homepage/detailProduct?id=${item.id}" class="btn btn-info" style="padding: 5px 10px;font-size:12px;border:none">Xem</a>
                     </div>
                 </div>
             </div>
