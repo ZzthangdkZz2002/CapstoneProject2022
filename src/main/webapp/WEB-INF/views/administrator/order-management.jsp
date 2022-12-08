@@ -177,7 +177,7 @@
                       </c:if>
                       <c:if test="${orderDto.isShipping eq 'true'}">
                         <a class="btn btn-primary btn-sm edit"
-                           type="button" title="Giao hàng nhanh" href="#"><i class="fas fa-edit"></i>Đã lên đơn cho Giao Hàng Nhanh</a>
+                           type="button" title="Giao hàng nhanh" href="${pageContext.request.contextPath}/admin/orders/updateGHN?orderid=${orderDto.orderid}"><i class="fas fa-edit"></i>Chi tiết GHN</a>
                       </c:if>
                     </c:if>
 

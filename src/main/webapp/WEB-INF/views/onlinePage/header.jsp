@@ -290,7 +290,7 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="${pageContext.request.contextPath}/signin" style="color: black;">Đăng nhập</a></li>
                                         <li><a href="${pageContext.request.contextPath}/signup" style="color: black;">Đăng kí</a></li>
-                                        <li><a href="${pageContext.request.contextPath}/trackingOrder" style="color: black;">Lịch sử đơn hàng</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/tracking/trackingOrder" style="color: black;">Lịch sử đơn hàng</a></li>
                                     </ul>
                                 </div>
                             </c:when>

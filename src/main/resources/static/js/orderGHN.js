@@ -84,14 +84,13 @@ function giaohangnhanh(orderid) {
             data: JSON.stringify(data),
             success: function (response){
                 console.log(response)
-                if(response.code === '200'){
+                if(response.code === 200){
                     $.ajax(
                         {
                             type : "GET",
-                            url : "/admin/orders/updateIsShip?id="+orderid,
+                            url : "/admin/orders/updateIsShip?id=" + orderid + "&order_code=" + response.data.order_code,
                             success: function (response){
                                 if(response.status === '00'){
-                                    console.log("update is shipping success");
                                     window.location.href = "http://localhost:5000/admin/orders/shipping";
                                 }
                                 else{
@@ -114,7 +113,6 @@ function giaohangnhanh(orderid) {
                             url : "/admin/orders/updateIsShip?id="+orderid,
                             success: function (response){
                                 if(response.status === '00'){
-                                    console.log("update is shipping success");
                                     window.location.href = "http://localhost:5000/admin/orders/shipping";
                                 }
                                 else{

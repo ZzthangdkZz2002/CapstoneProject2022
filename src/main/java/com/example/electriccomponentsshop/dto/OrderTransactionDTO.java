@@ -36,6 +36,7 @@ public class OrderTransactionDTO {
     private String payment_method;
     private Boolean isPaid;
     private Boolean isShipping;
+    private String order_code;
     //message tu khach hang
     private String message;
     private String orderKind;

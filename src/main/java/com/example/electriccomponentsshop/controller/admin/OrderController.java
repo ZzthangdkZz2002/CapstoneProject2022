@@ -134,6 +134,23 @@ public class OrderController {
         return "administrator/giaohangnhanh";
     }
 
+    @GetMapping("/updateGHN")
+    public String updateGiaoHangNhanh(@RequestParam(name = "orderid") String orderid, ModelMap map){
+        OrderTransaction orderTransaction = orderTransactionRepository.findByOrderid(orderid).get();
+        OrderTransactionDTO orderTransactionDTO = convertOrderToDTO2(orderTransaction);
+        map.addAttribute("order",orderTransactionDTO);
+        return "administrator/updateGiaoHangNhanh";
+    }
+    @GetMapping("/cancelGHN")
+    public String cancelGiaoHangNhanh(@RequestParam(name = "orderid") String orderid, ModelMap map){
+        OrderTransaction orderTransaction = orderTransactionRepository.findByOrderid(orderid).get();
+        orderTransaction.setIsShipping(false);
+        orderTransaction.setOrder_code(null);
+        orderTransactionRepository.save(orderTransaction);
+        map.addAttribute("active","shipping");
+        return "redirect:/admin/orders/shipping";
+    }
+
     @GetMapping("getOrder")
     @ResponseBody
     public ResponseEntity<ResponseObject> getOrderTransaction(@RequestParam(name = "id") String id){
@@ -143,9 +160,10 @@ public class OrderController {
     }
 
     @GetMapping("updateIsShip")
-    public ResponseEntity<ResponseObject> updateIsShip(@RequestParam(name = "id") String id){
+    public ResponseEntity<ResponseObject> updateIsShip(@RequestParam(name = "id") String id, @RequestParam(name = "order_code") String order_code){
         OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
         orderTransaction.setIsShipping(true);
+        orderTransaction.setOrder_code(order_code);
         orderTransactionRepository.save(orderTransaction);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","update is shipping success",""));
     }
@@ -233,6 +251,9 @@ public class OrderController {
                 orderTransactionDTO.setOrderid(orderTransaction.getOrderid());
                 orderTransactionDTO.setStatus(orderTransaction.getStatus());
                 orderTransactionDTO.setIsShipping(orderTransaction.getIsShipping());
+                if(orderTransaction.getOrder_code() != null){
+                    orderTransactionDTO.setOrder_code(orderTransaction.getOrder_code());
+                }
                 if(orderTransaction.getCustomer() != null){
                     CustomerDTO customerDTO = new CustomerDTO();
                     customerDTO.setId(orderTransaction.getCustomer().getId());

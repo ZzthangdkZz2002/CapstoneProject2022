@@ -59,6 +59,10 @@ public class OrderTransaction {
     @Column
     @ColumnDefault("0")
     private Boolean isShipping;
+
+    //code don hang Giao Hang Nhanh
+    @Column
+    private String order_code;
     //loi nhuan
     @Column
     @ColumnDefault("0")
