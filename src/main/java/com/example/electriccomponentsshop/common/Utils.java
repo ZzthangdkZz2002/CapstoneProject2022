@@ -53,6 +53,28 @@ public class Utils {
         return strCode.toString();
     }
 
+    public String generateInventoryExportCode(Integer inventoryexport_id){
+        StringBuffer strCode = new StringBuffer("XK");
+        if(String.valueOf(inventoryexport_id).length() == 1){
+            strCode.append("00000");
+        }
+        if(String.valueOf(inventoryexport_id).length() == 2){
+            strCode.append("0000");
+        }
+        if(String.valueOf(inventoryexport_id).length() == 3){
+            strCode.append("000");
+        }
+        if(String.valueOf(inventoryexport_id).length() == 4){
+            strCode.append("00");
+        }
+        if(String.valueOf(inventoryexport_id).length() == 5){
+            strCode.append("0");
+        }
+        strCode.append(inventoryexport_id);
+
+        return strCode.toString();
+    }
+
     public String gererateOrderid(String orderid_increment){
         StringBuffer strCode = new StringBuffer();
         String random_code = getRandomNumber(3);

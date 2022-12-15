@@ -47,4 +47,6 @@ public class Warehouse {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "warehouse")
     List<ProductLocation> productLocations = new ArrayList<>();
 
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "warehouse")
+//    List<InventoryExport> inventoryExports = new ArrayList<>();
 }

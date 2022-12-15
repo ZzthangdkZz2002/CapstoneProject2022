@@ -184,7 +184,7 @@ public class WarehouseController {
     @GetMapping("/view/import")
     public String viewListImport(ModelMap modelMap){
         try{
-            List<Inventory> inventories = inventoryRepository.findAll();
+            List<Inventory> inventories = inventoryRepository.findInventoryByCreated_dateDesc();
             modelMap.addAttribute("inventories",inventories);
 //            List<ImportTransactionDto> importTransactionDtoList =importTransactionService.findAll();
 //            modelMap.addAttribute("listImport", importTransactionDtoList );
@@ -333,7 +333,7 @@ public class WarehouseController {
 //        }catch (NoSuchElementException e){
 //            modelMap.addAttribute("notFound","Không có dữ liệu");
 //        }
-        return "administrator/warehouse-export-management";
+        return "administrator/inventory-export";
     }
 //    @PostMapping("/export/update")
 //    @ResponseBody

@@ -136,10 +136,10 @@
             </ul>
         </li>
 
-        <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/orders"><i
-                class='app-menu__icon bx bxs-package '></i><span class="app-menu__label">Quản lý lô sản
-            phẩm</span></a>
-        </li>
+<%--        <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/orders"><i--%>
+<%--                class='app-menu__icon bx bxs-package '></i><span class="app-menu__label">Quản lý lô sản--%>
+<%--            phẩm</span></a>--%>
+<%--        </li>--%>
         <sec:authorize access="hasRole('ROLE_MANAGER')">
             <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/feedbacks"><i class='app-menu__icon bx bx-user-voice'></i><span
                     class="app-menu__label">Feedback</span></a>
@@ -161,7 +161,7 @@
             current[0].className = current[0].className.replace(" active", "");
             items[6].className += " active";
         }
-        if(url.includes('admin/warehouses/view/import') || url.includes('admin/warehouses/import/add')){
+        if(url.includes('admin/warehouses/view/import') || url.includes('admin/warehouses/import/add') || url.includes('admin/inventory/search')){
             let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
             current[0].className = current[0].className.replace(" sub-item-active", "");
             sub_items[1].className += " sub-item-active";

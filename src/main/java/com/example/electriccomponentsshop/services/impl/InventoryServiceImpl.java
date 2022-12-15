@@ -2,8 +2,7 @@ package com.example.electriccomponentsshop.services.impl;
 
 import com.example.electriccomponentsshop.common.JwtUtils;
 import com.example.electriccomponentsshop.common.Utils;
-import com.example.electriccomponentsshop.dto.ImportProductDTO;
-import com.example.electriccomponentsshop.dto.ProductWarehouseDTO;
+import com.example.electriccomponentsshop.dto.*;
 import com.example.electriccomponentsshop.entities.*;
 import com.example.electriccomponentsshop.repositories.*;
 import com.example.electriccomponentsshop.services.InventoryService;
@@ -13,26 +12,58 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class InventoryServiceImpl implements InventoryService {
-    @Autowired
-    private JwtUtils jwtUtils;
-    @Autowired
-    ProductRepository productRepository;
-    @Autowired
-    ProductWarehouseRepository productWarehouseRepository;
-    @Autowired
-    InventoryRepository inventoryRepository;
-    @Autowired
-    ProductLocationRepository productLocationRepository;
-    @Autowired
-    SupplierRepository supplierRepository;
-    @Autowired
-    ProductsImportRepository productsImportRepository;
+    @Autowired private JwtUtils jwtUtils;
+    @Autowired ProductRepository productRepository;
+    @Autowired ProductWarehouseRepository productWarehouseRepository;
+    @Autowired InventoryRepository inventoryRepository;
+    @Autowired ProductLocationRepository productLocationRepository;
+    @Autowired SupplierRepository supplierRepository;
+    @Autowired ProductsImportRepository productsImportRepository;
+    @Autowired OrderTransactionRepository orderTransactionRepository;
+    @Autowired InventoryExportRepository inventoryExportRepository;
+    @Autowired ProductExportLocationRepository productExportLocationRepository;
+    @Autowired ProductsExportRepository productsExportRepository;
+
+
+    @Override
+    public void addInventoryExport(ExportTransactionNewDTO exportTransactionNewDTO) {
+        try{
+            InventoryExport inventoryExport = new InventoryExport();
+            Set<ProductsExport> productsExports = new HashSet<>();
+            String location_id = "";
+            OrderTransaction orderTransaction = orderTransactionRepository.findByOrderid(exportTransactionNewDTO.getOrder_id()).get();
+            inventoryExport.setExporter_name(exportTransactionNewDTO.getExportPerson());
+            inventoryExport.setReceiver(exportTransactionNewDTO.getReceivedPerson());
+            inventoryExport.setNote(exportTransactionNewDTO.getDescription());
+
+            int total_importPrice = 0;
+            for(ExportProductsDTO ep : exportTransactionNewDTO.getExportProducts()){
+                Product product = productRepository.findById(Integer.parseInt(ep.getProduct_id())).get();
+                for(ProductWarehouseExportDTO pwe : ep.getProductWarehouseExportDTOS()){
+                    total_importPrice += product.getPrice().intValue() * pwe.getQuantity();
+                }
+            }
+
+            inventoryExport.setTotal_importPrice(total_importPrice);
+            inventoryExport.setOrderTransaction(orderTransaction);
+
+            InventoryExport iv1 = inventoryExportRepository.save(inventoryExport);
+            inventoryExport.setCode(new Utils().generateInventoryExportCode(iv1.getId()));
+            InventoryExport iv2 = inventoryExportRepository.save(inventoryExport);
+            for(ExportProductsDTO ep : exportTransactionNewDTO.getExportProducts()){
+
+            }
+
+
+        }catch (Exception e){
+
+        }
+    }
+
     @Override
     public boolean addInventoryImport(ProductWarehouseDTO productWarehouseDTO) {
         try{
@@ -118,5 +149,7 @@ public class InventoryServiceImpl implements InventoryService {
         System.out.println("quantity: "+quantity);
         return quantity;
     }
+
+
 
 }

@@ -108,14 +108,14 @@
 <main class="app-content">
     <div class="app-title">
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item active"><a href="#"><b>Import enventory</b></a></li>
+            <li class="breadcrumb-item active"><a href="#"><b>Import inventory</b></a></li>
         </ul>
     </div>
     <div class="tile">
         <div class="tile-body">
             <div class="row">
                 <div class="col-2">
-                    <h1 class="heading-page mt-2">Phiếu nhập kho</h1>
+                    <h1 class="heading-page mt-2">Phiếu xuất kho</h1>
                     <div class="boxLeft mt-5">
                         <h5>Thời gian</h5>
                         <form method="get" action="/admin/inventory/search">
@@ -163,43 +163,25 @@
                         </div>
                     </form>
                     <div class="table-responsive">
-                        <table class="table mt-5 table-bordered " id="inventory-table" style="width: 100%;">
+                        <table class="table mt-5 table-bordered " id="inventoryExport-table" style="width: 100%;">
                             <thead class="thead" style="background-color: #5FB55F; color: white;">
                             <tr>
-                                <th scope="col">Mã nhập kho</th>
-                                <th scope="col">Thời gian</th>
-                                <th scope="col">Nhà cung cấp</th>
-                                <th scope="col">Kho hàng</th>
-                                <th scope="col">Người nhập kho</th>
-                                <th scope="col">Tổng số lượng</th>
-                                <th scope="col">Tổng tiền hàng</th>
-                                <th scope="col">Tiền đã trả NCC</th>
+                                <th scope="col">Mã xuất kho</th>
+                                <th scope="col">Đơn hàng</th>
+                                <th scope="col">Thời gian xuất kho</th>
+                                <th scope="col">Kho xuất hàng</th>
+                                <th scope="col">Người xuất hàng</th>
+                                <th scope="col">Người nhận hàng</th>
+                                <th scope="col">Tổng số lượng xuất</th>
+                                <th scope="col">Tổng tiền hàng xuất</th>
                                 <th scope="col">Ghi chú</th>
-
                                 <th scope="col"></th>
 
                             </tr>
                             </thead>
 
                             <tbody style="background-color: white;">
-                            <c:forEach var="inventory" items="${inventories}">
-                                <tr>
-                                    <th scope="row">${inventory.code}</th>
-                                    <td>${inventory.created_date}</td>
-                                    <td>${inventory.supplier.name}</td>
-                                    <td>Chi nhánh trung tâm</td>
-                                    <td>${inventory.creator_name}</td>
-                                    <td>${inventory.total_quantity}</td>
-                                    <td class="currency-text">${inventory.total_importPrice}</td>
-                                    <td style="color: ${inventory.money_paid != inventory.total_importPrice ? "red" :""}" class="currency-text">${inventory.money_paid}</td>
-                                    <td>${inventory.note}</td>
-                                    <td> <a href="#detailInventory" onclick="showDetailInventory(`${inventory.id}`,`${inventory.code}`,`${inventory.created_date}`,`${inventory.supplier.name}`,`${inventory.creator_name}`)">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </a>
-                                    </td>
-                                </tr>
 
-                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -215,26 +197,20 @@
 
     <div class="tile">
         <div class="tile-body">
-            <form  class="mt-4 hide" id="detailInventory" style="display: none">
+            <form  class="mt-4 hide" id="detailInventoryExport" style="display: none">
                 <div class="container mt-2">
                     <div class="row pre-info">
                         <div class="col-5 mr-5">
                             <div class="form-group row">
-                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Mã nhập hàng:</label>
+                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Mã xuất kho:</label>
                                 <div class="col-sm-8">
-                                    <p id="inventory_code" class="mt-2"></p>
+                                    <p id="inventoryexport_code" class="mt-2"></p>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Thời gian:</label>
+                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Thời gian xuất:</label>
                                 <div class="col-sm-8">
-                                    <p id="inventory_date" class="mt-2"></p>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Nhà cung cấp:</label>
-                                <div class="col-sm-8">
-                                    <p id="inventory_supplier" class="mt-2"></p>
+                                    <p id="inventoryexport_date" class="mt-2"></p>
                                 </div>
                             </div>
 
@@ -242,30 +218,35 @@
                         <div class="col-5">
 
                             <div class="form-group row">
-                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Chi nhánh:</label>
+                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Kho xuất hàng:</label>
                                 <div class="col-sm-8">
                                     <p class="mt-2">Chi nhánh trung tâm</p>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Người nhập:</label>
+                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Người xuất kho:</label>
                                 <div class="col-sm-8">
-                                    <p id="inventory_creatorname" class="mt-2"></p>
+                                    <p id="inventoryexport_exportername" class="mt-2"></p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Người nhận hàng:</label>
+                                <div class="col-sm-8">
+                                    <p id="inventoryexport_receiver" class="mt-2"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <h3 style="margin: 20px 0 15px 33px">Thông tin chi tiết hàng nhập</h3>
-                    <table class="table" id="importItemTable" style="margin-left: 33px">
+                    <h3 style="margin: 20px 0 15px 33px">Thông tin chi tiết hàng xuất</h3>
+                    <table class="table" id="exportItemTable" style="margin-left: 33px">
                         <thead style="background-color: #5FB55F; color: white;">
                         <tr>
                             <th scope="col">Mã hàng</th>
                             <th scope="col">Tên hàng</th>
-                            <th scope="col">Số lượng</th>
-                            <th scope="col">Đơn giá</th>
-                            <th scope="col">Giảm giá</th>
-                            <th scope="col">Giá nhập</th>
-                            <th scope="col">Thành tiền</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Số lượng xuất</th>
+                            <th scope="col">Kho xuất hàng</th>
+                            <th scope="col">Vị trí xuất hàng</th>
                         </tr>
                         </thead>
                         <tbody>

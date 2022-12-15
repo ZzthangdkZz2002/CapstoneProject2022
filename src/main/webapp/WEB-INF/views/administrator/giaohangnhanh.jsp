@@ -194,7 +194,7 @@
 <h4 class="row-title"> | Sản phẩm</h4>
 <div class="boder">
     <c:forEach var="item" items="${order.orderTransactionDetails}">
-        <div class="products-info justify-content-center">
+        <div class="products-info justify-content-around">
             <div class="d-flex">
                 <label for="product-name" class="form-label">1.</label>
                 <input type="text" class="form-control" id="product-name" value="${item.productDTO.name}">
@@ -278,8 +278,11 @@
     </div>
     <button type="button" class="btn-primary" onclick="giaohangnhanh('${order.id}')">Lên Đơn Hàng</button>
 </div>
-
 <script src="${pageContext.request.contextPath}/js/orderGHN.js"></script>
+
+<script>
+    console.log(moment('2022-12-09T23:59:59.000Z').utc().format('DD/MM/YYYY'))
+</script>
 </body>
 
 </html>

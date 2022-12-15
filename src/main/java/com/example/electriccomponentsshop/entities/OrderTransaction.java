@@ -9,9 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Getter
 @Setter
@@ -42,6 +40,8 @@ public class OrderTransaction {
 
     @OneToMany(mappedBy = "orderTransaction",fetch = FetchType.EAGER)
     private List<OrderTransactionDetail> orderTransactionDetails = new ArrayList<>();
+    @OneToMany(mappedBy = "orderTransaction",fetch = FetchType.EAGER)
+    private Set<InventoryExport> inventoryExports = new HashSet<>();
     private String user_name;
     private String user_email;
     private String user_phone;

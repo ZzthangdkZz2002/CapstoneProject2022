@@ -65,6 +65,7 @@
                   <th>Tên nhà cung cấp</th>
                   <th>Số điện thoại</th>
                   <th>Email</th>
+                  <th>Mã số thuế</th>
                   <th>Địa chỉ</th>
                   <th>Nợ cần trả</th>
                   <th>Tổng mua</th>
@@ -79,6 +80,7 @@
                   <td>${supplier.name}</td>
                   <td>${supplier.phone}</td>
                   <td>${supplier.email}</td>
+                  <td>${supplier.tax_code}</td>
                   <td>${supplier.address}</td>
                   <td class="currency-text">${supplier.debt}</td>
                   <td class="currency-text" c>${supplier.total_purchase}</td>
@@ -92,8 +94,8 @@
                     </div>
                   </td>
                   <td>
-                    <a href="${pageContext.request.contextPath}/admin/suppliers/edit/${supplier.id}" class="btn btn-primary btn-sm edit" type="button" title="Sửa"><i
-                            class="fas fa-edit"></i></a>
+                    <a href="${pageContext.request.contextPath}/admin/suppliers/detail?sid=${supplier.id}" class="btn btn-primary btn-sm edit" type="button" title="Sửa">Chi tiết hàng nhập</a>
+                    <a href="${pageContext.request.contextPath}/admin/suppliers/edit/${supplier.id}" class="btn btn-primary btn-sm edit" type="button" title="Sửa"><i class="fas fa-edit"></i></a>
                   </td>
                 </tr>
               </c:forEach>

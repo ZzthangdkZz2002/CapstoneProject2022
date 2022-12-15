@@ -2,8 +2,11 @@ package com.example.electriccomponentsshop.controller.admin;
 
 import com.example.electriccomponentsshop.dto.ResponseObject;
 import com.example.electriccomponentsshop.dto.SupplierDTO;
+import com.example.electriccomponentsshop.entities.Inventory;
 import com.example.electriccomponentsshop.entities.Supplier;
+import com.example.electriccomponentsshop.repositories.InventoryRepository;
 import com.example.electriccomponentsshop.services.SupplierService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +25,10 @@ import java.util.Optional;
 @Controller
 @RequestMapping("admin/suppliers")
 public class SupplierController {
+
+    @Autowired
+    InventoryRepository inventoryRepository;
+
     final
     SupplierService supplierService;
 
@@ -83,6 +92,92 @@ public class SupplierController {
         }catch (RuntimeException e){
             return e.getMessage();
         }
+    }
+
+    @GetMapping("/detail")
+    public String detailSupplier(ModelMap map, @RequestParam(name = "sid") String s_id){
+        List<Inventory> inventories = inventoryRepository.findInventoryBySupplierId(s_id);
+        map.addAttribute("inventories", inventories);
+        map.addAttribute("sid", s_id);
+        return "administrator/supplierInventory";
+    }
+
+    @GetMapping("/search")
+    public String searchInventory(@RequestParam(name = "sid") String s_id,@RequestParam(name = "date_type", required = false) String date_type,@RequestParam(name = "datedetail",required = false) String detailDate, ModelMap map){
+
+        if(date_type == null && detailDate != null){
+            System.out.println("dates: " + detailDate);
+            String[] arrDate = detailDate.trim().split("-");
+            String from_date = arrDate[0].trim();
+            String to_date = arrDate[1].trim();
+
+            List<Inventory> inventoryList = inventoryRepository.findInventoryByCreated_dateAndSupplier(from_date,to_date +" 23:59:59",s_id);
+            map.addAttribute("inventories", inventoryList);
+            map.addAttribute("sid", s_id);
+            return "administrator/supplierInventory";
+        }else{
+            LocalDateTime now = LocalDateTime.now();
+            int current_day = now.getDayOfMonth();
+            int current_month = now.getMonthValue();
+            int current_year = now.getYear();
+
+            YearMonth yearMonth = YearMonth.of(current_year, current_month);
+            int daysInMonth = yearMonth.lengthOfMonth();
+            String from_date = "";
+            String to_date = "";
+
+            if(date_type.equals("today")){
+                from_date += current_year + "-" + current_month + "-" + current_day;
+                to_date += current_year + "-" + current_month + "-" + (current_day+1);
+
+                List<Inventory> inventoryList = inventoryRepository.findInventoryByCreated_dateAndSupplier(from_date,to_date,s_id);
+                map.addAttribute("inventories", inventoryList);
+                map.addAttribute("sid", s_id);
+                return "administrator/supplierInventory";
+            }else if(date_type.equals("yesterday")){
+                from_date += current_year + "-" + current_month + "-" + (current_day-1);
+                to_date += current_year + "-" + current_month + "-" + (current_day);
+
+                List<Inventory> inventoryList = inventoryRepository.findInventoryByCreated_dateAndSupplier(from_date,to_date,s_id);
+                map.addAttribute("inventories", inventoryList);
+                map.addAttribute("sid", s_id);
+                return "administrator/supplierInventory";
+            }else if(date_type.equals("thismonth")){
+                from_date += current_year + "-" + current_month + "-" + "1";
+                to_date += current_year + "-" + current_month + "-" + daysInMonth + " 23:59:59";
+
+                List<Inventory> inventoryList = inventoryRepository.findInventoryByCreated_dateAndSupplier(from_date,to_date,s_id);
+                map.addAttribute("inventories", inventoryList);
+                map.addAttribute("sid", s_id);
+                return "administrator/supplierInventory";
+            }else if(date_type.equals("lastmonth")){
+                if(current_month == 1){
+                    current_month = 12;
+                    current_year = current_year - 1;
+                }else{
+                    current_month = current_month - 1;
+                }
+                YearMonth yearMonth1 = YearMonth.of(current_year, current_month);
+                from_date += current_year + "-" + current_month + "-" + "1";
+                to_date += current_year + "-" + current_month + "-" + yearMonth1.lengthOfMonth() + " 23:59:59";
+                List<Inventory> inventoryList = inventoryRepository.findInventoryByCreated_dateAndSupplier(from_date,to_date,s_id);
+                map.addAttribute("inventories", inventoryList);
+                map.addAttribute("sid", s_id);
+                return "administrator/supplierInventory";
+            }
+        }
+        List<Inventory> inventories = inventoryRepository.findInventoryByCreated_dateDesc();
+        map.addAttribute("inventories", inventories);
+        map.addAttribute("sid", s_id);
+        return "administrator/supplierInventory";
+    }
+
+    @GetMapping("/searchtext")
+    public String SearchInventoryByCode(@RequestParam(name = "text") String code, @RequestParam(name = "sid") String s_id, ModelMap map){
+        List<Inventory> inventories = inventoryRepository.findInventoryByCodeAndSupplier(code, s_id);
+        map.addAttribute("inventories", inventories);
+        map.addAttribute("sid", s_id);
+        return "administrator/supplierInventory";
     }
 
 }

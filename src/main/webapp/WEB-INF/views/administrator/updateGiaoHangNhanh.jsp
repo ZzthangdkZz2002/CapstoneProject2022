@@ -309,6 +309,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js" integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
     var data = {
         "order_code": "${order.order_code}"
@@ -330,7 +331,6 @@
                     if(response.data.status = 'ready_to_pick'){
                         status = 'Chờ lấy hàng'
                     }
-                    var date = new Date(response.data.leadtime).toISOString();
                     var requiredNote = response.data.required_note;
 
                     $('#ghn-status').text(response.data.order_code + ' - ' + status)
@@ -348,7 +348,7 @@
                     $('#height').val(response.data.height)
                     $('#total-cod').val(response.data.cod_amount)
                     $('#total-value').val(response.data.insurance_value)
-                    $('#delivery-date').val(date.toLocaleString("en-US"))
+                    $('#delivery-date').val(moment(response.data.leadtime).utc().format('DD/MM/YYYY'))
                     $('#order-id').val(response.data.client_order_code)
                     $("textarea#note").text(response.data.note)
 

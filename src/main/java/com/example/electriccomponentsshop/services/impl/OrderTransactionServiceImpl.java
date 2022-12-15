@@ -70,7 +70,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
             orderTransaction.setProvince(orderTransactionDTO.getProvince());
             orderTransaction.setDistrict(orderTransactionDTO.getDistrict());
             orderTransaction.setWard(orderTransactionDTO.getWard());
-            orderTransaction.setAmount(Double.parseDouble(orderTransactionDTO.getAmount()));
+            orderTransaction.setAmount((double) Math.round(Double.parseDouble(orderTransactionDTO.getAmount())*10)/10);
             orderTransaction.setPayment_method(orderTransactionDTO.getPayment_method());
             orderTransaction.setMessage(orderTransactionDTO.getMessage());
             orderTransaction.setStatus(OrderEnum.PENDING.getName());
@@ -87,7 +87,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
                 orderTransactionDetail.setOrderTransaction(o);
                 orderTransactionDetail.setProduct_id(dto.getProduct_id());
                 orderTransactionDetail.setQuantity(dto.getQuantity());
-                orderTransactionDetail.setAmount(dto.getAmount());
+                orderTransactionDetail.setAmount((double) Math.round(dto.getAmount()*10)/10);
 
                 orderTransactionDetailRepository.save(orderTransactionDetail);
             }
@@ -132,7 +132,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
             Account account = accountRepository.findById(accountDetail.getId()).get();
             orderTransaction.setAccountemployee(account);
 
-            orderTransaction.setAmount(Double.parseDouble(orderTransactionDTO.getAmount()));
+            orderTransaction.setAmount((double) Math.round(Double.parseDouble(orderTransactionDTO.getAmount())*10)/10);
             orderTransaction.setPayment_method(orderTransactionDTO.getPayment_method());
             orderTransaction.setStatus(OrderEnum.PENDING.getName());
             orderTransaction.setIsPaid(true);
@@ -151,7 +151,7 @@ public class OrderTransactionServiceImpl implements OrderTransactionService {
                 orderTransactionDetail.setOrderTransaction(o);
                 orderTransactionDetail.setProduct_id(dto.getProduct_id());
                 orderTransactionDetail.setQuantity(dto.getQuantity());
-                orderTransactionDetail.setAmount(dto.getAmount());
+                orderTransactionDetail.setAmount((double) Math.round(dto.getAmount()*10)/10);
 
                 orderTransactionDetailRepository.save(orderTransactionDetail);
             }

@@ -104,11 +104,11 @@
 <jsp:include page="header.jsp"/>
 <!-- Sidebar menu-->
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
-<jsp:include page="warehouse-home-menu.jsp"/>
+<jsp:include page="home-menu.jsp"/>
 <main class="app-content">
     <div class="app-title">
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item active"><a href="#"><b>Import enventory</b></a></li>
+            <li class="breadcrumb-item active"><a href="#"><b>Inventory</b></a></li>
         </ul>
     </div>
     <div class="tile">
@@ -118,7 +118,7 @@
                     <h1 class="heading-page mt-2">Phiếu nhập kho</h1>
                     <div class="boxLeft mt-5">
                         <h5>Thời gian</h5>
-                        <form method="get" action="/admin/inventory/search">
+                        <form method="get" action="/admin/suppliers/search">
                             <div class="form-check my-3">
                                 <input class="form-check-input" type="radio" name="inventoryDate" id="thisMonth">
                                 <label class="form-check-label d-flex justify-content-between line-under" for="thisMonth">
@@ -135,6 +135,7 @@
                             </div>
                             <!-- hiển thị calendar  -->
                             <input type="text" id="datetimerange-input1" class="calendar-popup hide" name="datedetail" size="24" style="text-align:center">
+                            <input type="text" class="calendar-popup hide" value="${sid}" name="sid">
                             <button class="btn-danger" type="submit" style="display:none;" id="btnInventorySearch">Tìm kiếm</button>
                         </form>
                     </div>
@@ -150,12 +151,13 @@
                     <%--                    </div>--%>
                 </div>
                 <div class="col-10">
-                    <form method="get" action="/admin/inventory/searchtext" name="inventorySearch">
+                    <form method="get" action="/admin/suppliers/searchtext" name="inventorySearch">
                         <div class="search-box">
                             <div class="input-group" style="width: 50%;">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" onclick="inventorySearch.submit()"><i class="fa-solid fa-magnifying-glass"></i></span>
                                 </div>
+                                <input type="text" class="calendar-popup hide" value="${sid}" name="sid">
                                 <input type="text" name="text" class="form-control" placeholder="Theo mã phiếu kiểm" aria-label="Input group example" aria-describedby="btnGroupAddon">
                                 <a class="btn btn-add btn-sm ml-3 mt-1" href="${pageContext.request.contextPath}/admin/warehouses/import/add" title="Thêm"><i class="fas fa-plus"></i>
                                     Thêm giao dịch mới</a>
@@ -242,7 +244,7 @@
                         <div class="col-5">
 
                             <div class="form-group row">
-                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Chi nhánh:</label>
+                                <%--@declare id="inputpassword"--%><label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Chi nhánh:</label>
                                 <div class="col-sm-8">
                                     <p class="mt-2">Chi nhánh trung tâm</p>
                                 </div>
@@ -321,13 +323,13 @@
             <div class="row">
                 <div class="col-2">
                     <p><strong>Theo ngày</strong></p>
-                    <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=today">Hôm nay</a><br />
-                    <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=yesterday">Hôm qua</a>
+                    <a href="${pageContext.request.contextPath}/admin/suppliers/search?date_type=today&sid=${sid}">Hôm nay</a><br />
+                    <a href="${pageContext.request.contextPath}/admin/suppliers/search?date_type=yesterday&sid=${sid}">Hôm qua</a>
                 </div>
                 <div class="col-2">
                     <p><strong>Theo tháng</strong></p>
-                    <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=thismonth">Tháng này</a><br />
-                    <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=lastmonth">Tháng trước</a><br />
+                    <a href="${pageContext.request.contextPath}/admin/suppliers/search?date_type=thismonth&sid=${sid}">Tháng này</a><br />
+                    <a href="${pageContext.request.contextPath}/admin/suppliers/search?date_type=lastmonth&sid=${sid}">Tháng trước</a><br />
                 </div>
             </div>
         </div>
