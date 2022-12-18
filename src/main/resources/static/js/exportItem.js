@@ -16,7 +16,7 @@ function  handleSubmit(){
                     {
                         "location_id" : item.locationID,
                         "quantity" : item.quantityInput
-                    }
+                    } 
                 ]
 
         }

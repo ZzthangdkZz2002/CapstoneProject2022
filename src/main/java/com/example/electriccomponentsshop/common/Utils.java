@@ -31,6 +31,29 @@ public class Utils {
         return strCode.toString();
     }
 
+    public String generateSupplierCode(Integer s_id){
+        StringBuffer strCode = new StringBuffer("NCC");
+        if(String.valueOf(s_id).length() == 1){
+            strCode.append("00000");
+        }
+        if(String.valueOf(s_id).length() == 2){
+            strCode.append("0000");
+        }
+        if(String.valueOf(s_id).length() == 3){
+            strCode.append("000");
+        }
+        if(String.valueOf(s_id).length() == 4){
+            strCode.append("00");
+        }
+        if(String.valueOf(s_id).length() == 5){
+            strCode.append("0");
+        }
+        strCode.append(s_id);
+
+        return strCode.toString();
+    }
+
+
     public String generateInventoryCode(Integer inventory_id){
         StringBuffer strCode = new StringBuffer("NK");
         if(String.valueOf(inventory_id).length() == 1){

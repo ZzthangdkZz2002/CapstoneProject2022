@@ -157,7 +157,7 @@
                                     <span class="input-group-text" onclick="inventorySearch.submit()"><i class="fa-solid fa-magnifying-glass"></i></span>
                                 </div>
                                 <input type="text" name="text" class="form-control" placeholder="Theo mã phiếu kiểm" aria-label="Input group example" aria-describedby="btnGroupAddon">
-                                <a class="btn btn-add btn-sm ml-3 mt-1" href="${pageContext.request.contextPath}/admin/warehouses/import/add" title="Thêm"><i class="fas fa-plus"></i>
+                                <a class="btn btn-add btn-sm ml-3 mt-1" href="${pageContext.request.contextPath}/admin/warehouses/export/add" title="Thêm"><i class="fas fa-plus"></i>
                                     Thêm giao dịch mới</a>
                             </div>
                         </div>

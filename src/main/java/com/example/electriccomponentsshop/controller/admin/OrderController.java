@@ -2,9 +2,11 @@ package com.example.electriccomponentsshop.controller.admin;
 
 import com.example.electriccomponentsshop.common.OrderEnum;
 import com.example.electriccomponentsshop.dto.*;
+import com.example.electriccomponentsshop.entities.Account;
 import com.example.electriccomponentsshop.entities.OrderTransaction;
 import com.example.electriccomponentsshop.entities.OrderTransactionDetail;
 import com.example.electriccomponentsshop.entities.Product;
+import com.example.electriccomponentsshop.repositories.AccountRepository;
 import com.example.electriccomponentsshop.repositories.OrderTransactionRepository;
 import com.example.electriccomponentsshop.repositories.ProductRepository;
 import com.example.electriccomponentsshop.services.*;
@@ -53,6 +55,8 @@ public class OrderController {
 
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    AccountRepository accountRepository;
 //    @Autowired
 //    OrderItemService orderItemService;
 //    @Autowired
@@ -342,7 +346,7 @@ public class OrderController {
     }
 
     @GetMapping("/finish")
-    public String finishOrder(@RequestParam(name = "id") String id, RedirectAttributes r){
+    public String finishOrder(@RequestParam(name = "id") String id, RedirectAttributes r, Authentication authentication){
         try{
             OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
             orderTransaction.setStatus(OrderEnum.DONE.getName());
@@ -350,6 +354,9 @@ public class OrderController {
                 orderTransaction.setIsPaid(true);
             }
             orderTransaction.setUpdatedDate(new Date());
+            AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
+            Account account = accountRepository.findById(accountDetail.getId()).get();
+            orderTransaction.setEmployeeProcessor(account);
             orderTransactionRepository.save(orderTransaction);
             r.addFlashAttribute("acceptOrderMessage","Giao thành công đơn hàng #" + orderTransaction.getOrderid());
         }catch (Exception e){
@@ -359,11 +366,14 @@ public class OrderController {
     }
 
     @GetMapping("/accept")
-    public String acceptOrder(@RequestParam(name = "id") String id, RedirectAttributes r){
+    public String acceptOrder(@RequestParam(name = "id") String id, RedirectAttributes r, Authentication authentication){
         try{
             OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
             orderTransaction.setStatus(OrderEnum.CONFIRM.getName());
             orderTransaction.setUpdatedDate(new Date());
+            AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
+            Account account = accountRepository.findById(accountDetail.getId()).get();
+            orderTransaction.setEmployeeProcessor(account);
             orderTransactionRepository.save(orderTransaction);
             r.addFlashAttribute("acceptOrderMessage","Xác nhận thành công đơn hàng #" + orderTransaction.getOrderid());
         }catch (Exception e){
@@ -373,7 +383,7 @@ public class OrderController {
     }
 
     @GetMapping("/cancel")
-    public ResponseEntity<ResponseObject> cancelOrder(@RequestParam(name = "id") String id, @RequestParam(name = "reason") String reason){
+    public ResponseEntity<ResponseObject> cancelOrder(@RequestParam(name = "id") String id, @RequestParam(name = "reason") String reason, Authentication authentication){
         try{
             System.out.println("Reason: "+ reason);
             String buildEmail =
@@ -448,6 +458,9 @@ public class OrderController {
             OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
             orderTransaction.setStatus(OrderEnum.CANCEL.getName());
             orderTransaction.setUpdatedDate(new Date());
+            AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
+            Account account = accountRepository.findById(accountDetail.getId()).get();
+            orderTransaction.setEmployeeProcessor(account);
             if(orderTransaction.getIsPaid() == true){
                 orderTransaction.setIsPaid(false);
             }

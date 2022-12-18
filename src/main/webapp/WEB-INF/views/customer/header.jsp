@@ -68,7 +68,8 @@
                     <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
 
                     <c:set var="username"
-                           value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}"/>
+                           value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.email}"/>
+                    <c:set var="name" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}"/>
 
                     <%--                    giỏ hàng--%>
                     <div class="dropdown dropdown-cart" style="">
@@ -128,7 +129,13 @@
                                 <div class="dropdown">
                                     <button class="dropdown-toggle" data-hover="dropdown"
                                             style="padding: 14px 8px; border: none; font-size: 15px"><i
-                                            class="icon fa fa-user" style="margin-right: 3px"></i>Tài khoản
+                                            class="icon fa fa-user" style="margin-right: 3px"></i>
+                                        <c:if test="${name == null}">
+                                            Tài khoản
+                                        </c:if>
+                                        <c:if test="${name != null}">
+                                            ${name}
+                                        </c:if>
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a href="${pageContext.request.contextPath}/signin" style="color: black;">Đăng

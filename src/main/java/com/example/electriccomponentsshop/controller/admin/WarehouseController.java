@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -368,9 +369,9 @@ public class WarehouseController {
     }
     @PostMapping("/export/add")
     @ResponseBody
-    public ResponseEntity<ResponseObject> addExportItem(@RequestBody ExportTransactionNewDTO exportTransactionNewDTO){
+    public ResponseEntity<ResponseObject> addExportItem(@RequestBody ExportTransactionNewDTO exportTransactionNewDTO, Authentication authentication){
         try {
-            exportTransactionNewService.addExportTransaction(exportTransactionNewDTO);
+            exportTransactionNewService.addExportTransaction(exportTransactionNewDTO, authentication);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","add export transaction success",""));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","add export transaction fail",e.getMessage()));

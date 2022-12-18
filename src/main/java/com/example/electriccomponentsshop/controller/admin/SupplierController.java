@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -43,8 +44,8 @@ public class SupplierController {
         return "administrator/supplier-management";
     }
     @PostMapping("/add")
-    public String addNew(@RequestParam(name = "s_code")String code, @RequestParam(name = "s_name")String name ,@RequestParam(name = "s_email")String email ,@RequestParam(name = "phone")String phone ,
-                         @RequestParam(name = "company")String company,@RequestParam(name = "address")String address ,@RequestParam(name = "tax_code")String tax_code ,@RequestParam(name = "note")String note){
+    public String addNew(@RequestParam(name = "s_code")String code, @RequestParam(name = "s_name")String name , @RequestParam(name = "s_email")String email , @RequestParam(name = "phone")String phone ,
+                         @RequestParam(name = "company")String company, @RequestParam(name = "address")String address , @RequestParam(name = "tax_code")String tax_code , @RequestParam(name = "note")String note, RedirectAttributes r){
         SupplierDTO supplierDTO = new SupplierDTO();
         supplierDTO.setCode(code);
         supplierDTO.setName(name);
@@ -54,8 +55,13 @@ public class SupplierController {
         supplierDTO.setAddress(address);
         supplierDTO.setTax_code(tax_code);
         supplierDTO.setNote(note);
-        supplierService.addSupplier(supplierDTO);
-        return "redirect:/admin/suppliers";
+        String error_code = supplierService.addSupplier(supplierDTO);
+        if(error_code.equals("00")){
+            return "redirect:/admin/suppliers";
+        }else{
+            r.addFlashAttribute("error","Thêm nhà cung cấp thất bại. Nhà cung cấp đã tồn tại");
+            return "redirect:/admin/suppliers";
+        }
     }
 //    @GetMapping("/add")
 //    public String viewAddForm(ModelMap modelMap){

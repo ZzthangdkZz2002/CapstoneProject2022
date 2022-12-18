@@ -27,9 +27,15 @@ public class OrderTransaction {
     @JoinColumn(name = "user_id")
     private Account accountuser;
 
+    //nguoi tao don hang
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Account accountemployee;
+
+    //nguoi xử lý đơn hàng
+    @ManyToOne(fetch =  FetchType.LAZY)
+    @JoinColumn(name = "processor_id")
+    private Account employeeProcessor;
 
     @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "customer_id")

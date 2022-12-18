@@ -49,6 +49,11 @@
                 <a class="btn btn-add btn-sm" href="#" title="Thêm" data-toggle="modal" data-target="#addSupplierModel"><i class="fas fa-plus"></i>
                   Thêm nhà cung cấp</a>
               </div>
+              <c:if test="${error != null}">
+                <div class="col-sm-2">
+                  <a class="btn btn-warning"  href="#" title="error">${error}</a>
+                </div>
+              </c:if>
             </div>
             <div class="search-row">
               <form action="">
@@ -228,7 +233,7 @@ MODAL
             <div class="row justify-content-between">
 
               <div class="form__group field col-5">
-                <input type="input" class="form__field" placeholder="Mã mặc định" name="s_code" id="code" required />
+                <input type="input" class="form__field" placeholder="Mã mặc định" name="s_code" id="code"  />
                 <label for="code" class="form__label" required-field>Mã nhà cung cấp</label>
               </div>
 

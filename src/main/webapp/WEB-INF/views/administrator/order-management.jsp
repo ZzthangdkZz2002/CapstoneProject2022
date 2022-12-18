@@ -131,9 +131,34 @@
               <thead>
                 <tr>
                   <th width="100">Mã đơn hàng</th>
-                  <th>Mã nhân viên</th>
-                  <th>Mã khách hàng</th>
-                  <th>Ngày đặt hàng</th>
+                  <th>Người tạo đơn</th>
+                  <c:if test="${active != 'waiting'}">
+                    <th>Người xử lý đơn</th>
+                  </c:if>
+                  <th>Khách hàng</th>
+                  <th>
+                    <c:if test="${active eq null}">
+                      Ngày Thay Đổi
+                    </c:if>
+                    <c:if test="${active eq 'waiting'}">
+                      Ngày đặt hàng
+                    </c:if>
+                    <c:if test="${active eq 'confirmed'}">
+                      Ngày Xử Lý
+                    </c:if>
+                    <c:if test="${active eq 'shipping'}">
+                      Ngày Xác Nhận
+                    </c:if>
+                    <c:if test="${active eq 'received'}">
+                      Ngày Hoàn Thành
+                    </c:if>
+                    <c:if test="${active eq 'cancelled'}">
+                      Ngày Hủy Đơn
+                    </c:if>
+                    <c:if test="${active eq 'returned'}">
+                      Ngày Nhận Hoàn Đơn
+                    </c:if>
+                  </th>
                   <th>Tổng tiền</th>
                   <th>Tình trạng</th>
                   <th>Loại đơn hàng</th>
@@ -144,9 +169,37 @@
               <c:forEach var="orderDto" items="${listOrder}">
                 <tr>
                   <td>#${orderDto.orderid}</td>
-                  <td>${orderDto.accountemployee != null ? orderDto.accountemployee.id : ""}</td>
-                  <td>${orderDto.customer != null ? orderDto.customer.id : "Khách lẻ"}</td>
-                  <td>${orderDto.created}</td>
+                  <td>${orderDto.accountemployee != null ? orderDto.accountemployee.name : orderDto.customer.name}</td>
+                  <c:if test="${active != 'waiting'}">
+                    <td>${orderDto.employeeProcessor.name}</td>
+                  </c:if>
+                  <td>${orderDto.customer != null ? orderDto.customer.name : "Khách lẻ"}</td>
+                  <td>
+                    <c:if test="${active eq null && orderDto.status eq 'Chờ Xử Lý'}">
+                      ${orderDto.created}
+                    </c:if>
+                    <c:if test="${active eq null && orderDto.status != 'Chờ Xử Lý'}">
+                      ${orderDto.updatedDate}
+                    </c:if>
+                    <c:if test="${active eq 'waiting'}">
+                      ${orderDto.created}
+                    </c:if>
+                    <c:if test="${active eq 'confirmed'}">
+                      ${orderDto.updatedDate}
+                    </c:if>
+                    <c:if test="${active eq 'shipping'}">
+                      ${orderDto.updatedDate}
+                    </c:if>
+                    <c:if test="${active eq 'received'}">
+                      ${orderDto.updatedDate}
+                    </c:if>
+                    <c:if test="${active eq 'cancelled'}">
+                      ${orderDto.updatedDate}
+                    </c:if>
+                    <c:if test="${active eq 'returned'}">
+                      ${orderDto.updatedDate}
+                    </c:if>
+                  </td>
                   <td class = "currency-text">${orderDto.amount}</td>
                   <td><span class="${orderDto.status =="Đã Hủy" ? "badge bg-danger" : orderDto.status =="Chờ Xử Lý" ? "badge bg-warning" : "badge bg-success"}">${orderDto.status}</span></td>
                   <td>${orderDto.orderKind}</td>

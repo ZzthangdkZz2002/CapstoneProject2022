@@ -6,14 +6,13 @@ import com.example.electriccomponentsshop.dto.ExportTransactionNewDTO;
 import com.example.electriccomponentsshop.dto.ProductWarehouseExportDTO;
 import com.example.electriccomponentsshop.entities.*;
 import com.example.electriccomponentsshop.repositories.*;
+import com.example.electriccomponentsshop.services.AccountDetailImpl;
 import com.example.electriccomponentsshop.services.ExportTransactionNewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ExportTransactionNewServiceImpl implements ExportTransactionNewService {
@@ -29,9 +28,11 @@ public class ExportTransactionNewServiceImpl implements ExportTransactionNewServ
     ExportTransactionNewRepository exportTransactionNewRepository;
     @Autowired
     ProductWarehouseRepository productWarehouseRepository;
+    @Autowired
+    AccountRepository accountRepository;
 
     @Override
-    public void addExportTransaction(ExportTransactionNewDTO exportTransactionNewDTO) throws Exception {
+    public void addExportTransaction(ExportTransactionNewDTO exportTransactionNewDTO, Authentication authentication) throws Exception {
         ExportTransactionNew exportTransactionNew = new ExportTransactionNew();
         exportTransactionNew.setOrderTransaction(orderTransactionRepository.findByOrderid(exportTransactionNewDTO.getOrder_id()).get());
         exportTransactionNew.setExportPerson(exportTransactionNewDTO.getExportPerson());
@@ -92,6 +93,10 @@ public class ExportTransactionNewServiceImpl implements ExportTransactionNewServ
 
         OrderTransaction orderTransaction = orderTransactionRepository.findByOrderid(exportTransactionNewDTO.getOrder_id()).get();
         orderTransaction.setStatus(OrderEnum.DELIVERY.getName());
+        orderTransaction.setUpdatedDate(new Date());
+        AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
+        Account account = accountRepository.findById(accountDetail.getId()).get();
+        orderTransaction.setEmployeeProcessor(account);
         orderTransactionRepository.save(orderTransaction);
 
     }

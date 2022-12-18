@@ -2,6 +2,7 @@ package com.example.electriccomponentsshop.services.impl;
 
 
 
+import com.example.electriccomponentsshop.common.Utils;
 import com.example.electriccomponentsshop.config.ModelMap;
 import com.example.electriccomponentsshop.dto.ProductWarehouseDTO;
 import com.example.electriccomponentsshop.dto.SupplierDTO;
@@ -89,9 +90,8 @@ public class SupplierServiceImpl implements SupplierService {
         return supplierRepository.findById(integer);
     }
     @Override
-    public void addSupplier(SupplierDTO supplierDTO){
+    public String addSupplier(SupplierDTO supplierDTO){
         Supplier supplier = new Supplier();
-        supplier.setCode(supplierDTO.getCode());
         supplier.setName(supplierDTO.getName());
         supplier.setPhone(supplierDTO.getPhone());
         supplier.setEmail(supplierDTO.getEmail());
@@ -102,7 +102,21 @@ public class SupplierServiceImpl implements SupplierService {
         supplier.setDebt(BigDecimal.valueOf(0));
         supplier.setTotal_purchase(BigDecimal.valueOf(0));
         supplier.setActive(1);
-        supplierRepository.save(supplier);
+        String code = "";
+        if("".equals(supplierDTO.getCode()) || supplierDTO.getCode() == null){
+            code += new Utils().generateSupplierCode(supplierRepository.getMaxSupplierID()+1);
+        }else{
+            code += supplierDTO.getCode();
+        }
+
+        if(supplierRepository.findByCode(code).isPresent()){
+            return "01";
+        }else{
+            supplier.setCode(code);
+            supplierRepository.save(supplier);
+            return "00";
+        }
+
     }
     @Override
     public void updateSupplier(SupplierDTO supplierDTO,String id){

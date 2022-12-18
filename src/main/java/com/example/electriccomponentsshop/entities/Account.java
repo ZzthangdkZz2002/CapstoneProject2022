@@ -41,6 +41,9 @@ public class Account {
     @OneToMany(mappedBy = "accountemployee",fetch = FetchType.LAZY)
     List<OrderTransaction> orderTrasactionListEmployee = new ArrayList<>();
 
+    @OneToMany(mappedBy = "employeeProcessor",fetch = FetchType.LAZY)
+    List<OrderTransaction> orderTrasactionListEmployeeProcessor = new ArrayList<>();
+
     @OneToOne(mappedBy = "account")
     @PrimaryKeyJoinColumn
     private RefreshToken refreshToken;

@@ -25,7 +25,7 @@ public interface SupplierService {
 
     Optional<Supplier> findById(Integer integer);
 
-    void addSupplier(SupplierDTO supplierDTO);
+    String addSupplier(SupplierDTO supplierDTO);
 
     void updateSupplier(SupplierDTO supplierDTO,String id);
 

@@ -223,7 +223,8 @@
                 <div class="col-xs-12 col-sm-12 col-md-3 animate-dropdown top-cart-row" style="display: flex; justify-content: right">
                     <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
 
-                    <c:set var="username" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}"/>
+                    <c:set var="username" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.email}"/>
+                    <c:set var="name" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}"/>
 
                     <%--                    giỏ hàng--%>
                     <div class="dropdown dropdown-cart" style="">
@@ -296,7 +297,14 @@
                             </c:when>
                             <c:otherwise>
                                 <div class="dropdown">
-                                    <button class="dropdown-toggle" data-hover ="dropdown" style="padding: 15px 13px; border: none; font-size: 15px"><i class="icon fa fa-user" style="margin-right: 3px; font-size: 15px"></i>${username}</button>
+                                    <button class="dropdown-toggle" data-hover ="dropdown" style="padding: 15px 13px; border: none; font-size: 15px"><i class="icon fa fa-user" style="margin-right: 3px; font-size: 15px"></i>
+                                            <c:if test="${name == null}">
+                                                Tài khoản
+                                            </c:if>
+                                        <c:if test="${name != null}">
+                                            ${name}
+                                        </c:if>
+                                    </button>
                                     <ul class="dropdown-menu">
                                         <li><a href="${pageContext.request.contextPath}/profile" style="color: black;">Tài khoản của tôi</a></li>
                                         <li><a href="${pageContext.request.contextPath}/order" style="color: black;">Đơn hàng của tôi</a></li>
