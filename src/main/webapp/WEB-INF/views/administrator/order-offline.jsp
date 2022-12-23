@@ -473,8 +473,8 @@
             background-color: white;
             padding: 2rem 1rem 4rem 1rem;">
     <div class="bill-header" style="display: flex;">
-        <img src="https://yt3.ggpht.com/ytc/AMLnZu9GCNaRZ_9jmsfiK2tgRjAFEXhjcZPyaRcZG79j=s900-c-k-c0x00ffffff-no-rj"
-             alt="" style="width: 10rem;margin-right: 2rem;">
+        <img src="${pageContext.request.contextPath}/assets_onlinepage/images/electroco.jpg"
+             alt="" style="width: 9rem;margin-right: 2rem;">
         <div class="header-info">
             <h4>ELECTROCO</h4>
             <p>Chi nhánh Đại Học FPT Hà Nội</p>
@@ -501,15 +501,7 @@
             </tr>
             </thead>
             <tbody id="invoice-items">
-<%--            <tr>--%>
-<%--                <th scope="row" style="border: 1px solid black;">1</th>--%>
-<%--                <td style="border: 1px solid black;">Mark</td>--%>
-<%--                <td style="border: 1px solid black;">Otto</td>--%>
-<%--                <td style="border: 1px solid black;">@mdo</td>--%>
-<%--                <td style="border: 1px solid black;">Mark</td>--%>
-<%--                <td style="border: 1px solid black;">Otto</td>--%>
-<%--                <td style="border: 1px solid black;">@mdoooooooooooooooooo</td>--%>
-<%--            </tr>--%>
+
             </tbody>
         </table>
         <p class="ms-5" style="margin-left: 2rem;">Cộng thành tiền (Viết bằng chữ): <span id="total-word"></span></p>

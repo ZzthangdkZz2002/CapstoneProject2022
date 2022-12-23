@@ -104,7 +104,7 @@
                     <div class="logo">
                         <a href="${pageContext.request.contextPath}/homepage">
 
-                            <img src="${pageContext.request.contextPath}/assets_onlinepage/images/logo.png" alt="">
+                            <img src="${pageContext.request.contextPath}/assets_onlinepage/images/electroco.jpg" alt="" style="width: 80px">
 
                         </a>
                     </div><!-- /.logo -->

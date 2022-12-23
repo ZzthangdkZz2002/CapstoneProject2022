@@ -50,11 +50,11 @@
                 <a class="btn btn-add btn-sm" href="${pageContext.request.contextPath}/admin/products/add" title="Thêm"><i class="fas fa-plus"></i>
                   Thêm sản phẩm</a>
               </div>
-              <div class="col-sm-2">
-                <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" data-toggle="modal"
-                  data-target="#importFile"><i class="fas fa-file-upload"></i> Nhập dữ liệu từ
-                  file</a>
-              </div>
+<%--              <div class="col-sm-2">--%>
+<%--                <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" data-toggle="modal"--%>
+<%--                  data-target="#importFile"><i class="fas fa-file-upload"></i> Nhập dữ liệu từ--%>
+<%--                  file</a>--%>
+<%--              </div>--%>
             </div>
             <div class="search-row">
               <form action="${pageContext.request.contextPath}/admin/products/search" method="GET">

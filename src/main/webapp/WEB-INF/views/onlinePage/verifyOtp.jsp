@@ -28,16 +28,12 @@
         font-size: 22px;
     }
 
-    div>span {
+    .d2>span {
         font-size: 20px;
         font-weight: normal;
         line-height: 1.5;
     }
 
-    div>* {
-        display: block;
-        margin-bottom: 25px;
-    }
 
     .hide {
         display: none !important;
@@ -52,7 +48,7 @@
         text-align: center;
     }
 
-    form>input {
+    .d2>form>input {
         border: 1px solid #e0e0e0;
         border-radius: 100px;
         width: 200px;
@@ -70,7 +66,7 @@
         font-family: ROBOTO LIGHT;
     }
 
-    div>form>label {
+    .d2>label {
         color: #f01;
         margin-bottom: 15px;
         width: 90%;
@@ -91,13 +87,13 @@
         margin-top: 10px;
     }
 
-    div>a {
-        font-size: 14px;
-        color: #666;
-        font-weight: bold;
-        text-decoration: none;
-        transition: .2s;
-    }
+    /*div>a {*/
+    /*    font-size: 14px;*/
+    /*    color: #666;*/
+    /*    font-weight: bold;*/
+    /*    text-decoration: none;*/
+    /*    transition: .2s;*/
+    /*}*/
 
     div>a.btnChangeNum {
         font-size: 13px;
@@ -111,7 +107,7 @@
 <div class="d2 step2">
     <span class="s1">Mã xác nhận đã được gửi đến số điện thoại <b>${phone}</b></span>
     <span class="s2 hide">Mã xác nhận đã được gửi lại</span>
-    <form id="frmSubmitVerifyCode" method="POST" action="/tracking/verifyOtp?phone=${phone}">
+    <form id="frmSubmitVerifyCode" method="POST" action="/tracking/verifyOtp?phone=${phone}" style="margin-top: 15px">
         <input type="number" name="txtOTP" placeholder="Nhập mã xác nhận gồm 6 chữ số" maxlength="6"
                autocomplete="one-time-code">
         <label>${wrongOtp != null ? wrongOtp : ""}</label>
@@ -122,6 +118,17 @@
 <%--    <a href="javascript:void(0)" onclick="changeNum()" class="btnChangeNum">Thay đổi số điện thoại</a>--%>
 </div>
 <jsp:include page="footer.jsp"></jsp:include>
+
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-hover-dropdown.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/owl.carousel.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/echo.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.easing-1.3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-slider.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.rateit.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets_onlinepage/js/lightbox.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/wow.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
 </body>
 
 </html>

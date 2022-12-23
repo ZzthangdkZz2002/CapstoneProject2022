@@ -767,6 +767,11 @@ function printInvoice(payment_method, order_id) {
                         result += itemTemp;
                     }
                     document.getElementById('total-word').innerHTML = to_vietnamese(response.data.amount) + " đồng";
+                    // result += '<tr>\n' +
+                    //     '                <td style="border: 1px solid black;" colspan="6">vat</td>\n' +
+                    //     '                <td style="border: 1px solid black;">invoiceTotal</td>\n' +
+                    //     '      </tr>' +
+                    //     '';
 
                     // itemTemp.replace('index', i);
                     // itemTemp.replace('index', i);
