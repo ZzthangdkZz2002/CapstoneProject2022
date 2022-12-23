@@ -41,7 +41,7 @@
 </head>
 <body class="bg-light">
 <jsp:include page="header.jsp"/>
-<div class="container">
+<div class="container" style="margin-bottom: 100px">
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -161,16 +161,10 @@
             </form>
         </div>
     </div>
-
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2017-2019 Company Name</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">Privacy</a></li>
-            <li class="list-inline-item"><a href="#">Terms</a></li>
-            <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-    </footer>
 </div>
+    <jsp:include page="footer.jsp"></jsp:include>
+
+
 <script>var contextPath = "${pageContext.request.contextPath}"</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>

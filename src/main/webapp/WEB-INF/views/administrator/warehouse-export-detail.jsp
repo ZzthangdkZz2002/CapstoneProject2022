@@ -105,7 +105,7 @@
     <form>
         <div class="row">
 
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="tile">
                     <h3 class="tile-title">Thông tin sản phẩm</h3>
                     <div class="du--lieu-san-pham">
@@ -134,18 +134,13 @@
                                     <input type="hidden" id="${o.productDTO.id}-quantity-order" value="${o.quantity}">
                                     <td>
                                         <button class="btn btn-add btn-sm" type="button" onclick="findAvailableItemInWarehouse('${o.productDTO.id}')">Tìm kho còn hàng</button>
-                                        <select  id="warehouses-list-${o.productDTO.id}" style="display: none; margin-left: 120px; margin-top: 15px" onchange="genDetailLocation(this.value, '${o.productDTO.id}')">
+                                        <select  id="warehouses-list-${o.productDTO.id}" style="display: none;" onchange="genDetailLocation(this.value, '${o.productDTO.id}')">
                                             <option value="0">--------Chọn kho hàng--------</option>
                                         </select>
                                     </td>
                                     <td id="detail-location-${o.productDTO.id}">
-                                            <%--                                        <select id="location-list-${o.productDTO.id}" style="display: none" onchange="genProductQuantity(this.value, '${o.productDTO.id}')">--%>
-                                            <%--                                            <option value="0">--------Chọn vị trí--------</option>--%>
-                                            <%--                                        </select>--%>
+
                                     </td>
-                                        <%--                                    <td>--%>
-                                        <%--&lt;%&ndash;                                        <span id="p-quantity-${o.productDTO.id}" style="display: none">0</span>&ndash;%&gt;--%>
-                                        <%--                                    </td>--%>
                                     <td></td>
                                 </tr>
                             </c:forEach>
@@ -154,7 +149,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="tile">
                     <h3 class="tile-title">Thông tin xuất hàng</h3>
                     <div class="tile-body">
@@ -178,7 +173,7 @@
                         </div>
                         <div class="row">
                             <div class="tile-footer col-md-12">
-                                <button  class="btn btn-primary create-order-button" onclick="handleSubmit()" type="button">Lưu
+                                <button class="btn btn-primary create-order-button" style="margin-left: 8px" onclick="handleSubmit()" type="button">Lưu
                                     giao
                                     dịch</button>
                                 <a class="btn btn-primary cancel-order-button"

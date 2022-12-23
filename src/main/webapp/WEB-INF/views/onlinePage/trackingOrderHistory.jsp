@@ -92,6 +92,7 @@
 <%--        <button type="submit" class="btn-continue" >Test</button>--%>
 <%--    </form>--%>
 </div>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 
 

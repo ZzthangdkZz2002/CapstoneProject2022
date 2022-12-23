@@ -169,24 +169,20 @@
                 </div>
                 <div class="col-5">
                     <p class="mb-4 text-right" id="total-money">0</p>
-
-
                 </div>
 
-                <div class="col-12 custpay">
-                    <div class="col-7 mt-3">
-                        <p class="mb-4 custom-text-bill ml-2 pt-2">Tiền khách trả</p>
+                <div class="custpay">
+                    <div class="row mt-3 justify-content-between">
+                        <p class="col-5 mb-4 custom-text-bill pt-2" style="margin-left: 14px">Tiền khách trả</p>
+                        <div class="col-6">
+                            <input type="text" class="form-control customer-pay mb-4" >
+                        </div>
                     </div>
-                    <div class="col-5 mt-3">
-                        <input type="text" class="form-control customer-pay mb-4" >
+                    <div class="row mt-3 justify-content-between">
+                        <p class="col-5 mb-4 custom-text-bill" style="margin-left: 14px">Tiền thừa trả khách</p>
+                        <p class="col-5 mb-4 text-right" id="tienThua">0</p>
                     </div>
-                    <div class="col-8 mt-3 pl-4">
-                        <p class="mb-4 custom-text-bill">Tiền thừa trả khách</p>
-                    </div>
-                    <div class="col-4 mt-3">
-                        <p class="mb-4 text-right" id="tienThua">0</p>
-                    </div>
-                    <div class="col-12 pl-4 mt-4">
+                    <div class="col-12 mt-4">
                         <p class="mb-4 custom-text-bill">Phương thức thanh toán:</p>
                     </div>
 
@@ -343,39 +339,35 @@
 
                 <div class="container-fluid">
                     <div class="row justify-content-between">
-
-
-
-
-                        <div class="form__group field col-5">
+                        <div class="col-5 form__group field">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_name' required />
-                            <label for="cust_name" class="form__label" required-field>Tên  khách hàng</label>
+                            <label for="cust_name" class="form__label required-field" required-field>Tên  khách hàng</label>
                         </div>
 
-                        <div class="form__group field col-5">
+                        <div class="col-5 form__group field">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_email' required />
-                            <label for="cust_email" class="form__label" required-field>Email</label>
+                            <label for="cust_email" class="form__label required-field" required-field>Email</label>
                         </div>
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_phone' required />
-                            <label for="cust_phone" class="form__label" required-field>Điện thoại</label>
+                            <label for="cust_phone" class="form__label required-field" required-field>Điện thoại</label>
                         </div>
 
                         <div class="form__group field col-5">
-                            <label for="city">Tỉnh/Thành phố</label> <br>
+                            <label for="city" class="required-field">Tỉnh/Thành phố</label> <br>
                             <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="city" name="city">
                                 <option value="0" selected>Chọn tỉnh thành</option>
                             </select>
                         </div>
                         <div class="form__group field col-5">
-                            <label for="district">Quận/Huyện</label> <br>
+                            <label for="district" class="required-field">Quận/Huyện</label> <br>
                             <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="district" name="district">
                                 <option value="0" selected>Chọn quận huyện</option>
                             </select>
                         </div>
                         <div class="form__group field col-5">
-                            <label for="ward">Xã/Phường</label> <br>
+                            <label for="ward" class="required-field">Xã/Phường</label> <br>
                             <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="ward" name="ward">
                                 <option value="0" selected>Chọn phường xã</option>
                             </select>

@@ -42,6 +42,9 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="assets_onlinepage/images/favicon.ico">
 
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -58,7 +61,7 @@
             <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
 
                 <div class="side-menu animate-dropdown outer-bottom-xs">
-                    <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Danh mục sản phẩm</div>
+                    <div class="head" style="font-family: Calibri"><i class="icon fa fa-align-justify fa-fw"></i> Danh mục sản phẩm</div>
                     <nav class="yamm megamenu-horizontal" role="navigation">
                         <ul class="nav">
                             <c:forEach var="cate" items="${categories}">
@@ -398,7 +401,7 @@
                         </div><!-- /.item -->
                     </div>
                 </div>
-                <h3 class="section-title" style="margin-bottom: 20px;">all products</h3>
+                <h3 class="section-title" style="margin-bottom: 20px; font-weight: bold">Sản phẩm</h3>
 
                 <div class="row list-product">
 
@@ -414,264 +417,94 @@
 
 </div>
 </div>
-<div id="brands-carousel" class="logo-slider wow fadeInUp">
 
-    <h3 class="section-title">Our Brands</h3>
-    <div class="logo-slider-inner">
-        <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
-            <div class="item m-t-15">
-                <a href="#" class="image">
-                    <img data-echo="assets/images/brands/brand1.png" src="assets/images/blank.gif" alt="">
-                </a>
-            </div>
-            <!--/.item-->
+<!--/.Our branch-->
+<%--<div id="brands-carousel" class="logo-slider wow fadeInUp">--%>
 
-            <div class="item m-t-10">
-                <a href="#" class="image">
-                    <img data-echo="assets/images/brands/brand2.png" src="assets/images/blank.gif" alt="">
-                </a>
-            </div>
-            <!--/.item-->
+<%--    <h3 class="section-title">Our Brands</h3>--%>
+<%--    <div class="logo-slider-inner">--%>
+<%--        <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">--%>
+<%--            <div class="item m-t-15">--%>
+<%--                <a href="#" class="image">--%>
+<%--                    <img data-echo="assets/images/brands/brand1.png" src="assets/images/blank.gif" alt="">--%>
+<%--                </a>--%>
+<%--            </div>--%>
+<%--            --%>
 
-            <div class="item">
-                <a href="#" class="image">
-                    <img data-echo="assets/images/brands/brand3.png" src="assets/images/blank.gif" alt="">
-                </a>
-            </div>
-            <!--/.item-->
+<%--            <div class="item m-t-10">--%>
+<%--                <a href="#" class="image">--%>
+<%--                    <img data-echo="assets/images/brands/brand2.png" src="assets/images/blank.gif" alt="">--%>
+<%--                </a>--%>
+<%--            </div>--%>
+<%--            --%>
 
-            <div class="item">
-                <a href="#" class="image">
-                    <img data-echo="assets/images/brands/brand4.png" src="assets/images/blank.gif" alt="">
-                </a>
-            </div>
-            <!--/.item-->
+<%--            <div class="item">--%>
+<%--                <a href="#" class="image">--%>
+<%--                    <img data-echo="assets/images/brands/brand3.png" src="assets/images/blank.gif" alt="">--%>
+<%--                </a>--%>
+<%--            </div>--%>
+<%--           --%>
 
-            <div class="item">
-                <a href="#" class="image">
-                    <img data-echo="assets/images/brands/brand5.png" src="assets/images/blank.gif" alt="">
-                </a>
-            </div>
-            <!--/.item-->
+<%--            <div class="item">--%>
+<%--                <a href="#" class="image">--%>
+<%--                    <img data-echo="assets/images/brands/brand4.png" src="assets/images/blank.gif" alt="">--%>
+<%--                </a>--%>
+<%--            </div>--%>
+<%--            --%>
 
-            <div class="item">
-                <a href="#" class="image">
-                    <img data-echo="assets/images/brands/brand6.png" src="assets/images/blank.gif" alt="">
-                </a>
-            </div>
-            <!--/.item-->
+<%--            <div class="item">--%>
+<%--                <a href="#" class="image">--%>
+<%--                    <img data-echo="assets/images/brands/brand5.png" src="assets/images/blank.gif" alt="">--%>
+<%--                </a>--%>
+<%--            </div>--%>
+<%--            --%>
 
-            <div class="item">
-                <a href="#" class="image">
-                    <img data-echo="assets/images/brands/brand2.png" src="assets/images/blank.gif" alt="">
-                </a>
-            </div>
-            <!--/.item-->
+<%--            <div class="item">--%>
+<%--                <a href="#" class="image">--%>
+<%--                    <img data-echo="assets/images/brands/brand6.png" src="assets/images/blank.gif" alt="">--%>
+<%--                </a>--%>
+<%--            </div>--%>
+<%--            --%>
 
-            <div class="item">
-                <a href="#" class="image">
-                    <img data-echo="assets/images/brands/brand4.png" src="assets/images/blank.gif" alt="">
-                </a>
-            </div>
-            <!--/.item-->
+<%--            <div class="item">--%>
+<%--                <a href="#" class="image">--%>
+<%--                    <img data-echo="assets/images/brands/brand2.png" src="assets/images/blank.gif" alt="">--%>
+<%--                </a>--%>
+<%--            </div>--%>
+<%--            --%>
 
-            <div class="item">
-                <a href="#" class="image">
-                    <img data-echo="assets/images/brands/brand1.png" src="assets/images/blank.gif" alt="">
-                </a>
-            </div>
-            <!--/.item-->
+<%--            <div class="item">--%>
+<%--                <a href="#" class="image">--%>
+<%--                    <img data-echo="assets/images/brands/brand4.png" src="assets/images/blank.gif" alt="">--%>
+<%--                </a>--%>
+<%--            </div>--%>
+<%--            --%>
 
-            <div class="item">
-                <a href="#" class="image">
-                    <img data-echo="assets/images/brands/brand5.png" src="assets/images/blank.gif" alt="">
-                </a>
-            </div>
-            <!--/.item-->
-        </div><!-- /.owl-carousel #logo-slider -->
-    </div><!-- /.logo-slider-inner -->
+<%--            <div class="item">--%>
+<%--                <a href="#" class="image">--%>
+<%--                    <img data-echo="assets/images/brands/brand1.png" src="assets/images/blank.gif" alt="">--%>
+<%--                </a>--%>
+<%--            </div>--%>
+<%--            --%>
 
-</div><!-- /.logo-slider -->
-<!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
-</div><!-- /.container -->
-</div><!-- /#top-banner-and-menu -->
+<%--            <div class="item">--%>
+<%--                <a href="#" class="image">--%>
+<%--                    <img data-echo="assets/images/brands/brand5.png" src="assets/images/blank.gif" alt="">--%>
+<%--                </a>--%>
+<%--            </div>--%>
+<%--            --%>
+<%--        </div>--%>
+<%--    </div>--%>
+
+<%--</div>--%>
+<%--</div>--%>
+</div>
 
 
 
 
 <!-- ============================================================= FOOTER ============================================================= -->
-<footer id="footer" class="footer color-bg">
-    <div class="links-social inner-top-sm">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <!-- ============================================================= CONTACT INFO ============================================================= -->
-                    <div class="contact-info">
-                        <div class="footer-logo">
-                            <div class="logo">
-                                <a href="home.html">
-
-                                    <img src="assets/images/logo.png" alt="">
-
-                                </a>
-                            </div><!-- /.logo -->
-
-                        </div><!-- /.footer-logo -->
-
-                        <div class="module-body m-t-20">
-                            <p class="about-us"> Nam libero tempore, cum soluta nobis est ses eligendi optio cumque
-                                cum soluta nobis est ses eligendi optio cumque.</p>
-
-                            <div class="social-icons">
-
-                                <a href="http://facebook.com/transvelo" class='active'><i
-                                        class="icon fa fa-facebook"></i></a>
-                                <a href="#"><i class="icon fa fa-twitter"></i></a>
-                                <a href="#"><i class="icon fa fa-linkedin"></i></a>
-                                <a href="#"><i class="icon fa fa-rss"></i></a>
-                                <a href="#"><i class="icon fa fa-pinterest"></i></a>
-
-                            </div><!-- /.social-icons -->
-                        </div><!-- /.module-body -->
-
-                    </div><!-- /.contact-info -->
-                    <!-- ============================================================= CONTACT INFO : END ============================================================= -->
-                </div><!-- /.col -->
-
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <!-- ============================================================= CONTACT TIMING============================================================= -->
-                    <div class="contact-timing">
-                        <div class="module-heading">
-                            <h4 class="module-title">opening time</h4>
-                        </div><!-- /.module-heading -->
-
-                        <div class="module-body outer-top-xs">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tbody>
-                                    <tr>
-                                        <td>Monday-Friday:</td>
-                                        <td class="pull-right">08.00 To 18.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Saturday:</td>
-                                        <td class="pull-right">09.00 To 20.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sunday:</td>
-                                        <td class="pull-right">10.00 To 20.00</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div><!-- /.table-responsive -->
-                            <p class='contact-number'>Hot Line:(400)888 868 848</p>
-                        </div><!-- /.module-body -->
-                    </div><!-- /.contact-timing -->
-                    <!-- ============================================================= CONTACT TIMING : END ============================================================= -->
-                </div><!-- /.col -->
-
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <!-- ============================================================= LATEST TWEET============================================================= -->
-                    <div class="latest-tweet">
-                        <div class="module-heading">
-                            <h4 class="module-title">latest tweet</h4>
-                        </div><!-- /.module-heading -->
-
-                        <div class="module-body outer-top-xs">
-                            <div class="re-twitter">
-                                <div class="comment media">
-                                    <div class='pull-left'>
-											<span class="icon fa-stack fa-lg">
-												<i class="fa fa-circle fa-stack-2x"></i>
-												<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-											</span>
-                                    </div>
-                                    <div class="media-body">
-                                        <a href="#">@laurakalbag</a> As a result of your previous recommendation :)
-                                        <span class="time">
-												12 hours ago
-											</span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="re-twitter">
-                                <div class="comment media">
-                                    <div class='pull-left'>
-											<span class="icon fa-stack fa-lg">
-												<i class="fa fa-circle fa-stack-2x"></i>
-												<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-											</span>
-                                    </div>
-                                    <div class="media-body">
-                                        <a href="#">@laurakalbag</a> As a result of your previous recommendation :)
-                                        <span class="time">
-												12 hours ago
-											</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- /.module-body -->
-                    </div><!-- /.contact-timing -->
-                </div><!-- /.col -->
-
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <!-- ============================================================= INFORMATION============================================================= -->
-                    <div class="contact-information">
-                        <div class="module-heading">
-                            <h4 class="module-title">information</h4>
-                        </div><!-- /.module-heading -->
-
-                        <div class="module-body outer-top-xs">
-                            <ul class="toggle-footer" style="">
-                                <li class="media">
-                                    <div class="pull-left">
-											<span class="icon fa-stack fa-lg">
-												<i class="fa fa-circle fa-stack-2x"></i>
-												<i class="fa fa-map-marker fa-stack-1x fa-inverse"></i>
-											</span>
-                                    </div>
-                                    <div class="media-body">
-                                        <p>868 Any Stress,Burala Casi,Picasa USA.</p>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="pull-left">
-											<span class="icon fa-stack fa-lg">
-												<i class="fa fa-circle fa-stack-2x"></i>
-												<i class="fa fa-mobile fa-stack-1x fa-inverse"></i>
-											</span>
-                                    </div>
-                                    <div class="media-body">
-                                        <p>(400) 0888 888 888<br>(400) 888 888 888</p>
-                                    </div>
-                                </li>
-
-                                <li class="media">
-                                    <div class="pull-left">
-											<span class="icon fa-stack fa-lg">
-												<i class="fa fa-circle fa-stack-2x"></i>
-												<i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
-											</span>
-                                    </div>
-                                    <div class="media-body">
-                                        <span><a href="#">Contact @Unicase.com</a></span><br>
-                                        <span><a href="#">Sale @Unicase.com</a></span>
-                                    </div>
-                                </li>
-
-                            </ul>
-                        </div><!-- /.module-body -->
-                    </div><!-- /.contact-timing -->
-                    <!-- ============================================================= INFORMATION : END ============================================================= -->
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container -->
-    </div><!-- /.links-social -->
-
-
-</footer>
+<jsp:include page="footer.jsp"></jsp:include>
 
 <script>var contextPath = "${pageContext.request.contextPath}"</script>
 

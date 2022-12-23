@@ -153,7 +153,7 @@
                             <div class="row">
                                 <div class="tile-footer col-md-12">
                                     <button id="createImport" class="btn btn-primary create-order-button"
-                                            type="button">Lưu giao
+                                            type="button" style="margin-left: 10px">Lưu giao
                                         dịch</button>
                                     <a class="btn btn-primary cancel-order-button" href="order-management.html"
                                        type="button">Huỷ và quay về</a>

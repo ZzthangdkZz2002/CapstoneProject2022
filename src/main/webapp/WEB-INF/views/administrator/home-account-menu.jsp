@@ -164,11 +164,20 @@
             current[0].className = current[0].className.replace(" active", "");
             items[3].className += " active";
         }
-        if(url.includes('admin/accounts/customer-account')){
-            let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
-            current[0].className = current[0].className.replace(" sub-item-active", "");
-            sub_items[1].className += " sub-item-active";
+        if(sub_items.length == 1){
+            if(url.includes('admin/accounts/customer-account')){
+                // let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
+                // current[0].className = current[0].className.replace(" sub-item-active", "");
+                sub_items[0].className += " sub-item-active";
+            }
+        }else {
+            if(url.includes('admin/accounts/customer-account')){
+                let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
+                current[0].className = current[0].className.replace(" sub-item-active", "");
+                sub_items[1].className += " sub-item-active";
+            }
         }
+
     }
 </script>
 

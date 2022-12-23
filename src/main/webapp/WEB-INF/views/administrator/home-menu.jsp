@@ -124,14 +124,14 @@
     </div>
     <hr>
     <ul class="app-menu">
-        <sec:authorize access="hasRole('ROLE_MANAGER')">
+<%--        <sec:authorize access="hasRole('ROLE_MANAGER')">--%>
             <li>
                 <a class="app-menu__item active" href="${pageContext.request.contextPath}/admin/home">
                     <i class='app-menu__icon bx bx-cart-alt'></i>
                     <span class="app-menu__label">Trang chủ</span>
                 </a>
             </li>
-        </sec:authorize>
+<%--        </sec:authorize>--%>
         <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/products"><i
                 class='app-menu__icon bx bx-purchase-tag-alt'></i><span class="app-menu__label">Quản lý sản
             phẩm</span></a>

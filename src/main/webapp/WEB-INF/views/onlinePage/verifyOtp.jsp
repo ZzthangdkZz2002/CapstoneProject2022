@@ -121,6 +121,7 @@
 
 <%--    <a href="javascript:void(0)" onclick="changeNum()" class="btnChangeNum">Thay đổi số điện thoại</a>--%>
 </div>
+<jsp:include page="footer.jsp"></jsp:include>
 </body>
 
 </html>
