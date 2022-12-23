@@ -286,7 +286,7 @@
 </div>
 <div class="save-btn text-center mt-5">
     <button type="button" class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#cancelOrder">Hủy Đơn</button>
-    <button type="button" class="btn btn-success" onclick="updateGHN('${order.order_code}')">Cập nhật</button>
+    <button type="button" class="btn btn-success" id="btnUpdate" onclick="updateGHN('${order.order_code}')">Cập nhật</button>
 </div>
 <%--Model cancel order--%>
 <div class="modal fade" id="cancelOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -330,6 +330,10 @@
                     var status;
                     if(response.data.status = 'ready_to_pick'){
                         status = 'Chờ lấy hàng'
+                    }
+                    if(response.data.status = 'cancel'){
+                        status = 'Đơn hủy'
+                        $("#btnUpdate").prop('disabled', true);
                     }
                     var requiredNote = response.data.required_note;
 

@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Inventory</title>
+    <title>Export inventory</title>
     <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/main.css"/>">
 
@@ -108,7 +108,7 @@
 <main class="app-content">
     <div class="app-title">
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item active"><a href="#"><b>Import inventory</b></a></li>
+            <li class="breadcrumb-item active"><a href="#"><b>Export inventory</b></a></li>
         </ul>
     </div>
     <div class="tile">
@@ -118,7 +118,7 @@
                     <h1 class="heading-page mt-2">Phiếu xuất kho</h1>
                     <div class="boxLeft mt-5">
                         <h5>Thời gian</h5>
-                        <form method="get" action="/admin/inventory/search">
+                        <form method="get" action="/admin/inventory/export/search">
                             <div class="form-check my-3">
                                 <input class="form-check-input" type="radio" name="inventoryDate" id="thisMonth">
                                 <label class="form-check-label d-flex justify-content-between line-under" for="thisMonth">
@@ -150,7 +150,7 @@
                     <%--                    </div>--%>
                 </div>
                 <div class="col-10">
-                    <form method="get" action="/admin/inventory/searchtext" name="inventorySearch">
+                    <form method="get" action="/admin/inventory/export/searchtext" name="inventorySearch">
                         <div class="search-box">
                             <div class="input-group" style="width: 50%;">
                                 <div class="input-group-prepend">
@@ -169,10 +169,10 @@
                                 <th scope="col">Mã xuất kho</th>
                                 <th scope="col">Đơn hàng</th>
                                 <th scope="col">Thời gian xuất kho</th>
-                                <th scope="col">Kho xuất hàng</th>
+<%--                                <th scope="col">Kho xuất hàng</th>--%>
                                 <th scope="col">Người xuất hàng</th>
                                 <th scope="col">Người nhận hàng</th>
-                                <th scope="col">Tổng số lượng xuất</th>
+<%--                                <th scope="col">Tổng số lượng xuất</th>--%>
                                 <th scope="col">Tổng tiền hàng xuất</th>
                                 <th scope="col">Ghi chú</th>
                                 <th scope="col"></th>
@@ -181,6 +181,21 @@
                             </thead>
 
                             <tbody style="background-color: white;">
+                            <c:forEach var="inventory" items="${inventories}">
+                                <tr>
+                                    <th scope="row">${inventory.code}</th>
+                                    <td>${inventory.orderTransaction.orderid}</td>
+                                    <td>${inventory.created_date}</td>
+                                    <td>${inventory.exporter_name}</td>
+                                    <td>${inventory.receiver}</td>
+                                    <td class="currency-text">${inventory.total_exportPrice}</td>
+                                    <td>${inventory.note}</td>
+                                    <td> <a href="#detailInventory" onclick="showDetailExportInventory(`${inventory.id}`,`${inventory.code}`,`${inventory.created_date}`,`${inventory.exporter_name}`,`${inventory.receiver}`)">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
 
                             </tbody>
                         </table>
@@ -216,13 +231,6 @@
 
                         </div>
                         <div class="col-5">
-
-                            <div class="form-group row">
-                                <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Kho xuất hàng:</label>
-                                <div class="col-sm-8">
-                                    <p class="mt-2">Chi nhánh trung tâm</p>
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <label for="inputPassword" class="col-sm-4 col-form-label font-weight-bold">Người xuất kho:</label>
                                 <div class="col-sm-8">
@@ -245,12 +253,12 @@
                             <th scope="col">Tên hàng</th>
                             <th scope="col">Giá</th>
                             <th scope="col">Số lượng xuất</th>
+                            <th scope="col">Tổng</th>
                             <th scope="col">Kho xuất hàng</th>
                             <th scope="col">Vị trí xuất hàng</th>
                         </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
                     <%--            <div class="count mt-2 d-flex justify-content-end">--%>
@@ -302,13 +310,13 @@
             <div class="row">
                 <div class="col-2">
                     <p><strong>Theo ngày</strong></p>
-                    <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=today">Hôm nay</a><br />
-                    <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=yesterday">Hôm qua</a>
+                    <a href="${pageContext.request.contextPath}/admin/inventory/export/search?date_type=today">Hôm nay</a><br />
+                    <a href="${pageContext.request.contextPath}/admin/inventory/export/search?date_type=yesterday">Hôm qua</a>
                 </div>
                 <div class="col-2">
                     <p><strong>Theo tháng</strong></p>
-                    <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=thismonth">Tháng này</a><br />
-                    <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=lastmonth">Tháng trước</a><br />
+                    <a href="${pageContext.request.contextPath}/admin/inventory/export/search?date_type=thismonth">Tháng này</a><br />
+                    <a href="${pageContext.request.contextPath}/admin/inventory/export/search?date_type=lastmonth">Tháng trước</a><br />
                 </div>
             </div>
         </div>

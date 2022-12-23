@@ -5,6 +5,7 @@ import com.example.electriccomponentsshop.dto.SupplierDTO;
 import com.example.electriccomponentsshop.entities.Inventory;
 import com.example.electriccomponentsshop.entities.Supplier;
 import com.example.electriccomponentsshop.repositories.InventoryRepository;
+import com.example.electriccomponentsshop.repositories.SupplierRepository;
 import com.example.electriccomponentsshop.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,8 @@ public class SupplierController {
 
     @Autowired
     InventoryRepository inventoryRepository;
+    @Autowired
+    SupplierRepository supplierRepository;
 
     final
     SupplierService supplierService;
@@ -62,6 +65,13 @@ public class SupplierController {
             r.addFlashAttribute("error","Thêm nhà cung cấp thất bại. Nhà cung cấp đã tồn tại");
             return "redirect:/admin/suppliers";
         }
+    }
+
+    @GetMapping("/searchncc")
+    public String searchSupplier(Model model, @RequestParam(name = "ncc_text") String text){
+        List<Supplier> suppliers = supplierRepository.findByCodeOrNameLike(text);
+        model.addAttribute("listSupplier",suppliers);
+        return "administrator/supplier-management";
     }
 //    @GetMapping("/add")
 //    public String viewAddForm(ModelMap modelMap){

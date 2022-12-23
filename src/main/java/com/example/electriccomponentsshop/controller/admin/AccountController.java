@@ -55,7 +55,7 @@ public class AccountController {
             }
             System.out.println("đây f");
             bindingResult.getFieldErrors().forEach(fieldError -> {
-                System.out.println(fieldError.getDefaultMessage()+"lol"+ fieldError.getField());
+                System.out.println(fieldError.getDefaultMessage()+": "+ fieldError.getField());
                         model.addAttribute(fieldError.getField(),fieldError.getDefaultMessage());});
 
             model.addAttribute("accountDto",accountDTO);
@@ -67,7 +67,7 @@ public class AccountController {
             model.addAttribute("listWard", wardDTOS);
             return "administrator/add-employee";
         }
-        System.out.println("ggg");
+        System.out.println("accout success");
         accountService.addAccount(accountDTO);
         return "redirect:/admin/accounts/system-account";
     }

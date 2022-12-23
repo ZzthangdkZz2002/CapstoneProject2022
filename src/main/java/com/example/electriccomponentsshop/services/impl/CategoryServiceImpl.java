@@ -24,11 +24,29 @@ public class CategoryServiceImpl implements CategoryService {
 
     final ModelMap modelMap;
 
+    @Override
+    public List<Category> findCategoriesByParentCategoryIdIsNull() {
+        return categoryRepository.findNoneParent();
+    }
 
     @Override
     public List<Category> findAll() {
         List<Category> categories = categoryRepository.findAll();
         return categories;
+    }
+
+    @Override
+    public Category getById(String id) {
+        try {
+            Integer cId = Integer.parseInt(id);
+
+            Optional<Category> category = categoryRepository.findById(cId);
+            if (category.isEmpty()) {
+                throw new NoSuchElementException("Không tìm thấy danh mục này");
+            } else return category.get();
+        } catch (NumberFormatException e) {
+            throw new NoSuchElementException("Không có danh mục này");
+        }
     }
 
     @Override

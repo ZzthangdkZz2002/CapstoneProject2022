@@ -16,7 +16,9 @@ import java.util.function.Function;
 
 public interface ProductService {
 
+    List<Product> getProductByCate(String cate, int pageNo, int pageSize);
 
+    int countByCate(String cate);
 
     ProductDTO convertToDto(Product product);
 

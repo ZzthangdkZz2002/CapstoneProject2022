@@ -22,7 +22,12 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     Page<Product> searchProductsByNameorCode(@Param("pName") String pName,Pageable pageable);
     @Override
     Page<Product> findAll(Pageable pageable);
+    @Query(value = "select * from e2c.product order by Added_Date desc",nativeQuery = true)
+    Page<Product> findAllByAddedDateDesc(Pageable pageable);
+    Page<Product> findAllByStatus(Pageable pageable,int status);
     List<Product> findByStatus(int status);
+    @Query(value = "select * from e2c.product where status = :status order by Added_Date desc limit 20",nativeQuery = true)
+    List<Product> findByStatusAndLimitAddedDate(int status);
     Optional<Product> findById(Integer id);
     Optional<Product> findByCode(String code);
     List<Product> findDistinctByName(String name);

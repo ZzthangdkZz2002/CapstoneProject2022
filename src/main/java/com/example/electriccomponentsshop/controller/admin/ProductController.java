@@ -56,10 +56,27 @@ public class ProductController {
     final ProductLocationRepository productLocationRepository;
     @GetMapping("")
     public String viewAll(Model model,@RequestParam(name="index",defaultValue = "0") String index){
-        Page<Product> products =  productService.findAll(PageRequest.of(Integer.parseInt(index),10));
+        Page<Product> products =  productRepository.findAllByAddedDateDesc(PageRequest.of(Integer.parseInt(index),10));
         model.addAttribute("products", products.getContent());
         model.addAttribute("total",products.getTotalPages());
         return "administrator/product-management";
+    }
+
+    @GetMapping("/view/{id}")
+    public String viewById(ModelMap model,@PathVariable @Valid String id){
+        try{
+            Product productDTO = productRepository.findById(Integer.parseInt(id)).get();
+            List<Category> categoryDtos = categoryService.findAll();
+            List<Brand> brands = brandRepository.findAll();
+            model.addAttribute("productDto",productDTO);
+            model.addAttribute("brands",brands);
+            model.addAttribute("listCategories",categoryDtos);
+
+        } catch (NoSuchElementException e){
+            System.out.println(e.getMessage());
+            model.addAttribute("notFound" ,e.getMessage());
+        }
+        return "administrator/setting-product";
     }
 
     @GetMapping("search")

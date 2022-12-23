@@ -15,6 +15,8 @@ public interface SupplierRepository extends JpaRepository<Supplier,Integer> {
     List<Supplier> findAll();
     Optional<Supplier> findById(Integer id);
     Optional<Supplier> findByCode(String code);
+    @Query(value = "select * from e2c.supplier where code like %:text% or name like %:text%",nativeQuery = true)
+    List<Supplier> findByCodeOrNameLike(String text);
     @Query(value = "select max(ID) from e2c.supplier",nativeQuery = true)
     Integer getMaxSupplierID();
 

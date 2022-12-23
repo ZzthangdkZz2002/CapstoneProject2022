@@ -1,6 +1,7 @@
 package com.example.electriccomponentsshop.entities;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -24,7 +25,9 @@ public class InventoryExport {
     //tong so luong hang duoc xuat kho
 //    private int total_quantity;
     //tong tien hang xuat kho
-    private int total_importPrice;
+    @Column
+    @ColumnDefault("0")
+    private int total_exportPrice;
     private String exporter_name;
     private String receiver;
     private String note;

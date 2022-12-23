@@ -11,6 +11,7 @@
     <title>Shopping Cart</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         .shopping-cart img {
             width: 80px;
@@ -56,11 +57,13 @@
         <p class="fw-bold" style="font-size: 2rem;">Tổng tiền: </p>
         <p class="total-order ms-2 text-primary" style="font-size: 2rem;">0</p>
     </div>
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between" style="margin-bottom: 100px">
         <a href="${pageContext.request.contextPath}/homepage"class="btn btn-light btn-lg me-2"><i class="fa-solid fa-rotate-left mr-1" role="button"></i>Tiếp tục
             mua hàng</a>
         <a href="${pageContext.request.contextPath}/homepage/checkout" id="ContinueOrder" style="color: white; display: none" class="btn btn-success btn-lg" role="button">Tiếp tục</a>
     </div>
+
+    <jsp:include page="footer.jsp"></jsp:include>
 </div>
 <script>var contextPath = "${pageContext.request.contextPath}"</script>
 <!-- Cart JS -->

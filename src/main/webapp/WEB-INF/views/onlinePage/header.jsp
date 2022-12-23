@@ -34,102 +34,6 @@
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets_onlinepage/images/favicon.ico">
 
 
-    <%--    <style>--%>
-    <%--        .d2 {--%>
-    <%--            margin-top: 100px;--%>
-    <%--            margin: 3% auto;--%>
-    <%--            max-width: 500px;--%>
-    <%--            border: 1px solid #ccc;--%>
-    <%--            padding: 25px 0;--%>
-    <%--            background-color: #fff;--%>
-    <%--            text-align: center;--%>
-    <%--        }--%>
-
-    <%--        div.d2>span {--%>
-    <%--            width: 300px;--%>
-    <%--            margin-left: auto;--%>
-    <%--            margin-right: auto;--%>
-    <%--            font-size: 22px;--%>
-    <%--        }--%>
-
-    <%--        div>span {--%>
-    <%--            font-size: 20px;--%>
-    <%--            font-weight: normal;--%>
-    <%--            line-height: 1.5;--%>
-    <%--        }--%>
-
-    <%--        div>* {--%>
-    <%--            display: block;--%>
-    <%--            margin-bottom: 25px;--%>
-    <%--        }--%>
-
-    <%--        .hide {--%>
-    <%--            display: none !important;--%>
-    <%--        }--%>
-
-    <%--        .d2>form>input {--%>
-    <%--            background-image: url(https://cdn.tgdd.vn/mwgcart/orderhistory/images/icon-lock.png);--%>
-    <%--            background-size: 16px 17px;--%>
-    <%--            padding: 0 45px;--%>
-    <%--            width: 220px;--%>
-    <%--            background-position: 20px center;--%>
-    <%--            text-align: center;--%>
-    <%--        }--%>
-
-    <%--        form>input {--%>
-    <%--            border: 1px solid #e0e0e0;--%>
-    <%--            border-radius: 100px;--%>
-    <%--            width: 200px;--%>
-    <%--            height: 48px;--%>
-    <%--            padding: 0 50px;--%>
-    <%--            background-repeat: no-repeat;--%>
-    <%--            background-position: 25px center;--%>
-    <%--            margin-bottom: 15px;--%>
-    <%--            font-size: 15px;--%>
-    <%--        }--%>
-
-    <%--        div>form>* {--%>
-    <%--            display: block;--%>
-    <%--            margin: auto;--%>
-    <%--            font-family: ROBOTO LIGHT;--%>
-    <%--        }--%>
-
-    <%--        div>form>label {--%>
-    <%--            color: #f01;--%>
-    <%--            margin-bottom: 15px;--%>
-    <%--            width: 90%;--%>
-    <%--        }--%>
-
-    <%--        .btn-inputotp {--%>
-    <%--            background-image: linear-gradient(-106deg, #51beed 2%, #288ad6 100%);--%>
-    <%--            box-shadow: 0 2px 6px 0 #9ed4ec;--%>
-    <%--            border-radius: 100px;--%>
-    <%--            width: 302px;--%>
-    <%--            height: 50px;--%>
-    <%--            border: none;--%>
-    <%--            text-transform: uppercase;--%>
-    <%--            color: #fff;--%>
-    <%--            font-size: 17px;--%>
-    <%--            max-width: 100%;--%>
-    <%--            cursor: pointer;--%>
-    <%--            margin-top: 10px;--%>
-    <%--        }--%>
-
-    <%--        div>a {--%>
-    <%--            font-size: 14px;--%>
-    <%--            color: #666;--%>
-    <%--            font-weight: bold;--%>
-    <%--            text-decoration: none;--%>
-    <%--            transition: .2s;--%>
-    <%--        }--%>
-
-    <%--        div>a.btnChangeNum {--%>
-    <%--            font-size: 13px;--%>
-    <%--            color: #288ad6;--%>
-    <%--            font-weight: normal;--%>
-    <%--        }--%>
-    <%--    </style>--%>
-
     <style>
         .step1 {
             margin: 3% auto;
@@ -200,7 +104,7 @@
                     <div class="logo">
                         <a href="${pageContext.request.contextPath}/homepage">
 
-                            <img src="${pageContext.request.contextPath}/assets_onlinepage/images/logo.png" alt="">
+                            <img src="${pageContext.request.contextPath}/assets_onlinepage/images/electroco.jpg" alt="" style="width: 80px">
 
                         </a>
                     </div><!-- /.logo -->
@@ -223,8 +127,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-3 animate-dropdown top-cart-row" style="display: flex; justify-content: right">
                     <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
 
-                    <c:set var="username" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.email}"/>
-                    <c:set var="name" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}"/>
+                    <c:set var="username" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}"/>
 
                     <%--                    giỏ hàng--%>
                     <div class="dropdown dropdown-cart" style="">
@@ -297,14 +200,7 @@
                             </c:when>
                             <c:otherwise>
                                 <div class="dropdown">
-                                    <button class="dropdown-toggle" data-hover ="dropdown" style="padding: 15px 13px; border: none; font-size: 15px"><i class="icon fa fa-user" style="margin-right: 3px; font-size: 15px"></i>
-                                            <c:if test="${name == null}">
-                                                Tài khoản
-                                            </c:if>
-                                        <c:if test="${name != null}">
-                                            ${name}
-                                        </c:if>
-                                    </button>
+                                    <button class="dropdown-toggle" data-hover ="dropdown" style="padding: 15px 13px; border: none; font-size: 15px"><i class="icon fa fa-user" style="margin-right: 3px; font-size: 15px"></i>${username}</button>
                                     <ul class="dropdown-menu">
                                         <li><a href="${pageContext.request.contextPath}/profile" style="color: black;">Tài khoản của tôi</a></li>
                                         <li><a href="${pageContext.request.contextPath}/order" style="color: black;">Đơn hàng của tôi</a></li>
@@ -342,8 +238,8 @@
 
                                     </li>
                                     <li class="dropdown yamm">
-                                        <a href="home.html" data-hover="dropdown"
-                                           class="dropdown-toggle">Desktop</a>
+                                        <a href="${pageContext.request.contextPath}/product/list?index=0" data-hover="dropdown"
+                                           class="dropdown-toggle">Products</a>
                                     </li>
 
                                     <li class="dropdown">

@@ -13,35 +13,29 @@
         * {
             box-sizing: border-box;
         }
-
         body {
             font: 16px Arial;
         }
-
         /*the container must be positioned relative:*/
         .autocomplete {
             position: relative;
             display: inline-block;
         }
-
         input {
             border: 1px solid transparent;
             background-color: #f1f1f1;
             padding: 10px;
             font-size: 16px;
         }
-
         .search_product {
             background-color: #f1f1f1;
             width: 100%;
         }
-
         input[type=submit] {
             background-color: DodgerBlue;
             color: #fff;
             cursor: pointer;
         }
-
         .autocomplete-items {
             position: absolute;
             border: 1px solid #d4d4d4;
@@ -53,19 +47,16 @@
             left: 0;
             right: 0;
         }
-
         .autocomplete-items div {
             padding: 10px;
             cursor: pointer;
             background-color: #fff;
             border-bottom: 1px solid #d4d4d4;
         }
-
         /*when hovering an item:*/
         .autocomplete-items div:hover {
             background-color: #e9e9e9;
         }
-
         /*when navigating through the items using the arrow keys:*/
         .autocomplete-active {
             background-color: DodgerBlue !important;
@@ -79,13 +70,11 @@
             color: red;
         }
         @media print {
-
             body {
                 zoom: 50%;
                 margin: 0;
                 background-color: #dee2e6;
             }
-
         }
     </style>
     <!-- Bootstrap CSS -->
@@ -159,7 +148,7 @@
             <div class="row">
                 <div class="col-7">
                     <input type="text" name="search" placeholder="Tìm khách hàng" class="mb-4 form-boder search-customer" id="search-customer">
-<%--                    <i style="position: absolute;right: 30px;top: 10px;cursor: pointer;" class="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#exampleModal3" ></i>--%>
+                    <%--                    <i style="position: absolute;right: 30px;top: 10px;cursor: pointer;" class="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#exampleModal3" ></i>--%>
                 </div>
                 <div class="col-5 pl-4">
                     <button type="button" class="btn btn-primary ml-4" data-bs-toggle="modal" data-bs-target="#exampleModal3">Thêm khách hàng</button>
@@ -169,24 +158,20 @@
                 </div>
                 <div class="col-5">
                     <p class="mb-4 text-right" id="total-money">0</p>
-
-
                 </div>
 
-                <div class="col-12 custpay">
-                    <div class="col-7 mt-3">
-                        <p class="mb-4 custom-text-bill ml-2 pt-2">Tiền khách trả</p>
+                <div class="custpay">
+                    <div class="row mt-3 justify-content-between">
+                        <p class="col-5 mb-4 custom-text-bill pt-2" style="margin-left: 14px">Tiền khách trả</p>
+                        <div class="col-6">
+                            <input type="text" class="form-control customer-pay mb-4" >
+                        </div>
                     </div>
-                    <div class="col-5 mt-3">
-                        <input type="text" class="form-control customer-pay mb-4" >
+                    <div class="row mt-3 justify-content-between">
+                        <p class="col-5 mb-4 custom-text-bill" style="margin-left: 14px">Tiền thừa trả khách</p>
+                        <p class="col-5 mb-4 text-right" id="tienThua">0</p>
                     </div>
-                    <div class="col-8 mt-3 pl-4">
-                        <p class="mb-4 custom-text-bill">Tiền thừa trả khách</p>
-                    </div>
-                    <div class="col-4 mt-3">
-                        <p class="mb-4 text-right" id="tienThua">0</p>
-                    </div>
-                    <div class="col-12 pl-4 mt-4">
+                    <div class="col-12 mt-4">
                         <p class="mb-4 custom-text-bill">Phương thức thanh toán:</p>
                     </div>
 
@@ -343,64 +328,60 @@
 
                 <div class="container-fluid">
                     <div class="row justify-content-between">
-
-
-
-
-                        <div class="form__group field col-5">
+                        <div class="col-5 form__group field">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_name' required />
-                            <label for="cust_name" class="form__label" required-field>Tên  khách hàng</label>
+                            <label for="cust_name" class="form__label required-field" required-field>Tên  khách hàng</label>
                         </div>
 
-                        <div class="form__group field col-5">
+                        <div class="col-5 form__group field">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_email' required />
-                            <label for="cust_email" class="form__label" required-field>Email</label>
+                            <label for="cust_email" class="form__label required-field" required-field>Email</label>
                         </div>
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_phone' required />
-                            <label for="cust_phone" class="form__label" required-field>Điện thoại</label>
+                            <label for="cust_phone" class="form__label required-field" required-field>Điện thoại</label>
                         </div>
 
                         <div class="form__group field col-5">
-                            <label for="city">Tỉnh/Thành phố</label> <br>
+                            <label for="city" class="required-field">Tỉnh/Thành phố</label> <br>
                             <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="city" name="city">
                                 <option value="0" selected>Chọn tỉnh thành</option>
                             </select>
                         </div>
                         <div class="form__group field col-5">
-                            <label for="district">Quận/Huyện</label> <br>
+                            <label for="district" class="required-field">Quận/Huyện</label> <br>
                             <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="district" name="district">
                                 <option value="0" selected>Chọn quận huyện</option>
                             </select>
                         </div>
                         <div class="form__group field col-5">
-                            <label for="ward">Xã/Phường</label> <br>
+                            <label for="ward" class="required-field">Xã/Phường</label> <br>
                             <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="ward" name="ward">
                                 <option value="0" selected>Chọn phường xã</option>
                             </select>
                         </div>
 
-<%--                        <div class="mb-3">--%>
-<%--                            <label for="city">Tỉnh/Thành phố</label> <br>--%>
-<%--                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="city" name="city">--%>
-<%--                                <option value="0" selected>Chọn tỉnh thành</option>--%>
-<%--                            </select>--%>
-<%--                        </div>--%>
+                        <%--                        <div class="mb-3">--%>
+                        <%--                            <label for="city">Tỉnh/Thành phố</label> <br>--%>
+                        <%--                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="city" name="city">--%>
+                        <%--                                <option value="0" selected>Chọn tỉnh thành</option>--%>
+                        <%--                            </select>--%>
+                        <%--                        </div>--%>
 
-<%--                        <div class="mb-3">--%>
-<%--                            <label for="district">Quận/Huyện</label> <br>--%>
-<%--                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="district" name="district">--%>
-<%--                                <option value="0" selected>Chọn quận huyện</option>--%>
-<%--                            </select>--%>
-<%--                        </div>--%>
+                        <%--                        <div class="mb-3">--%>
+                        <%--                            <label for="district">Quận/Huyện</label> <br>--%>
+                        <%--                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="district" name="district">--%>
+                        <%--                                <option value="0" selected>Chọn quận huyện</option>--%>
+                        <%--                            </select>--%>
+                        <%--                        </div>--%>
 
-<%--                        <div class="mb-3">--%>
-<%--                            <label for="ward">Xã/Phường</label> <br>--%>
-<%--                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="ward" name="ward">--%>
-<%--                                <option value="0" selected>Chọn phường xã</option>--%>
-<%--                            </select>--%>
-<%--                        </div>--%>
+                        <%--                        <div class="mb-3">--%>
+                        <%--                            <label for="ward">Xã/Phường</label> <br>--%>
+                        <%--                            <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="ward" name="ward">--%>
+                        <%--                                <option value="0" selected>Chọn phường xã</option>--%>
+                        <%--                            </select>--%>
+                        <%--                        </div>--%>
 
                         <div class="form__group field col-5">
                             <input type="input" class="form__field" placeholder="Name" name="name" id='cust_address' required />
@@ -481,8 +462,8 @@
             background-color: white;
             padding: 2rem 1rem 4rem 1rem;">
     <div class="bill-header" style="display: flex;">
-        <img src="https://yt3.ggpht.com/ytc/AMLnZu9GCNaRZ_9jmsfiK2tgRjAFEXhjcZPyaRcZG79j=s900-c-k-c0x00ffffff-no-rj"
-             alt="" style="width: 10rem;margin-right: 2rem;">
+        <img src="${pageContext.request.contextPath}/assets_onlinepage/images/electroco.jpg"
+             alt="" style="width: 9rem;margin-right: 2rem;">
         <div class="header-info">
             <h4>ELECTROCO</h4>
             <p>Chi nhánh Đại Học FPT Hà Nội</p>
@@ -509,15 +490,15 @@
             </tr>
             </thead>
             <tbody id="invoice-items">
-<%--            <tr>--%>
-<%--                <th scope="row" style="border: 1px solid black;">1</th>--%>
-<%--                <td style="border: 1px solid black;">Mark</td>--%>
-<%--                <td style="border: 1px solid black;">Otto</td>--%>
-<%--                <td style="border: 1px solid black;">@mdo</td>--%>
-<%--                <td style="border: 1px solid black;">Mark</td>--%>
-<%--                <td style="border: 1px solid black;">Otto</td>--%>
-<%--                <td style="border: 1px solid black;">@mdoooooooooooooooooo</td>--%>
-<%--            </tr>--%>
+            <%--            <tr>--%>
+            <%--                <th scope="row" style="border: 1px solid black;">1</th>--%>
+            <%--                <td style="border: 1px solid black;">Mark</td>--%>
+            <%--                <td style="border: 1px solid black;">Otto</td>--%>
+            <%--                <td style="border: 1px solid black;">@mdo</td>--%>
+            <%--                <td style="border: 1px solid black;">Mark</td>--%>
+            <%--                <td style="border: 1px solid black;">Otto</td>--%>
+            <%--                <td style="border: 1px solid black;">@mdoooooooooooooooooo</td>--%>
+            <%--            </tr>--%>
             </tbody>
         </table>
         <p class="ms-5" style="margin-left: 2rem;">Cộng thành tiền (Viết bằng chữ): <span id="total-word"></span></p>
@@ -527,9 +508,9 @@
             <div class="p-2" style="padding: 5px;margin-right: 3px;">Năm <span id="invoice-year"></span></div>
         </div>
         <p class="text-center" style="font-size: 1.5rem; margin-top: 2rem; text-align: center; display: none" id="qr-title">Vui lòng quét mã QR bên dưới để thanh toán</p>
-<%--        <div id="qr-code" style="display: block;width: 40%;margin-left: 187px;">--%>
+        <%--        <div id="qr-code" style="display: block;width: 40%;margin-left: 187px;">--%>
 
-<%--        </div>--%>
+        <%--        </div>--%>
         <img style="display: block;width: 40%;margin-left: auto;margin-right: auto; display: none" src=""
              alt="" id="qr-invoice">
     </div>
@@ -588,7 +569,6 @@
     promise.then(function (result) {
         renderCity(result.data);
     });
-
     function renderCity(data) {
         for (const x of data) {
             citis.options[citis.options.length] = new Option(x.Name, x.Id);
@@ -598,7 +578,6 @@
             ward.length = 1;
             if(this.value != ""){
                 const result = data.filter(n => n.Id === this.value);
-
                 for (const k of result[0].Districts) {
                     district.options[district.options.length] = new Option(k.Name, k.Id);
                 }
@@ -609,7 +588,6 @@
             const dataCity = data.filter((n) => n.Id === citis.value);
             if (this.value != "") {
                 const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
                 for (const w of dataWards) {
                     wards.options[wards.options.length] = new Option(w.Name, w.Id);
                 }

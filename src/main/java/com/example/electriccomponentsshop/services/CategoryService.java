@@ -13,7 +13,8 @@ import java.util.Optional;
 public interface CategoryService {
 
 
-
+    List<Category> findCategoriesByParentCategoryIdIsNull();
+    Category getById(String id);
     List<Category> findAll();
     Category addCategory(String name);
 

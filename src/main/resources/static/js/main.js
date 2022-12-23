@@ -876,6 +876,38 @@ function showDetailInventory(inventory_id,inventory_code,inventory_date,inventor
 
 }
 
+function showDetailExportInventory(inventory_id, inventory_code, inventory_date, exporter_name, inventory_receiver) {
+    $.ajax({
+        type: "GET",
+        url: "/admin/warehouses/getExportItems?code="+inventory_id,
+        success: function (response){
+            console.log(response);
+            document.getElementById('inventoryexport_code').innerHTML = inventory_code;
+            document.getElementById('inventoryexport_date').innerHTML = inventory_date;
+            document.getElementById('inventoryexport_exportername').innerHTML = exporter_name;
+            document.getElementById('inventoryexport_receiver').innerHTML = inventory_receiver;
+
+            var $exportItemTable = $('#exportItemTable tbody');
+            $exportItemTable.find('tr').remove();
+            for(var i in response.data){
+                for(var j in response.data[i].productExportLocationDTOS){
+                    $exportItemTable.append('<tr>' +
+                        '<td>'+response.data[i].p_code+'</td>' +
+                        '<td>'+response.data[i].p_name+'</td>' +
+                        '<td>'+convertMoney(Number(response.data[i].price))+'</td>' +
+                        '<td>'+response.data[i].productExportLocationDTOS[j].quantity+'</td>' +
+                        '<td>'+convertMoney(Number(response.data[i].price * response.data[i].productExportLocationDTOS[j].quantity))+'</td>' +
+                        '<td>'+response.data[i].productExportLocationDTOS[j].productLocationDTO.warehouseDTO.id+'-'+response.data[i].productExportLocationDTOS[j].productLocationDTO.warehouseDTO.name + '</td>' +
+                        '<td>'+response.data[i].productExportLocationDTOS[j].productLocationDTO.name+'</td>' +
+                        '</tr>');
+                }
+            }
+        }
+    });
+    // document.getElementById("inventory_code").innerHTML = inventory.code;
+    document.getElementById("detailInventoryExport").style.display = "block";
+}
+
 function checkPassword() {
     // /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
     var valid = true;
@@ -1044,6 +1076,7 @@ function addProduct(){
             console.log(response)
             if(response.status === "00"){
                 $('#successful').modal('show');
+                window.location.replace('http://localhost:5000/admin/products');
             }
             else {
                 $('#reason').innerHTML = response.message;

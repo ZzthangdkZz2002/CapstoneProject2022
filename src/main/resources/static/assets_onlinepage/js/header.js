@@ -22,7 +22,7 @@ $.ajax({
     type: "GET",
     async: false,
     contentType: false,
-    url: "/homepage/products",
+    url: "/homepage/api/products",
     success: function (response){
         if(response.status === "00"){
             productLists = response.data;

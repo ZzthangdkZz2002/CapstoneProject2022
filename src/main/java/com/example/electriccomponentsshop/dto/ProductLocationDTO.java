@@ -10,5 +10,5 @@ import lombok.*;
 public class ProductLocationDTO {
     private String id;
     private String name;
-    private Warehouse warehouse;
+    private WarehouseDTO warehouseDTO;
 }

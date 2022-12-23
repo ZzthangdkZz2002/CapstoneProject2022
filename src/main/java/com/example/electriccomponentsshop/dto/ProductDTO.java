@@ -14,7 +14,7 @@ import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor

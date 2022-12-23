@@ -3,6 +3,7 @@ var productList;
 var cart=[]
 const products = document.querySelector('.list-product');
 
+
 // const count = document.querySelector('.count');
 // const countQuantity=()=>{
 //     return  countCart = JSON.parse(localStorage.getItem('cart'))?.reduce(
@@ -95,7 +96,7 @@ productList.map((item,key)=>{
             </div>
             <div class="col col-xs-7">
                 <div class="product-info">
-                    <h3 class="name"><a href="${contextPath}/homepage/detailProduct?id=${item.id}">${item.name}</a></h3>
+                    <h3 class="name"><a href="${contextPath}/homepage/detailProduct?id=${item.id}" onclick="saveId(${item.id})">${item.name}</a></h3>
                     <p class="decription">${formatDescription(item.description)}</p>
                     <div class="product-price">
                         <span class="price">

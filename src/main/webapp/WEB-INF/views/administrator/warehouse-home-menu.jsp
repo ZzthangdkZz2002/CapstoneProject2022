@@ -130,7 +130,7 @@
                 <li><a class="sub-app-menu_item " href="${pageContext.request.contextPath}/admin/warehouses/view/import"><span
                         class="app-menu__label">Quản lý
                                 nhập kho</span></a></li>
-                <li><a class="sub-app-menu_item" href="${pageContext.request.contextPath}/admin/warehouses/view/export"><span
+                <li><a class="sub-app-menu_item" href="${pageContext.request.contextPath}/admin/warehouses/export/inventory"><span
                         class="app-menu__label">Quản lý
                                 xuất kho</span></a></li>
             </ul>

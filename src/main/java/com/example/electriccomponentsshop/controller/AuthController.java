@@ -132,10 +132,13 @@ public class AuthController {
         cookie.setMaxAge(120000000);
         cookie.setPath("/");
         response.addCookie(cookie);
-        if(roles.contains("ROLE_MANAGER")||roles.contains("ROLE_EMPLOYEE")){
+        if(roles.contains("ROLE_MANAGER")){
             modelMap.addAttribute("roles", roles.get(0));
             return "redirect:/admin/home";
-
+        }
+        if(roles.contains("ROLE_EMPLOYEE")){
+            modelMap.addAttribute("roles", roles.get(0));
+            return "redirect:/admin/home";
         }
         return "redirect:/homepage";
     }

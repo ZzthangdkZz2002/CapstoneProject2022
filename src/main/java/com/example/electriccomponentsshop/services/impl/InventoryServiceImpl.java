@@ -40,27 +40,47 @@ public class InventoryServiceImpl implements InventoryService {
             inventoryExport.setReceiver(exportTransactionNewDTO.getReceivedPerson());
             inventoryExport.setNote(exportTransactionNewDTO.getDescription());
 
-            int total_importPrice = 0;
+            int total_exportPrice = 0;
             for(ExportProductsDTO ep : exportTransactionNewDTO.getExportProducts()){
                 Product product = productRepository.findById(Integer.parseInt(ep.getProduct_id())).get();
                 for(ProductWarehouseExportDTO pwe : ep.getProductWarehouseExportDTOS()){
-                    total_importPrice += product.getPrice().intValue() * pwe.getQuantity();
+                    total_exportPrice += product.getOriginal_price().doubleValue() * pwe.getQuantity();
                 }
             }
 
-            inventoryExport.setTotal_importPrice(total_importPrice);
+            inventoryExport.setTotal_exportPrice(total_exportPrice);
             inventoryExport.setOrderTransaction(orderTransaction);
 
             InventoryExport iv1 = inventoryExportRepository.save(inventoryExport);
             inventoryExport.setCode(new Utils().generateInventoryExportCode(iv1.getId()));
             InventoryExport iv2 = inventoryExportRepository.save(inventoryExport);
             for(ExportProductsDTO ep : exportTransactionNewDTO.getExportProducts()){
-
+                ProductsExport pe = new ProductsExport();
+                Set<ProductExportLocation> productExportLocationList = new HashSet<>();
+                Product product = productRepository.findById(Integer.parseInt(ep.getProduct_id())).get();
+                pe.setP_code(product.getCode());
+                pe.setP_name(product.getName());
+                pe.setPrice(product.getOriginal_price().doubleValue());
+                pe.setInventoryExport(iv2);
+                ProductsExport pe1 = productsExportRepository.save(pe);
+                for(ProductWarehouseExportDTO pwe : ep.getProductWarehouseExportDTOS()){
+                    ProductExportLocation pel = new ProductExportLocation();
+                    pel.setQuantity(pwe.getQuantity());
+                    pel.setLocation_id(pwe.getLocation_id());
+                    pel.setProductsExport(pe1);
+                    productExportLocationRepository.save(pel);
+                    productExportLocationList.add(pel);
+                }
+                pe.setProductExportLocationList(productExportLocationList);
+                productsExports.add(pe);
+                productsExportRepository.save(pe);
             }
+            inventoryExport.setProductsExports(productsExports);
+            inventoryExportRepository.save(inventoryExport);
 
 
         }catch (Exception e){
-
+            System.out.println("Inventory exprot error: " + e.getMessage());
         }
     }
 

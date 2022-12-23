@@ -30,7 +30,6 @@
         .navbar-nav{
             flex-direction: row;
         }
-
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
@@ -41,7 +40,7 @@
 </head>
 <body class="bg-light">
 <jsp:include page="header.jsp"/>
-<div class="container">
+<div class="container" style="margin-bottom: 100px">
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
@@ -88,19 +87,19 @@
                     </div>
                 </div>
 
-<%--                <div>--%>
-<%--                    <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">--%>
-<%--                        <option value="" selected>Chọn tỉnh thành</option>--%>
-<%--                    </select>--%>
+                <%--                <div>--%>
+                <%--                    <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">--%>
+                <%--                        <option value="" selected>Chọn tỉnh thành</option>--%>
+                <%--                    </select>--%>
 
-<%--                    <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">--%>
-<%--                        <option value="" selected>Chọn quận huyện</option>--%>
-<%--                    </select>--%>
+                <%--                    <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">--%>
+                <%--                        <option value="" selected>Chọn quận huyện</option>--%>
+                <%--                    </select>--%>
 
-<%--                    <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">--%>
-<%--                        <option value="" selected>Chọn phường xã</option>--%>
-<%--                    </select>--%>
-<%--                </div>--%>
+                <%--                    <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">--%>
+                <%--                        <option value="" selected>Chọn phường xã</option>--%>
+                <%--                    </select>--%>
+                <%--                </div>--%>
 
                 <div class="mb-3">
                     <label for="city">Tỉnh/Thành phố</label> <br>
@@ -127,16 +126,16 @@
                 <div class="mb-3">
                     <label for="address">Địa chỉ chi tiết</label>
                     <input type="text" class="form-control" id="address"  required="Vui lòng nhập địa chỉ">
-<%--                    <div class="invalid-feedback">--%>
-<%--                        Please enter your shipping address.--%>
-<%--                    </div>--%>
+                    <%--                    <div class="invalid-feedback">--%>
+                    <%--                        Please enter your shipping address.--%>
+                    <%--                    </div>--%>
                 </div>
 
 
 
                 <div class="mb-3">
                     <label for="note" class="form-label">Ghi chú</label>
-                        <textarea class="form-control" id="note" rows="3"></textarea>
+                    <textarea class="form-control" id="note" rows="3"></textarea>
                 </div>
 
 
@@ -161,16 +160,10 @@
             </form>
         </div>
     </div>
-
-    <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2017-2019 Company Name</p>
-        <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">Privacy</a></li>
-            <li class="list-inline-item"><a href="#">Terms</a></li>
-            <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-    </footer>
 </div>
+<jsp:include page="footer.jsp"></jsp:include>
+
+
 <script>var contextPath = "${pageContext.request.contextPath}"</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
@@ -186,7 +179,6 @@
     promise.then(function (result) {
         renderCity(result.data);
     });
-
     function renderCity(data) {
         for (const x of data) {
             citis.options[citis.options.length] = new Option(x.Name, x.Id);
@@ -196,7 +188,6 @@
             ward.length = 1;
             if(this.value != ""){
                 const result = data.filter(n => n.Id === this.value);
-
                 for (const k of result[0].Districts) {
                     district.options[district.options.length] = new Option(k.Name, k.Id);
                 }
@@ -207,7 +198,6 @@
             const dataCity = data.filter((n) => n.Id === citis.value);
             if (this.value != "") {
                 const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
                 for (const w of dataWards) {
                     wards.options[wards.options.length] = new Option(w.Name, w.Id);
                 }

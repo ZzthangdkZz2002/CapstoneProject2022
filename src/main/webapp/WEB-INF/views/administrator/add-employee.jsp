@@ -136,8 +136,8 @@
               <div class="row">
                 <div class="confirm-button">
                   <div class="button">
-                    <button type="submit" class="btn btn-save" onclick="continueornot()">Lưu lại</button>
-                    <button class="btn btn-cancel" onclick="location.href='system-account-management.html'">Hủy
+                    <button type="submit" class="btn btn-save" onclick="//continueornot()">Lưu lại</button>
+                    <button class="btn btn-cancel" onclick="location.href='http://localhost:5000/admin/accounts/add'">Hủy
                       bỏ</button>
                   </div>
                 </div>

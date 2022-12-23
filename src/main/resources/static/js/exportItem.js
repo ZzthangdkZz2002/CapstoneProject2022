@@ -250,14 +250,12 @@ function genDetailLocation(w_id, p_id) {
            <div class="d-flex" style="display: flex;align-items: center;margin-bottom: 10px;" >
         <input type="checkbox" onchange="chooseLocation(${item.id},${p_id},${w_id},${item.total},${item.product.id},${item.productLocation.id})" id="${item.id}-choose" name="choose-location" value="0">
 
-     <h4 style="margin-right: 3px">${item.productLocation.name}</h4>
-        <input min="0"  name="quantity" value=${item.total} type="text" 
+     <h5 style="margin-right: 5px;margin-left: 5px; padding-top: 7px">${item.productLocation.name}</h5>
+        <input min="0"  name="quantity" value=${item.total} type="number" 
         class="${item.id}-quantity" style="width: 50px;"  onkeyup="handleQuantity(${item.id})"/>
-     <div style="display: flex;flex-direction: column;">
-     
-     <i class="fas fa-plus" sty le="cursor: pointer;" onclick="increasing(${item.id},${item.total},${p_id},${w_id})"></i>
- 
- <i class="fas fa-minus" style="cursor: pointer;" onclick="decreasing(${item.id},${p_id},${w_id})"></i>
+      <div style="display: flex;flex-direction: column; margin-left: 5px">
+     <i class="fas fa-plus" style="cursor: pointer;" onclick="increasing(${item.id},${item.total},${p_id},${w_id})"></i>
+     <i class="fas fa-minus" style="cursor: pointer;" onclick="decreasing(${item.id},${p_id},${w_id})"></i>
      </div>
 
     </div>

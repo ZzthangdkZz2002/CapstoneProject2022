@@ -98,6 +98,7 @@ public class AccountServiceImpl implements AccountService {
         setAddress(accountDTO,account);
         account.setBirthDate(Date.valueOf(accountDTO.getDob()));
         account.setRoles(roles);
+        account.setStatus(true);
         return accountRepository.save(account) != null;
     }
     @Override

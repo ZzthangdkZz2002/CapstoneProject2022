@@ -4,7 +4,6 @@ import com.example.electriccomponentsshop.common.Utils;
 import com.example.electriccomponentsshop.config.ModelMap;
 import com.example.electriccomponentsshop.dto.*;
 import com.example.electriccomponentsshop.entities.*;
-import com.example.electriccomponentsshop.repositories.ExportPriceRepository;
 import com.example.electriccomponentsshop.repositories.ProductRepository;
 import com.example.electriccomponentsshop.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ import javax.persistence.Query;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -41,18 +38,20 @@ public class ProductServiceImpl implements ProductService {
 //    SupplierService supplierService;
 
 
-    EntityManager em;
+    final EntityManager em;
 
     @Autowired
     ModelMap modelMap;
 
-    CategoryService categoryService;
+    final CategoryService categoryService;
 
     @Value("${product.upload.path}")
     private String fileUpload;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, EntityManager em, CategoryService categoryService) {
         this.productRepository = productRepository;
+        this.em = em;
+        this.categoryService = categoryService;
     }
 
     private String sql = "select p.* from product p join product_category pc on pc.product_id = p.id "
@@ -82,6 +81,32 @@ public class ProductServiceImpl implements ProductService {
         } catch (NumberFormatException e){
             throw  new NoSuchElementException("Không có sản phẩm này");
         }
+    }
+
+    @Override
+    public List<Product> getProductByCate(String cate, int pageNo, int pageSize) {
+        Category category = categoryService.getById(cate);
+
+        Query query = em.createNativeQuery(sql, Product.class);
+        query.setParameter("path", category.getPath() + "%");
+        query.setFirstResult((pageNo-1)*pageSize);
+        query.setMaxResults(pageSize);
+
+        List<Product> products = query.getResultList();
+
+        return products;
+    }
+
+    @Override
+    public int countByCate(String cate) {
+        Category category = categoryService.getById(cate);
+
+        Query query = em.createNativeQuery(sql, Product.class);
+        query.setParameter("path", category.getPath() + "%");
+
+        List<Product> products = query.getResultList();
+
+        return products.size();
     }
 //    public boolean updateProduct(ProductDTO productDTO, String id){
 //       Product product = getById(id);

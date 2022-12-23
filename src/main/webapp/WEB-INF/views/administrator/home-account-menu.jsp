@@ -118,9 +118,16 @@
         <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/orders/waiting"><i class='app-menu__icon bx bx-task'></i><span
                 class="app-menu__label">Quản lý đơn hàng</span></a></li>
 
+        <sec:authorize access="hasRole('ROLE_MANAGER')">
             <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/accounts/system-account"><i class='app-menu__icon bx bx-id-card'></i>
                 <span class="app-menu__label">Quản lý tài khoản</span>
             </a>
+                </sec:authorize>
+                <sec:authorize access="hasRole('ROLE_CUSTOMER')">
+        <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/accounts/customer-account"><i class='app-menu__icon bx bx-id-card'></i>
+            <span class="app-menu__label">Quản lý tài khoản</span>
+        </a>
+            </sec:authorize>
                 <ul class="sub-app-menu" >
                     <div id="sub-account-menu">
                         <sec:authorize access="hasRole('ROLE_MANAGER')">
@@ -164,10 +171,18 @@
             current[0].className = current[0].className.replace(" active", "");
             items[3].className += " active";
         }
-        if(url.includes('admin/accounts/customer-account')){
-            let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
-            current[0].className = current[0].className.replace(" sub-item-active", "");
-            sub_items[1].className += " sub-item-active";
+        if(sub_items.length == 1){
+            if(url.includes('admin/accounts/customer-account')){
+                // let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
+                // current[0].className = current[0].className.replace(" sub-item-active", "");
+                sub_items[0].className += " sub-item-active";
+            }
+        }else {
+            if(url.includes('admin/accounts/customer-account')){
+                let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
+                current[0].className = current[0].className.replace(" sub-item-active", "");
+                sub_items[1].className += " sub-item-active";
+            }
         }
     }
 </script>

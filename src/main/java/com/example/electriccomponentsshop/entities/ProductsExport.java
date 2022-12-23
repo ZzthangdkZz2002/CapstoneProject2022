@@ -2,6 +2,7 @@ package com.example.electriccomponentsshop.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class ProductsExport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,11 @@ public class ProductsExport {
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "productsExport")
     private Set<ProductExportLocation> productExportLocationList = new HashSet<>();
-    private int price;
+    @Column
+    @ColumnDefault("0")
+    private double price;
+    @Column
+    @ColumnDefault("0")
     private int total;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "inventoryexport_id")

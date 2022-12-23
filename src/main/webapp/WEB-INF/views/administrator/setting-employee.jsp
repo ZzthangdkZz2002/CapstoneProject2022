@@ -117,7 +117,7 @@
               </div>
               <div class="form-group col-md-3">
                 <label class="control-label">Địa chỉ email</label>
-                <form:input class="form-control" type="text" path="email" value="${accountDto.email}" />
+                <form:input class="form-control" type="text" path="email" value="${accountDto.email}" readonly="true" />
               </div>
               <div class="form-group col-md-3">
                 <label class="control-label">Mật Khẩu</label>

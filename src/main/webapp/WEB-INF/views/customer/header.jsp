@@ -44,7 +44,7 @@
                     <div class="logo">
                         <a href="${pageContext.request.contextPath}/homepage">
 
-                            <img src="${pageContext.request.contextPath}/assets_onlinepage/images/logo.png" alt="">
+                            <img src="${pageContext.request.contextPath}/assets_onlinepage/images/electroco.jpg" alt="" style="width: 80px">
 
                         </a>
                     </div><!-- /.logo -->
@@ -68,8 +68,7 @@
                     <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
 
                     <c:set var="username"
-                           value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.email}"/>
-                    <c:set var="name" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}"/>
+                           value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.name}"/>
 
                     <%--                    giỏ hàng--%>
                     <div class="dropdown dropdown-cart" style="">
@@ -129,19 +128,14 @@
                                 <div class="dropdown">
                                     <button class="dropdown-toggle" data-hover="dropdown"
                                             style="padding: 14px 8px; border: none; font-size: 15px"><i
-                                            class="icon fa fa-user" style="margin-right: 3px"></i>
-                                        <c:if test="${name == null}">
-                                            Tài khoản
-                                        </c:if>
-                                        <c:if test="${name != null}">
-                                            ${name}
-                                        </c:if>
+                                            class="icon fa fa-user" style="margin-right: 3px"></i>Tài khoản
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a href="${pageContext.request.contextPath}/signin" style="color: black;">Đăng
                                             nhập</a></li>
                                         <li><a href="${pageContext.request.contextPath}/signup" style="color: black;">Đăng
                                             kí</a></li>
+                                        <li><a href="${pageContext.request.contextPath}/tracking/trackingOrder" style="color: black;">Lịch sử đơn hàng</a></li>
                                     </ul>
                                 </div>
                                 <%--                                <a href="${pageContext.request.contextPath}/signup" type="button" style="padding: 14px 8px; border: none; font-size: 15px; background-color: #efefef; color: #666666"><i class="icon fa fa-user" style="margin-right: 3px"></i>Đăng ký</a>--%>
@@ -228,5 +222,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     <%--<script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>--%>
 
-
+    <script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-hover-dropdown.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets_onlinepage/js/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets_onlinepage/js/echo.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.easing-1.3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-slider.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.rateit.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets_onlinepage/js/lightbox.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-select.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets_onlinepage/js/wow.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
 </header>

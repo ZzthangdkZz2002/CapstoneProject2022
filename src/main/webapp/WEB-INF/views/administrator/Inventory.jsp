@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Inventory</title>
+    <title>Import inventory</title>
     <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <link rel="stylesheet" type="text/css" href="<c:url value="/css/main.css"/>">
 
@@ -108,7 +108,7 @@
 <main class="app-content">
     <div class="app-title">
         <ul class="app-breadcrumb breadcrumb side">
-            <li class="breadcrumb-item active"><a href="#"><b>Import enventory</b></a></li>
+            <li class="breadcrumb-item active"><a href="#"><b>Import inventory</b></a></li>
         </ul>
     </div>
     <div class="tile">
@@ -319,12 +319,12 @@
     <div class="time-popup hide">
         <div class="container">
             <div class="row">
-                <div class="col-2">
+                <div class="col-4">
                     <p><strong>Theo ngày</strong></p>
                     <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=today">Hôm nay</a><br />
                     <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=yesterday">Hôm qua</a>
                 </div>
-                <div class="col-2">
+                <div class="col-4">
                     <p><strong>Theo tháng</strong></p>
                     <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=thismonth">Tháng này</a><br />
                     <a href="${pageContext.request.contextPath}/admin/inventory/search?date_type=lastmonth">Tháng trước</a><br />

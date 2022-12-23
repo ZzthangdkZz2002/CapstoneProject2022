@@ -54,18 +54,22 @@
       <div class="tile">
         <h3 class="tile-title">Tuỳ chỉnh sản phẩm</h3>
         <div class="tile-body">
-          <div class="row element-button">
-            <div class="col-sm-2">
-              <a class="btn btn-add btn-sm" href="add-product-specification.html" title="Thêm"><i
-                      class="fas fa-plus"></i>
-                Thêm thông số kỹ thuật</a>
-            </div>
-          </div>
+<%--          <div class="row element-button">--%>
+<%--            <div class="col-sm-2">--%>
+<%--              <a class="btn btn-add btn-sm" href="add-product-specification.html" title="Thêm"><i--%>
+<%--                      class="fas fa-plus"></i>--%>
+<%--                Thêm thông số kỹ thuật</a>--%>
+<%--            </div>--%>
+<%--          </div>--%>
           <form>
             <div class="row">
               <div class="form-group col-md-3">
                 <label class="control-label required-field">Tên sản phẩm</label>
                 <input class="form-control" type="text" value="${productDto.name}" required>
+              </div>
+              <div class="form-group col-md-3">
+                <label class="control-label required-field">Giá vốn</label>
+                <input class="form-control" type="number" value="${productDto.original_price}" required>
               </div>
               <div class="form-group col-md-3">
                 <label class="control-label required-field">Giá bán</label>
@@ -114,57 +118,74 @@
                 </table>
               </div>
             </div>
-
             <div class="row">
               <div class="form-group col-md-3">
-                <label for="exampleSelect1" class="control-label">Thông số kỹ thuật</label>
-                <select id="specOption" class="form-control" id="exampleSelect1">
-                 <c:forEach items="${specificationDtos}" var="spec">
-                   <option value="${spec.id}">${spec.name}</option>
-                 </c:forEach>
+                <label class="control-label required-field">Thương hiệu</label>
+                <select class="form-control" id="brandOption" required>
+                  <option value="${productDto.brand.id}" selected>${productDto.brand.name}</option>
+                  <c:forEach var = "brand" items="${brands}">
+                    <option value="${brand.id}">${brand.name}</option>
+                  </c:forEach>
                 </select>
               </div>
-              <div class="form-group col-md-3">
-                <button class="side-button btn btn-add" type="button" title="Thêm vào danh sách"
-                        onclick="addToSpecTable()">Thêm
-                  vào
-                  danh sách</button>
-                <button id="deleteButton" type="button" class="side-button btn btn-cancel" title="Xoá"
-                        onclick="deleteFromTable()">Xoá</button>
-              </div>
             </div>
             <div class="row">
-              <div class="form-group col-md-7">
-                <label for="exampleSelect1" class="control-label">Bảng thông số kỹ thuật</label>
-                <table id="specTable" class="table table-hover table-bordered js-copytextarea" cellpadding="0"
-                       cellspacing="0" >
-
-                  <tbody>
-                  <thead>
-                  <tr>
-                    <th width="200">Mã thông số kỹ thuật</th>
-                    <th width="200">Thông số kỹ thuật</th>
-                    <th width="400">Giá trị</th>
-                  </tr>
-                  <c:forEach var="specification" items="${listSpecificationValue}">
-                  <tr class="spec-item">
-                    <td>${specification.specificationId}</td>
-                    <td>${specification.specificationName}</td>
-                    <td><input type="text" style="width: 100px"  placeholder="Giá trị nhỏ nhất" class="fromValue" value="${specification.valueFrom}" >
-                      <span>-</span>
-                      <input type="text" style="width: 100px"  placeholder="Giá trị lớn nhất" class="toValue" value="${specification.valueTo}" ></td>
-                    <td>
-                      <input type="checkbox">
-                    </td>
-
-
-                  </tr>
-                  </c:forEach>
-                  </thead>
-                  </tbody>
-                </table>
+              <div class="form-group col-md-3">
+                <label class="control-label required-field">Đơn vị</label>
+                <input class="form-control" type="text" value="${productDto.unit}">
               </div>
             </div>
+
+<%--            <div class="row">--%>
+<%--              <div class="form-group col-md-3">--%>
+<%--                <label for="exampleSelect1" class="control-label">Thông số kỹ thuật</label>--%>
+<%--                <select id="specOption" class="form-control" id="exampleSelect1">--%>
+<%--                 <c:forEach items="${specificationDtos}" var="spec">--%>
+<%--                   <option value="${spec.id}">${spec.name}</option>--%>
+<%--                 </c:forEach>--%>
+<%--                </select>--%>
+<%--              </div>--%>
+<%--              <div class="form-group col-md-3">--%>
+<%--                <button class="side-button btn btn-add" type="button" title="Thêm vào danh sách"--%>
+<%--                        onclick="addToSpecTable()">Thêm--%>
+<%--                  vào--%>
+<%--                  danh sách</button>--%>
+<%--                <button id="deleteButton" type="button" class="side-button btn btn-cancel" title="Xoá"--%>
+<%--                        onclick="deleteFromTable()">Xoá</button>--%>
+<%--              </div>--%>
+<%--            </div>--%>
+<%--            <div class="row">--%>
+<%--              <div class="form-group col-md-7">--%>
+<%--                <label for="exampleSelect1" class="control-label">Bảng thông số kỹ thuật</label>--%>
+<%--                <table id="specTable" class="table table-hover table-bordered js-copytextarea" cellpadding="0"--%>
+<%--                       cellspacing="0" >--%>
+
+<%--                  <tbody>--%>
+<%--                  <thead>--%>
+<%--                  <tr>--%>
+<%--                    <th width="200">Mã thông số kỹ thuật</th>--%>
+<%--                    <th width="200">Thông số kỹ thuật</th>--%>
+<%--                    <th width="400">Giá trị</th>--%>
+<%--                  </tr>--%>
+<%--                  <c:forEach var="specification" items="${listSpecificationValue}">--%>
+<%--                  <tr class="spec-item">--%>
+<%--                    <td>${specification.specificationId}</td>--%>
+<%--                    <td>${specification.specificationName}</td>--%>
+<%--                    <td><input type="text" style="width: 100px"  placeholder="Giá trị nhỏ nhất" class="fromValue" value="${specification.valueFrom}" >--%>
+<%--                      <span>-</span>--%>
+<%--                      <input type="text" style="width: 100px"  placeholder="Giá trị lớn nhất" class="toValue" value="${specification.valueTo}" ></td>--%>
+<%--                    <td>--%>
+<%--                      <input type="checkbox">--%>
+<%--                    </td>--%>
+
+
+<%--                  </tr>--%>
+<%--                  </c:forEach>--%>
+<%--                  </thead>--%>
+<%--                  </tbody>--%>
+<%--                </table>--%>
+<%--              </div>--%>
+<%--            </div>--%>
             <div class="row">
               <div class="form-group col-md-12">
                 <label class="control-label required-field">Ảnh sản phẩm</label>
@@ -184,9 +205,9 @@
             <div class="row">
               <div class="confirm-button">
                 <div class="button">
-                  <input type="button" class="btn btn-save" onclick="validateTable()" >Lưu lại</input>
-                  <input type="button" class="btn btn-cancel" onclick="location.href='product-management.html'">Hủy
-                    bỏ</input>
+                  <button type="submit" id="createProduct" class="btn btn-save" >Lưu lại</button>
+                  <button type="button" class="btn btn-cancel" onclick="location.href='product-management.html'">Hủy
+                    bỏ</button>
                 </div>
               </div>
             </div>
@@ -286,11 +307,8 @@ MODAL UNSUCCESSFUL
 <!--
 MODAL
 -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-<script src="js/api-province.js"></script>
-<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
-<script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
 <script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>
 <script src="<c:url value="/js/popper.min.js"/>"></script>
 <script src="<c:url value="/js/bootstrap.min.js"/>"></script>

@@ -1,6 +1,7 @@
 package com.example.electriccomponentsshop.entities;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -15,6 +16,8 @@ public class ProductExportLocation {
     private Integer id;
 
     private String location_id;
+    @Column
+    @ColumnDefault("0")
     private int quantity;
 
     @ManyToOne(fetch = FetchType.EAGER)

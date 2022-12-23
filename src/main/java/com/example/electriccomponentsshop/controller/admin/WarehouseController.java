@@ -51,6 +51,8 @@ public class WarehouseController {
     ExportTransactionNewRepository exportTransactionNewRepository;
     @Autowired
     ExportProductsRepository exportProductsRepository;
+    @Autowired
+    InventoryExportRepository inventoryExportRepository;
     final
     WarehouseService warehouseService;
     final
@@ -251,7 +253,50 @@ public class WarehouseController {
             List<ProductsImport> productsImports = inventory.get().getProductsImports();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","success",productsImports));
         }else{
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Không tìm thấy Inventory",""));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Không tìm thấy import inventory",""));
+        }
+    }
+
+    @GetMapping("/getExportItems")
+    @ResponseBody
+    public ResponseEntity<ResponseObject> getExportProducts(@RequestParam(name = "code") Integer inventory_id){
+        Optional<InventoryExport> inventory = inventoryExportRepository.findById(inventory_id);
+        if(inventory.isPresent()){
+            Set<ProductsExport> productsExports = inventory.get().getProductsExports();
+            Set<ProductsExportDTO> productsExportDTOS = new HashSet<>();
+            for(ProductsExport pe : productsExports){
+                ProductsExportDTO productsExportDTO = new ProductsExportDTO();
+                productsExportDTO.setId(pe.getId());
+                productsExportDTO.setP_code(pe.getP_code());
+                productsExportDTO.setP_name(pe.getP_name());
+                productsExportDTO.setPrice(pe.getPrice());
+
+                Set<ProductExportLocationDTO> productExportLocationDTOS = new HashSet<>();
+                for(ProductExportLocation pel : pe.getProductExportLocationList()){
+                    ProductExportLocationDTO pelDTO = new ProductExportLocationDTO();
+                    pelDTO.setId(pel.getId());
+                    pelDTO.setQuantity(pel.getQuantity());
+                    ProductLocationDTO productLocationDTO = new ProductLocationDTO();
+                    ProductLocation productLocation = productLocationRepository.findById(Integer.parseInt(pel.getLocation_id())).get();
+                    productLocationDTO.setId(String.valueOf(productLocation.getId()));
+                    productLocationDTO.setName(productLocation.getName());
+                    WarehouseDTO warehouseDTO = new WarehouseDTO();
+                    Warehouse warehouse = warehouseRepository.findById(productLocation.getWarehouse().getId()).get();
+                    warehouseDTO.setId(String.valueOf(warehouse.getId()));
+                    warehouseDTO.setName(warehouse.getName());
+                    warehouseDTO.setDetailLocation(warehouse.getDetailLocation());
+                    productLocationDTO.setWarehouseDTO(warehouseDTO);
+                    pelDTO.setProductLocationDTO(productLocationDTO);
+
+                    productExportLocationDTOS.add(pelDTO);
+                }
+                productsExportDTO.setProductExportLocationDTOS(productExportLocationDTOS);
+
+                productsExportDTOS.add(productsExportDTO);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","success",productsExportDTOS));
+        }else{
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","Không tìm thấy export inventory",""));
         }
     }
 //    @GetMapping("/import/update/{id}")
@@ -372,10 +417,17 @@ public class WarehouseController {
     public ResponseEntity<ResponseObject> addExportItem(@RequestBody ExportTransactionNewDTO exportTransactionNewDTO, Authentication authentication){
         try {
             exportTransactionNewService.addExportTransaction(exportTransactionNewDTO, authentication);
+            inventoryService.addInventoryExport(exportTransactionNewDTO);
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","add export transaction success",""));
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("01","add export transaction fail",e.getMessage()));
         }
+    }
+    @GetMapping("/export/inventory")
+    public String exportInventoryView(ModelMap modelMap){
+        List<InventoryExport> inventories = inventoryExportRepository.findbyCreatedDate();
+        modelMap.addAttribute("inventories",inventories);
+        return "administrator/inventory-export";
     }
     @GetMapping("/export/detail/add")
     public String exportItem(@RequestParam(name = "orderid") String orderid, ModelMap modelMap){
@@ -465,13 +517,13 @@ public class WarehouseController {
         return map;
     }
 
-    public ProductLocationDTO convertProductLocation2DTO(ProductLocation productLocation){
-        ProductLocationDTO productLocationDTO = new ProductLocationDTO();
-        productLocationDTO.setId(String.valueOf(productLocation.getId()));
-        productLocationDTO.setName(productLocation.getName());
-        productLocationDTO.setWarehouse(productLocation.getWarehouse());
-        return productLocationDTO;
-    }
+//    public ProductLocationDTO convertProductLocation2DTO(ProductLocation productLocation){
+//        ProductLocationDTO productLocationDTO = new ProductLocationDTO();
+//        productLocationDTO.setId(String.valueOf(productLocation.getId()));
+//        productLocationDTO.setName(productLocation.getName());
+//        productLocationDTO.setWarehouse(productLocation.getWarehouse());
+//        return productLocationDTO;
+//    }
 
     public OrderTransactionDTO convertOrderToDTO2(OrderTransaction orderTransaction){
         try{
@@ -585,36 +637,36 @@ public class WarehouseController {
         }
     }
 
-    public ProductWarehouse2DTO2 convertProductWarehouse2DTOToDTO2(ProductWarehouse2DTO productWarehouse2DTO){
-        ProductWarehouse2DTO2 productWarehouse2DTO2 = new ProductWarehouse2DTO2();
-
-        productWarehouse2DTO2.setId(productWarehouse2DTO.getId());
-
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setId(productWarehouse2DTO.getProduct().getId());
-        productDTO.setName(productWarehouse2DTO.getProduct().getName());
-        productDTO.setPrice(productWarehouse2DTO.getProduct().getPrice());
-        productDTO.setOriginal_price(productWarehouse2DTO.getProduct().getOriginal_price());
-        productDTO.setQuantity(productWarehouse2DTO.getProduct().getQuantity());
-        productDTO.setCategories(productWarehouse2DTO.getProduct().getCategories());
-        productDTO.setBrand(productWarehouse2DTO.getProduct().getBrand());
-        productDTO.setDescription(productWarehouse2DTO.getProduct().getDescription());
-        productDTO.setStatus(productWarehouse2DTO.getProduct().getStatus());
-        productDTO.setAddedDate(productWarehouse2DTO.getProduct().getAddedDate());
-        productDTO.setCode(productWarehouse2DTO.getProduct().getCode());
-        productDTO.setImage(productWarehouse2DTO.getProduct().getImage());
-
-        productWarehouse2DTO2.setProductDTO(productDTO);
-
-        ProductLocationDTO productLocationDTO = new ProductLocationDTO();
-        productLocationDTO.setId(String.valueOf(productWarehouse2DTO.getProductLocation().getId()));
-        productLocationDTO.setName(productWarehouse2DTO.getProductLocation().getName());
-        productLocationDTO.setWarehouse(productWarehouse2DTO.getProductLocation().getWarehouse());
-
-        productWarehouse2DTO2.setProductLocationDTO(productLocationDTO);
-
-        return productWarehouse2DTO2;
-    }
+//    public ProductWarehouse2DTO2 convertProductWarehouse2DTOToDTO2(ProductWarehouse2DTO productWarehouse2DTO){
+//        ProductWarehouse2DTO2 productWarehouse2DTO2 = new ProductWarehouse2DTO2();
+//
+//        productWarehouse2DTO2.setId(productWarehouse2DTO.getId());
+//
+//        ProductDTO productDTO = new ProductDTO();
+//        productDTO.setId(productWarehouse2DTO.getProduct().getId());
+//        productDTO.setName(productWarehouse2DTO.getProduct().getName());
+//        productDTO.setPrice(productWarehouse2DTO.getProduct().getPrice());
+//        productDTO.setOriginal_price(productWarehouse2DTO.getProduct().getOriginal_price());
+//        productDTO.setQuantity(productWarehouse2DTO.getProduct().getQuantity());
+//        productDTO.setCategories(productWarehouse2DTO.getProduct().getCategories());
+//        productDTO.setBrand(productWarehouse2DTO.getProduct().getBrand());
+//        productDTO.setDescription(productWarehouse2DTO.getProduct().getDescription());
+//        productDTO.setStatus(productWarehouse2DTO.getProduct().getStatus());
+//        productDTO.setAddedDate(productWarehouse2DTO.getProduct().getAddedDate());
+//        productDTO.setCode(productWarehouse2DTO.getProduct().getCode());
+//        productDTO.setImage(productWarehouse2DTO.getProduct().getImage());
+//
+//        productWarehouse2DTO2.setProductDTO(productDTO);
+//
+//        ProductLocationDTO productLocationDTO = new ProductLocationDTO();
+//        productLocationDTO.setId(String.valueOf(productWarehouse2DTO.getProductLocation().getId()));
+//        productLocationDTO.setName(productWarehouse2DTO.getProductLocation().getName());
+//        productLocationDTO.setWarehouse(productWarehouse2DTO.getProductLocation().getWarehouse());
+//
+//        productWarehouse2DTO2.setProductLocationDTO(productLocationDTO);
+//
+//        return productWarehouse2DTO2;
+//    }
 
 }
 

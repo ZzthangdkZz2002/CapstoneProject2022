@@ -218,7 +218,6 @@
 <h4 class="row-title"> | Thông tin gói hàng</h4>
 <div class="boder">
     <div class="products-info justify-content-center">
-        <img src="https://bizweb.dktcdn.net/100/307/433/articles/87126502-2509242206005371-2073523065622364160-n.jpg?v=1627806241047" alt="">
         <div class="d-flex">
             <label for="product-name" class="form-label">Tổng KL(gam)</label>
             <input style="width: 60%;" type="text" class="form-control" id="total-mass">
@@ -276,8 +275,8 @@
         </div>
         <textarea class="form-control" id="note" style="height: 130px"></textarea>
     </div>
-    <button type="button" class="btn-primary" onclick="giaohangnhanh('${order.id}')">Lên Đơn Hàng</button>
 </div>
+<button type="button" class="btn btn-primary" style="margin-left: 660px;margin-top: 30px; padding: 15px 40px;" onclick="giaohangnhanh('${order.id}')">Lên Đơn Hàng</button>
 <script src="${pageContext.request.contextPath}/js/orderGHN.js"></script>
 
 <script>

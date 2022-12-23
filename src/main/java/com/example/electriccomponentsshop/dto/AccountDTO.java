@@ -17,7 +17,7 @@ public class AccountDTO {
     private String name;
     @NotEmpty(message = "Không được để trống")
     private String phone;
-    @NotEmpty(message = "Không được để trống")
+//    @NotEmpty(message = "Không được để trống")
     private String role;
     @NotEmpty(message = "Không được để trống")
     private String password;

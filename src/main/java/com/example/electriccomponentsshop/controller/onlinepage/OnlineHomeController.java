@@ -305,6 +305,31 @@ public class OnlineHomeController {
     @GetMapping("/products")
     @ResponseBody
     public ResponseEntity<ResponseObject> getAllProduct(){
+        List<Product> products = productRepository.findByStatusAndLimitAddedDate(1);
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        for(Product product : products){
+            ProductDTO p = new ProductDTO();
+            p.setId(product.getId());
+            p.setCode(product.getCode());
+            p.setName(product.getName());
+            p.setUnit(product.getUnit());
+            p.setImage(product.getImage());
+            p.setOriginal_price(product.getOriginal_price());
+            p.setPrice(product.getPrice());
+            p.setQuantity(product.getQuantity());
+            p.setDescription(product.getDescription());
+            p.setAddedDate(product.getAddedDate());
+            p.setBrand(product.getBrand());
+            p.setCategories(product.getCategories());
+
+            productDTOS.add(p);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","get product success",productDTOS));
+    }
+
+    @GetMapping("api/products")
+    @ResponseBody
+    public ResponseEntity<ResponseObject> getAllProductForSearch(){
         List<Product> products = productRepository.findByStatus(1);
         List<ProductDTO> productDTOS = new ArrayList<>();
         for(Product product : products){
