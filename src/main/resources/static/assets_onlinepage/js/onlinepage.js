@@ -1,5 +1,5 @@
 var productList;
-
+console.log('abc')
 var cart=[]
 const products = document.querySelector('.list-product');
 
@@ -44,7 +44,6 @@ const addCart=(id)=>{
     count.textContent=countQuantity()
 }
 const saveId=(id)=>{
-    console.log("saveid")
     localStorage.setItem('idDetald',id);
 
 }
@@ -87,7 +86,7 @@ productList.map((item,key)=>{
                     <div class="image" href="${contextPath}/homepage/detailProduct?id=${item.id}">
                         
                             <img style="object-fit: cover;"
-                                src="img/${item.image}" alt="" width="111px" height="111px" onerror="this.src='https://cdn-img.thethao247.vn//storage/files/camhm/2022/10/11/tin-mu-moi-nhat-11-10-ronaldo-duoc-doi-thu-tang-len-may-casemiro-tim-lai-chinh-minh-200731.jpg'">
+                                src="img/${item.image}" alt="" width="111px" height="111px">
                             <div class="zoom-overlay"></div>
                     </div>
 

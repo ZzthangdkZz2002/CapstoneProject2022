@@ -82,10 +82,12 @@ public class ProductController {
     @GetMapping("search")
     public String searchProduct(@RequestParam(name="text", required = false) String text, @RequestParam(name="index",defaultValue = "0") String index, ModelMap modelMap){
         int pIndex = Integer.parseInt(index);
-
+        if(pIndex>0){
+            pIndex -= 1;
+        }
         Page<Product> products = productService.searchProduct(text,PageRequest.of(pIndex,10));
 
-        modelMap.addAttribute("pageNo", 1);
+        modelMap.addAttribute("pageNo", pIndex);
         modelMap.addAttribute("products", products.getContent());
         modelMap.addAttribute("total", products.getTotalPages());
         modelMap.addAttribute("text", text);

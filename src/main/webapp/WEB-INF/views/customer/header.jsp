@@ -187,12 +187,12 @@
 
                                     </li>
                                     <li class="dropdown yamm">
-                                        <a href="home.html" data-hover="dropdown"
-                                           class="dropdown-toggle">Desktop</a>
+                                        <a href="${pageContext.request.contextPath}/product/list?index=0" data-hover="dropdown"
+                                           class="dropdown-toggle">Products</a>
                                     </li>
 
                                     <li class="dropdown">
-                                        <a href="contact.html">Contact</a>
+                                        <a>Contact</a>
                                     </li>
 
                                     <li class="dropdown navbar-right">
@@ -213,6 +213,23 @@
         </div>
 
     </div>
+
+    <script>
+        window.onload = function (){
+            var url = window.location.href;
+            var items = document.querySelectorAll('.yamm-fw');
+            if(url.includes('product/list')){
+                let current = document.getElementsByClassName("yamm-fw active");
+                current[0].className = current[0].className.replace(" active", "");
+                items[1].className += " active";
+            }
+            // else if(url.includes('admin/products')){
+            //     let current = document.getElementsByClassName("app-menu__item active");
+            //     current[0].className = current[0].className.replace(" active", "");
+            //     items[1].className += " active";
+            // }
+        }
+    </script>
     <script>var contextPath = "${pageContext.request.contextPath}"</script>
 
     <script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery-1.11.1.min.js"></script>

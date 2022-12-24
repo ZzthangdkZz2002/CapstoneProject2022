@@ -35,6 +35,10 @@
                 font-size: 3.5rem;
             }
         }
+        .required-field::after {
+            content: " *";
+            color: red;
+        }
     </style>
 
 </head>
@@ -64,12 +68,12 @@
             <form class="needs-validation" >
 
                 <div class="mb-3">
-                    <label for="phone">Số điện thoại</label>
-                    <input type="text" class="form-control" id="phone" value="${auth != null ? auth.phone : "" }" ${auth != null ? "readonly" : "" } required>
+                    <label for="phone" class="required-field">Số điện thoại</label>
+                    <input type="number" class="form-control" id="phone" value="${auth != null ? auth.phone : "" }" ${auth != null ? "readonly" : "" } required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="email">Email </label>
+                    <label for="email" class="required-field">Email </label>
                     <input type="email" class="form-control" id="email" value="${auth != null ? auth.email : "" }" ${auth != null ? "readonly" : "" } required>
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
@@ -77,7 +81,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="username">Họ và tên</label>
+                    <label for="username" class="required-field">Họ và tên</label>
                     <div class="input-group">
 
                         <input type="text" class="form-control" id="username"  value="${auth != null ? auth.name : "" }" ${auth != null ? "readonly" : "" } required>
@@ -102,21 +106,21 @@
                 <%--                </div>--%>
 
                 <div class="mb-3">
-                    <label for="city">Tỉnh/Thành phố</label> <br>
+                    <label for="city" class="required-field">Tỉnh/Thành phố</label> <br>
                     <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="city" name="city">
                         <option value="0" selected>Chọn tỉnh thành</option>
                     </select>
                 </div>
 
                 <div class="mb-3">
-                    <label for="district">Quận/Huyện</label> <br>
+                    <label for="district" class="required-field">Quận/Huyện</label> <br>
                     <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="district" name="district">
                         <option value="0" selected>Chọn quận huyện</option>
                     </select>
                 </div>
 
                 <div class="mb-3">
-                    <label for="ward">Xã/Phường</label> <br>
+                    <label for="ward" class="required-field">Xã/Phường</label> <br>
                     <select class="form-select form-select-lg mb-3" aria-label="Default select example" id="ward" name="ward">
                         <option value="0" selected>Chọn phường xã</option>
                     </select>
@@ -124,7 +128,7 @@
 
 
                 <div class="mb-3">
-                    <label for="address">Địa chỉ chi tiết</label>
+                    <label for="address" class="required-field">Địa chỉ chi tiết</label>
                     <input type="text" class="form-control" id="address"  required="Vui lòng nhập địa chỉ">
                     <%--                    <div class="invalid-feedback">--%>
                     <%--                        Please enter your shipping address.--%>

@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,21 +51,22 @@
 <body class="cnt-home">
 
 
-
 <jsp:include page="header.jsp"/>
 
 <div class="body-content outer-top-xs" id="top-banner-and-menu">
     <div class="container">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
-
                 <div class="side-menu animate-dropdown outer-bottom-xs">
-                    <div class="head" style="font-family: Calibri"><i class="icon fa fa-align-justify fa-fw"></i> Danh mục sản phẩm</div>
+                    <div class="head" style="font-family: Calibri"><i class="icon fa fa-align-justify fa-fw"></i> Danh
+                        mục sản phẩm
+                    </div>
                     <nav class="yamm megamenu-horizontal" role="navigation">
                         <ul class="nav">
                             <c:forEach var="cate" items="${categories}">
                                 <li class="dropdown menu-item">
-                                    <a href="${pageContext.request.contextPath}/product?cate=${cate.id}&pageNo=1" class="dropdown-toggle" data-hover="dropdown">${cate.name}</a>
+                                    <a href="${pageContext.request.contextPath}/product?cate=${cate.id}&pageNo=1"
+                                       class="dropdown-toggle" data-hover="dropdown">${cate.name}</a>
                                     <ul class="dropdown-menu mega-menu">
                                         <li class="yamm-content">
                                             <div class="row">
@@ -84,25 +85,26 @@
                         </ul>
                     </nav>
                 </div>
-
             </div>
             <div class="col-xs-12 col-sm-12 col-md-9">
-
                 <h3 class="section-title" style="margin-bottom: 20px; font-weight: bold">Sản phẩm</h3>
-
                 <div class="row list-product">
                     <c:forEach var="product" items="${products}">
-                        <a href="${pageContext.request.contextPath}/homepage/detailProduct?id=${product.id}" onclick="saveId(${product.id})"></a>
-                        <div class="product col-md-4" style="height: 200px;margin-bottom: 20px; border: 0.5px solid #e6e6e6; padding: 5px">
+                        <a href="${pageContext.request.contextPath}/homepage/detailProduct?id=${product.id}"
+                           onclick="saveId(${product.id})"></a>
+                        <div class="product col-md-4"
+                             style="height: 200px;margin-bottom: 20px; border: 0.5px solid #e6e6e6; padding: 5px">
                             <div class="product-micro">
                                 <div class="row product-micro-row">
                                     <div class="col col-xs-5">
                                         <div class="product-image" style="  width: 111px;
                 height: 20px;">
-                                            <div class="image" href="${pageContext.request.contextPath}/homepage/detailProduct?id=${product.id}">
+                                            <div class="image"
+                                                 href="${pageContext.request.contextPath}/homepage/detailProduct?id=${product.id}">
 
                                                 <img style="object-fit: cover;"
-                                                     src="${pageContext.request.contextPath}/img/${product.image}" alt="" width="111px" height="111px" onerror="this.src='https://cdn-img.thethao247.vn//storage/files/camhm/2022/10/11/tin-mu-moi-nhat-11-10-ronaldo-duoc-doi-thu-tang-len-may-casemiro-tim-lai-chinh-minh-200731.jpg'">
+                                                     src="${pageContext.request.contextPath}/img/${product.image}"
+                                                     alt="" width="111px" height="111px">
                                                 <div class="zoom-overlay"></div>
                                             </div>
 
@@ -111,7 +113,9 @@
                                     </div>
                                     <div class="col col-xs-7">
                                         <div class="product-info">
-                                            <h3 class="name"><a href="${pageContext.request.contextPath}/homepage/detailProduct?id=${product.id}" onclick="saveId(${product.id})">${product.name}</a></h3>
+                                            <h3 class="name"><a
+                                                    href="${pageContext.request.contextPath}/homepage/detailProduct?id=${product.id}"
+                                                    onclick="saveId(${product.id})">${product.name}</a></h3>
                                             <p class="decriptions">${product.description}</p>
                                             <div class="product-price">
                         <span class="price">
@@ -119,8 +123,17 @@
 
                                                 <p style="color: ${item.quantity > 0 ? "green" : "red"}">${product.quantity > 0 ? "Còn hàng" : "Liên hệ"}</p>
                                             </div>
-                                            <div class="action" style="display:flex;position: absolute;top: 160px"><button type="button" onclick="addCart(${product.id})" class="btn btn-info" style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px";><i class="glyphicon glyphicon-shopping-cart" style="margin-right: 2px"></i>Chọn mua</button>
-                                                <a onclick="saveId(${product.id})" href="${pageContext.request.contextPath}/homepage/detailProduct?id=${product.id}" class="btn btn-info" style="padding: 5px 10px;font-size:12px;border:none">Xem</a>
+                                            <div class="action" style="display:flex;position: absolute;top: 160px">
+                                                <button type="button" onclick="addCart(${product.id})"
+                                                        class="btn btn-info"
+                                                        style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px"
+                                                        ><i class="glyphicon glyphicon-shopping-cart"
+                                                             style="margin-right: 2px"></i>Chọn mua
+                                                </button>
+                                                <a onclick="saveId(${product.id})"
+                                                   href="${pageContext.request.contextPath}/homepage/detailProduct?id=${product.id}"
+                                                   class="btn btn-info"
+                                                   style="padding: 5px 10px;font-size:12px;border:none">Xem</a>
                                             </div>
                                         </div>
                                     </div>
@@ -131,27 +144,28 @@
                     </c:forEach>
                 </div>
 
-            </div>
-            <div class="pagination-row">
+            <div class="pagination-row" >
                 <div class="pagination-container">
-                    <%--              <p>${pageNo}</p>--%>
                     <div class="dataTables_paginate paging_simple_numbers" id="sampleTable_paginate">
                         <ul class="pagination">
-                            <c:forEach var="i" step="1" begin="1" end="${total<=0 ? 0: total-1}">
+                            <c:forEach var="i" begin="1" end="${total<=0 ? 0: total-1}">
                                 <c:choose>
-                                    <c:when test="${pageNo == i}">
-                                        <li class="active paginate_button page-item " id="sampleTable_previous"><a href="${pageContext.request.contextPath}/product/list?index=${i}"
-                                                                                                                   aria-controls="sampleTable" data-dt-idx="0" tabindex="0" class="page-link">${i}</a></li>
+                                    <c:when test="${active == i-1}">
+                                        <li class="active paginate_button page-item " id="sampleTable_previous">
+                                            <a id="active" href="${pageContext.request.contextPath}/product/list?index=${i}">${i}</a>
+                                        </li>
                                     </c:when>
                                     <c:otherwise>
-                                        <li class="paginate_button page-item " id="sampleTable_previous"><a href="${pageContext.request.contextPath}/product/list?index=${i}"
-                                                                                                            aria-controls="sampleTable" data-dt-idx="0" tabindex="0" class="page-link">${i}</a></li>
+                                        <li class="paginate_button page-item " id="sampleTable_previous">
+                                            <a href="${pageContext.request.contextPath}/product/list?index=${i}">${i}</a>
+                                        </li>
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
                         </ul>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -161,89 +175,8 @@
 </div>
 </div>
 
-<!--/.Our branch-->
-<%--<div id="brands-carousel" class="logo-slider wow fadeInUp">--%>
 
-<%--    <h3 class="section-title">Our Brands</h3>--%>
-<%--    <div class="logo-slider-inner">--%>
-<%--        <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">--%>
-<%--            <div class="item m-t-15">--%>
-<%--                <a href="#" class="image">--%>
-<%--                    <img data-echo="assets/images/brands/brand1.png" src="assets/images/blank.gif" alt="">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-<%--            --%>
-
-<%--            <div class="item m-t-10">--%>
-<%--                <a href="#" class="image">--%>
-<%--                    <img data-echo="assets/images/brands/brand2.png" src="assets/images/blank.gif" alt="">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-<%--            --%>
-
-<%--            <div class="item">--%>
-<%--                <a href="#" class="image">--%>
-<%--                    <img data-echo="assets/images/brands/brand3.png" src="assets/images/blank.gif" alt="">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-<%--           --%>
-
-<%--            <div class="item">--%>
-<%--                <a href="#" class="image">--%>
-<%--                    <img data-echo="assets/images/brands/brand4.png" src="assets/images/blank.gif" alt="">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-<%--            --%>
-
-<%--            <div class="item">--%>
-<%--                <a href="#" class="image">--%>
-<%--                    <img data-echo="assets/images/brands/brand5.png" src="assets/images/blank.gif" alt="">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-<%--            --%>
-
-<%--            <div class="item">--%>
-<%--                <a href="#" class="image">--%>
-<%--                    <img data-echo="assets/images/brands/brand6.png" src="assets/images/blank.gif" alt="">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-<%--            --%>
-
-<%--            <div class="item">--%>
-<%--                <a href="#" class="image">--%>
-<%--                    <img data-echo="assets/images/brands/brand2.png" src="assets/images/blank.gif" alt="">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-<%--            --%>
-
-<%--            <div class="item">--%>
-<%--                <a href="#" class="image">--%>
-<%--                    <img data-echo="assets/images/brands/brand4.png" src="assets/images/blank.gif" alt="">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-<%--            --%>
-
-<%--            <div class="item">--%>
-<%--                <a href="#" class="image">--%>
-<%--                    <img data-echo="assets/images/brands/brand1.png" src="assets/images/blank.gif" alt="">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-<%--            --%>
-
-<%--            <div class="item">--%>
-<%--                <a href="#" class="image">--%>
-<%--                    <img data-echo="assets/images/brands/brand5.png" src="assets/images/blank.gif" alt="">--%>
-<%--                </a>--%>
-<%--            </div>--%>
-<%--            --%>
-<%--        </div>--%>
-<%--    </div>--%>
-
-<%--</div>--%>
-<%--</div>--%>
 </div>
-
-
 
 
 <!-- ============================================================= FOOTER ============================================================= -->
@@ -251,50 +184,50 @@
 
 <script>var contextPath = "${pageContext.request.contextPath}"</script>
 <script>
-    const saveId=(id)=>{
+    const saveId = (id) => {
         console.log("saveid")
-        localStorage.setItem('idDetald',id);
+        localStorage.setItem('idDetald', id);
 
     }
+
 </script>
 <script>
     const text = document.getElementsByClassName('decriptions');
-    var result = '';
-
-    if(text == null){
-        result = "";
+    for (var i = 0; i < text.length; i++) {
+        var result = '';
+        if (text[i] == null) {
+            result = "";
+        }
+        else if (text[i].textContent.length > 40) {
+            result = text[i].textContent.toString().substr(0, 40) + '...'
+        }
+        text[i].textContent = result;
     }
-    if(text.toString().length >40){
-        result = text.substr(0,40) +'...'
-    }
-
-    text.textContent = result.textContent;
+</script>
+<script>
 
 </script>
 <!-- JavaScripts placed at the end of the document so the pages load faster -->
 <script src="assets_onlinepage/js/jquery-1.11.1.min.js"></script>
-<%--<script src="assets_onlinepage/js/onlinepage.js"></script>--%>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/onlinepage.js"></script>
 
 <script src="assets_onlinepage/js/bootstrap.min.js"></script>
 
-<script src="assets_onlinepage/js/bootstrap-hover-dropdown.min.js"></script>
-<script src="assets_onlinepage/js/owl.carousel.min.js"></script>
-
-<script src="assets_onlinepage/js/echo.min.js"></script>
-<script src="assets_onlinepage/js/jquery.easing-1.3.min.js"></script>
-<script src="assets_onlinepage/js/bootstrap-slider.min.js"></script>
-<script src="assets_onlinepage/js/jquery.rateit.min.js"></script>
-<script type="text/javascript" src="assets_onlinepage/js/lightbox.min.js"></script>
-<script src="assets_onlinepage/js/bootstrap-select.min.js"></script>
-<script src="assets_onlinepage/js/wow.min.js"></script>
-<script src="assets_onlinepage/js/scripts.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-hover-dropdown.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/owl.carousel.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/echo.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.easing-1.3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-slider.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/jquery.rateit.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets_onlinepage/js/lightbox.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/bootstrap-select.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/wow.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/scripts.js"></script>
 
 <!-- For demo purposes – can be removed on production -->
 
 
-
 <!-- For demo purposes – can be removed on production : End -->
-
 
 
 </body>

@@ -121,11 +121,11 @@
 <%--              <p>${pageNo}</p>--%>
                 <div class="dataTables_paginate paging_simple_numbers" id="sampleTable_paginate">
                  <ul class="pagination">
-                   <c:forEach var="i" step="1" begin="1" end="${total<=0 ? 0: total-1}">
+                   <c:forEach var="i" begin="1" end="${total<=0 ? 0: total-1}">
                      <c:choose>
                         <c:when test="${pageNo == i}">
-                            <li class="active paginate_button page-item " id="sampleTable_previous"><a href="${pageContext.request.contextPath}/admin/products<c:choose><c:when test="${text!=null}">/search?text=${text}&index=${i}</c:when><c:otherwise>?index=${i}</c:otherwise></c:choose>"
-                                                                                                                                  aria-controls="sampleTable" data-dt-idx="0" tabindex="0" class="page-link">${i}</a></li>
+                            <li class="active paginate_button page-item " id="sampleTable_previous">
+                              <a id="active" href="${pageContext.request.contextPath}/admin/products<c:choose><c:when test="${text!=null}">/search?text=${text}&index=${i}</c:when><c:otherwise>?index=${i}</c:otherwise></c:choose>"
                         </c:when>
                         <c:otherwise>
                             <li class="paginate_button page-item " id="sampleTable_previous"><a href="${pageContext.request.contextPath}/admin/products<c:choose><c:when test="${text!=null}">/search?text=${text}&index=${i}</c:when><c:otherwise>?index=${i}</c:otherwise></c:choose>"
@@ -148,7 +148,7 @@
 MODAL
 -->
   <!--
-  MODAL DISABLE STATUS 
+  MODAL DISABLE STATUS
 -->
   <div class="modal fade" id="disableStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     data-backdrop="static" data-keyboard="false">
@@ -180,7 +180,7 @@ MODAL
 MODAL
 -->
   <!--
-  MODAL ENABLE STATUS 
+  MODAL ENABLE STATUS
 -->
   <div class="modal fade" id="enableStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     data-backdrop="static" data-keyboard="false">
@@ -212,7 +212,7 @@ MODAL
 MODAL
 -->
   <!--
-  MODAL IMPORT FILE ARLERT 
+  MODAL IMPORT FILE ARLERT
 -->
   <div class="modal fade" id="importAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     data-backdrop="static" data-keyboard="false">
