@@ -144,6 +144,11 @@
             </a>
 
             </li>
+        <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/customer"><i class='app-menu__icon bx bx-id-card'></i>
+            <span class="app-menu__label">Quản lý khách hàng</span>
+        </a>
+
+        </li>
             <li><a class="app-menu__item" href="${pageContext.request.contextPath}/admin/categories"><i class='app-menu__icon bx bx-category'></i><span
                     class="app-menu__label">Quản lý danh mục</span></a></li>
 
@@ -201,30 +206,35 @@
             current[0].className = current[0].className.replace(" active", "");
             items[3].className += " active";
         }
-        else if(url.includes('admin/categories')){
+        else if(url.includes('admin/customer')){
             let current = document.getElementsByClassName("app-menu__item active");
             current[0].className = current[0].className.replace(" active", "");
             items[4].className += " active";
         }
-        else if(url.includes('admin/suppliers')){
+        else if(url.includes('admin/categories')){
             let current = document.getElementsByClassName("app-menu__item active");
             current[0].className = current[0].className.replace(" active", "");
             items[5].className += " active";
         }
-        else if(url.includes('admin/warehouses')){
+        else if(url.includes('admin/suppliers')){
             let current = document.getElementsByClassName("app-menu__item active");
             current[0].className = current[0].className.replace(" active", "");
             items[6].className += " active";
         }
-        else if(url.includes('admin/feedbacks')){
+        else if(url.includes('admin/warehouses')){
             let current = document.getElementsByClassName("app-menu__item active");
             current[0].className = current[0].className.replace(" active", "");
             items[7].className += " active";
         }
-        else{
+        else if(url.includes('admin/feedbacks')){
             let current = document.getElementsByClassName("app-menu__item active");
             current[0].className = current[0].className.replace(" active", "");
             items[8].className += " active";
+        }
+        else{
+            let current = document.getElementsByClassName("app-menu__item active");
+            current[0].className = current[0].className.replace(" active", "");
+            items[9].className += " active";
         }
     }
 </script>

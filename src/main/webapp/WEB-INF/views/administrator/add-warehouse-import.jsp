@@ -133,9 +133,9 @@
         </select>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
-            Thêm nhà cung cấp
-        </button>
+<%--        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">--%>
+<%--            Thêm nhà cung cấp--%>
+<%--        </button>--%>
     </div>
 
                             <div class="form-group col-md-12">

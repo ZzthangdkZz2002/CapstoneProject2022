@@ -180,11 +180,16 @@ public class ProductServiceImpl implements ProductService {
 
         //
 
+
         if("".equals(productDTO.getCode()) || productDTO.getCode() == null){
             String code = new Utils().generateProductCode(productRepository.getMaxProductID()+1);
-            product.setCode(code);
+            if(productRepository.findByCode(code).isPresent()){
+                return "02";
+            }else{
+                product.setCode(code);
+            }
         }else if(productRepository.findByCode(productDTO.getCode()).isPresent()){
-            return "Mã sản phẩm này đã tồn tại";
+            return "02";
         }else{
             product.setCode(productDTO.getCode());
         }
@@ -196,10 +201,45 @@ public class ProductServiceImpl implements ProductService {
 //        product.setSpecificationValues(specificationValues);
         product.setDescription(productDTO.getDescription());
         productRepository.save(product);
-        return  "Lưu sản phẩm thành công";
+        return  "00";
 
     }
 
+    @Override
+    public String updateProduct(ProductDTO productDTO, MultipartFile multipartFile) {
+        Product product = productRepository.findById(productDTO.getId()).get();
+        product.setName(productDTO.getName());
+        List<Category> categories = productDTO.getCategories();
+
+
+        product.setCategories(categories);
+        if("".equals(productDTO.getOriginal_price()) || productDTO.getOriginal_price() == null){
+            product.setOriginal_price(BigDecimal.valueOf(0));
+        }else{
+            product.setOriginal_price(productDTO.getOriginal_price());
+        }
+        if("".equals(productDTO.getPrice()) || productDTO.getPrice() == null){
+            product.setPrice(BigDecimal.valueOf(0));
+        }else{
+            product.setPrice(productDTO.getPrice());
+        }
+        product.setBrand(productDTO.getBrand());
+
+        if(multipartFile != null){
+            //upload image
+            String fileName = multipartFile.getOriginalFilename();
+            try{
+                FileCopyUtils.copy(multipartFile.getBytes(), new File(this.fileUpload + fileName));
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            product.setImage(fileName);
+        }
+        product.setUnit(productDTO.getUnit());
+        product.setDescription(productDTO.getDescription());
+        productRepository.save(product);
+        return  "Cập nhật phẩm thành công";
+    }
 
 
     @Override

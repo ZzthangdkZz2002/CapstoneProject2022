@@ -233,20 +233,20 @@
                         <div class="navbar-collapse collapse" id="mc-horizontal-menu-collapse">
                             <div class="nav-outer">
                                 <ul class="nav navbar-nav">
-                                    <li class="active dropdown yamm-fw">
+                                    <li class="dropdown yamm-fw active">
                                         <a href="${pageContext.request.contextPath}/homepage" data-hover="dropdown" class="dropdown-toggle">Home</a>
 
                                     </li>
-                                    <li class="dropdown yamm">
+                                    <li class="dropdown yamm-fw">
                                         <a href="${pageContext.request.contextPath}/product/list?index=0" data-hover="dropdown"
                                            class="dropdown-toggle">Products</a>
                                     </li>
 
-                                    <li class="dropdown">
-                                        <a href="contact.html">Contact</a>
+                                    <li class="dropdown yamm-fw">
+                                        <a>Contact</a>
                                     </li>
 
-                                    <li class="dropdown navbar-right">
+                                    <li class="dropdown navbar-right yamm-fw">
                                         <a href="#" class="dropdown-toggle" data-hover="dropdown">Pages</a>
 
                                     </li>
@@ -266,56 +266,22 @@
     </div>
 
 
-    <%--    <div class="modal fade" id="orderHistoryModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"--%>
-    <%--         data-backdrop="static" data-keyboard="false">--%>
-    <%--        <div class="modal-dialog modal-dialog-centered" role="document">--%>
-    <%--            <div class="modal-content">--%>
-    <%--                <div class="modal-body">--%>
-    <%--                    <div class="row">--%>
-    <%--                        <div class="d1 step1">--%>
-    <%--                            <img src="https://www.thegioididong.com/lich-su-mua-hang/images/i1.png">--%>
-    <%--                            <span>Tra cứu thông tin đơn hàng</span>--%>
-    <%--                            <form id="frmGetVerifyCode">--%>
-    <%--                                <input type="tel" name="txtPhoneNumber" id="txtPhoneNumber" placeholder="Nhập số điện thoại mua hàng"--%>
-    <%--                                       autocomplete="off" maxlength="12">--%>
-    <%--                                <label class="hide"></label>--%>
-    <%--                                <button type="button" class="continues-btn" onclick="sendOtp()" c>Tiếp tục</button>--%>
-    <%--                                <button class="continues-btn" data-dismiss="modal" href="#">Hủy bỏ</button>--%>
-    <%--                            </form>--%>
-    <%--                        </div>--%>
-    <%--                </div>--%>
-    <%--                <div class="modal-footer">--%>
-    <%--                </div>--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
-    <%--    </div>--%>
-
-    <%--        <div class="modal fade" id="formInputOtpModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"--%>
-    <%--             data-backdrop="static" data-keyboard="false">--%>
-    <%--            <div class="modal-dialog modal-dialog-centered" role="document">--%>
-    <%--                <div class="modal-content">--%>
-    <%--                    <div class="modal-body">--%>
-    <%--                        <div class="row">--%>
-    <%--                            <div class="d2 step2">--%>
-    <%--                                <span class="s1">Mã xác nhận đã được gửi đến số điện thoại <b>0961990712</b></span>--%>
-    <%--                                <span class="s2 hide">Mã xác nhận đã được gửi lại</span>--%>
-    <%--                                <form id="formInputOtp">--%>
-    <%--                                    <input type="number" name="txtOTP" id="txtOTP" placeholder="Nhập mã xác nhận gồm 4 chữ số" maxlength="6"--%>
-    <%--                                           autocomplete="one-time-code">--%>
-    <%--                                    <label class="hide"></label>--%>
-    <%--                                    <button type="button" class="btn-inputotp">Tiếp tục</button>--%>
-    <%--                                    <button class="continues-btn" data-dismiss="modal" href="#">Hủy bỏ</button>--%>
-    <%--                                </form>--%>
-    <%--                                <a class="resend-sms" href="javascript:GetVerifyCode(1, 1)">Tôi không nhận được mã, vui lòng gửi lại</a>--%>
-
-    <%--                                <a href="javascript:void(0)" onclick="changeNum()" class="btnChangeNum">Thay đổi số điện thoại</a>--%>
-    <%--                            </div>--%>
-    <%--                        </div>--%>
-    <%--                        <div class="modal-footer">--%>
-    <%--                        </div>--%>
-    <%--                    </div>--%>
-    <%--                </div>--%>
-    <%--            </div>--%>
+    <script>
+        window.onload = function (){
+            var url = window.location.href;
+            var items = document.querySelectorAll('.yamm-fw');
+            if(url.includes('product/list')){
+                let current = document.getElementsByClassName("yamm-fw active");
+                current[0].className = current[0].className.replace(" active", "");
+                items[1].className += " active";
+            }
+            // else if(url.includes('admin/products')){
+            //     let current = document.getElementsByClassName("app-menu__item active");
+            //     current[0].className = current[0].className.replace(" active", "");
+            //     items[1].className += " active";
+            // }
+        }
+    </script>
 
     <script>var contextPath = "${pageContext.request.contextPath}"</script>
 

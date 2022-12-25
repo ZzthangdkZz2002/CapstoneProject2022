@@ -2,11 +2,9 @@ package com.example.electriccomponentsshop.controller.admin;
 
 import com.example.electriccomponentsshop.common.OrderEnum;
 import com.example.electriccomponentsshop.dto.*;
-import com.example.electriccomponentsshop.entities.Account;
-import com.example.electriccomponentsshop.entities.OrderTransaction;
-import com.example.electriccomponentsshop.entities.OrderTransactionDetail;
-import com.example.electriccomponentsshop.entities.Product;
+import com.example.electriccomponentsshop.entities.*;
 import com.example.electriccomponentsshop.repositories.AccountRepository;
+import com.example.electriccomponentsshop.repositories.CustomerRepository;
 import com.example.electriccomponentsshop.repositories.OrderTransactionRepository;
 import com.example.electriccomponentsshop.repositories.ProductRepository;
 import com.example.electriccomponentsshop.services.*;
@@ -48,6 +46,8 @@ public class OrderController {
     ProductService productService;
     @Autowired
     OrderTransactionRepository orderTransactionRepository;
+    @Autowired
+    CustomerRepository customerRepository;
     final
     OrderTransactionService orderTransactionService;
     final
@@ -358,6 +358,11 @@ public class OrderController {
             Account account = accountRepository.findById(accountDetail.getId()).get();
             orderTransaction.setEmployeeProcessor(account);
             orderTransactionRepository.save(orderTransaction);
+            if(orderTransaction.getCustomer() != null){
+                Customer customer = orderTransaction.getCustomer();
+                customer.setTotalPaid(customer.getTotalPaid() + (int)orderTransaction.getAmount());
+                customerRepository.save(customer);
+            }
             r.addFlashAttribute("acceptOrderMessage","Giao thành công đơn hàng #" + orderTransaction.getOrderid());
         }catch (Exception e){
             r.addFlashAttribute("acceptOrderMessage","error");

@@ -103,7 +103,7 @@
                       <input class="status-checkbox" onclick="return false" type="checkbox"  name="check" <c:if test="${product.status == 1}"> checked</c:if>/>
 
                       <span class="slider round"></span>
-                      <div style="position:absolute; left:0; right:0; top:0; bottom:0;" onclick="updateProductStatus(this)"data-toggle="modal"
+                      <div style="position:absolute; left:0; right:0; top:0; bottom:0;" onclick="updateProductStatus(this,'${product.id}')"data-toggle="modal"
                               <c:if test="${product.status == 1}"> data-target="#disableStatus"</c:if> <c:if test="${product.status == 0}"> data-target="#enableStatus"</c:if> ></div>
                     </div>
                   </td>
@@ -287,8 +287,8 @@ MODAL
     $(document).ready(function (){
 
     });
-    function updateProductStatus(e){
-      var id = $(e.parentNode.parentNode.parentNode).find('td').eq(0).html();
+    function updateProductStatus(e,id){
+      var id = id;
       var element =$(e.parentNode).find('input');
       if($(element).is(":checked")){
 
@@ -297,7 +297,6 @@ MODAL
     }
     function disableProduct(id){
       var dis = document.getElementById("disableP");
-      alert("hoang");
       dis.addEventListener('click',()=>{
         $.ajax({
           type:"POST",

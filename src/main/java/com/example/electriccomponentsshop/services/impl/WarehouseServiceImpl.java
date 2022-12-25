@@ -44,7 +44,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
     @Override
     public  List<WarehouseDTO>  getAllWarehouse(){
-        List<Warehouse> warehouseList = warehouseRepository.findAll();
+        List<Warehouse> warehouseList = warehouseRepository.findWarehouseByStatus(1);
         if(warehouseList.isEmpty()){
             throw new NoSuchElementException("Không có kho nào");
         }
@@ -91,6 +91,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         warehouse.setDistrictWarehouse(district);
         warehouse.setWardWarehouse(ward);
         warehouse.setDetailLocation(warehouseDTO.getDetailLocation());
+        warehouse.setName(warehouseDTO.getName());
         warehouse.setStatus(1);
         warehouseRepository.save(warehouse);
     }

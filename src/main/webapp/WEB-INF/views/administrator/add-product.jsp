@@ -226,10 +226,6 @@
                   <div class="preview">
                     <img id="file-ip-1-preview" style="width: 250px; height: 250px; display: none">
                   </div>
-
-<%--                  <div id="thumbbox">--%>
-<%--                    <img height="450" width="400" alt="Thumb image" id="thumbimage" style="display: none" />--%>
-<%--                  </div>--%>
                 </div>
                 <div class="form-group col-md-12">
                   <label class="control-label">Mô tả sản phẩm</label>
@@ -326,7 +322,7 @@ MODAL UNSUCCESSFUL
               </span>
             </div>
             <div class="form-group col-md-12" style="text-align: center;">
-              <p class="modal-notify-unsuccessful" id="reason">Thêm sản phẩm không thành công</p>
+              <p class="modal-notify-unsuccessful" id="reasonUnsucces"></p>
             </div>
           </div>
           <div style="display: flex; justify-content: center; padding: 10px;">

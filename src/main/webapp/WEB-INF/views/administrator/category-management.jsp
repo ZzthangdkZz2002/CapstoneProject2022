@@ -68,10 +68,10 @@
                                 <tr>
                                     <td>${category.id}</td>
                                     <td>${category.name}</td>
-                                    <c:if test="${category.parentId !=null}">
-                                        <td style="color: rgb(1, 98, 155);">${category.parentName}</td>
+                                    <c:if test="${category.parentCategory.id !=null}">
+                                        <td style="color: rgb(1, 98, 155);">${category.parentCategory.name}</td>
                                     </c:if>
-                                    <c:if test="${category.parentId ==null}">
+                                    <c:if test="${category.parentCategory.id ==null}">
                                         <td style="color: rgb(1, 98, 155);">Không có</td>
                                     </c:if>
 

@@ -61,19 +61,19 @@
 <%--                Thêm thông số kỹ thuật</a>--%>
 <%--            </div>--%>
 <%--          </div>--%>
-          <form>
+          <form enctype="multipart/form-data" method="post">
             <div class="row">
               <div class="form-group col-md-3">
                 <label class="control-label required-field">Tên sản phẩm</label>
-                <input class="form-control" type="text" value="${productDto.name}" required>
+                <input class="form-control" type="text" id="name" value="${productDto.name}" required>
               </div>
               <div class="form-group col-md-3">
                 <label class="control-label required-field">Giá vốn</label>
-                <input class="form-control" type="number" value="${productDto.original_price}" required>
+                <input class="form-control" type="number" id="original-price" value="${productDto.original_price}" required>
               </div>
               <div class="form-group col-md-3">
                 <label class="control-label required-field">Giá bán</label>
-                <input class="form-control" type="number" value="${productDto.price}" required>
+                <input class="form-control" type="number" id="price" value="${productDto.price}" required>
               </div>
             </div>
             <div class="row">
@@ -91,7 +91,7 @@
                         onclick="addToCategoryTable()">Thêm
                   vào
                   danh sách</button>
-                <button id="deleteButtonCategory" type="button" class="side-button btn btn-cancel" title="Xoá"
+                <button id="deleteButton" type="button" class="side-button btn btn-cancel" title="Xoá"
                         onclick="deleteFromCategoryTable()">Xoá</button>
               </div>
             </div>
@@ -106,7 +106,7 @@
                     <th width="300">Tên danh mục</th>
                   </tr>
                   <c:forEach var="category" items="${productDto.categories}">
-                    <tr class="category-item">
+                    <tr class="category-items">
                       <td>${category.id}</td>
                       <td>${category.name}</td>
                       <td><input type="checkbox" ></td>
@@ -127,85 +127,36 @@
                     <option value="${brand.id}">${brand.name}</option>
                   </c:forEach>
                 </select>
+                <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#addBrandModel">
+                  Thêm thương hiệu
+                </button>
               </div>
             </div>
             <div class="row">
               <div class="form-group col-md-3">
                 <label class="control-label required-field">Đơn vị</label>
-                <input class="form-control" type="text" value="${productDto.unit}">
+                <input class="form-control" id="unit" type="text" value="${productDto.unit}">
               </div>
             </div>
-
-<%--            <div class="row">--%>
-<%--              <div class="form-group col-md-3">--%>
-<%--                <label for="exampleSelect1" class="control-label">Thông số kỹ thuật</label>--%>
-<%--                <select id="specOption" class="form-control" id="exampleSelect1">--%>
-<%--                 <c:forEach items="${specificationDtos}" var="spec">--%>
-<%--                   <option value="${spec.id}">${spec.name}</option>--%>
-<%--                 </c:forEach>--%>
-<%--                </select>--%>
-<%--              </div>--%>
-<%--              <div class="form-group col-md-3">--%>
-<%--                <button class="side-button btn btn-add" type="button" title="Thêm vào danh sách"--%>
-<%--                        onclick="addToSpecTable()">Thêm--%>
-<%--                  vào--%>
-<%--                  danh sách</button>--%>
-<%--                <button id="deleteButton" type="button" class="side-button btn btn-cancel" title="Xoá"--%>
-<%--                        onclick="deleteFromTable()">Xoá</button>--%>
-<%--              </div>--%>
-<%--            </div>--%>
-<%--            <div class="row">--%>
-<%--              <div class="form-group col-md-7">--%>
-<%--                <label for="exampleSelect1" class="control-label">Bảng thông số kỹ thuật</label>--%>
-<%--                <table id="specTable" class="table table-hover table-bordered js-copytextarea" cellpadding="0"--%>
-<%--                       cellspacing="0" >--%>
-
-<%--                  <tbody>--%>
-<%--                  <thead>--%>
-<%--                  <tr>--%>
-<%--                    <th width="200">Mã thông số kỹ thuật</th>--%>
-<%--                    <th width="200">Thông số kỹ thuật</th>--%>
-<%--                    <th width="400">Giá trị</th>--%>
-<%--                  </tr>--%>
-<%--                  <c:forEach var="specification" items="${listSpecificationValue}">--%>
-<%--                  <tr class="spec-item">--%>
-<%--                    <td>${specification.specificationId}</td>--%>
-<%--                    <td>${specification.specificationName}</td>--%>
-<%--                    <td><input type="text" style="width: 100px"  placeholder="Giá trị nhỏ nhất" class="fromValue" value="${specification.valueFrom}" >--%>
-<%--                      <span>-</span>--%>
-<%--                      <input type="text" style="width: 100px"  placeholder="Giá trị lớn nhất" class="toValue" value="${specification.valueTo}" ></td>--%>
-<%--                    <td>--%>
-<%--                      <input type="checkbox">--%>
-<%--                    </td>--%>
-
-
-<%--                  </tr>--%>
-<%--                  </c:forEach>--%>
-<%--                  </thead>--%>
-<%--                  </tbody>--%>
-<%--                </table>--%>
-<%--              </div>--%>
-<%--            </div>--%>
             <div class="row">
               <div class="form-group col-md-12">
-                <label class="control-label required-field">Ảnh sản phẩm</label>
-                <div id="myfileupload">
-                  <input type="file" id="uploadfile" name="ImageUpload" onchange="setThumbImage();"
-                         accept="image/*" />
-                </div>
-                <div id="thumbbox">
-                  <img height="450" width="400" alt="Thumb image" id="thumbimage" src="resources/images/diode.jpg" />
+                <label class="control-label required-field">Chỉnh sửa ảnh</label>
+
+                <input type="file" id="updateFileUpload" name="ImageUpload" accept="image/*" onchange="showPreview(event);">
+
+                <div class="preview">
+                  <img src="${pageContext.request.contextPath}/img/${productDto.image}" id="file-ip-1-preview" style="width: 250px; height: 250px;">
                 </div>
               </div>
               <div class="form-group col-md-12">
                 <label class="control-label">Mô tả sản phẩm</label>
-                <textarea class="form-control" name="mota" id="mota" value="${productDto.description}"></textarea>
+                <textarea class="form-control" name="mota" id="mota">${productDto.description}</textarea>
               </div>
             </div>
             <div class="row">
               <div class="confirm-button">
                 <div class="button">
-                  <button type="submit" id="createProduct" class="btn btn-save" >Lưu lại</button>
+                  <button type="submit" class="btn btn-save" onclick="updateProduct(${productDto.id})">Lưu lại</button>
                   <button type="button" class="btn btn-cancel" onclick="location.href='product-management.html'">Hủy
                     bỏ</button>
                 </div>
@@ -236,7 +187,7 @@ MODAL SUCCESSFUL
           </div>
         </div>
         <div style="display: flex; justify-content: center; padding: 10px;">
-          <button style="margin: 5px;" class="btn btn-save" data-dismiss="modal">Quay lại</button>
+          <a  href="${pageContext.request.contextPath}/admin/products/view/${productDto.id}" style="margin: 5px;" class="btn btn-save" >Đóng</a>
         </div>
       </div>
       <div class="modal-footer">
@@ -292,11 +243,11 @@ MODAL UNSUCCESSFUL
               </span>
           </div>
           <div class="form-group col-md-12" style="text-align: center;">
-            <p class="modal-notify-unsuccessful">Thay đổi thông tin sản phẩm không thành công</p>
+            <p class="modal-notify-unsuccessful" id="reasonUnsucces"></p>
           </div>
         </div>
         <div style="display: flex; justify-content: center; padding: 10px;">
-          <button style="margin: 5px;" class="btn btn-save" data-dismiss="modal">Quay lại</button>
+          <button style="margin: 5px;" class="btn btn-save" data-dismiss="modal">Đóng</button>
         </div>
       </div>
       <div class="modal-footer">
@@ -307,6 +258,30 @@ MODAL UNSUCCESSFUL
 <!--
 MODAL
 -->
+<%--Model add brand--%>
+<div class="modal fade" id="addBrandModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color: green">Thêm mới thương hiệu</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="addBrandError" style="color: red;display: none"></p>
+        <div class="form-group">
+          <label class="control-label required-field">Tên thương hiệu</label>
+          <input class="form-control" id="addBrand" type="text" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="addBrand()">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <script src="<c:url value="/js/jquery-3.2.1.min.js"/>"></script>

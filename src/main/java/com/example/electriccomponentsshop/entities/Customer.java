@@ -1,6 +1,7 @@
 package com.example.electriccomponentsshop.entities;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -27,6 +28,9 @@ public class Customer {
     private String note;
     private Date dob;
     private String gender;
+    @Column
+    @ColumnDefault("0")
+    private int totalPaid;
     @OneToMany(mappedBy = "customer",fetch = FetchType.EAGER)
     private List<OrderTransaction> orderTransactions = new ArrayList<>();
 

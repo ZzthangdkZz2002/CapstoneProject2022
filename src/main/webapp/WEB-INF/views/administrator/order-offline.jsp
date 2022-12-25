@@ -536,9 +536,9 @@
                             <img src="" alt="Error_img_qr" style="width:100% ;height: 100%;object-fit: cover;"
                                  class="qr_code_modal">
                         </div>
-                        <div class="col-7">
-                            <button type="button" class="btn btn-success" onclick="printInvoice();" style="margin-left: 148px">Print</button>
-                        </div>
+<%--                        <div class="col-7">--%>
+<%--                            <button type="button" class="btn btn-success" onclick="printInvoice();" style="margin-left: 148px">Print</button>--%>
+<%--                        </div>--%>
 
                     </div>
                 </div>
@@ -546,7 +546,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary save-bank">Lưu</button>
+<%--                <button type="button" class="btn btn-primary save-bank">Lưu</button>--%>
 
             </div>
         </div>

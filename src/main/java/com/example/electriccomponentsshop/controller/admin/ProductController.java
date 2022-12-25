@@ -56,7 +56,11 @@ public class ProductController {
     final ProductLocationRepository productLocationRepository;
     @GetMapping("")
     public String viewAll(Model model,@RequestParam(name="index",defaultValue = "0") String index){
-        Page<Product> products =  productRepository.findAllByAddedDateDesc(PageRequest.of(Integer.parseInt(index),10));
+        int i = Integer.parseInt(index);
+        if(Integer.parseInt(index) > 0){
+            i -= 1;
+        }
+        Page<Product> products =  productRepository.findAllByAddedDateDesc(PageRequest.of(i,10));
         model.addAttribute("products", products.getContent());
         model.addAttribute("total",products.getTotalPages());
         return "administrator/product-management";
@@ -67,6 +71,14 @@ public class ProductController {
         try{
             Product productDTO = productRepository.findById(Integer.parseInt(id)).get();
             List<Category> categoryDtos = categoryService.findAll();
+            List<Category> categories = new ArrayList<>();
+            for(Category category: categoryDtos){
+                for(Category category1 : productDTO.getCategories()){
+                    if(category.getId() != category1.getId()){
+
+                    }
+                }
+            }
             List<Brand> brands = brandRepository.findAll();
             model.addAttribute("productDto",productDTO);
             model.addAttribute("brands",brands);
@@ -81,11 +93,14 @@ public class ProductController {
 
     @GetMapping("search")
     public String searchProduct(@RequestParam(name="text", required = false) String text, @RequestParam(name="index",defaultValue = "0") String index, ModelMap modelMap){
-        int pIndex = Integer.parseInt(index);
+        int i = Integer.parseInt(index);
+        if(Integer.parseInt(index) > 0){
+            i -= 1;
+        }
 
-        Page<Product> products = productService.searchProduct(text,PageRequest.of(pIndex,10));
+        Page<Product> products = productService.searchProduct(text,PageRequest.of(i,10));
 
-        modelMap.addAttribute("pageNo", 1);
+        modelMap.addAttribute("pageNo", i);
         modelMap.addAttribute("products", products.getContent());
         modelMap.addAttribute("total", products.getTotalPages());
         modelMap.addAttribute("text", text);
@@ -142,8 +157,30 @@ public class ProductController {
             if(bindingResult.hasErrors()){
                 return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("01","Something went wrong!",bindingResult.getAllErrors()));
             }
-           return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00",productService.addProduct(productDTO,multipartFile),""));
+            String message = productService.addProduct(productDTO,multipartFile);
+            if("00".equals(message)){
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00","Thêm sản phẩm thành công",""));
+            }
+            if("02".equals(message)){
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("02","Thêm sản phẩm không thành công, mã sản phẩm đã tồn tại",""));
+            }else{
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("03","Thêm sản phẩm không thành công",""));
+            }
         }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("01","Something went wrong!",e.getMessage()));
+        }
+    }
+
+    @PostMapping(value ="/update")
+    @ResponseBody
+    public ResponseEntity<ResponseObject> update(@Valid @RequestPart("products") ProductDTO productDTO, @RequestPart(value = "file",required = false) MultipartFile multipartFile,BindingResult bindingResult){
+        try{
+            if(bindingResult.hasErrors()){
+                return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("01","Something went wrong!",bindingResult.getAllErrors()));
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("00",productService.updateProduct(productDTO,multipartFile),""));
+        }catch (Exception e){
+            System.out.println("update error: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(new ResponseObject("01","Something went wrong!",e.getMessage()));
         }
     }
@@ -213,11 +250,6 @@ public class ProductController {
 //        }
 //
 //    }
-    @PostMapping("/update/{id}")
-    @ResponseBody
-    public String update(@PathVariable Integer id,@Valid @RequestBody ProductDTO productDTO){
-        return "administrator/product-management";
-    }
     }
 
 

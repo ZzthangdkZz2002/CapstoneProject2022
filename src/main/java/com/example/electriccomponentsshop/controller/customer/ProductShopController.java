@@ -35,10 +35,14 @@ public class ProductShopController {
 
     @GetMapping(value = "/list")
     public String showListProduct (Model model, @RequestParam(name="index",defaultValue = "0") String index) {
-        Page<Product> products =  productRepository.findAllByStatus(PageRequest.of(Integer.parseInt(index),10),1);
+        int i = Integer.parseInt(index);
+        if(i>0){
+            i -= 1;
+        }
+        Page<Product> products =  productRepository.findAllByStatus(PageRequest.of(i,10),1);
         model.addAttribute("products", products.getContent());
         model.addAttribute("total",products.getTotalPages());
-
+        model.addAttribute("active", i);
         List<Category> categories = categoryRepository.findNoneParent();
         model.addAttribute("categories", categories);
 
@@ -55,11 +59,9 @@ public class ProductShopController {
             int no = Integer.parseInt(pageNo);
 
             int pageNum = (int) Math.ceil(productService.countByCate(cate)/18.0);
-            List<Category> categories = categoryRepository.findAll();
-
+            List<Category> categories = categoryRepository.findNoneParent();
             category = categoryService.getById(cate);
             products = productService.getProductByCate(cate, no, 18);
-
             model.addAttribute("categories", categories);
             model.addAttribute("products", products);
             model.addAttribute("category", category);

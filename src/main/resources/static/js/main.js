@@ -221,6 +221,8 @@ function addToCategoryTable() {
         cell2.appendChild(checkbox.cloneNode());
         const select = document.querySelector('select');
         select.remove(selection.selectedIndex);
+        // document.querySelector('select').children[selection.selectedIndex].style.display = "none"
+        // document.querySelector('select').firstElementChild.selected
     }
     // tableChange();
 }
@@ -1012,8 +1014,77 @@ function showPreview(event){
         var src = URL.createObjectURL(event.target.files[0]);
         var preview = document.getElementById("file-ip-1-preview");
         preview.src = src;
-        preview.style.display = "block";
+        preview.style.display = 'block';
     }
+}
+
+function updateProduct(id) {
+    validateTable();
+    event.preventDefault();
+    var categories = new Array();
+    console.log("id: ",id)
+    $(".category-items").each(function (){
+        var row = $(this);
+        var category = new Object();
+        category.id = row.find("TD").eq(0).html();
+        categories.push(category);
+        console.log("cate: ",categories)
+
+    });
+    var file = $('input[type=file]')[0].files[0];
+    var formData = new FormData();
+
+    var brand = new Object();
+    brand.id = $('#brandOption').val()
+
+    var data1={
+        "id" : id,
+        "name": $('#name').val(),
+        "price": $('#price').val(),
+        "unit": $('#unit').val(),
+        "description": $('textarea#mota').val(),
+        "original_price": $('#original-price').val(),
+        "brand": brand,
+        "categories": categories
+        // "image": filed
+    };
+
+    console.log(data1)
+    formData.append("file", file);
+    formData.append("products", new Blob([JSON.stringify(data1)],
+        {
+            type: "application/json"
+        }));
+
+    $.ajax({
+        type: "POST",
+        contentType: false,
+        processData: false,
+        url: "/admin/products/update",
+        data: formData
+        // JSON.stringify(data1)
+        ,
+        // dataType:"json",
+        success: function (response){
+            console.log(response)
+            if(response.status === "00"){
+                $('#successful').modal('show');
+                // window.location.replace('http://localhost:5000/admin/products');
+            }
+            else {
+                document.getElementById('reasonUnsucces').innerHTML = response.message;
+                $('#unsuccessful').modal('show');
+            }
+        },
+        error: function (error){
+            document.getElementById('reasonUnsucces').innerHTML = "Cập nhật sản phẩm không thành công";
+            $('#unsuccessful').modal('show');
+            // window.location.replace('http://localhost:5000/auth/signin');
+        }
+
+
+    });
+    $('#updateProduct').off('click');
 }
 
 function addProduct(){
@@ -1047,7 +1118,7 @@ function addProduct(){
         "name": $('#name').val(),
         "price": $('#price').val(),
         "unit": $('#unit').val(),
-        "description": $('#mota').val(),
+        "description": $('textarea#mota').val(),
         "original_price": $('#original-price').val(),
         "brand": brand,
         "code" : $('#code').val(),
@@ -1076,15 +1147,15 @@ function addProduct(){
             console.log(response)
             if(response.status === "00"){
                 $('#successful').modal('show');
-                window.location.replace('http://localhost:5000/admin/products');
+                // window.location.replace('http://localhost:5000/admin/products');
             }
             else {
-                $('#reason').innerHTML = response.message;
+                document.getElementById('reasonUnsucces').innerHTML = response.message;
                 $('#unsuccessful').modal('show');
             }
         },
         error: function (error){
-            // $('#reason').innerHTML = "Thêm sản phẩm không thành công";
+            document.getElementById('reasonUnsucces').innerHTML = "Thêm sản phẩm không thành công";
             $('#unsuccessful').modal('show');
             // window.location.replace('http://localhost:5000/auth/signin');
         }

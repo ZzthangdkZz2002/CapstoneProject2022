@@ -83,6 +83,10 @@
                 <form:errors path="wardName" element="span" />
               </div>
               <div class="form-group col-md-3">
+                <label class="control-label required-field">Tên kho</label>
+                <form:input class="form-control" type="text" path="name" required="required"/>
+              </div>
+              <div class="form-group col-md-3">
               <label class="control-label required-field">Địa chỉ chi tiết</label>
               <form:input class="form-control" type="text" path="detailLocation" required="required"/>
                </div>

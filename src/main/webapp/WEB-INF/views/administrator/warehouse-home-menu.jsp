@@ -166,7 +166,7 @@
             current[0].className = current[0].className.replace(" sub-item-active", "");
             sub_items[1].className += " sub-item-active";
         }
-        else if(url.includes('admin/warehouses/view/export') || url.includes('admin/warehouses/export/add')){
+        else if(url.includes('admin/warehouses/export') || url.includes('admin/warehouses/export/add')){
             let current = document.getElementsByClassName("sub-app-menu_item sub-item-active");
             current[0].className = current[0].className.replace(" sub-item-active", "");
             sub_items[2].className += " sub-item-active";

@@ -27,6 +27,7 @@ public interface ProductService {
     Product getById(String id);
 
     String addProduct(ProductDTO productDTO, MultipartFile multipartFile);
+    String updateProduct(ProductDTO productDTO, MultipartFile multipartFile);
 
     List<Product> getAll();
 

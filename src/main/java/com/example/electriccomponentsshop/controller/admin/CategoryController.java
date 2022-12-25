@@ -1,41 +1,38 @@
-//package com.example.electriccomponentsshop.controller.admin;
-//
-//import com.example.electriccomponentsshop.config.ModelMap;
-//import com.example.electriccomponentsshop.dto.CategoryDTO;
-//import com.example.electriccomponentsshop.dto.ProductDTO;
-//import com.example.electriccomponentsshop.repositories.CategoryRepository;
-//import com.example.electriccomponentsshop.services.CategoryService;
-//import lombok.AllArgsConstructor;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.validation.BindingResult;
-//import org.springframework.web.bind.annotation.*;
-//
-//import javax.validation.Valid;
-//import java.util.*;
-//
-//@CrossOrigin
-//@Controller
-//@RequestMapping("/admin/categories")
-//@AllArgsConstructor
-//public class CategoryController  {
-//    final
-//    CategoryService categoryService;
-//    final
-//    ModelMap modelMap;
-//    @GetMapping("")
-//    public String list(Model model){
-//        ArrayList<CategoryDTO> categories = (ArrayList<CategoryDTO>)categoryService.findAll();
-//        model.addAttribute("categories", categories);
-//        for (CategoryDTO ca: categories
-//             ) {
-//            System.out.println(ca.getName() + " đây này");
-//        }
-//        System.out.println(categories.size()+"sizfff");
-//        return "administrator/category-management";
-//
-//    }
+package com.example.electriccomponentsshop.controller.admin;
+
+import com.example.electriccomponentsshop.config.ModelMap;
+import com.example.electriccomponentsshop.dto.CategoryDTO;
+import com.example.electriccomponentsshop.dto.ProductDTO;
+import com.example.electriccomponentsshop.entities.Category;
+import com.example.electriccomponentsshop.repositories.CategoryRepository;
+import com.example.electriccomponentsshop.services.CategoryService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.*;
+
+@CrossOrigin
+@Controller
+@RequestMapping("/admin/categories")
+@AllArgsConstructor
+public class CategoryController  {
+    final
+    CategoryService categoryService;
+    CategoryRepository categoryRepository;
+    final
+    ModelMap modelMap;
+    @GetMapping("")
+    public String list(Model model){
+        List<Category> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
+        return "administrator/category-management";
+
+    }
 //    @PostMapping("/getExcept")
 //    @ResponseBody
 //    public List<CategoryDTO> getExcept(@RequestBody ProductDTO productDTO){
@@ -112,4 +109,4 @@
 //        return "administrator/setting-category";
 //
 //    }
-//}
+}
