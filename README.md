@@ -1,1 +1,2 @@
-# CapstoneProject2022
+# CapstoneProject
+Electric Component Online Shopping
