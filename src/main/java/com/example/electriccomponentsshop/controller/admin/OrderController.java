@@ -70,41 +70,51 @@ public class OrderController {
         Page<OrderTransaction> orderTransactions = null;
         List<OrderTransactionDTO> orderTransactionDTOS= new ArrayList<>();
         String active = "";
+        int pIndex = Integer.parseInt(index);
+//        if(pIndex>0){
+//            pIndex -= 1;
+//        }
 
         if (status.equals("waiting")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.PENDING.getName(), PageRequest.of(Integer.parseInt(index),10));
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.PENDING.getName(), PageRequest.of(pIndex,10));
             model.addAttribute("listOrder", orderTransactions.getContent());
             model.addAttribute("total",orderTransactions.getTotalPages());
+            model.addAttribute("pageNo", pIndex);
 //            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "waiting";
         } else if (status.equals("confirmed")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.CONFIRM.getName(), PageRequest.of(Integer.parseInt(index),10));
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.CONFIRM.getName(), PageRequest.of(pIndex,10));
             model.addAttribute("listOrder", orderTransactions.getContent());
             model.addAttribute("total",orderTransactions.getTotalPages());
+            model.addAttribute("pageNo", pIndex);
 //            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "confirmed";
         } else if (status.equals("shipping")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.DELIVERY.getName(), PageRequest.of(Integer.parseInt(index),10));
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.DELIVERY.getName(), PageRequest.of(pIndex,10));
             model.addAttribute("listOrder", orderTransactions.getContent());
             model.addAttribute("total",orderTransactions.getTotalPages());
+            model.addAttribute("pageNo", pIndex);
 //            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "shipping";
         } else if (status.equals("received")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.DONE.getName(), PageRequest.of(Integer.parseInt(index),10));
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.DONE.getName(), PageRequest.of(pIndex,10));
             model.addAttribute("listOrder", orderTransactions.getContent());
             model.addAttribute("total",orderTransactions.getTotalPages());
+            model.addAttribute("pageNo", pIndex);
 //            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "received";
         } else if (status.equals("cancelled")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.CANCEL.getName(), PageRequest.of(Integer.parseInt(index),10));
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.CANCEL.getName(), PageRequest.of(pIndex,10));
             model.addAttribute("listOrder", orderTransactions.getContent());
             model.addAttribute("total",orderTransactions.getTotalPages());
+            model.addAttribute("pageNo", pIndex);
 //            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "cancelled";
         } else if (status.equals("returned")) {
-            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.RETURNED.getName(), PageRequest.of(Integer.parseInt(index),10));
+            orderTransactions = orderTransactionRepository.findAllByStatusOrderByCreatedDesc(OrderEnum.RETURNED.getName(), PageRequest.of(pIndex,10));
             model.addAttribute("listOrder", orderTransactions.getContent());
             model.addAttribute("total",orderTransactions.getTotalPages());
+            model.addAttribute("pageNo", pIndex);
 //            orderTransactionDTOS = convertOrderToDTO(orderTransactions);
             active = "returned";
         }
@@ -121,7 +131,7 @@ public class OrderController {
         System.out.println("status: "+status);
         Page<OrderTransaction> orderTransactions = orderTransactionRepository.findAllByOrderidOrderByCreatedDesc(text,PageRequest.of(pIndex,10));
 
-        modelMap.addAttribute("pageNo", 1);
+        modelMap.addAttribute("pageNo", pIndex);
         modelMap.addAttribute("listOrder", orderTransactions.getContent());
         modelMap.addAttribute("total", orderTransactions.getTotalPages());
         modelMap.addAttribute("text", text);

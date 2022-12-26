@@ -66,15 +66,15 @@
 <div class="row GHN justify-content-center">
     <div class="col-4">
         <div class="mb-2">
-            <label for="sender-name" class="form-label">Tên cửa hàng/bên gửi</label>
+            <label for="sender-name" class="form-label required-field">Tên cửa hàng/bên gửi</label>
             <input type="text" class="form-control" id="sender-name">
         </div>
         <div class="mb-2">
-            <label for="sender-phone" class="form-label">Số điện thoại</label>
+            <label for="sender-phone" class="form-label required-field">Số điện thoại</label>
             <input type="tel" class="form-control" id="sender-phone">
         </div>
         <div class="mb-2">
-            <label for="sender-address" class="form-label">Địa chỉ</label>
+            <label for="sender-address" class="form-label required-field">Địa chỉ</label>
             <input type="text" class="form-control" id="sender-address">
         </div>
     </div>
@@ -104,34 +104,34 @@
 <div class="row GHN justify-content-center">
     <div class="col-4">
         <div class="mb-2">
-            <label for="receive-name" class="form-label">Họ tên</label>
+            <label for="receive-name" class="form-label required-field">Họ tên</label>
             <input type="text" class="form-control" id="receive-name" value="${order.customer.name != null ? order.customer.name : "khách lẻ"}">
         </div>
         <div class="mb-2">
-            <label for="receive-phone" class="form-label">Số điện thoại</label>
+            <label for="receive-phone" class="form-label required-field">Số điện thoại</label>
             <input type="tel" class="form-control" id="receive-phone" value="${order.customer.phone}">
         </div>
         <div class="mb-2">
-            <label for="receive-address" class="form-label">Địa chỉ</label>
+            <label for="receive-address" class="form-label required-field">Địa chỉ</label>
             <input type="text" class="form-control" id="receive-address" value="${order.customer.address}">
         </div>
     </div>
     <div class="col-4">
         <div class="mb-2">
-            <label for="receive-province" class="form-label">Tỉnh/Thành Phố</label>
+            <label for="receive-province" class="form-label required-field">Tỉnh/Thành Phố</label>
             <select class="form-select" aria-label="Default select example" id="receive-province">
                 <option selected>${order.province}</option>
             </select>
         </div>
         <div class="mb-2">
-            <label for="receive-district" class="form-label">Quận/Huyện</label>
+            <label for="receive-district" class="form-label required-field">Quận/Huyện</label>
             <select class="form-select" aria-label="Default select example" id="receive-district">
                 <option selected>${order.district}</option>
 
             </select>
         </div>
         <div class="mb-2">
-            <label for="receive-wards" class="form-label">Phường/Xã</label>
+            <label for="receive-wards" class="form-label required-field">Phường/Xã</label>
             <select class="form-select" aria-label="Default select example" id="receive-wards">
                 <option selected>${order.ward}</option>
             </select>
@@ -149,15 +149,15 @@
 <div class="row GHN justify-content-center">
     <div class="col-4">
         <div class="mb-2">
-            <label for="return-name" class="form-label">Họ tên</label>
+            <label for="return-name" class="form-label required-field">Họ tên</label>
             <input type="tel" class="form-control" id="return-name">
         </div>
         <div class="mb-2">
-            <label for="return-phone" class="form-label">Số điện thoại</label>
+            <label for="return-phone" class="form-label required-field">Số điện thoại</label>
             <input type="tel" class="form-control" id="return-phone">
         </div>
         <div class="mb-2">
-            <label for="return-address" class="form-label">Địa chỉ</label>
+            <label for="return-address" class="form-label required-field">Địa chỉ</label>
             <input type="text" class="form-control" id="return-address">
         </div>
     </div>

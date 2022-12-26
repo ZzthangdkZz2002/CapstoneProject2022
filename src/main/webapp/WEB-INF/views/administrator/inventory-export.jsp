@@ -64,8 +64,7 @@
             display:block
         }
         .calendar-popup{
-            width: 230px;
-            padding:10px;
+            padding:4px 0px;
             background-color:white;
             border-radius: 5px;
             /*position: absolute;*/
@@ -308,12 +307,12 @@
     <div class="time-popup hide">
         <div class="container">
             <div class="row">
-                <div class="col-2">
+                <div class="col-4">
                     <p><strong>Theo ngày</strong></p>
                     <a href="${pageContext.request.contextPath}/admin/inventory/export/search?date_type=today">Hôm nay</a><br />
                     <a href="${pageContext.request.contextPath}/admin/inventory/export/search?date_type=yesterday">Hôm qua</a>
                 </div>
-                <div class="col-2">
+                <div class="col-4">
                     <p><strong>Theo tháng</strong></p>
                     <a href="${pageContext.request.contextPath}/admin/inventory/export/search?date_type=thismonth">Tháng này</a><br />
                     <a href="${pageContext.request.contextPath}/admin/inventory/export/search?date_type=lastmonth">Tháng trước</a><br />

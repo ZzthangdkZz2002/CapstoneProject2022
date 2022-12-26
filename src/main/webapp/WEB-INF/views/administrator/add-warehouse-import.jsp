@@ -144,7 +144,7 @@
                             </div>
     <div class="form-group col-md-12">
         <label class="control-label">Tiền trả nhà cung cấp: </label>
-        <input type="text" class="form__field money_mustPay" id="moneyMustPay" required="" value="0" style="width: 200px;">
+        <input type="number" class="form__field money_mustPay" id="moneyMustPay" value="0" style="width: 200px;">
     </div>
     <div class="form-group col-md-12">
         <label class="control-label">Tính vào công nợ: </label>

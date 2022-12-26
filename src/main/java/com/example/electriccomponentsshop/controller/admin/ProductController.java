@@ -56,9 +56,14 @@ public class ProductController {
     final ProductLocationRepository productLocationRepository;
     @GetMapping("")
     public String viewAll(Model model,@RequestParam(name="index",defaultValue = "0") String index){
-        Page<Product> products =  productRepository.findAllByAddedDateDesc(PageRequest.of(Integer.parseInt(index),10));
+        int pIndex = Integer.parseInt(index);
+        if(pIndex>0){
+            pIndex -= 1;
+        }
+        Page<Product> products =  productRepository.findAllByAddedDateDesc(PageRequest.of(pIndex,10));
         model.addAttribute("products", products.getContent());
         model.addAttribute("total",products.getTotalPages());
+        model.addAttribute("pageNo", pIndex);
         return "administrator/product-management";
     }
 

@@ -277,27 +277,27 @@
                             <div class="row mb-4">
                                 <div class="col-6">
                                     <label >Tên sản phẩm</label>
-                                    <input type="text" class="form-control name-modal" >
+                                    <input type="text" class="form-control name-modal" readonly >
                                 </div>
                                 <div class="col-6">
                                     <label >Giá</label>
-                                    <input type="text" class="form-control price-modal" >
+                                    <input type="text" class="form-control price-modal" readonly>
                                 </div>
                             </div>
                             <div class="row mb-4">
                                 <div class="col-6">
                                     <label >Số lượng</label>
-                                    <input type="text" class="form-control quantity-modal" >
+                                    <input type="text" class="form-control quantity-modal" readonly>
                                 </div>
                                 <div class="col-6">
                                     <label >Thành tiền</label>
-                                    <input type="text" class="form-control total-modal" >
+                                    <input type="text" class="form-control total-modal" readonly>
                                 </div>
                             </div>
                             <div class="row mb-4">
                                 <div class="col-12">
                                     <label >Mô tả</label>
-                                    <textarea class="form-control description-modal"  rows="4"></textarea>
+                                    <textarea class="form-control description-modal"  rows="4" readonly></textarea>
                                 </div>
 
                             </div>

@@ -39,7 +39,7 @@ public class ProductShopController {
         if(i>0){
             i -= 1;
         }
-        Page<Product> products =  productRepository.findAllByStatus(PageRequest.of(i,10),1);
+        Page<Product> products =  productRepository.findAllByStatus(PageRequest.of(i,12),1);
         model.addAttribute("products", products.getContent());
         model.addAttribute("total",products.getTotalPages());
         model.addAttribute("active", i);

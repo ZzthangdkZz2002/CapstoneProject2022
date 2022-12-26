@@ -743,7 +743,7 @@ function printInvoice(payment_method, order_id) {
                             document.getElementById('cust-address').innerHTML = response.data.customer.address;
                         }
                     }
-                    // var invoiceTotal = 0;
+                     var invoiceTotal = 0;
                     for(let i=0; i<response.data.orderTransactionDetails.length ; i++){
                         let itemTemp = '<tr>\n' +
                             '                <th scope="row" style="border: 1px solid black;">index</th>\n' +
@@ -763,11 +763,17 @@ function printInvoice(payment_method, order_id) {
                         itemTemp = itemTemp.replace('price', convertMoney(response.data.orderTransactionDetails[i].productDTO.price));
                         itemTemp = itemTemp.replace('vat', convertMoney(response.data.orderTransactionDetails[i].productDTO.price * response.data.orderTransactionDetails[i].quantity *0.1));
                         itemTemp = itemTemp.replace('total', convertMoney(response.data.orderTransactionDetails[i].amount));
-                        // invoiceTotal += total;
+                        invoiceTotal += response.data.orderTransactionDetails[i].amount;
                         result += itemTemp;
                     }
                     document.getElementById('total-word').innerHTML = to_vietnamese(response.data.amount) + " đồng";
-
+                    let totalTemp = '<tr>\n' +
+                        '                <td style="border: 1px solid black; text-align: center" colspan="6">Tổng tiền</td>\n' +
+                        '                <td style="border: 1px solid black;" colspan="6">invoiceTotal</td>\n' +
+                        '            </tr>' +
+                        '';
+                    totalTemp = totalTemp.replace('invoiceTotal', convertMoney(invoiceTotal));
+                    result += totalTemp;
                     // itemTemp.replace('index', i);
                     // itemTemp.replace('index', i);
                     // console.log("inner: ", document.getElementById('invoice-items') );
