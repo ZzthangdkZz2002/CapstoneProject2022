@@ -67,7 +67,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <img src="${pageContext.request.contextPath}/img/${item.productDTO.image}"
+                                                <img src="${item.productDTO.image}"
                                                      class="img-fluid" alt="error">
                                             </div>
                                             <div class="col-md-2 text-center d-flex justify-content-center align-items-center">

@@ -1080,7 +1080,8 @@ function updateProduct(id) {
             document.getElementById('reasonUnsucces').innerHTML = "Cập nhật sản phẩm không thành công";
             $('#unsuccessful').modal('show');
             // window.location.replace('http://localhost:5000/auth/signin');
-        }
+        },
+        timeout: 5000
 
 
     });
@@ -1158,7 +1159,7 @@ function addProduct(){
             document.getElementById('reasonUnsucces').innerHTML = "Thêm sản phẩm không thành công";
             $('#unsuccessful').modal('show');
             // window.location.replace('http://localhost:5000/auth/signin');
-        }
+        },
 
 
     });

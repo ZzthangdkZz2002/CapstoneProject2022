@@ -145,7 +145,7 @@
                 <input type="file" id="updateFileUpload" name="ImageUpload" accept="image/*" onchange="showPreview(event);">
 
                 <div class="preview">
-                  <img src="${pageContext.request.contextPath}/img/${productDto.image}" id="file-ip-1-preview" style="width: 250px; height: 250px;">
+                  <img src="${productDto.image}" id="file-ip-1-preview" style="width: 250px; height: 250px;">
                 </div>
               </div>
               <div class="form-group col-md-12">

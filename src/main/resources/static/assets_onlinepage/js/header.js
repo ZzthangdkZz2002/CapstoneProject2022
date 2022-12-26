@@ -74,7 +74,7 @@ function autocomplete(inp, arr) {
                 b.addEventListener('click', (e)=>{
                     localStorage.setItem('idDetald',e.target.className);
                 });
-                b.innerHTML = `<img id="imgheader" src="${contextPath}/img/${arr[i].image}" alt="img-produc" width="100" height="100" onerror="this.src='https://cdn-img.thethao247.vn//storage/files/camhm/2022/10/11/tin-mu-moi-nhat-11-10-ronaldo-duoc-doi-thu-tang-len-may-casemiro-tim-lai-chinh-minh-200731.jpg'"/>`
+                b.innerHTML = `<img id="imgheader" src="${arr[i].image}" alt="img-produc" width="100" height="100" onerror="this.src='https://bizweb.dktcdn.net/thumb/1024x1024/100/408/906/products/diode-tron-15a10-15a-1000v-dip-1.jpg?v=1614331430420'"/>`
                 b.innerHTML +=`<div class="infor-search" style="display:flex;flex-direction: column;margin-left:80px">
               <strong style="font-size: 16px; color: #333">${arr[i].name}</strong>
               <span style="font-size: 16px; color: #333">${convertMoney(arr[i].price)}</span>

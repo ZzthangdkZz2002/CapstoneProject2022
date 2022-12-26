@@ -27,7 +27,7 @@
            <div>
              <c:forEach var="product" items="${map.value}">
                <div class="product-card">
-                 <a href="${pageContext.request.contextPath}/product/${product.id}"><img src="/img/${product.image}" alt="hình ảnh sản phẩm" class="prod_img"></a>
+                 <a href="${pageContext.request.contextPath}/product/${product.id}"><img src="${product.image}" alt="hình ảnh sản phẩm" class="prod_img"></a>
                  <p class="product-name"><a href="${pageContext.request.contextPath}/product/${product.id}">${product.getName()}</a></p>
                  <p>${product.getPrice()}đ</p>
                </div>

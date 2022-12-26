@@ -32,7 +32,7 @@
             <div>
               <div id="product_area"> 
                 <div id="product_images">
-                  <img src="/img/${product.image}" alt="product_image">
+                  <img src="${product.image}" alt="product_image">
                 </div>
                 <div id="product_info">
                   <div>

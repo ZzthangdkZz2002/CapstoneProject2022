@@ -62,7 +62,7 @@ const getListCart=()=>{
                     <i class="fas fa-minus"></i>
                 </button>
 
-                <input min="0" name="quantity" value="${item.quantity}" type="text" onkeyup="handleQuantity(${item.product.id})"
+                <input min="0" max="" name="quantity" value="${item.quantity}" type="text" onkeyup="handleQuantity(${item.product.id})"
                     class="quantity form-control form-control-sm" style="width: 50px;" />
 
                 <button class="btnDecrease btn btn-link px-2"

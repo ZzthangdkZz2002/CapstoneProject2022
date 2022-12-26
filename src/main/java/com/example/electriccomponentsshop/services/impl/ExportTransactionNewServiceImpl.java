@@ -34,7 +34,6 @@ public class ExportTransactionNewServiceImpl implements ExportTransactionNewServ
     @Override
     public void addExportTransaction(ExportTransactionNewDTO exportTransactionNewDTO, Authentication authentication) throws Exception {
         ExportTransactionNew exportTransactionNew = new ExportTransactionNew();
-        exportTransactionNew.setOrderTransaction(orderTransactionRepository.findByOrderid(exportTransactionNewDTO.getOrder_id()).get());
         exportTransactionNew.setExportPerson(exportTransactionNewDTO.getExportPerson());
         exportTransactionNew.setReceivedPerson(exportTransactionNewDTO.getReceivedPerson());
         exportTransactionNew.setDescription(exportTransactionNewDTO.getDescription());
@@ -89,7 +88,6 @@ public class ExportTransactionNewServiceImpl implements ExportTransactionNewServ
             }
         }
         exportTransactionNew2.setExportProducts(exportProductsList);
-        exportTransactionNewRepository.save(exportTransactionNew);
 
         OrderTransaction orderTransaction = orderTransactionRepository.findByOrderid(exportTransactionNewDTO.getOrder_id()).get();
         orderTransaction.setStatus(OrderEnum.DELIVERY.getName());
@@ -98,6 +96,8 @@ public class ExportTransactionNewServiceImpl implements ExportTransactionNewServ
         Account account = accountRepository.findById(accountDetail.getId()).get();
         orderTransaction.setEmployeeProcessor(account);
         orderTransactionRepository.save(orderTransaction);
+        exportTransactionNew.setOrderTransaction(orderTransactionRepository.findByOrderid(exportTransactionNewDTO.getOrder_id()).get());
+        exportTransactionNewRepository.save(exportTransactionNew);
 
     }
 }

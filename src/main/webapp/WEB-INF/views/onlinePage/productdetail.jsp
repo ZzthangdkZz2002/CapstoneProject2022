@@ -116,7 +116,7 @@
                                 </div><!-- /.row -->
                             </div><!-- /.price-container -->
 
-                            <div class="quantity-container info-container">
+                            <div class="quantity-container info-container ${products.quantity > 0 ? "" : "hidden"}">
                                 <div class="row">
 
                                     <div class="col-sm-2">
@@ -133,7 +133,7 @@
                                     </div>
 
                                     <div class="col-sm-7 add-cart">
-                                        <button  class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-shopping-cart inner-right-vs"></i> Thêm vào giỏ hàng</button>
+                                        <button ${products.quantity > 0 ? "" : "disabled"} class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-shopping-cart inner-right-vs"></i> Thêm vào giỏ hàng</button>
                                     </div>
 
 

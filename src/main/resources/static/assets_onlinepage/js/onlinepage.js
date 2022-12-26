@@ -87,7 +87,7 @@ productList.map((item,key)=>{
                     <div class="image" href="${contextPath}/homepage/detailProduct?id=${item.id}">
                         
                             <img style="object-fit: cover;"
-                                src="img/${item.image}" alt="" width="111px" height="111px" onerror="this.src='https://cdn-img.thethao247.vn//storage/files/camhm/2022/10/11/tin-mu-moi-nhat-11-10-ronaldo-duoc-doi-thu-tang-len-may-casemiro-tim-lai-chinh-minh-200731.jpg'">
+                                src="${item.image}" alt="" width="111px" height="111px" onerror="this.src='https://bizweb.dktcdn.net/thumb/1024x1024/100/408/906/products/diode-tron-15a10-15a-1000v-dip-1.jpg?v=1614331430420'">
                             <div class="zoom-overlay"></div>
                     </div>
 
@@ -104,7 +104,7 @@ productList.map((item,key)=>{
                         
                         <p style="color: ${item.quantity > 0 ? "green" : "red"}">${item.quantity > 0 ? "Còn hàng" : "Liên hệ"}</p>
                     </div>
-                       <div class="action" style="display:flex;position: absolute;top: 160px"><button type="button" onclick="addCart(${item.id})" class="btn btn-info" style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px";><i class="glyphicon glyphicon-shopping-cart" style="margin-right: 2px"></i>Chọn mua</button>
+                       <div class="action" style="display:flex;position: absolute;top: 160px"><button ${item.quantity > 0 ? "" : "disabled"} type="button" onclick="addCart(${item.id})" class="btn btn-info" style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px";><i class="glyphicon glyphicon-shopping-cart" style="margin-right: 2px"></i>Chọn mua</button>
                       <a onclick="saveId(${item.id})" href="${contextPath}/homepage/detailProduct?id=${item.id}" class="btn btn-info" style="padding: 5px 10px;font-size:12px;border:none">Xem</a>
                     </div>
                 </div>

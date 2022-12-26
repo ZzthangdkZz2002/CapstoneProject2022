@@ -103,7 +103,7 @@
                                                 <img style="object-fit: cover;"
                                                      src="${pageContext.request.contextPath}/img/${product.image}"
                                                      alt="" width="111px" height="111px"
-                                                     onerror="this.src='https://cdn-img.thethao247.vn//storage/files/camhm/2022/10/11/tin-mu-moi-nhat-11-10-ronaldo-duoc-doi-thu-tang-len-may-casemiro-tim-lai-chinh-minh-200731.jpg'">
+                                                     onerror="this.src='https://bizweb.dktcdn.net/thumb/1024x1024/100/408/906/products/diode-tron-15a10-15a-1000v-dip-1.jpg?v=1614331430420'">
                                                 <div class="zoom-overlay"></div>
                                             </div>
                                         </div>
@@ -121,7 +121,8 @@
                                                 <p style="color: ${product.quantity > 0 ? "green" : "red"}">${product.quantity > 0 ? "Còn hàng" : "Liên hệ"}</p>
                                             </div>
                                             <div class="action" style="display:flex;position: absolute;top: 160px">
-                                                <button type="button" onclick="addCart(${product.id})"
+                                                <button ${product.quantity > 0 ? "" : "disabled"}
+                                                        type="button" onclick="addCart(${product.id})"
                                                         class="btn btn-info"
                                                         style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px"
                                                         ;><i class="glyphicon glyphicon-shopping-cart"

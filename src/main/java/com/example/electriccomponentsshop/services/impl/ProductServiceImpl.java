@@ -19,6 +19,7 @@ import javax.persistence.Query;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -39,6 +40,9 @@ public class ProductServiceImpl implements ProductService {
 
 
     final EntityManager em;
+
+    @Autowired
+    private AWSService awsService;
 
     @Autowired
     ModelMap modelMap;
@@ -169,17 +173,31 @@ public class ProductServiceImpl implements ProductService {
         product.setBrand(productDTO.getBrand());
 
         //upload image
-        String fileName = multipartFile.getOriginalFilename();
-        try{
-            FileCopyUtils.copy(multipartFile.getBytes(), new File(this.fileUpload + fileName));
-        }catch (IOException e){
-            e.printStackTrace();
+//        String fileName = multipartFile.getOriginalFilename();
+//        try{
+//
+//            FileCopyUtils.copy(multipartFile.getBytes(), new File(this.fileUpload + fileName));
+//            Thread thread = new Thread(() -> System.out.println("Thread Running"));
+//            thread.start();
+//            File f = new File(this.fileUpload + fileName);
+//            long size = Files.size(f.toPath());
+//
+//                Thread.sleep(5000);
+//
+//            thread.interrupt();
+//
+//        }catch (IOException | InterruptedException e){
+//            e.printStackTrace();
+//        }
+        try {
+            String fileName = awsService.upload(multipartFile);
+            product.setImage(fileName);
+            System.out.println(fileName + " - aaaaaaaaaaaaaa");
+        }catch (Exception e){
+            System.out.println("upload error: " + e.getMessage());
         }
-        product.setImage(fileName);
-        product.setUnit(productDTO.getUnit());
-
         //
-
+        product.setUnit(productDTO.getUnit());
 
         if("".equals(productDTO.getCode()) || productDTO.getCode() == null){
             String code = new Utils().generateProductCode(productRepository.getMaxProductID()+1);
@@ -227,13 +245,20 @@ public class ProductServiceImpl implements ProductService {
 
         if(multipartFile != null){
             //upload image
-            String fileName = multipartFile.getOriginalFilename();
-            try{
-                FileCopyUtils.copy(multipartFile.getBytes(), new File(this.fileUpload + fileName));
-            }catch (IOException e){
-                e.printStackTrace();
+            try {
+                String fileName = awsService.upload(multipartFile);
+                product.setImage(fileName);
+                System.out.println(fileName + " - aaaaaaaaaaaaaa");
+            }catch (Exception e){
+                System.out.println("upload error: " + e.getMessage());
             }
-            product.setImage(fileName);
+//            String fileName = multipartFile.getOriginalFilename();
+//            try{
+//                FileCopyUtils.copy(multipartFile.getBytes(), new File(this.fileUpload + fileName));
+//            }catch (IOException e){
+//                e.printStackTrace();
+//            }
+//            product.setImage(fileName);
         }
         product.setUnit(productDTO.getUnit());
         product.setDescription(productDTO.getDescription());

@@ -48,7 +48,7 @@
                                     <c:forEach var="item" items="${order.orderTransactionDetails}">
                                         <tr>
                                         <tr style="border-bottom: 0.5px solid #36454F;">
-                                            <td><img src="/img/${item.productDTO.image}" alt="hinh ảnh sản phẩm">
+                                            <td><img src="${item.productDTO.image}" alt="hinh ảnh sản phẩm">
                                                 <span style="margin-left: 15px"> ${item.productDTO.name}</span> <br>
                                                 <span style="margin-left: 15px">x${item.quantity}</span>
                                             </td>

@@ -114,7 +114,7 @@
                                 <tr>
                                     <td>${orderItemDTO.productDTO.code}</td>
                                     <td>${orderItemDTO.productDTO.name}</td>
-                                    <td><img src="${pageContext.request.contextPath}/img/${orderItemDTO.productDTO.image}" alt="" width="100px;"></td>
+                                    <td><img src="${orderItemDTO.productDTO.image}" alt="" width="100px;"></td>
                                     <td class="currency-text">${orderItemDTO.productDTO.price}</td>
                                     <td>${orderItemDTO.quantity}</td>
                                     <td class="currency-text">${orderItemDTO.amount}</td>

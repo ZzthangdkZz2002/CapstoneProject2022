@@ -32,7 +32,7 @@
                 <c:set var = "total" value = "${0}"/>
                 <c:forEach var = "item" items = "${cartItems}">
                     <tr>
-                      <td><img src="/img/${item.productDTO.image}" alt=""> </td>
+                      <td><img src="${item.productDTO.image}" alt=""> </td>
                       <td class="prod_name"><a href="${pageContext.request.contextPath}/product/${item.productDTO.id}">${item.productDTO.name} </a></td>
                       <td>${item.productDTO.price}đ</td>
                       <td>

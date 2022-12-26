@@ -105,7 +105,7 @@
     <form>
         <div class="row">
 
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="tile">
                     <h3 class="tile-title">Thông tin sản phẩm</h3>
                     <div class="du--lieu-san-pham">
@@ -129,18 +129,23 @@
                                 <tr>
                                     <td>${o.productDTO.code}</td>
                                     <td>${o.productDTO.name}</td>
-                                    <td><img src="/img/${o.productDTO.image}" alt="" width="100px;"></td>
+                                    <td><img src="${o.productDTO.image}" alt="" width="100px;"></td>
                                     <td >${o.quantity}</td>
-                                    <input type="hidden" id="${o.productDTO.id}-quantity-order" value="${o.quantity}">
+                                    <input type="hidden" class="huhu" id="${o.productDTO.id}-quantity-order" value="${o.quantity}">
                                     <td>
                                         <button class="btn btn-add btn-sm" type="button" onclick="findAvailableItemInWarehouse('${o.productDTO.id}')">Tìm kho còn hàng</button>
-                                        <select  id="warehouses-list-${o.productDTO.id}" style="display: none;" onchange="genDetailLocation(this.value, '${o.productDTO.id}')">
+                                        <select  id="warehouses-list-${o.productDTO.id}" style="display: none; margin-left: 120px; margin-top: 15px" onchange="genDetailLocation(this.value, '${o.productDTO.id}')">
                                             <option value="0">--------Chọn kho hàng--------</option>
                                         </select>
                                     </td>
                                     <td id="detail-location-${o.productDTO.id}">
-
+                                            <%--                                        <select id="location-list-${o.productDTO.id}" style="display: none" onchange="genProductQuantity(this.value, '${o.productDTO.id}')">--%>
+                                            <%--                                            <option value="0">--------Chọn vị trí--------</option>--%>
+                                            <%--                                        </select>--%>
                                     </td>
+                                        <%--                                    <td>--%>
+                                        <%--&lt;%&ndash;                                        <span id="p-quantity-${o.productDTO.id}" style="display: none">0</span>&ndash;%&gt;--%>
+                                        <%--                                    </td>--%>
                                     <td></td>
                                 </tr>
                             </c:forEach>
@@ -149,7 +154,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="tile">
                     <h3 class="tile-title">Thông tin xuất hàng</h3>
                     <div class="tile-body">
@@ -173,7 +178,7 @@
                         </div>
                         <div class="row">
                             <div class="tile-footer col-md-12">
-                                <button class="btn btn-primary create-order-button" style="margin-left: 8px" onclick="handleSubmit()" type="button">Lưu
+                                <button  class="btn btn-primary create-order-button" id="save-transaction"  type="button">Lưu
                                     giao
                                     dịch</button>
                                 <a class="btn btn-primary cancel-order-button"
@@ -433,6 +438,46 @@ MODAL ORDER EMPTY
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+
+                        <th scope="col">Code</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Hình Ảnh</th>
+                        <th scope="col">Số lượng cần xuất</th>
+                        <th scope="col">Số lượng xuất</th>
+                        <th scope="col">Thông tin xuất</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-infor-export">
+
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <!--
 MODAL
 -->
@@ -467,6 +512,7 @@ MODAL
             description:$('#mota').val(),
             exportItems: exportItems
         };
+
         $.ajax({
             type: "POST",
             contentType: "application/json",
@@ -490,9 +536,11 @@ MODAL
 <script>
     $(document).ready(function () {
         var opener;
+
         $('.modal').on('show.bs.modal', function (e) {
             opener = document.activeElement;
         });
+
         $('.modal .btn-confirm').click(function () {
             if (document.getElementById("orderProductList") != null) {
                 console.log(opener.className);
@@ -502,10 +550,12 @@ MODAL
                 } else {
                     index = opener.parentNode.parentNode.rowIndex;
                 }
+
                 var tableOrder = document.getElementById("orderProductList");
                 tableOrder.deleteRow(index);
                 setSumOrder();
             }
+
             if (document.getElementById("importProductList") != null) {
                 var index;
                 if (opener.className == "minus-btn") {
@@ -517,6 +567,7 @@ MODAL
                 tableImport.deleteRow(index);
                 setSumImport();
             }
+
             if (document.getElementById("exportProductList") != null) {
                 var index;
                 if (opener.className == "minus-btn") {
@@ -524,11 +575,16 @@ MODAL
                 } else {
                     index = opener.parentNode.parentNode.rowIndex;
                 }
+
                 var tableExport = document.getElementById("exportProductList");
                 tableExport.deleteRow(index);
             }
+
         });
+
+
     });
+
 </script>
 </body>
 

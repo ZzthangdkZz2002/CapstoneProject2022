@@ -124,7 +124,7 @@
                                                 <p style="color: ${product.quantity > 0 ? "green" : "red"}">${product.quantity > 0 ? "Còn hàng" : "Liên hệ"}</p>
                                             </div>
                                             <div class="action" style="display:flex;position: absolute;top: 160px">
-                                                <button type="button" onclick="addCart(${product.id})"
+                                                <button ${product.quantity > 0 ? "" : "disabled"} type="button" onclick="addCart(${product.id})"
                                                         class="btn btn-info"
                                                         style="padding: 5px 10px;border:none;font-size:12px;margin-right:10px"
                                                 ><i class="glyphicon glyphicon-shopping-cart"

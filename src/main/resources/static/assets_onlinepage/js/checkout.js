@@ -16,7 +16,7 @@ const getListCart=()=>{
         shoppingCart.innerHTML+=`<li class="list-group-item d-flex justify-content-between lh-condensed">
        <div style="display:flex">
        <div style="width: 40px;height: 40px;object-fit: cover;margin-right:20px">
-       <img src="${contextPath}/img/${item.product.image}" alt="Girl in a jacket" style="width: 100%;height: 100%;object-fit: cover;">
+       <img src="${item.product.image}" alt="Girl in a jacket" style="width: 100%;height: 100%;object-fit: cover;">
        </div>
        <div>
          <h6 class="my-0">${item.product.name}</h6>

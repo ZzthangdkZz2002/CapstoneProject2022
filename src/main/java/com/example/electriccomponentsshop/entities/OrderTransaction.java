@@ -45,7 +45,7 @@ public class OrderTransaction {
     private ExportTransactionNew exportTransactionNew;
 
     @OneToMany(mappedBy = "orderTransaction",fetch = FetchType.EAGER)
-    private List<OrderTransactionDetail> orderTransactionDetails = new ArrayList<>();
+    private Set<OrderTransactionDetail> orderTransactionDetails = new HashSet<>();
     @OneToMany(mappedBy = "orderTransaction",fetch = FetchType.EAGER)
     private Set<InventoryExport> inventoryExports = new HashSet<>();
     private String user_name;

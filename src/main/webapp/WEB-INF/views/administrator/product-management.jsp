@@ -86,7 +86,7 @@
                 <tr>
                   <td>${product.code}</td>
                   <td>${product.name}</td>
-                  <td><img src="/img/${product.image}" alt="" width="100px;"></td>
+                  <td><img src="${product.image}" alt="" width="100px;"></td>
 <%--                  <td>${product.available}</td>--%>
                   <td class="currency-text">${product.original_price}</td>
                   <td class="currency-text">${product.price}</td>
