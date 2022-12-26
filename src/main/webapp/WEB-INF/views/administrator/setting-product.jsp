@@ -122,7 +122,12 @@
               <div class="form-group col-md-3">
                 <label class="control-label required-field">Thương hiệu</label>
                 <select class="form-control" id="brandOption" required>
-                  <option value="${productDto.brand.id}" selected>${productDto.brand.name}</option>
+
+                    <option value="0" selected>---Chọn thương hiệu---</option>
+
+                  <c:if test="${productDto.brand != null}">
+                    <option value="${productDto.brand.id}" selected>${productDto.brand.name}</option>
+                  </c:if>
                   <c:forEach var = "brand" items="${brands}">
                     <option value="${brand.id}">${brand.name}</option>
                   </c:forEach>

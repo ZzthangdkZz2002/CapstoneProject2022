@@ -223,8 +223,8 @@
                       <a class="btn btn-primary btn-sm edit"
                          type="button" title="Giao thành công" href="${pageContext.request.contextPath}/admin/orders/finish?id=${orderDto.id}"><i class="fas fa-edit"></i>Xác nhận</a>
                       <a class="btn btn-primary btn-sm edit"
-                         type="button" title="Giao thành công" href="#"><i class="fas fa-edit"></i>Hoàn trả</a>
-                      <c:if test="${orderDto.isShipping eq 'false'}">
+                         type="button" title="Giao thành công" href="${pageContext.request.contextPath}/admin/orders/return?id=${orderDto.id}"><i class="fas fa-edit"></i>Hoàn trả</a>
+                      <c:if test="${orderDto.isShipping eq 'false' && orderDto.orderKind == 'online'}">
                         <a class="btn btn-primary btn-sm edit"
                            type="button" title="Giao hàng nhanh" href="${pageContext.request.contextPath}/admin/orders/giaohangnhanh?orderid=${orderDto.orderid}"><i class="fas fa-edit"></i>Lên đơn Giao Hàng Nhanh</a>
                       </c:if>

@@ -150,6 +150,10 @@
         <label class="control-label">Tính vào công nợ: </label>
         <p class="control-all-money-total"><span id="debt">0</span></p>
     </div>
+    <label class="control-label">Ghi chú: </label>
+    <div class="form-group col-md-12">
+        <textarea name="noteImport" id="noteImport" style="width: 400px;height: 300px"></textarea>
+    </div>
                             <div class="row">
                                 <div class="tile-footer col-md-12">
                                     <button id="createImport" class="btn btn-primary create-order-button"
@@ -586,6 +590,7 @@ MODAL
             "warehouse": warehouse,
             "total_importPrice" : totalMoney.toFixed(0),
             "money_paid" : $('#moneyMustPay').val(),
+            "note" : $('textarea#noteImport').val(),
             "importProducts": importProducts
         };
 

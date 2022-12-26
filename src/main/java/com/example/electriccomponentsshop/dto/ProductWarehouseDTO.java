@@ -22,6 +22,7 @@ public class ProductWarehouseDTO {
     private String location_name;
     private Warehouse warehouse;
     private String supplier_id;
+    private String note;
     //tong tien hang
     private BigDecimal total_importPrice;
     //tien da tra nha cung cap

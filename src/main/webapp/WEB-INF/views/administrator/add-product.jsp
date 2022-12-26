@@ -172,6 +172,7 @@
               <div class="form-group col-md-3">
                 <label  class="control-label required-field">Thương Hiệu</label>
                 <select class="form-control" id="brandOption" required>
+                  <option value="0">---Chọn thương hiệu---</option>
                   <c:forEach var = "brand" items="${listBrand}">
                     <option value="${brand.id}">${brand.name}</option>
                   </c:forEach>

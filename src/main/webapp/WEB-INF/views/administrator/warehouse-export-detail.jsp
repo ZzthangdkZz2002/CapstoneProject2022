@@ -119,9 +119,9 @@
                                 <th class="order-item-number">Kho hàng</th>
                                 <th class="order-item-number">Vị trí</th>
                                 <%--                                <th class="order-item-number">Số lượng tồn kho</th>--%>
-                                <th width="100" class="order-item-number text-center"
-                                    style="text-align: center; vertical-align: middle;">Tuỳ chọn
-                                </th>
+<%--                                <th width="100" class="order-item-number text-center"--%>
+<%--                                    style="text-align: center; vertical-align: middle;">Tuỳ chọn--%>
+<%--                                </th>--%>
                             </tr>
                             </thead>
                             <tbody>
@@ -146,7 +146,7 @@
                                         <%--                                    <td>--%>
                                         <%--&lt;%&ndash;                                        <span id="p-quantity-${o.productDTO.id}" style="display: none">0</span>&ndash;%&gt;--%>
                                         <%--                                    </td>--%>
-                                    <td></td>
+<%--                                    <td></td>--%>
                                 </tr>
                             </c:forEach>
                             </tbody>

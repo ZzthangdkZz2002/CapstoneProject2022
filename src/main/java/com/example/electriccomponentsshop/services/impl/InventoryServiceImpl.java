@@ -99,7 +99,7 @@ public class InventoryServiceImpl implements InventoryService {
             inventory.setTotal_importPrice(productWarehouseDTO.getTotal_importPrice());
             inventory.setMoney_paid(productWarehouseDTO.getMoney_paid());
             inventory.setCreator_name(getLoggedUsername());
-            inventory.setNote("note test");
+            inventory.setNote(productWarehouseDTO.getNote());
             inventory.setWarehouse(productWarehouseDTO.getWarehouse());
             if(Integer.parseInt(productWarehouseDTO.getSupplier_id()) > 0 && supplierRepository.findById(Integer.parseInt(productWarehouseDTO.getSupplier_id())).isPresent()){
                 inventory.setSupplier(supplierRepository.findById(Integer.parseInt(productWarehouseDTO.getSupplier_id())).get());

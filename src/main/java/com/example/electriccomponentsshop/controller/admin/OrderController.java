@@ -387,6 +387,23 @@ public class OrderController {
         return "redirect:/admin/orders/confirmed";
     }
 
+    @GetMapping("/return")
+    public String returnOrder(@RequestParam(name = "id") String id, RedirectAttributes r, Authentication authentication){
+        try{
+            OrderTransaction orderTransaction = orderTransactionRepository.findById(Integer.parseInt(id)).get();
+            orderTransaction.setStatus(OrderEnum.RETURNED.getName());
+            orderTransaction.setUpdatedDate(new Date());
+            AccountDetailImpl accountDetail = (AccountDetailImpl) authentication.getPrincipal();
+            Account account = accountRepository.findById(accountDetail.getId()).get();
+            orderTransaction.setEmployeeProcessor(account);
+            orderTransactionRepository.save(orderTransaction);
+            r.addFlashAttribute("acceptOrderMessage","Hoàn trả thành công đơn hàng #" + orderTransaction.getOrderid());
+        }catch (Exception e){
+            r.addFlashAttribute("acceptOrderMessage","error");
+        }
+        return "redirect:/admin/orders/returned";
+    }
+
     @GetMapping("/cancel")
     public ResponseEntity<ResponseObject> cancelOrder(@RequestParam(name = "id") String id, @RequestParam(name = "reason") String reason, Authentication authentication){
         try{

@@ -37,9 +37,9 @@ public class ProductDTO {
     
     private BigDecimal price;
     private int quantity;
-    @NotNull
+
     private List<Category> categories;
-    @NotNull
+
     private Brand brand;
 
     private String code;

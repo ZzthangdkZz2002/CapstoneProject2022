@@ -1035,7 +1035,12 @@ function updateProduct(id) {
     var formData = new FormData();
 
     var brand = new Object();
-    brand.id = $('#brandOption').val()
+    if($('#brandOption').val() === '0'){
+        brand = null;
+    }else{
+        brand.id = $('#brandOption').val()
+    }
+    // brand.id = $('#brandOption').val()
 
     var data1={
         "id" : id,
@@ -1114,7 +1119,11 @@ function addProduct(){
    var formData = new FormData();
 
    var brand = new Object();
-   brand.id = $('#brandOption').val()
+   if($('#brandOption').val() === '0'){
+       brand = null;
+   }else{
+       brand.id = $('#brandOption').val()
+   }
     var data1={
         "name": $('#name').val(),
         "price": $('#price').val(),

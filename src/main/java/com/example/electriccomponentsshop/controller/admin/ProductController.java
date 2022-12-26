@@ -72,14 +72,21 @@ public class ProductController {
             Product productDTO = productRepository.findById(Integer.parseInt(id)).get();
             List<Category> categoryDtos = categoryService.findAll();
             List<Category> categories = new ArrayList<>();
-            for(Category category: categoryDtos){
+            for(int i =0; i<categoryDtos.size(); i++){
                 for(Category category1 : productDTO.getCategories()){
-                    if(category.getId() != category1.getId()){
-
+                    if(category1.getId() == categoryDtos.get(i).getId()){
+                        categoryDtos.remove(i);
                     }
                 }
             }
             List<Brand> brands = brandRepository.findAll();
+            if(productDTO.getBrand() != null){
+                for(int i =0; i<brands.size(); i++){
+                    if(brands.get(i).getId() == productDTO.getBrand().getId()){
+                        brands.remove(i);
+                    }
+                }
+            }
             model.addAttribute("productDto",productDTO);
             model.addAttribute("brands",brands);
             model.addAttribute("listCategories",categoryDtos);
