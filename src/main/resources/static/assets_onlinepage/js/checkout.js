@@ -69,6 +69,17 @@ function OrderAction() {
     let phone = $('#phone').val();
     let address = $('#address').val();
 
+    const phoneRegex =/^(((\+|)84)|0)(3|5|7|8|9)+([0-9]{8})\b/
+    const emailRegex=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    if (!phoneRegex.test(phone)){
+        alert('Bạn cần nhập đúng định dạng SDT')
+        return;
+    }
+    if (!emailRegex.test(email)){
+        alert('Bạn cần nhập đúng định dạng email')
+        return;
+    }
+
     let province = $("#city option:selected").text();
     let district = $("#district option:selected").text();
     let ward = $( "#ward option:selected").text();

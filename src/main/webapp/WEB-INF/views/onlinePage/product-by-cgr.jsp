@@ -206,7 +206,7 @@
 <!-- JavaScripts placed at the end of the document so the pages load faster -->
 <script src="assets_onlinepage/js/jquery-1.11.1.min.js"></script>
 <%--<script src="assets_onlinepage/js/onlinepage.js"></script>--%>
-
+<script src="${pageContext.request.contextPath}/assets_onlinepage/js/huhu.js"></script>
 <script src="assets_onlinepage/js/bootstrap.min.js"></script>
 
 <script src="assets_onlinepage/js/bootstrap-hover-dropdown.min.js"></script>
