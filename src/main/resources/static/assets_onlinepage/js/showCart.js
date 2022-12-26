@@ -54,7 +54,7 @@ const getListCart=()=>{
             <p class="fw-bold">${item.product.name}</p>
             <p>Mã sản phẩm: ${item.product.id}</p>
         </td>
-        <td class="price">${item.product.price}</td>
+        <td class="price">${parseFloat(item.product.price,10).toLocaleString()}</td>
         <td>
             <div class="d-flex" style="justify-content: center">
                 <button class="btnIncrease btn btn-link px-2"
@@ -62,7 +62,7 @@ const getListCart=()=>{
                     <i class="fas fa-minus"></i>
                 </button>
 
-                <input min="0" name="quantity" value="${item.quantity}" type="text" onkeyup="handleQuantity(${item.product.id})"
+                <input min="0" name="quantity" value="${item.quantity}" type="number" onkeyup="handleQuantity(${item.product.id})"
                     class="quantity form-control form-control-sm" style="width: 50px;" />
 
                 <button class="btnDecrease btn btn-link px-2"
@@ -71,7 +71,7 @@ const getListCart=()=>{
                 </button>
             </div>
         </td>
-        <td class="total">${item.quantity*item.product.price}</td>
+        <td class="total">${parseFloat(item.quantity*item.product.price,10).toLocaleString()}</td>
         <td><i class="fas fa-trash fa-lg" style="color:red" onclick="removeCart(${item.product.id})"></i></td>
     </tr>`
     })
@@ -79,7 +79,7 @@ const getListCart=()=>{
         (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
         0
       );
-    totalMoney.textContent=money
+    totalMoney.textContent=money.toLocaleString()
 }
 const handleQuantity=(id)=>{
     let quantityInput=document.querySelector('.quantity').value;
