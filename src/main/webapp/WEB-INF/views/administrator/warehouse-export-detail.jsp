@@ -134,7 +134,7 @@
                                     <input type="hidden" class="huhu" id="${o.productDTO.id}-quantity-order" value="${o.quantity}">
                                     <td>
                                         <button class="btn btn-add btn-sm" type="button" onclick="findAvailableItemInWarehouse('${o.productDTO.id}')">Tìm kho còn hàng</button>
-                                        <select  id="warehouses-list-${o.productDTO.id}" style="display: none; margin-left: 120px; margin-top: 15px" onchange="genDetailLocation(this.value, '${o.productDTO.id}')">
+                                        <select  id="warehouses-list-${o.productDTO.id}" style="display: none;  margin-top: 15px" onchange="genDetailLocation(this.value, '${o.productDTO.id}')">
                                             <option value="0">--------Chọn kho hàng--------</option>
                                         </select>
                                     </td>

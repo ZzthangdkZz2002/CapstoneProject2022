@@ -95,18 +95,18 @@
 <%--                <option selected id="sender-province-opt"></option>--%>
 <%--            </select>--%>
 <%--        </div>--%>
-        <div class="mb-2">
-            <label for="sender-district" class="form-label">Quận/Huyện</label>
-            <select class="form-select" aria-label="Default select example" id="sender-district">
-                <option selected id="sender-district-opt"></option>
-            </select>
-        </div>
-        <div class="mb-2">
-            <label for="sender-wards" class="form-label">Phường/Xã</label>
-            <select class="form-select" aria-label="Default select example" id="sender-wards">
-                <option selected id="sender-wards-opt"></option>
-            </select>
-        </div>
+<%--        <div class="mb-2">--%>
+<%--            <label for="sender-district" class="form-label">Quận/Huyện</label>--%>
+<%--            <select class="form-select" aria-label="Default select example" id="sender-district">--%>
+<%--                <option selected id="sender-district-opt"></option>--%>
+<%--            </select>--%>
+<%--        </div>--%>
+<%--        <div class="mb-2">--%>
+<%--            <label for="sender-wards" class="form-label">Phường/Xã</label>--%>
+<%--            <select class="form-select" aria-label="Default select example" id="sender-wards">--%>
+<%--                <option selected id="sender-wards-opt"></option>--%>
+<%--            </select>--%>
+<%--        </div>--%>
     </div>
     <div class="col-8">
         <hr>
@@ -131,24 +131,24 @@
         </div>
     </div>
     <div class="col-4">
-        <div class="mb-2">
-            <label for="sender-district" class="form-label">Tỉnh/Thành Phố</label>
-            <select class="form-select" aria-label="Default select example" id="receive-province">
-                <option selected id="receive-province-opt"></option>
-            </select>
-        </div>
-        <div class="mb-2">
-            <label for="receive-district" class="form-label">Quận/Huyện</label>
-            <select class="form-select" aria-label="Default select example" id="receive-district">
-                <option selected id="receive-district-opt"></option>
-            </select>
-        </div>
-        <div class="mb-2">
-            <label for="receive-wards" class="form-label">Phường/Xã</label>
-            <select class="form-select" aria-label="Default select example" id="receive-wards">
-                <option selected id="receive-wards-opt"></option>
-            </select>
-        </div>
+<%--        <div class="mb-2">--%>
+<%--            <label for="sender-district" class="form-label">Tỉnh/Thành Phố</label>--%>
+<%--            <select class="form-select" aria-label="Default select example" id="receive-province">--%>
+<%--                <option selected id="receive-province-opt"></option>--%>
+<%--            </select>--%>
+<%--        </div>--%>
+<%--        <div class="mb-2">--%>
+<%--            <label for="receive-district" class="form-label">Quận/Huyện</label>--%>
+<%--            <select class="form-select" aria-label="Default select example" id="receive-district">--%>
+<%--                <option selected id="receive-district-opt"></option>--%>
+<%--            </select>--%>
+<%--        </div>--%>
+<%--        <div class="mb-2">--%>
+<%--            <label for="receive-wards" class="form-label">Phường/Xã</label>--%>
+<%--            <select class="form-select" aria-label="Default select example" id="receive-wards">--%>
+<%--                <option selected id="receive-wards-opt"></option>--%>
+<%--            </select>--%>
+<%--        </div>--%>
     </div>
     <div class="col-8">
         <hr>
