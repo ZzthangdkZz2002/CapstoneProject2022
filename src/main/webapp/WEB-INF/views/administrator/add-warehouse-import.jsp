@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class="du--lieu-san-pham">
-                            <table id="importProductList" class="table table-hover table-bordered form-product">
+                            <table id="importProductList" style="display: block; overflow-x: auto; white-space: nowrap" class="table table-hover table-bordered form-product">
                                 <thead>
                                 <tr>
                                     <th>Mã sản phẩm</th>
@@ -76,7 +76,7 @@
                                     <th class="order-item-number" width="10">Số lượng</th>
                                     <th class="order-item-number" width="10">Giảm giá</th>
                                     <th class="order-item-number">Thành tiền</th>
-                                    <th width="100" class="order-item-number text-center"
+                                    <th class="order-item-number text-center"
                                         style="text-align: center; vertical-align: middle;">Tuỳ chọn
                                     </th>
                                 </tr>
@@ -152,7 +152,7 @@
     </div>
     <label class="control-label">Ghi chú: </label>
     <div class="form-group col-md-12">
-        <textarea name="noteImport" id="noteImport" style="width: 400px;height: 300px"></textarea>
+        <textarea name="noteImport" id="noteImport" style="width: 200px;height: 100px"></textarea>
     </div>
                             <div class="row">
                                 <div class="tile-footer col-md-12">
