@@ -60,11 +60,16 @@
     <div class="d-flex justify-content-between" style="margin-bottom: 100px">
         <a href="${pageContext.request.contextPath}/homepage"class="btn btn-light btn-lg me-2"><i class="fa-solid fa-rotate-left mr-1" role="button"></i>Tiếp tục
             mua hàng</a>
-        <a href="${pageContext.request.contextPath}/homepage/checkout" id="ContinueOrder" style="color: white; display: none" class="btn btn-success btn-lg" role="button">Tiếp tục</a>
+        <button onclick="dieu_huong()"  id="ContinueOrder" style="color: white; display: none" class="btn btn-success btn-lg" >Tiếp tục</button>
     </div>
 
     <jsp:include page="footer.jsp"></jsp:include>
 </div>
+<script>
+    function dieu_huong(){
+        location.assign("${pageContext.request.contextPath}/homepage/checkout");
+    }
+</script>
 <script>var contextPath = "${pageContext.request.contextPath}"</script>
 <!-- Cart JS -->
 <script src="${pageContext.request.contextPath}/assets_onlinepage/js/showCart.js"></script>

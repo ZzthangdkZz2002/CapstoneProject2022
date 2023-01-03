@@ -101,7 +101,7 @@
                                             <div class="image"
                                                  href="${pageContext.request.contextPath}/homepage/detailProduct?id=${product.id}">
                                                 <img style="object-fit: cover;"
-                                                     src="${pageContext.request.contextPath}/img/${product.image}"
+                                                     src="${product.image}"
                                                      alt="" width="111px" height="111px"
                                                      onerror="this.src='https://bizweb.dktcdn.net/thumb/1024x1024/100/408/906/products/diode-tron-15a10-15a-1000v-dip-1.jpg?v=1614331430420'">
                                                 <div class="zoom-overlay"></div>

@@ -1,0 +1,18 @@
+cloud:
+  aws:
+    credentials:
+      access-key: AKIATLYFIQIWIOD6W6WS
+      secret-key: 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
+    region:
+      static: ap-northeast-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: electric-shop
+
+twilio:
+  account_sid: AC6b824350dc77b2c02c6dcb798ea1eb99
+  auth_token: c5529e0b8e934f85945bd88ced068788
+  trial_number: +19894677936

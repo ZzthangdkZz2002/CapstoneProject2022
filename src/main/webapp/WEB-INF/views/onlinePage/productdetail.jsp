@@ -71,7 +71,7 @@
                             <div id="owl-single-product">
                                 <div class="single-product-gallery-item" id="slide1">
                                     <a data-lightbox="image-1" data-title="Gallery" href="assets_onlinepage/images/single-product/1.jpg">
-                                        <img class="img-responsive description-img" alt="" src="${pageContext.request.contextPath}/img/${products.image}"  />
+                                        <img class="img-responsive description-img" alt="" src="${products.image}"  />
                                     </a>
                                 </div><!-- /.single-product-gallery-item -->
 

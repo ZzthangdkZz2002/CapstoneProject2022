@@ -10,7 +10,9 @@ const increasing=(id)=>{
         cart.quantity+=1;
         localStorage.setItem('cart',JSON.stringify(cartList))
     }
- getListCart()
+    handelNoti(id)
+
+    getListCart()
 }
 const decreasing=(id)=>{
     const cartList=JSON.parse(localStorage.getItem('cart'))
@@ -23,7 +25,9 @@ const decreasing=(id)=>{
         cart.quantity-=1;
         localStorage.setItem('cart',JSON.stringify(cartList))
     }
- getListCart()
+    handelNoti(id)
+
+    getListCart()
 }
 
 const removeCart=(id)=>{
@@ -39,22 +43,47 @@ const removeCart=(id)=>{
     }else{
         document.getElementById('ContinueOrder').style.display = "none";
     }
+
     getListCart()
 }
+const checkDisable =()=>{
+    document.getElementById("ContinueOrder").disabled = false;
+    let check= false;
+    const cartList=JSON.parse(localStorage.getItem('cart'))
+    for ( let i=0; i <cartList.length; i++){
+        console.log('ffff',cartList)
+        if (cartList[i].quantity > cartList[i].product.quantity ){
+            check=true;
+            document.getElementById("ContinueOrder").disabled = true;
 
+            return
+        }
+    }
+
+}
+const handelNoti =(id)=>{
+
+    const cartList=JSON.parse(localStorage.getItem('cart'))
+    const cartFind = cartList.find((item)=>item.product.id==id);
+    console.log('kokok',cartFind)
+    // if(cartFind.quantity>cartFind.product.quantity){
+    //     alert('Xin lỗi, số lượng bạn nhập lớn hơn trong kho !')
+    // }
+
+}
 const getListCart=()=>{
     shoppingCart.innerHTML='';
     let cartList=JSON.parse(localStorage.getItem('cart'))
     cartList.map((item,key)=>{
         shoppingCart.innerHTML+=` <tr>
         <td scope="row"><img
-                src="${contextPath}/img/${item.product.image}"
+                src="${item.product.image}"
                 alt=""></td>
         <td>
             <p class="fw-bold">${item.product.name}</p>
-            <p>Mã sản phẩm: ${item.product.id}</p>
+            <p style="${item.product.quantity==0 ?"color :red" : ""}">Số hàng còn trong kho: ${item.product.quantity}</p>
         </td>
-        <td class="price">${item.product.price}</td>
+        <td class="price">${parseFloat(item.product.price,10).toLocaleString()}</td>
         <td>
             <div class="d-flex" style="justify-content: center">
                 <button class="btnIncrease btn btn-link px-2"
@@ -62,8 +91,8 @@ const getListCart=()=>{
                     <i class="fas fa-minus"></i>
                 </button>
 
-                <input min="0" max="" name="quantity" value="${item.quantity}" type="text" onkeyup="handleQuantity(${item.product.id})"
-                    class="quantity form-control form-control-sm" style="width: 50px;" />
+                <input min="0" name="quantity" value="${item.quantity}" type="number" onkeyup="handleQuantity(${item.product.id})"
+                    class="quantity form-control form-control-sm" style="width: 150px;" />
 
                 <button class="btnDecrease btn btn-link px-2"
                     onclick="increasing(${item.product.id})">
@@ -71,42 +100,44 @@ const getListCart=()=>{
                 </button>
             </div>
         </td>
-        <td class="total">${item.quantity*item.product.price}</td>
+        <td class="total">${parseFloat(item.quantity*item.product.price,10).toLocaleString()}</td>
         <td><i class="fas fa-trash fa-lg" style="color:red" onclick="removeCart(${item.product.id})"></i></td>
     </tr>`
     })
     const money = cartList.reduce(
         (previousValue, currentValue) => previousValue + (currentValue.product.price*currentValue.quantity),
         0
-      );
-    totalMoney.textContent=money
+    );
+    totalMoney.textContent=money.toLocaleString()
+    count.textContent = countQuantity();
+    checkDisable()
 }
 const handleQuantity=(id)=>{
     let quantityInput=document.querySelector('.quantity').value;
     const cartList=JSON.parse(localStorage.getItem('cart'))
-const cartFind = cartList.find((item)=>item.product.id==id);
+    const cartFind = cartList.find((item)=>item.product.id==id);
 
-if( typeof parseInt(quantityInput,10) !='number' || quantityInput==''){
-  
-    document.querySelector('.quantity').value=cartFind.quantity;
-    quantityInput=cartFind.quantity
+    if( typeof parseInt(quantityInput,10) !='number' || quantityInput==''){
+
+        document.querySelector('.quantity').value=cartFind.quantity;
+        quantityInput=cartFind.quantity
+    }
+
+
+
+    if(cartFind){
+        cartFind.quantity=parseInt(quantityInput,10);
+
+        localStorage.setItem('cart',JSON.stringify(cartList))
+    }
+
+    getListCart()
+
+
 }
 
 
-
-if(cartFind){
-    cartFind.quantity=parseInt(quantityInput,10);
-
-    localStorage.setItem('cart',JSON.stringify(cartList))
- }
-
- getListCart()
-
-
-}
-
-
-      getListCart()
+getListCart()
 
 
 var cartlists = JSON.parse(localStorage.getItem('cart'));

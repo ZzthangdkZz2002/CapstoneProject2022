@@ -103,7 +103,7 @@
                                                  href="${pageContext.request.contextPath}/homepage/detailProduct?id=${product.id}">
 
                                                 <img style="object-fit: cover;"
-                                                     src="${pageContext.request.contextPath}/img/${product.image}"
+                                                     src="${product.image}"
                                                      alt="" width="111px" height="111px">
                                                 <div class="zoom-overlay"></div>
                                             </div>
